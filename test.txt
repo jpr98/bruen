@@ -1,0 +1,40 @@
+program test;
+
+	class Car {
+		attributes
+		var doors: int;
+
+		methods
+		function start() void {
+			return;
+		}
+	};
+
+	var a : int;
+	var b : float = 1 < 2;
+	
+	function test() int {
+		var local: string;
+		var array[2]: int;
+		var mat[1][2]: float;
+
+		if (a) {
+			write("helloworld");
+		}
+		return 10;
+	}
+
+	main() {
+		var c : float = a + b;
+		var x : char = "x";
+
+        a = test();
+
+		if (a > z) {
+			read(car.doors, a, b);
+		} else {
+			write("hi");
+		}
+
+        return;
+	}
