@@ -39,17 +39,23 @@ func (s *BaseProyectoListener) EnterClassBlock(ctx *ClassBlockContext) {}
 // ExitClassBlock is called when production classBlock is exited.
 func (s *BaseProyectoListener) ExitClassBlock(ctx *ClassBlockContext) {}
 
-// EnterVars is called when production vars is entered.
-func (s *BaseProyectoListener) EnterVars(ctx *VarsContext) {}
+// EnterVarsDec is called when production varsDec is entered.
+func (s *BaseProyectoListener) EnterVarsDec(ctx *VarsDecContext) {}
 
-// ExitVars is called when production vars is exited.
-func (s *BaseProyectoListener) ExitVars(ctx *VarsContext) {}
+// ExitVarsDec is called when production varsDec is exited.
+func (s *BaseProyectoListener) ExitVarsDec(ctx *VarsDecContext) {}
 
 // EnterVarsTypeInit is called when production varsTypeInit is entered.
 func (s *BaseProyectoListener) EnterVarsTypeInit(ctx *VarsTypeInitContext) {}
 
 // ExitVarsTypeInit is called when production varsTypeInit is exited.
 func (s *BaseProyectoListener) ExitVarsTypeInit(ctx *VarsTypeInitContext) {}
+
+// EnterVars is called when production vars is entered.
+func (s *BaseProyectoListener) EnterVars(ctx *VarsContext) {}
+
+// ExitVars is called when production vars is exited.
+func (s *BaseProyectoListener) ExitVars(ctx *VarsContext) {}
 
 // EnterFunctions is called when production functions is entered.
 func (s *BaseProyectoListener) EnterFunctions(ctx *FunctionsContext) {}
@@ -123,23 +129,17 @@ func (s *BaseProyectoListener) EnterMethodCall(ctx *MethodCallContext) {}
 // ExitMethodCall is called when production methodCall is exited.
 func (s *BaseProyectoListener) ExitMethodCall(ctx *MethodCallContext) {}
 
+// EnterCall is called when production call is entered.
+func (s *BaseProyectoListener) EnterCall(ctx *CallContext) {}
+
+// ExitCall is called when production call is exited.
+func (s *BaseProyectoListener) ExitCall(ctx *CallContext) {}
+
 // EnterRead is called when production read is entered.
 func (s *BaseProyectoListener) EnterRead(ctx *ReadContext) {}
 
 // ExitRead is called when production read is exited.
 func (s *BaseProyectoListener) ExitRead(ctx *ReadContext) {}
-
-// EnterIds is called when production ids is entered.
-func (s *BaseProyectoListener) EnterIds(ctx *IdsContext) {}
-
-// ExitIds is called when production ids is exited.
-func (s *BaseProyectoListener) ExitIds(ctx *IdsContext) {}
-
-// EnterId is called when production id is entered.
-func (s *BaseProyectoListener) EnterId(ctx *IdContext) {}
-
-// ExitId is called when production id is exited.
-func (s *BaseProyectoListener) ExitId(ctx *IdContext) {}
 
 // EnterWrite is called when production write is entered.
 func (s *BaseProyectoListener) EnterWrite(ctx *WriteContext) {}
@@ -165,17 +165,29 @@ func (s *BaseProyectoListener) EnterWhileLoop(ctx *WhileLoopContext) {}
 // ExitWhileLoop is called when production whileLoop is exited.
 func (s *BaseProyectoListener) ExitWhileLoop(ctx *WhileLoopContext) {}
 
-// EnterExpression is called when production expression is entered.
-func (s *BaseProyectoListener) EnterExpression(ctx *ExpressionContext) {}
-
-// ExitExpression is called when production expression is exited.
-func (s *BaseProyectoListener) ExitExpression(ctx *ExpressionContext) {}
-
 // EnterExp is called when production exp is entered.
 func (s *BaseProyectoListener) EnterExp(ctx *ExpContext) {}
 
 // ExitExp is called when production exp is exited.
 func (s *BaseProyectoListener) ExitExp(ctx *ExpContext) {}
+
+// EnterT_exp is called when production t_exp is entered.
+func (s *BaseProyectoListener) EnterT_exp(ctx *T_expContext) {}
+
+// ExitT_exp is called when production t_exp is exited.
+func (s *BaseProyectoListener) ExitT_exp(ctx *T_expContext) {}
+
+// EnterG_exp is called when production g_exp is entered.
+func (s *BaseProyectoListener) EnterG_exp(ctx *G_expContext) {}
+
+// ExitG_exp is called when production g_exp is exited.
+func (s *BaseProyectoListener) ExitG_exp(ctx *G_expContext) {}
+
+// EnterM_exp is called when production m_exp is entered.
+func (s *BaseProyectoListener) EnterM_exp(ctx *M_expContext) {}
+
+// ExitM_exp is called when production m_exp is exited.
+func (s *BaseProyectoListener) ExitM_exp(ctx *M_expContext) {}
 
 // EnterTerm is called when production term is entered.
 func (s *BaseProyectoListener) EnterTerm(ctx *TermContext) {}
@@ -212,6 +224,12 @@ func (s *BaseProyectoListener) EnterCte_c(ctx *Cte_cContext) {}
 
 // ExitCte_c is called when production cte_c is exited.
 func (s *BaseProyectoListener) ExitCte_c(ctx *Cte_cContext) {}
+
+// EnterCte_b is called when production cte_b is entered.
+func (s *BaseProyectoListener) EnterCte_b(ctx *Cte_bContext) {}
+
+// ExitCte_b is called when production cte_b is exited.
+func (s *BaseProyectoListener) ExitCte_b(ctx *Cte_bContext) {}
 
 // EnterCte_s is called when production cte_s is entered.
 func (s *BaseProyectoListener) EnterCte_s(ctx *Cte_sContext) {}

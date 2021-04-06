@@ -5,6 +5,7 @@ grammar Proyecto;
 INT: [0-9]+;
 FLOAT: INT ('.' INT)? ('E' [+-]? INT)?;
 CHAR: '"'[A-Za-z]'"';
+BOOL: 'true' | 'false';
 WS: [ \r\n\t]+ -> skip;
 GT: '>';
 LT: '<';
@@ -42,6 +43,7 @@ INT_TYPE: 'int';
 FLOAT_TYPE: 'float';
 CHAR_TYPE: 'char';
 STRING_TYPE: 'string';
+BOOL_TYPE: 'bool';
 VOID: 'void';
 // Program
 PROGRAM: 'program';
@@ -49,74 +51,86 @@ PROGRAM: 'program';
 ID: [a-zA-Z_][a-zA-Z0-9]*;
 
 // Rules
-program: PROGRAM ID SEMI classDef* vars* functions* main EOF;
+program: PROGRAM ID SEMI classDef* varsDec* functions* main EOF;
 
 classDef: CLASS ID ('<' ID '>')? classBlock SEMI;
-classBlock: '{' ATTRIBUTES vars* METHODS functions* '}';
+classBlock: '{' ATTRIBUTES varsDec* METHODS functions* '}';
 
-vars: VAR ID ':' varsTypeInit SEMI
+varsDec: VAR ID ':' varsTypeInit SEMI
     | VAR ID '['INT']' ':' varsTypeInit SEMI
     | VAR ID '['INT']['INT']' ':' varsTypeInit SEMI;
-varsTypeInit: typeRule ('=' expression)?;
+varsTypeInit: (typeRule | ID) ('=' exp)?;
 
-functions: FUNCTION ID '(' parameters? ')' typeRule functionBlock;
+vars: ID ('.' ID)? ('[' exp ']')? ('[' exp ']')?;
+
+functions: FUNCTION ID '(' parameters? ')' (typeRule | VOID) functionBlock;
 parameters: parameter (',' parameter)*;
 parameter: ID ':' typeRule;
-functionBlock: '{' vars* statutes* returnRule'}';
-returnRule: RETURN expression? SEMI;
+functionBlock: '{' varsDec* statutes* returnRule'}';
+returnRule: RETURN exp? SEMI;
 
 block: '{' statutes* '}';
 
 statutes: assignation
-        | functionCall
-        | methodCall
         | read
         | write
         | conditional
         | forLoop
         | whileLoop
-        | expression;
+        | exp;
 
-assignation: ID '=' (expression SEMI| functionCall | methodCall);
+assignation: ID '=' exp SEMI;
 
-functionCall: ID '(' arguments? ')' SEMI;
+functionCall: ID '(' arguments? ')';
 arguments: argument (',' argument)*;
-argument: (ID | expression | functionCall | methodCall);
+argument: (vars | exp);
 
-methodCall: ID '.' ID '(' arguments? ')' SEMI;
+methodCall: ID '.' ID '(' arguments? ')';
 
-read: READ '(' ids ')' SEMI;
+call: functionCall | methodCall;
 
-ids: id (',' id)*;
-id: (ID | ID '.' ID);
+read: READ '(' vars (',' vars)* ')' SEMI;
 
 write: WRITE '(' arguments ')' SEMI;
 
-conditional: IF '(' expression ')' block (ELSE block)?;
+conditional: IF '(' exp ')' block (ELSE block)?;
 
 forLoop: FOR ID '=' exp IN exp block;
 
-whileLoop: WHILE '(' expression ')' block;
+whileLoop: WHILE '(' exp ')' block;
 
-expression: exp (relop exp)*;
-
-exp: term ((ADD | SUB) term)*;
-
+// Nuevo
+exp: t_exp ('||' t_exp)*;
+t_exp: g_exp ('&&' g_exp)*;
+g_exp: m_exp (relop m_exp)?;
+m_exp: term ((ADD | SUB) term)*;
 term: factor ((MUL | DIV) factor)*;
+factor: '(' exp ')'
+      | varCte
+      | vars
+      | call;
 
-factor: '(' expression ')'
-      | (ADD | SUB)? varCte;
+// Viejo
+// expression: exp (relop exp)*;
 
-varCte: ID
-      | cte_i
+// exp: term ((ADD | SUB) term)*;
+
+// term: factor ((MUL | DIV) factor)*;
+
+// factor: '(' expression ')'
+//       | (ADD | SUB)? varCte;
+
+varCte: cte_i
       | cte_f
       | cte_c
-      | cte_s;
+      | cte_s
+      | cte_b;
 
 cte_i: INT;
 cte_f: FLOAT;
 cte_c: CHAR;
-cte_s: '"' . '"'; // checar espacios en strings
+cte_b: BOOL;
+cte_s: '"' .*? '"'; // checar espacios en strings
 
 main: MAIN '('')' functionBlock;
 
@@ -124,7 +138,7 @@ typeRule: INT_TYPE
     | FLOAT_TYPE
     | CHAR_TYPE
     | STRING_TYPE
-    | VOID;
+    | BOOL_TYPE;
 
 relop: GT
      | LT

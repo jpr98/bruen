@@ -15,10 +15,10 @@ program test;
 	
 	function test() int {
 		var local: string;
-		var array[2]: int;
+		var array[1]: int;
 		var mat[1][2]: float;
 
-		if (a) {
+		if (a || b && c) {
 			write("helloworld");
 		}
 		return 10;
@@ -33,7 +33,7 @@ program test;
 		if (a > z) {
 			read(car.doors, a, b);
 		} else {
-			write("hi");
+			write("hello world");
 		}
 
         return;

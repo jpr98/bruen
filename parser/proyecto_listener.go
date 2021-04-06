@@ -17,11 +17,14 @@ type ProyectoListener interface {
 	// EnterClassBlock is called when entering the classBlock production.
 	EnterClassBlock(c *ClassBlockContext)
 
-	// EnterVars is called when entering the vars production.
-	EnterVars(c *VarsContext)
+	// EnterVarsDec is called when entering the varsDec production.
+	EnterVarsDec(c *VarsDecContext)
 
 	// EnterVarsTypeInit is called when entering the varsTypeInit production.
 	EnterVarsTypeInit(c *VarsTypeInitContext)
+
+	// EnterVars is called when entering the vars production.
+	EnterVars(c *VarsContext)
 
 	// EnterFunctions is called when entering the functions production.
 	EnterFunctions(c *FunctionsContext)
@@ -59,14 +62,11 @@ type ProyectoListener interface {
 	// EnterMethodCall is called when entering the methodCall production.
 	EnterMethodCall(c *MethodCallContext)
 
+	// EnterCall is called when entering the call production.
+	EnterCall(c *CallContext)
+
 	// EnterRead is called when entering the read production.
 	EnterRead(c *ReadContext)
-
-	// EnterIds is called when entering the ids production.
-	EnterIds(c *IdsContext)
-
-	// EnterId is called when entering the id production.
-	EnterId(c *IdContext)
 
 	// EnterWrite is called when entering the write production.
 	EnterWrite(c *WriteContext)
@@ -80,11 +80,17 @@ type ProyectoListener interface {
 	// EnterWhileLoop is called when entering the whileLoop production.
 	EnterWhileLoop(c *WhileLoopContext)
 
-	// EnterExpression is called when entering the expression production.
-	EnterExpression(c *ExpressionContext)
-
 	// EnterExp is called when entering the exp production.
 	EnterExp(c *ExpContext)
+
+	// EnterT_exp is called when entering the t_exp production.
+	EnterT_exp(c *T_expContext)
+
+	// EnterG_exp is called when entering the g_exp production.
+	EnterG_exp(c *G_expContext)
+
+	// EnterM_exp is called when entering the m_exp production.
+	EnterM_exp(c *M_expContext)
 
 	// EnterTerm is called when entering the term production.
 	EnterTerm(c *TermContext)
@@ -103,6 +109,9 @@ type ProyectoListener interface {
 
 	// EnterCte_c is called when entering the cte_c production.
 	EnterCte_c(c *Cte_cContext)
+
+	// EnterCte_b is called when entering the cte_b production.
+	EnterCte_b(c *Cte_bContext)
 
 	// EnterCte_s is called when entering the cte_s production.
 	EnterCte_s(c *Cte_sContext)
@@ -125,11 +134,14 @@ type ProyectoListener interface {
 	// ExitClassBlock is called when exiting the classBlock production.
 	ExitClassBlock(c *ClassBlockContext)
 
-	// ExitVars is called when exiting the vars production.
-	ExitVars(c *VarsContext)
+	// ExitVarsDec is called when exiting the varsDec production.
+	ExitVarsDec(c *VarsDecContext)
 
 	// ExitVarsTypeInit is called when exiting the varsTypeInit production.
 	ExitVarsTypeInit(c *VarsTypeInitContext)
+
+	// ExitVars is called when exiting the vars production.
+	ExitVars(c *VarsContext)
 
 	// ExitFunctions is called when exiting the functions production.
 	ExitFunctions(c *FunctionsContext)
@@ -167,14 +179,11 @@ type ProyectoListener interface {
 	// ExitMethodCall is called when exiting the methodCall production.
 	ExitMethodCall(c *MethodCallContext)
 
+	// ExitCall is called when exiting the call production.
+	ExitCall(c *CallContext)
+
 	// ExitRead is called when exiting the read production.
 	ExitRead(c *ReadContext)
-
-	// ExitIds is called when exiting the ids production.
-	ExitIds(c *IdsContext)
-
-	// ExitId is called when exiting the id production.
-	ExitId(c *IdContext)
 
 	// ExitWrite is called when exiting the write production.
 	ExitWrite(c *WriteContext)
@@ -188,11 +197,17 @@ type ProyectoListener interface {
 	// ExitWhileLoop is called when exiting the whileLoop production.
 	ExitWhileLoop(c *WhileLoopContext)
 
-	// ExitExpression is called when exiting the expression production.
-	ExitExpression(c *ExpressionContext)
-
 	// ExitExp is called when exiting the exp production.
 	ExitExp(c *ExpContext)
+
+	// ExitT_exp is called when exiting the t_exp production.
+	ExitT_exp(c *T_expContext)
+
+	// ExitG_exp is called when exiting the g_exp production.
+	ExitG_exp(c *G_expContext)
+
+	// ExitM_exp is called when exiting the m_exp production.
+	ExitM_exp(c *M_expContext)
 
 	// ExitTerm is called when exiting the term production.
 	ExitTerm(c *TermContext)
@@ -211,6 +226,9 @@ type ProyectoListener interface {
 
 	// ExitCte_c is called when exiting the cte_c production.
 	ExitCte_c(c *Cte_cContext)
+
+	// ExitCte_b is called when exiting the cte_b production.
+	ExitCte_b(c *Cte_bContext)
 
 	// ExitCte_s is called when exiting the cte_s production.
 	ExitCte_s(c *Cte_sContext)
