@@ -99,7 +99,6 @@ forLoop: FOR ID '=' exp IN exp block;
 
 whileLoop: WHILE '(' exp ')' block;
 
-// Nuevo
 exp: t_exp ('||' t_exp)*;
 t_exp: g_exp ('&&' g_exp)*;
 g_exp: m_exp (relop m_exp)?;
@@ -109,16 +108,6 @@ factor: '(' exp ')'
       | varCte
       | vars
       | call;
-
-// Viejo
-// expression: exp (relop exp)*;
-
-// exp: term ((ADD | SUB) term)*;
-
-// term: factor ((MUL | DIV) factor)*;
-
-// factor: '(' expression ')'
-//       | (ADD | SUB)? varCte;
 
 varCte: cte_i
       | cte_f
