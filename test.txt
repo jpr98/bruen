@@ -13,7 +13,7 @@ program test;
 	var a : int;
 	var b : float = 1 < 2;
 	
-	function test() int {
+	function testTwo(hello : int, helloTwo : float) int {
 		var local: string;
 		var array[1]: int;
 		var mat[1][2]: float;

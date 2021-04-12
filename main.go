@@ -37,5 +37,6 @@ func main() {
 	// Creates the parser
 	p := parser.NewProyectoParser(stream)
 
-	antlr.ParseTreeWalkerDefault.Walk(&parser.BaseProyectoListener{}, p.Program())
+	var listener MyListener = NewListener()
+	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
 }
