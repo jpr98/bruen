@@ -3,17 +3,21 @@ program test;
 	class Car {
 		attributes
 		var doors: int;
+		var start: bool;
 
 		methods
 		function start() void {
 			return;
 		}
+
 	};
 
 	var a : int;
 	var b : float = 1 < 2;
 	
-	function testTwo(hello : int, helloTwo : float) int {
+	function start() void {return;}
+	
+	function testTwo(a: int, hello : int, helloTwo : float) int {
 		var local: string;
 		var array[1]: int;
 		var mat[1][2]: float;
