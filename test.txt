@@ -1,9 +1,8 @@
-program test;
+program programa;
 
 	class Car {
 		attributes
 		var doors: int;
-		var start: bool;
 
 		methods
 		function start() void {
