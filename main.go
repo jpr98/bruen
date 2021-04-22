@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/parser"
 )
 
@@ -39,4 +41,11 @@ func main() {
 
 	var listener MyListener = NewListener()
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
+
+	testSC()
+}
+
+func testSC() {
+	sc := NewSemanticCube()
+	fmt.Println(sc.cube[constants.TYPEINT][constants.TYPEFLOAT][constants.OPPLUS])
 }
