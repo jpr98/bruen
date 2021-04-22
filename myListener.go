@@ -133,7 +133,7 @@ func (l *MyListener) EnterTypeRule(c *parser.TypeRuleContext) {
 
 func (l *MyListener) ExitProgram(c *parser.ProgramContext) {
 	l.scopeStack.pop()
-	l.printFunctions()
+	//l.printFunctions()
 }
 
 func (l *MyListener) printFunctions() {
