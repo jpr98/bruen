@@ -1,18 +1,25 @@
-package main
+package semantic
 
-import "github.com/jpr98/compis/constants"
+import (
+	"log"
 
-type SemanticCube struct {
-	cube [][][]int
+	"github.com/jpr98/compis/constants"
+)
+
+// Cube contains the validity table for type operations
+type Cube struct {
+	cube   [][][]constants.Type
+	logger *log.Logger
 }
 
-func NewSemanticCube() SemanticCube {
-	sc := SemanticCube{}
-	sc.cube = make([][][]int, 4)
+// NewCube creates a new Cube
+func NewCube(logger *log.Logger) Cube {
+	sc := Cube{logger: logger}
+	sc.cube = make([][][]constants.Type, 4)
 	for i := 0; i < 4; i++ {
-		sc.cube[i] = make([][]int, 4)
+		sc.cube[i] = make([][]constants.Type, 4)
 		for j := 0; j < 4; j++ {
-			sc.cube[i][j] = make([]int, 10)
+			sc.cube[i][j] = make([]constants.Type, 10)
 		}
 	}
 
@@ -197,4 +204,27 @@ func NewSemanticCube() SemanticCube {
 	sc.cube[constants.TYPEBOOL][constants.TYPEBOOL][constants.OPOR] = constants.TYPEBOOL
 
 	return sc
+}
+
+// ValidateBinaryOperation gets the type of a given pair of types applying a given operator
+func (sc Cube) ValidateBinaryOperation(lType, rType, op constants.Type) constants.Type {
+	if int(lType) > len(sc.cube) || lType < 0 {
+		if sc.logger != nil {
+			sc.logger.Printf("Error: (ValidateBinaryOperation) accesing binary semantic cube, lType out of bounds: lType value (%d)", lType)
+		}
+		return constants.ERR
+	}
+	if int(rType) > len(sc.cube[lType]) || rType < 0 {
+		if sc.logger != nil {
+			sc.logger.Printf("Error: (ValidateBinaryOperation) accesing binary semantic cube, rType out of bounds: rType value (%d)", rType)
+		}
+		return constants.ERR
+	}
+	if int(op) > len(sc.cube[lType][rType]) || op < 0 {
+		if sc.logger != nil {
+			sc.logger.Printf("Error: (ValidateBinaryOperation) accesing binary semantic cube, op out of bounds: op value (%d)", op)
+		}
+		return constants.ERR
+	}
+	return sc.cube[lType][rType][op]
 }

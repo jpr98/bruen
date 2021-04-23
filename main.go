@@ -8,6 +8,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/parser"
+	"github.com/jpr98/compis/semantic"
 )
 
 func main() {
@@ -46,6 +47,6 @@ func main() {
 }
 
 func testSC() {
-	sc := NewSemanticCube()
-	fmt.Println(sc.cube[constants.TYPEINT][constants.TYPEFLOAT][constants.OPPLUS])
+	sc := semantic.NewCube(nil)
+	fmt.Println(sc.ValidateBinaryOperation(constants.TYPEBOOL, constants.TYPEBOOL, constants.OPAND).String())
 }
