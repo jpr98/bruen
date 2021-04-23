@@ -1,4 +1,4 @@
-package main
+package semantic
 
 type Quad struct {
 	action QuadAction  // operator

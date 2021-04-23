@@ -1,4 +1,4 @@
-package main
+package semantic
 
 import "github.com/jpr98/compis/constants"
 
