@@ -7,6 +7,8 @@ FLOAT: INT ('.' INT)? ('E' [+-]? INT)?;
 CHAR: '"'[A-Za-z]'"';
 BOOL: 'true' | 'false';
 WS: [ \r\n\t]+ -> skip;
+OR: '||';
+AND: '&&';
 GT: '>';
 LT: '<';
 EQ: '==';
@@ -16,6 +18,8 @@ DIV: '/';
 ADD: '+';
 SUB: '-';
 SEMI: ';';
+LPAREN: '(';
+RPAREN: ')';
 
 // -- Keywords -- 
 // Conditionals
@@ -63,7 +67,7 @@ varsTypeInit: (typeRule | ID) ('=' exp)?;
 
 vars: ID ('.' ID)? ('[' exp ']')? ('[' exp ']')?;
 
-functions: FUNCTION ID '(' parameters? ')' (typeRule | VOID) functionBlock;
+functions: FUNCTION ID LPAREN parameters? RPAREN (typeRule | VOID) functionBlock;
 parameters: parameter (',' parameter)*;
 parameter: ID ':' typeRule;
 functionBlock: '{' varsDec* statutes* returnRule'}';
@@ -81,30 +85,39 @@ statutes: assignation
 
 assignation: ID '=' exp SEMI;
 
-functionCall: ID '(' arguments? ')';
+functionCall: ID LPAREN arguments? RPAREN;
 arguments: argument (',' argument)*;
 argument: (vars | exp);
 
-methodCall: ID '.' ID '(' arguments? ')';
+methodCall: ID '.' ID LPAREN arguments? RPAREN;
 
 call: functionCall | methodCall;
 
-read: READ '(' vars (',' vars)* ')' SEMI;
+read: READ LPAREN vars (',' vars)* RPAREN SEMI;
 
-write: WRITE '(' arguments ')' SEMI;
+write: WRITE LPAREN arguments RPAREN SEMI;
 
-conditional: IF '(' exp ')' block (ELSE block)?;
+conditional: IF LPAREN exp RPAREN block (ELSE block)?;
 
 forLoop: FOR ID '=' exp IN exp block;
 
-whileLoop: WHILE '(' exp ')' block;
+whileLoop: WHILE LPAREN exp RPAREN block;
 
-exp: t_exp ('||' t_exp)*;
-t_exp: g_exp ('&&' g_exp)*;
+exp: t_exp exp2*;
+exp2: (OR t_exp);
+
+t_exp: g_exp t_exp2*;
+t_exp2: (AND g_exp);
+
 g_exp: m_exp (relop m_exp)?;
-m_exp: term ((ADD | SUB) term)*;
-term: factor ((MUL | DIV) factor)*;
-factor: '(' exp ')'
+
+m_exp: term m_exp2*;
+m_exp2: (ADD | SUB) term;
+
+term: factor term2*;
+term2: (MUL | DIV) factor;
+
+factor: LPAREN exp RPAREN
       | varCte
       | vars
       | call;
@@ -121,7 +134,7 @@ cte_c: CHAR;
 cte_b: BOOL;
 cte_s: '"' .*? '"'; // checar espacios en strings
 
-main: MAIN '('')' functionBlock;
+main: MAIN LPAREN RPAREN functionBlock;
 
 typeRule: INT_TYPE
     | FLOAT_TYPE

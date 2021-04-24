@@ -83,8 +83,14 @@ type ProyectoListener interface {
 	// EnterExp is called when entering the exp production.
 	EnterExp(c *ExpContext)
 
+	// EnterExp2 is called when entering the exp2 production.
+	EnterExp2(c *Exp2Context)
+
 	// EnterT_exp is called when entering the t_exp production.
 	EnterT_exp(c *T_expContext)
+
+	// EnterT_exp2 is called when entering the t_exp2 production.
+	EnterT_exp2(c *T_exp2Context)
 
 	// EnterG_exp is called when entering the g_exp production.
 	EnterG_exp(c *G_expContext)
@@ -92,8 +98,14 @@ type ProyectoListener interface {
 	// EnterM_exp is called when entering the m_exp production.
 	EnterM_exp(c *M_expContext)
 
+	// EnterM_exp2 is called when entering the m_exp2 production.
+	EnterM_exp2(c *M_exp2Context)
+
 	// EnterTerm is called when entering the term production.
 	EnterTerm(c *TermContext)
+
+	// EnterTerm2 is called when entering the term2 production.
+	EnterTerm2(c *Term2Context)
 
 	// EnterFactor is called when entering the factor production.
 	EnterFactor(c *FactorContext)
@@ -200,8 +212,14 @@ type ProyectoListener interface {
 	// ExitExp is called when exiting the exp production.
 	ExitExp(c *ExpContext)
 
+	// ExitExp2 is called when exiting the exp2 production.
+	ExitExp2(c *Exp2Context)
+
 	// ExitT_exp is called when exiting the t_exp production.
 	ExitT_exp(c *T_expContext)
+
+	// ExitT_exp2 is called when exiting the t_exp2 production.
+	ExitT_exp2(c *T_exp2Context)
 
 	// ExitG_exp is called when exiting the g_exp production.
 	ExitG_exp(c *G_expContext)
@@ -209,8 +227,14 @@ type ProyectoListener interface {
 	// ExitM_exp is called when exiting the m_exp production.
 	ExitM_exp(c *M_expContext)
 
+	// ExitM_exp2 is called when exiting the m_exp2 production.
+	ExitM_exp2(c *M_exp2Context)
+
 	// ExitTerm is called when exiting the term production.
 	ExitTerm(c *TermContext)
+
+	// ExitTerm2 is called when exiting the term2 production.
+	ExitTerm2(c *Term2Context)
 
 	// ExitFactor is called when exiting the factor production.
 	ExitFactor(c *FactorContext)

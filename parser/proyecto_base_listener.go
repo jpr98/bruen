@@ -171,11 +171,23 @@ func (s *BaseProyectoListener) EnterExp(ctx *ExpContext) {}
 // ExitExp is called when production exp is exited.
 func (s *BaseProyectoListener) ExitExp(ctx *ExpContext) {}
 
+// EnterExp2 is called when production exp2 is entered.
+func (s *BaseProyectoListener) EnterExp2(ctx *Exp2Context) {}
+
+// ExitExp2 is called when production exp2 is exited.
+func (s *BaseProyectoListener) ExitExp2(ctx *Exp2Context) {}
+
 // EnterT_exp is called when production t_exp is entered.
 func (s *BaseProyectoListener) EnterT_exp(ctx *T_expContext) {}
 
 // ExitT_exp is called when production t_exp is exited.
 func (s *BaseProyectoListener) ExitT_exp(ctx *T_expContext) {}
+
+// EnterT_exp2 is called when production t_exp2 is entered.
+func (s *BaseProyectoListener) EnterT_exp2(ctx *T_exp2Context) {}
+
+// ExitT_exp2 is called when production t_exp2 is exited.
+func (s *BaseProyectoListener) ExitT_exp2(ctx *T_exp2Context) {}
 
 // EnterG_exp is called when production g_exp is entered.
 func (s *BaseProyectoListener) EnterG_exp(ctx *G_expContext) {}
@@ -189,11 +201,23 @@ func (s *BaseProyectoListener) EnterM_exp(ctx *M_expContext) {}
 // ExitM_exp is called when production m_exp is exited.
 func (s *BaseProyectoListener) ExitM_exp(ctx *M_expContext) {}
 
+// EnterM_exp2 is called when production m_exp2 is entered.
+func (s *BaseProyectoListener) EnterM_exp2(ctx *M_exp2Context) {}
+
+// ExitM_exp2 is called when production m_exp2 is exited.
+func (s *BaseProyectoListener) ExitM_exp2(ctx *M_exp2Context) {}
+
 // EnterTerm is called when production term is entered.
 func (s *BaseProyectoListener) EnterTerm(ctx *TermContext) {}
 
 // ExitTerm is called when production term is exited.
 func (s *BaseProyectoListener) ExitTerm(ctx *TermContext) {}
+
+// EnterTerm2 is called when production term2 is entered.
+func (s *BaseProyectoListener) EnterTerm2(ctx *Term2Context) {}
+
+// ExitTerm2 is called when production term2 is exited.
+func (s *BaseProyectoListener) ExitTerm2(ctx *Term2Context) {}
 
 // EnterFactor is called when production factor is entered.
 func (s *BaseProyectoListener) EnterFactor(ctx *FactorContext) {}
