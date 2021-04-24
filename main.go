@@ -40,13 +40,13 @@ func main() {
 	// Creates the parser
 	p := parser.NewProyectoParser(stream)
 
-	var listener MyListener = NewListener()
+	// var listener MyListener = NewListener()
+	// antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
+	var listener semantic.QuadGenListener = semantic.NewListener()
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
-
-	testSC()
 }
 
 func testSC() {
 	sc := semantic.NewCube(nil)
-	fmt.Println(sc.ValidateBinaryOperation(constants.TYPEBOOL, constants.TYPEBOOL, constants.OPAND).String())
+	fmt.Println(sc.ValidateBinaryOperation(constants.TYPEBOOL, constants.TYPEBOOL, constants.OPAND))
 }

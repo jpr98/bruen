@@ -1,9 +1,13 @@
 package semantic
 
-import "github.com/jpr98/compis/constants"
+import (
+	"fmt"
+
+	"github.com/jpr98/compis/constants"
+)
 
 type QuadValue interface {
-	Value()
+	//Value()
 }
 
 type QuadElement struct {
@@ -23,6 +27,7 @@ func NewQuadElementStack() QuadElementStack {
 // Push adds an element to the stack
 func (qes *QuadElementStack) Push(e QuadElement) {
 	qes.stack = append(qes.stack, e)
+	fmt.Println("adding to element stack")
 }
 
 // Pop removes and returns the next element in the stack
