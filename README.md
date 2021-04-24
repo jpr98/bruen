@@ -9,3 +9,8 @@ En este avance definimos la sintaxis inicial de nuestro lenguaje de programació
 (*16 de abril de 2021*)
 
 En este avance creamos una interfaz que escucha los eventos de entrada y salida de las reglas de gramática para ir construyendo el directorio de funciones y sus respectivas tablas de variables. Esto lo hacemos utilizando mapas en Go.
+
+### Avance 3: Generación de código intermedio inicial
+(*23 de abril de 2021*)
+
+En este avance creamos los tipos para manejar los cuadruplos en el código y generamos las instrucciones intermedias para las expresiones artiméticas. También creamos el cubo semántico en el código.
