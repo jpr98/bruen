@@ -1,0 +1,11 @@
+program test2;
+
+var a: bool;
+var b: bool;
+var c: bool;
+
+main() {
+    a = a > b;
+    a = a + b - c;
+    return;
+}
