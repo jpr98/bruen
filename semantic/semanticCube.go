@@ -6,15 +6,22 @@ import (
 	"github.com/jpr98/compis/constants"
 )
 
-// Cube contains the validity table for type operations
-type Cube struct {
+// SCube contains the validity table for type operations
+type SCube interface {
+	ValidateBinaryOperation(constants.Type, constants.Type, int) constants.Type
+}
+
+// Cube is an instance of the semantic cube
+var Cube SCube = NewCube(nil)
+
+type cube struct {
 	cube   [][][]constants.Type
 	logger *log.Logger
 }
 
 // NewCube creates a new Cube
-func NewCube(logger *log.Logger) Cube {
-	sc := Cube{logger: logger}
+func NewCube(logger *log.Logger) SCube {
+	sc := cube{logger: logger}
 	sc.cube = make([][][]constants.Type, 4)
 	for i := 0; i < 4; i++ {
 		sc.cube[i] = make([][]constants.Type, 4)
@@ -207,7 +214,7 @@ func NewCube(logger *log.Logger) Cube {
 }
 
 // ValidateBinaryOperation gets the type of a given pair of types applying a given operator
-func (sc Cube) ValidateBinaryOperation(lType, rType, op constants.Type) constants.Type {
+func (sc cube) ValidateBinaryOperation(lType, rType constants.Type, op int) constants.Type {
 	if int(lType) > len(sc.cube) || lType < 0 {
 		if sc.logger != nil {
 			sc.logger.Printf("Error: (ValidateBinaryOperation) accesing binary semantic cube, lType out of bounds: lType value (%d)", lType)

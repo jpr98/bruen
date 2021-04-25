@@ -1,6 +1,24 @@
-package semantic
+package quads
 
+// QuadAction represents an action in Quadruples
 type QuadAction int
+
+const (
+	ADD QuadAction = iota
+	SUB
+	MUL
+	DIV
+	GT
+	LT
+	EQ
+	NEQ
+	AND
+	OR
+)
+
+func (a QuadAction) String() string {
+	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||"}[a]
+}
 
 type QuadActionStack struct {
 	stack []QuadAction

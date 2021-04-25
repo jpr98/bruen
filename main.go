@@ -8,6 +8,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/parser"
+	"github.com/jpr98/compis/quads"
 	"github.com/jpr98/compis/semantic"
 )
 
@@ -42,7 +43,7 @@ func main() {
 
 	// var listener MyListener = NewListener()
 	// antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
-	var listener semantic.QuadGenListener = semantic.NewListener()
+	var listener quads.QuadGenListener = quads.NewListener()
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
 }
 
