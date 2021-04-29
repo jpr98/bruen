@@ -65,7 +65,7 @@ func (m *Manager) GenerateQuad(validOps []int) {
 		// 3: obtener left operand - done
 		lOperand := m.operands.Pop()
 		// 4: sacar op de stack - done
-		op := m.operators.Top()
+		op := m.operators.Pop()
 
 		// 5: obtener tipo de cubo semantico - done
 		resultType := semantic.Cube.ValidateBinaryOperation(lOperand.Type(), rOperand.Type(), int(op))
