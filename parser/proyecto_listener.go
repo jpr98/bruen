@@ -95,6 +95,9 @@ type ProyectoListener interface {
 	// EnterG_exp is called when entering the g_exp production.
 	EnterG_exp(c *G_expContext)
 
+	// EnterG_exp2 is called when entering the g_exp2 production.
+	EnterG_exp2(c *G_exp2Context)
+
 	// EnterM_exp is called when entering the m_exp production.
 	EnterM_exp(c *M_expContext)
 
@@ -223,6 +226,9 @@ type ProyectoListener interface {
 
 	// ExitG_exp is called when exiting the g_exp production.
 	ExitG_exp(c *G_expContext)
+
+	// ExitG_exp2 is called when exiting the g_exp2 production.
+	ExitG_exp2(c *G_exp2Context)
 
 	// ExitM_exp is called when exiting the m_exp production.
 	ExitM_exp(c *M_expContext)

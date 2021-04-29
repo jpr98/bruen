@@ -1,6 +1,8 @@
 package quads
 
 import (
+	"fmt"
+
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/parser"
 )
@@ -15,13 +17,14 @@ func NewListener() QuadGenListener {
 	return QuadGenListener{m: &m}
 }
 
-func (l *QuadGenListener) EnterG_exp(c *parser.G_expContext) {
+func (l *QuadGenListener) EnterG_exp2(c *parser.G_exp2Context) {
 	if c.Relop() != nil {
 		l.m.PushOp(c.Relop().GetText())
 	}
 }
 
-func (l *QuadGenListener) ExitG_exp(c *parser.G_expContext) {
+func (l *QuadGenListener) ExitG_exp2(c *parser.G_exp2Context) {
+	fmt.Println("exit g exp")
 	l.m.GenerateQuad([]int{
 		constants.OPGT,
 		constants.OPLT,
@@ -38,6 +41,7 @@ func (l *QuadGenListener) EnterM_exp2(c *parser.M_exp2Context) {
 	}
 }
 func (l *QuadGenListener) ExitM_exp2(c *parser.M_exp2Context) {
+	fmt.Println("exit m exp 2")
 	l.m.GenerateQuad([]int{
 		constants.OPPLUS,
 		constants.OPMINUS,
@@ -57,6 +61,7 @@ func (l *QuadGenListener) EnterTerm2(c *parser.Term2Context) {
 }
 
 func (l *QuadGenListener) ExitTerm2(c *parser.Term2Context) {
+	fmt.Println("exit term 2")
 	l.m.GenerateQuad([]int{
 		constants.OPMULT,
 		constants.OPDIV,

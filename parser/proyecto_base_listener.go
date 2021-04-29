@@ -195,6 +195,12 @@ func (s *BaseProyectoListener) EnterG_exp(ctx *G_expContext) {}
 // ExitG_exp is called when production g_exp is exited.
 func (s *BaseProyectoListener) ExitG_exp(ctx *G_expContext) {}
 
+// EnterG_exp2 is called when production g_exp2 is entered.
+func (s *BaseProyectoListener) EnterG_exp2(ctx *G_exp2Context) {}
+
+// ExitG_exp2 is called when production g_exp2 is exited.
+func (s *BaseProyectoListener) ExitG_exp2(ctx *G_exp2Context) {}
+
 // EnterM_exp is called when production m_exp is entered.
 func (s *BaseProyectoListener) EnterM_exp(ctx *M_expContext) {}
 

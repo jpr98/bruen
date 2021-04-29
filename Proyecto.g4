@@ -109,7 +109,8 @@ exp2: (OR t_exp);
 t_exp: g_exp t_exp2*;
 t_exp2: (AND g_exp);
 
-g_exp: m_exp (relop m_exp)?;
+g_exp: m_exp (g_exp2)?;
+g_exp2: relop m_exp;
 
 m_exp: term m_exp2*;
 m_exp2: (ADD | SUB) term;

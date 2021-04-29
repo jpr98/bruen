@@ -88,6 +88,8 @@ func (m *Manager) GenerateQuad(validOps []int) {
 		m.quads = append(m.quads, q)
 		// 10: meter result a stack operandos - done
 		m.operands.Push(result)
+		fmt.Println("Operands: ", m.operands)
+		fmt.Println("Operators: ", m.operators)
 	}
 }
 
