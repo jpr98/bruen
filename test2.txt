@@ -5,7 +5,11 @@ var b: bool;
 var c: bool;
 
 main() {
-    a = a > b;
-    a = a + b - c;
+    if (a > b) {
+        a = a + b;
+    } else {
+        c = b - a;
+        c = b - a;
+    }
     return;
 }

@@ -8,7 +8,8 @@ const (
 	TYPECHAR  Type = 2 // 2
 	TYPEBOOL  Type = 3 // 3
 
-	ERR Type = 4 // 4
+	ERR  Type = 4 // 4
+	ADDR Type = 5
 )
 
 func (t Type) String() string {
@@ -23,6 +24,8 @@ func (t Type) String() string {
 		return "bool"
 	case ERR:
 		return "Type error"
+	case ADDR:
+		return "Address"
 	default:
 		return "Unkown type"
 	}

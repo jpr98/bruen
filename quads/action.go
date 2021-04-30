@@ -14,10 +14,12 @@ const (
 	NEQ
 	AND
 	OR
+	GOTOF
+	GOTO
 )
 
 func (a QuadAction) String() string {
-	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||"}[a]
+	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||", "GOTOF", "GOTO"}[a]
 }
 
 type QuadActionStack struct {

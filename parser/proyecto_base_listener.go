@@ -153,6 +153,24 @@ func (s *BaseProyectoListener) EnterConditional(ctx *ConditionalContext) {}
 // ExitConditional is called when production conditional is exited.
 func (s *BaseProyectoListener) ExitConditional(ctx *ConditionalContext) {}
 
+// EnterConditional2 is called when production conditional2 is entered.
+func (s *BaseProyectoListener) EnterConditional2(ctx *Conditional2Context) {}
+
+// ExitConditional2 is called when production conditional2 is exited.
+func (s *BaseProyectoListener) ExitConditional2(ctx *Conditional2Context) {}
+
+// EnterConditional3 is called when production conditional3 is entered.
+func (s *BaseProyectoListener) EnterConditional3(ctx *Conditional3Context) {}
+
+// ExitConditional3 is called when production conditional3 is exited.
+func (s *BaseProyectoListener) ExitConditional3(ctx *Conditional3Context) {}
+
+// EnterConditional4 is called when production conditional4 is entered.
+func (s *BaseProyectoListener) EnterConditional4(ctx *Conditional4Context) {}
+
+// ExitConditional4 is called when production conditional4 is exited.
+func (s *BaseProyectoListener) ExitConditional4(ctx *Conditional4Context) {}
+
 // EnterForLoop is called when production forLoop is entered.
 func (s *BaseProyectoListener) EnterForLoop(ctx *ForLoopContext) {}
 

@@ -1,8 +1,6 @@
 package quads
 
 import (
-	"fmt"
-
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/parser"
 )
@@ -17,6 +15,10 @@ func NewListener() QuadGenListener {
 	return QuadGenListener{m: &m}
 }
 
+func (l QuadGenListener) GetManager() Manager {
+	return *l.m
+}
+
 func (l *QuadGenListener) EnterG_exp2(c *parser.G_exp2Context) {
 	if c.Relop() != nil {
 		l.m.PushOp(c.Relop().GetText())
@@ -24,7 +26,6 @@ func (l *QuadGenListener) EnterG_exp2(c *parser.G_exp2Context) {
 }
 
 func (l *QuadGenListener) ExitG_exp2(c *parser.G_exp2Context) {
-	fmt.Println("exit g exp")
 	l.m.GenerateQuad([]int{
 		constants.OPGT,
 		constants.OPLT,
@@ -41,7 +42,6 @@ func (l *QuadGenListener) EnterM_exp2(c *parser.M_exp2Context) {
 	}
 }
 func (l *QuadGenListener) ExitM_exp2(c *parser.M_exp2Context) {
-	fmt.Println("exit m exp 2")
 	l.m.GenerateQuad([]int{
 		constants.OPPLUS,
 		constants.OPMINUS,
@@ -61,7 +61,6 @@ func (l *QuadGenListener) EnterTerm2(c *parser.Term2Context) {
 }
 
 func (l *QuadGenListener) ExitTerm2(c *parser.Term2Context) {
-	fmt.Println("exit term 2")
 	l.m.GenerateQuad([]int{
 		constants.OPMULT,
 		constants.OPDIV,
@@ -72,4 +71,19 @@ func (l *QuadGenListener) EnterFactor(c *parser.FactorContext) {
 	if c.Vars() != nil {
 		l.m.PushOperand(c.Vars().GetText())
 	}
+}
+
+func (l *QuadGenListener) ExitConditional(c *parser.ConditionalContext) {
+	// Neuralgic point 2
+	l.m.UpdateGoto()
+}
+
+func (l *QuadGenListener) ExitConditional2(c *parser.Conditional2Context) {
+	// Neuralgic point 1
+	l.m.AddGotoF()
+}
+
+func (l *QuadGenListener) EnterConditional4(c *parser.Conditional4Context) {
+	// Neuralgic point 3
+	l.m.AddAndUpdateGoto()
 }

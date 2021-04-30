@@ -41,10 +41,11 @@ func main() {
 	// Creates the parser
 	p := parser.NewProyectoParser(stream)
 
-	// var listener MyListener = NewListener()
+	// listener := semantic.NewListener()
 	// antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
 	var listener quads.QuadGenListener = quads.NewListener()
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
+	fmt.Println(listener.GetManager().GetQuads())
 }
 
 func testSC() {

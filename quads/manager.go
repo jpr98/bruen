@@ -29,8 +29,13 @@ type Manager struct {
 	operands  ElementStack    // stack operands
 	operators QuadActionStack // stack operators
 	quads     []Quad
+	jumpStack []int
 
 	avail int
+}
+
+func (m Manager) GetQuads() []Quad {
+	return m.quads
 }
 
 func NewManager() Manager {
@@ -83,14 +88,45 @@ func (m *Manager) GenerateQuad(validOps []int) {
 		result := NewElement(m.getNextAvail(), resultType)
 		// 8: generar quad - done
 		q := Quad{op, lOperand, rOperand, result}
-		fmt.Println(q)
 		// 9: meter quad a lista - done
 		m.quads = append(m.quads, q)
 		// 10: meter result a stack operandos - done
 		m.operands.Push(result)
-		fmt.Println("Operands: ", m.operands)
-		fmt.Println("Operators: ", m.operators)
 	}
+}
+
+func (m *Manager) AddGotoF() {
+	m.jumpStack = append(m.jumpStack, len(m.quads))
+	operand := m.operands.Pop()
+	if operand.Type() != constants.TYPEBOOL {
+		log.Fatalf(
+			"Error: (AddGotoF) if statement needs bool, received %s\n",
+			operand,
+		)
+	}
+	q := Quad{GOTOF, operand, nil, nil}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddAndUpdateGoto() {
+	// Get pos of quad to update
+	pos := m.jumpStack[len(m.jumpStack)-1]
+	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
+
+	// Add goto quad
+	m.jumpStack = append(m.jumpStack, len(m.quads))
+	q := Quad{GOTO, nil, nil, nil}
+	m.quads = append(m.quads, q)
+
+	// Update quad
+	m.quads[pos].result = NewElement(len(m.quads), constants.ADDR)
+}
+
+func (m *Manager) UpdateGoto() {
+	pos := m.jumpStack[len(m.jumpStack)-1]
+	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
+
+	m.quads[pos].result = NewElement(len(m.quads), constants.ADDR)
 }
 
 func (m *Manager) getNextAvail() string {

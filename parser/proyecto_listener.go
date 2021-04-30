@@ -74,6 +74,15 @@ type ProyectoListener interface {
 	// EnterConditional is called when entering the conditional production.
 	EnterConditional(c *ConditionalContext)
 
+	// EnterConditional2 is called when entering the conditional2 production.
+	EnterConditional2(c *Conditional2Context)
+
+	// EnterConditional3 is called when entering the conditional3 production.
+	EnterConditional3(c *Conditional3Context)
+
+	// EnterConditional4 is called when entering the conditional4 production.
+	EnterConditional4(c *Conditional4Context)
+
 	// EnterForLoop is called when entering the forLoop production.
 	EnterForLoop(c *ForLoopContext)
 
@@ -205,6 +214,15 @@ type ProyectoListener interface {
 
 	// ExitConditional is called when exiting the conditional production.
 	ExitConditional(c *ConditionalContext)
+
+	// ExitConditional2 is called when exiting the conditional2 production.
+	ExitConditional2(c *Conditional2Context)
+
+	// ExitConditional3 is called when exiting the conditional3 production.
+	ExitConditional3(c *Conditional3Context)
+
+	// ExitConditional4 is called when exiting the conditional4 production.
+	ExitConditional4(c *Conditional4Context)
 
 	// ExitForLoop is called when exiting the forLoop production.
 	ExitForLoop(c *ForLoopContext)

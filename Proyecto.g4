@@ -97,7 +97,10 @@ read: READ LPAREN vars (',' vars)* RPAREN SEMI;
 
 write: WRITE LPAREN arguments RPAREN SEMI;
 
-conditional: IF LPAREN exp RPAREN block (ELSE block)?;
+conditional: IF conditional2 conditional3 conditional4?;
+conditional2: LPAREN exp RPAREN;
+conditional3: block;
+conditional4: ELSE block;
 
 forLoop: FOR ID '=' exp IN exp block;
 
