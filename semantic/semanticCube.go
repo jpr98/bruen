@@ -26,7 +26,7 @@ func NewCube(logger *log.Logger) SCube {
 	for i := 0; i < 4; i++ {
 		sc.cube[i] = make([][]constants.Type, 4)
 		for j := 0; j < 4; j++ {
-			sc.cube[i][j] = make([]constants.Type, 10)
+			sc.cube[i][j] = make([]constants.Type, 11)
 		}
 	}
 
@@ -41,6 +41,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEINT][constants.TYPEINT][constants.OPNEQ] = constants.TYPEBOOL
 	sc.cube[constants.TYPEINT][constants.TYPEINT][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPEINT][constants.TYPEINT][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPEINT][constants.OPASSIGN] = constants.TYPEINT
 
 	sc.cube[constants.TYPEINT][constants.TYPEFLOAT][constants.OPPLUS] = constants.TYPEFLOAT
 	sc.cube[constants.TYPEINT][constants.TYPEFLOAT][constants.OPMINUS] = constants.TYPEFLOAT
@@ -52,6 +53,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEINT][constants.TYPEFLOAT][constants.OPNEQ] = constants.TYPEBOOL
 	sc.cube[constants.TYPEINT][constants.TYPEFLOAT][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPEINT][constants.TYPEFLOAT][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPEFLOAT][constants.OPASSIGN] = constants.ERR
 
 	sc.cube[constants.TYPEINT][constants.TYPECHAR][constants.OPPLUS] = constants.ERR
 	sc.cube[constants.TYPEINT][constants.TYPECHAR][constants.OPMINUS] = constants.ERR
@@ -63,6 +65,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEINT][constants.TYPECHAR][constants.OPNEQ] = constants.ERR
 	sc.cube[constants.TYPEINT][constants.TYPECHAR][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPEINT][constants.TYPECHAR][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPECHAR][constants.OPASSIGN] = constants.ERR
 
 	sc.cube[constants.TYPEINT][constants.TYPEBOOL][constants.OPPLUS] = constants.ERR
 	sc.cube[constants.TYPEINT][constants.TYPEBOOL][constants.OPMINUS] = constants.ERR
@@ -74,6 +77,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEINT][constants.TYPEBOOL][constants.OPNEQ] = constants.ERR
 	sc.cube[constants.TYPEINT][constants.TYPEBOOL][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPEINT][constants.TYPEBOOL][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPEBOOL][constants.OPASSIGN] = constants.ERR
 
 	// Float
 	sc.cube[constants.TYPEFLOAT][constants.TYPEINT][constants.OPPLUS] = constants.TYPEFLOAT
@@ -86,6 +90,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEFLOAT][constants.TYPEINT][constants.OPNEQ] = constants.TYPEBOOL
 	sc.cube[constants.TYPEFLOAT][constants.TYPEINT][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPEFLOAT][constants.TYPEINT][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPEINT][constants.OPASSIGN] = constants.TYPEFLOAT
 
 	sc.cube[constants.TYPEFLOAT][constants.TYPEFLOAT][constants.OPPLUS] = constants.TYPEFLOAT
 	sc.cube[constants.TYPEFLOAT][constants.TYPEFLOAT][constants.OPMINUS] = constants.TYPEFLOAT
@@ -97,6 +102,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEFLOAT][constants.TYPEFLOAT][constants.OPNEQ] = constants.TYPEBOOL
 	sc.cube[constants.TYPEFLOAT][constants.TYPEFLOAT][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPEFLOAT][constants.TYPEFLOAT][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPEFLOAT][constants.OPASSIGN] = constants.TYPEFLOAT
 
 	sc.cube[constants.TYPEFLOAT][constants.TYPECHAR][constants.OPPLUS] = constants.ERR
 	sc.cube[constants.TYPEFLOAT][constants.TYPECHAR][constants.OPMINUS] = constants.ERR
@@ -108,6 +114,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEFLOAT][constants.TYPECHAR][constants.OPNEQ] = constants.ERR
 	sc.cube[constants.TYPEFLOAT][constants.TYPECHAR][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPEFLOAT][constants.TYPECHAR][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPECHAR][constants.OPASSIGN] = constants.ERR
 
 	sc.cube[constants.TYPEFLOAT][constants.TYPEBOOL][constants.OPPLUS] = constants.ERR
 	sc.cube[constants.TYPEFLOAT][constants.TYPEBOOL][constants.OPMINUS] = constants.ERR
@@ -119,6 +126,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEFLOAT][constants.TYPEBOOL][constants.OPNEQ] = constants.ERR
 	sc.cube[constants.TYPEFLOAT][constants.TYPEBOOL][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPEFLOAT][constants.TYPEBOOL][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPEBOOL][constants.OPASSIGN] = constants.ERR
 
 	// Char
 	sc.cube[constants.TYPECHAR][constants.TYPEINT][constants.OPPLUS] = constants.ERR
@@ -131,6 +139,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPECHAR][constants.TYPEINT][constants.OPNEQ] = constants.ERR
 	sc.cube[constants.TYPECHAR][constants.TYPEINT][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPECHAR][constants.TYPEINT][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPEINT][constants.OPASSIGN] = constants.ERR
 
 	sc.cube[constants.TYPECHAR][constants.TYPEFLOAT][constants.OPPLUS] = constants.ERR
 	sc.cube[constants.TYPECHAR][constants.TYPEFLOAT][constants.OPMINUS] = constants.ERR
@@ -142,6 +151,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPECHAR][constants.TYPEFLOAT][constants.OPNEQ] = constants.ERR
 	sc.cube[constants.TYPECHAR][constants.TYPEFLOAT][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPECHAR][constants.TYPEFLOAT][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPEFLOAT][constants.OPASSIGN] = constants.ERR
 
 	sc.cube[constants.TYPECHAR][constants.TYPECHAR][constants.OPPLUS] = constants.ERR
 	sc.cube[constants.TYPECHAR][constants.TYPECHAR][constants.OPMINUS] = constants.ERR
@@ -153,6 +163,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPECHAR][constants.TYPECHAR][constants.OPNEQ] = constants.TYPEBOOL
 	sc.cube[constants.TYPECHAR][constants.TYPECHAR][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPECHAR][constants.TYPECHAR][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPECHAR][constants.OPASSIGN] = constants.TYPECHAR
 
 	sc.cube[constants.TYPECHAR][constants.TYPEBOOL][constants.OPPLUS] = constants.ERR
 	sc.cube[constants.TYPECHAR][constants.TYPEBOOL][constants.OPMINUS] = constants.ERR
@@ -164,6 +175,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPECHAR][constants.TYPEBOOL][constants.OPNEQ] = constants.ERR
 	sc.cube[constants.TYPECHAR][constants.TYPEBOOL][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPECHAR][constants.TYPEBOOL][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPEBOOL][constants.OPASSIGN] = constants.ERR
 
 	// Bool
 	sc.cube[constants.TYPEBOOL][constants.TYPEINT][constants.OPPLUS] = constants.ERR
@@ -176,6 +188,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEBOOL][constants.TYPEINT][constants.OPNEQ] = constants.ERR
 	sc.cube[constants.TYPEBOOL][constants.TYPEINT][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPEBOOL][constants.TYPEINT][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPEINT][constants.OPASSIGN] = constants.ERR
 
 	sc.cube[constants.TYPEBOOL][constants.TYPEFLOAT][constants.OPPLUS] = constants.ERR
 	sc.cube[constants.TYPEBOOL][constants.TYPEFLOAT][constants.OPMINUS] = constants.ERR
@@ -187,6 +200,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEBOOL][constants.TYPEFLOAT][constants.OPNEQ] = constants.ERR
 	sc.cube[constants.TYPEBOOL][constants.TYPEFLOAT][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPEBOOL][constants.TYPEFLOAT][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPEFLOAT][constants.OPASSIGN] = constants.ERR
 
 	sc.cube[constants.TYPEBOOL][constants.TYPECHAR][constants.OPPLUS] = constants.ERR
 	sc.cube[constants.TYPEBOOL][constants.TYPECHAR][constants.OPMINUS] = constants.ERR
@@ -198,6 +212,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEBOOL][constants.TYPECHAR][constants.OPNEQ] = constants.ERR
 	sc.cube[constants.TYPEBOOL][constants.TYPECHAR][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPEBOOL][constants.TYPECHAR][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPECHAR][constants.OPASSIGN] = constants.ERR
 
 	sc.cube[constants.TYPEBOOL][constants.TYPEBOOL][constants.OPPLUS] = constants.ERR
 	sc.cube[constants.TYPEBOOL][constants.TYPEBOOL][constants.OPMINUS] = constants.ERR
@@ -209,6 +224,7 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEBOOL][constants.TYPEBOOL][constants.OPNEQ] = constants.ERR
 	sc.cube[constants.TYPEBOOL][constants.TYPEBOOL][constants.OPAND] = constants.TYPEBOOL
 	sc.cube[constants.TYPEBOOL][constants.TYPEBOOL][constants.OPOR] = constants.TYPEBOOL
+	sc.cube[constants.TYPEBOOL][constants.TYPEBOOL][constants.OPASSIGN] = constants.TYPEBOOL
 
 	return sc
 }

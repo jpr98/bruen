@@ -19,6 +19,15 @@ func (l QuadGenListener) GetManager() Manager {
 	return *l.m
 }
 
+func (l *QuadGenListener) EnterAssignation(c *parser.AssignationContext) {
+	l.m.PushOperand(c.ID().GetText())
+	l.m.PushOp(c.ASSIGN().GetText())
+}
+
+func (l *QuadGenListener) ExitAssignation(c *parser.AssignationContext) {
+	l.m.GenerateAssignationQuad()
+}
+
 func (l *QuadGenListener) EnterG_exp2(c *parser.G_exp2Context) {
 	if c.Relop() != nil {
 		l.m.PushOp(c.Relop().GetText())

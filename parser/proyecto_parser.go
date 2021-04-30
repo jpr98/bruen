@@ -65,8 +65,8 @@ var parserATN = []uint16{
 	48, 3, 48, 3, 49, 3, 49, 3, 49, 3, 429, 2, 50, 2, 4, 6, 8, 10, 12, 14,
 	16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50,
 	52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86,
-	88, 90, 92, 94, 96, 2, 6, 3, 2, 26, 27, 3, 2, 24, 25, 3, 2, 45, 49, 3,
-	2, 20, 23, 2, 441, 2, 98, 3, 2, 2, 2, 4, 122, 3, 2, 2, 2, 6, 132, 3, 2,
+	88, 90, 92, 94, 96, 2, 6, 3, 2, 25, 26, 3, 2, 23, 24, 3, 2, 45, 49, 3,
+	2, 19, 22, 2, 441, 2, 98, 3, 2, 2, 2, 4, 122, 3, 2, 2, 2, 6, 132, 3, 2,
 	2, 2, 8, 175, 3, 2, 2, 2, 10, 179, 3, 2, 2, 2, 12, 185, 3, 2, 2, 2, 14,
 	202, 3, 2, 2, 2, 16, 215, 3, 2, 2, 2, 18, 223, 3, 2, 2, 2, 20, 227, 3,
 	2, 2, 2, 22, 243, 3, 2, 2, 2, 24, 249, 3, 2, 2, 2, 26, 265, 3, 2, 2, 2,
@@ -80,7 +80,7 @@ var parserATN = []uint16{
 	3, 2, 2, 2, 78, 408, 3, 2, 2, 2, 80, 415, 3, 2, 2, 2, 82, 417, 3, 2, 2,
 	2, 84, 419, 3, 2, 2, 2, 86, 421, 3, 2, 2, 2, 88, 423, 3, 2, 2, 2, 90, 425,
 	3, 2, 2, 2, 92, 434, 3, 2, 2, 2, 94, 439, 3, 2, 2, 2, 96, 441, 3, 2, 2,
-	2, 98, 99, 7, 51, 2, 2, 99, 100, 7, 52, 2, 2, 100, 104, 7, 28, 2, 2, 101,
+	2, 98, 99, 7, 51, 2, 2, 99, 100, 7, 52, 2, 2, 100, 104, 7, 27, 2, 2, 101,
 	103, 5, 4, 3, 2, 102, 101, 3, 2, 2, 2, 103, 106, 3, 2, 2, 2, 104, 102,
 	3, 2, 2, 2, 104, 105, 3, 2, 2, 2, 105, 110, 3, 2, 2, 2, 106, 104, 3, 2,
 	2, 2, 107, 109, 5, 8, 5, 2, 108, 107, 3, 2, 2, 2, 109, 112, 3, 2, 2, 2,
@@ -89,28 +89,28 @@ var parserATN = []uint16{
 	3, 2, 2, 2, 116, 114, 3, 2, 2, 2, 116, 117, 3, 2, 2, 2, 117, 119, 3, 2,
 	2, 2, 118, 116, 3, 2, 2, 2, 119, 120, 5, 92, 47, 2, 120, 121, 7, 2, 2,
 	3, 121, 3, 3, 2, 2, 2, 122, 123, 7, 36, 2, 2, 123, 127, 7, 52, 2, 2, 124,
-	125, 7, 21, 2, 2, 125, 126, 7, 52, 2, 2, 126, 128, 7, 20, 2, 2, 127, 124,
+	125, 7, 20, 2, 2, 125, 126, 7, 52, 2, 2, 126, 128, 7, 19, 2, 2, 127, 124,
 	3, 2, 2, 2, 127, 128, 3, 2, 2, 2, 128, 129, 3, 2, 2, 2, 129, 130, 5, 6,
-	4, 2, 130, 131, 7, 28, 2, 2, 131, 5, 3, 2, 2, 2, 132, 133, 7, 3, 2, 2,
+	4, 2, 130, 131, 7, 27, 2, 2, 131, 5, 3, 2, 2, 2, 132, 133, 7, 3, 2, 2,
 	133, 137, 7, 37, 2, 2, 134, 136, 5, 8, 5, 2, 135, 134, 3, 2, 2, 2, 136,
 	139, 3, 2, 2, 2, 137, 135, 3, 2, 2, 2, 137, 138, 3, 2, 2, 2, 138, 140,
 	3, 2, 2, 2, 139, 137, 3, 2, 2, 2, 140, 144, 7, 38, 2, 2, 141, 143, 5, 14,
 	8, 2, 142, 141, 3, 2, 2, 2, 143, 146, 3, 2, 2, 2, 144, 142, 3, 2, 2, 2,
 	144, 145, 3, 2, 2, 2, 145, 147, 3, 2, 2, 2, 146, 144, 3, 2, 2, 2, 147,
 	148, 7, 4, 2, 2, 148, 7, 3, 2, 2, 2, 149, 150, 7, 44, 2, 2, 150, 151, 7,
-	52, 2, 2, 151, 152, 7, 5, 2, 2, 152, 153, 5, 10, 6, 2, 153, 154, 7, 28,
+	52, 2, 2, 151, 152, 7, 5, 2, 2, 152, 153, 5, 10, 6, 2, 153, 154, 7, 27,
 	2, 2, 154, 176, 3, 2, 2, 2, 155, 156, 7, 44, 2, 2, 156, 157, 7, 52, 2,
-	2, 157, 158, 7, 6, 2, 2, 158, 159, 7, 13, 2, 2, 159, 160, 7, 7, 2, 2, 160,
-	161, 7, 5, 2, 2, 161, 162, 5, 10, 6, 2, 162, 163, 7, 28, 2, 2, 163, 176,
+	2, 157, 158, 7, 6, 2, 2, 158, 159, 7, 12, 2, 2, 159, 160, 7, 7, 2, 2, 160,
+	161, 7, 5, 2, 2, 161, 162, 5, 10, 6, 2, 162, 163, 7, 27, 2, 2, 163, 176,
 	3, 2, 2, 2, 164, 165, 7, 44, 2, 2, 165, 166, 7, 52, 2, 2, 166, 167, 7,
-	6, 2, 2, 167, 168, 7, 13, 2, 2, 168, 169, 7, 8, 2, 2, 169, 170, 7, 13,
+	6, 2, 2, 167, 168, 7, 12, 2, 2, 168, 169, 7, 8, 2, 2, 169, 170, 7, 12,
 	2, 2, 170, 171, 7, 7, 2, 2, 171, 172, 7, 5, 2, 2, 172, 173, 5, 10, 6, 2,
-	173, 174, 7, 28, 2, 2, 174, 176, 3, 2, 2, 2, 175, 149, 3, 2, 2, 2, 175,
+	173, 174, 7, 27, 2, 2, 174, 176, 3, 2, 2, 2, 175, 149, 3, 2, 2, 2, 175,
 	155, 3, 2, 2, 2, 175, 164, 3, 2, 2, 2, 176, 9, 3, 2, 2, 2, 177, 180, 5,
 	94, 48, 2, 178, 180, 7, 52, 2, 2, 179, 177, 3, 2, 2, 2, 179, 178, 3, 2,
-	2, 2, 180, 183, 3, 2, 2, 2, 181, 182, 7, 9, 2, 2, 182, 184, 5, 58, 30,
+	2, 2, 180, 183, 3, 2, 2, 2, 181, 182, 7, 28, 2, 2, 182, 184, 5, 58, 30,
 	2, 183, 181, 3, 2, 2, 2, 183, 184, 3, 2, 2, 2, 184, 11, 3, 2, 2, 2, 185,
-	188, 7, 52, 2, 2, 186, 187, 7, 10, 2, 2, 187, 189, 7, 52, 2, 2, 188, 186,
+	188, 7, 52, 2, 2, 186, 187, 7, 9, 2, 2, 187, 189, 7, 52, 2, 2, 188, 186,
 	3, 2, 2, 2, 188, 189, 3, 2, 2, 2, 189, 194, 3, 2, 2, 2, 190, 191, 7, 6,
 	2, 2, 191, 192, 5, 58, 30, 2, 192, 193, 7, 7, 2, 2, 193, 195, 3, 2, 2,
 	2, 194, 190, 3, 2, 2, 2, 194, 195, 3, 2, 2, 2, 195, 200, 3, 2, 2, 2, 196,
@@ -121,7 +121,7 @@ var parserATN = []uint16{
 	208, 3, 2, 2, 2, 208, 211, 7, 30, 2, 2, 209, 212, 5, 94, 48, 2, 210, 212,
 	7, 50, 2, 2, 211, 209, 3, 2, 2, 2, 211, 210, 3, 2, 2, 2, 212, 213, 3, 2,
 	2, 2, 213, 214, 5, 20, 11, 2, 214, 15, 3, 2, 2, 2, 215, 220, 5, 18, 10,
-	2, 216, 217, 7, 11, 2, 2, 217, 219, 5, 18, 10, 2, 218, 216, 3, 2, 2, 2,
+	2, 216, 217, 7, 10, 2, 2, 217, 219, 5, 18, 10, 2, 218, 216, 3, 2, 2, 2,
 	219, 222, 3, 2, 2, 2, 220, 218, 3, 2, 2, 2, 220, 221, 3, 2, 2, 2, 221,
 	17, 3, 2, 2, 2, 222, 220, 3, 2, 2, 2, 223, 224, 7, 52, 2, 2, 224, 225,
 	7, 5, 2, 2, 225, 226, 5, 94, 48, 2, 226, 19, 3, 2, 2, 2, 227, 231, 7, 3,
@@ -132,7 +132,7 @@ var parserATN = []uint16{
 	2, 2, 239, 237, 3, 2, 2, 2, 240, 241, 5, 22, 12, 2, 241, 242, 7, 4, 2,
 	2, 242, 21, 3, 2, 2, 2, 243, 245, 7, 42, 2, 2, 244, 246, 5, 58, 30, 2,
 	245, 244, 3, 2, 2, 2, 245, 246, 3, 2, 2, 2, 246, 247, 3, 2, 2, 2, 247,
-	248, 7, 28, 2, 2, 248, 23, 3, 2, 2, 2, 249, 253, 7, 3, 2, 2, 250, 252,
+	248, 7, 27, 2, 2, 248, 23, 3, 2, 2, 2, 249, 253, 7, 3, 2, 2, 250, 252,
 	5, 26, 14, 2, 251, 250, 3, 2, 2, 2, 252, 255, 3, 2, 2, 2, 253, 251, 3,
 	2, 2, 2, 253, 254, 3, 2, 2, 2, 254, 256, 3, 2, 2, 2, 255, 253, 3, 2, 2,
 	2, 256, 257, 7, 4, 2, 2, 257, 25, 3, 2, 2, 2, 258, 266, 5, 28, 15, 2, 259,
@@ -140,42 +140,42 @@ var parserATN = []uint16{
 	266, 5, 52, 27, 2, 263, 266, 5, 54, 28, 2, 264, 266, 5, 58, 30, 2, 265,
 	258, 3, 2, 2, 2, 265, 259, 3, 2, 2, 2, 265, 260, 3, 2, 2, 2, 265, 261,
 	3, 2, 2, 2, 265, 262, 3, 2, 2, 2, 265, 263, 3, 2, 2, 2, 265, 264, 3, 2,
-	2, 2, 266, 27, 3, 2, 2, 2, 267, 268, 7, 52, 2, 2, 268, 269, 7, 9, 2, 2,
-	269, 270, 5, 58, 30, 2, 270, 271, 7, 28, 2, 2, 271, 29, 3, 2, 2, 2, 272,
+	2, 2, 266, 27, 3, 2, 2, 2, 267, 268, 7, 52, 2, 2, 268, 269, 7, 28, 2, 2,
+	269, 270, 5, 58, 30, 2, 270, 271, 7, 27, 2, 2, 271, 29, 3, 2, 2, 2, 272,
 	273, 7, 52, 2, 2, 273, 275, 7, 29, 2, 2, 274, 276, 5, 32, 17, 2, 275, 274,
 	3, 2, 2, 2, 275, 276, 3, 2, 2, 2, 276, 277, 3, 2, 2, 2, 277, 278, 7, 30,
-	2, 2, 278, 31, 3, 2, 2, 2, 279, 284, 5, 34, 18, 2, 280, 281, 7, 11, 2,
+	2, 2, 278, 31, 3, 2, 2, 2, 279, 284, 5, 34, 18, 2, 280, 281, 7, 10, 2,
 	2, 281, 283, 5, 34, 18, 2, 282, 280, 3, 2, 2, 2, 283, 286, 3, 2, 2, 2,
 	284, 282, 3, 2, 2, 2, 284, 285, 3, 2, 2, 2, 285, 33, 3, 2, 2, 2, 286, 284,
 	3, 2, 2, 2, 287, 290, 5, 12, 7, 2, 288, 290, 5, 58, 30, 2, 289, 287, 3,
 	2, 2, 2, 289, 288, 3, 2, 2, 2, 290, 35, 3, 2, 2, 2, 291, 292, 7, 52, 2,
-	2, 292, 293, 7, 10, 2, 2, 293, 294, 7, 52, 2, 2, 294, 296, 7, 29, 2, 2,
+	2, 292, 293, 7, 9, 2, 2, 293, 294, 7, 52, 2, 2, 294, 296, 7, 29, 2, 2,
 	295, 297, 5, 32, 17, 2, 296, 295, 3, 2, 2, 2, 296, 297, 3, 2, 2, 2, 297,
 	298, 3, 2, 2, 2, 298, 299, 7, 30, 2, 2, 299, 37, 3, 2, 2, 2, 300, 303,
 	5, 30, 16, 2, 301, 303, 5, 36, 19, 2, 302, 300, 3, 2, 2, 2, 302, 301, 3,
 	2, 2, 2, 303, 39, 3, 2, 2, 2, 304, 305, 7, 40, 2, 2, 305, 306, 7, 29, 2,
-	2, 306, 311, 5, 12, 7, 2, 307, 308, 7, 11, 2, 2, 308, 310, 5, 12, 7, 2,
+	2, 306, 311, 5, 12, 7, 2, 307, 308, 7, 10, 2, 2, 308, 310, 5, 12, 7, 2,
 	309, 307, 3, 2, 2, 2, 310, 313, 3, 2, 2, 2, 311, 309, 3, 2, 2, 2, 311,
 	312, 3, 2, 2, 2, 312, 314, 3, 2, 2, 2, 313, 311, 3, 2, 2, 2, 314, 315,
-	7, 30, 2, 2, 315, 316, 7, 28, 2, 2, 316, 41, 3, 2, 2, 2, 317, 318, 7, 39,
+	7, 30, 2, 2, 315, 316, 7, 27, 2, 2, 316, 41, 3, 2, 2, 2, 317, 318, 7, 39,
 	2, 2, 318, 319, 7, 29, 2, 2, 319, 320, 5, 32, 17, 2, 320, 321, 7, 30, 2,
-	2, 321, 322, 7, 28, 2, 2, 322, 43, 3, 2, 2, 2, 323, 324, 7, 31, 2, 2, 324,
+	2, 321, 322, 7, 27, 2, 2, 322, 43, 3, 2, 2, 2, 323, 324, 7, 31, 2, 2, 324,
 	325, 5, 46, 24, 2, 325, 327, 5, 48, 25, 2, 326, 328, 5, 50, 26, 2, 327,
 	326, 3, 2, 2, 2, 327, 328, 3, 2, 2, 2, 328, 45, 3, 2, 2, 2, 329, 330, 7,
 	29, 2, 2, 330, 331, 5, 58, 30, 2, 331, 332, 7, 30, 2, 2, 332, 47, 3, 2,
 	2, 2, 333, 334, 5, 24, 13, 2, 334, 49, 3, 2, 2, 2, 335, 336, 7, 32, 2,
 	2, 336, 337, 5, 24, 13, 2, 337, 51, 3, 2, 2, 2, 338, 339, 7, 34, 2, 2,
-	339, 340, 7, 52, 2, 2, 340, 341, 7, 9, 2, 2, 341, 342, 5, 58, 30, 2, 342,
+	339, 340, 7, 52, 2, 2, 340, 341, 7, 28, 2, 2, 341, 342, 5, 58, 30, 2, 342,
 	343, 7, 35, 2, 2, 343, 344, 5, 58, 30, 2, 344, 345, 5, 24, 13, 2, 345,
 	53, 3, 2, 2, 2, 346, 347, 7, 33, 2, 2, 347, 348, 5, 56, 29, 2, 348, 349,
 	5, 24, 13, 2, 349, 55, 3, 2, 2, 2, 350, 351, 7, 29, 2, 2, 351, 352, 5,
 	58, 30, 2, 352, 353, 7, 30, 2, 2, 353, 57, 3, 2, 2, 2, 354, 358, 5, 62,
 	32, 2, 355, 357, 5, 60, 31, 2, 356, 355, 3, 2, 2, 2, 357, 360, 3, 2, 2,
 	2, 358, 356, 3, 2, 2, 2, 358, 359, 3, 2, 2, 2, 359, 59, 3, 2, 2, 2, 360,
-	358, 3, 2, 2, 2, 361, 362, 7, 18, 2, 2, 362, 363, 5, 62, 32, 2, 363, 61,
+	358, 3, 2, 2, 2, 361, 362, 7, 17, 2, 2, 362, 363, 5, 62, 32, 2, 363, 61,
 	3, 2, 2, 2, 364, 368, 5, 66, 34, 2, 365, 367, 5, 64, 33, 2, 366, 365, 3,
 	2, 2, 2, 367, 370, 3, 2, 2, 2, 368, 366, 3, 2, 2, 2, 368, 369, 3, 2, 2,
-	2, 369, 63, 3, 2, 2, 2, 370, 368, 3, 2, 2, 2, 371, 372, 7, 19, 2, 2, 372,
+	2, 369, 63, 3, 2, 2, 2, 370, 368, 3, 2, 2, 2, 371, 372, 7, 18, 2, 2, 372,
 	373, 5, 66, 34, 2, 373, 65, 3, 2, 2, 2, 374, 376, 5, 70, 36, 2, 375, 377,
 	5, 68, 35, 2, 376, 375, 3, 2, 2, 2, 376, 377, 3, 2, 2, 2, 377, 67, 3, 2,
 	2, 2, 378, 379, 5, 96, 49, 2, 379, 380, 5, 70, 36, 2, 380, 69, 3, 2, 2,
@@ -193,12 +193,12 @@ var parserATN = []uint16{
 	5, 84, 43, 2, 412, 416, 5, 86, 44, 2, 413, 416, 5, 90, 46, 2, 414, 416,
 	5, 88, 45, 2, 415, 410, 3, 2, 2, 2, 415, 411, 3, 2, 2, 2, 415, 412, 3,
 	2, 2, 2, 415, 413, 3, 2, 2, 2, 415, 414, 3, 2, 2, 2, 416, 81, 3, 2, 2,
-	2, 417, 418, 7, 13, 2, 2, 418, 83, 3, 2, 2, 2, 419, 420, 7, 14, 2, 2, 420,
-	85, 3, 2, 2, 2, 421, 422, 7, 15, 2, 2, 422, 87, 3, 2, 2, 2, 423, 424, 7,
-	16, 2, 2, 424, 89, 3, 2, 2, 2, 425, 429, 7, 12, 2, 2, 426, 428, 11, 2,
+	2, 417, 418, 7, 12, 2, 2, 418, 83, 3, 2, 2, 2, 419, 420, 7, 13, 2, 2, 420,
+	85, 3, 2, 2, 2, 421, 422, 7, 14, 2, 2, 422, 87, 3, 2, 2, 2, 423, 424, 7,
+	15, 2, 2, 424, 89, 3, 2, 2, 2, 425, 429, 7, 11, 2, 2, 426, 428, 11, 2,
 	2, 2, 427, 426, 3, 2, 2, 2, 428, 431, 3, 2, 2, 2, 429, 430, 3, 2, 2, 2,
 	429, 427, 3, 2, 2, 2, 430, 432, 3, 2, 2, 2, 431, 429, 3, 2, 2, 2, 432,
-	433, 7, 12, 2, 2, 433, 91, 3, 2, 2, 2, 434, 435, 7, 43, 2, 2, 435, 436,
+	433, 7, 11, 2, 2, 433, 91, 3, 2, 2, 2, 434, 435, 7, 43, 2, 2, 435, 436,
 	7, 29, 2, 2, 436, 437, 7, 30, 2, 2, 437, 438, 5, 20, 11, 2, 438, 93, 3,
 	2, 2, 2, 439, 440, 9, 4, 2, 2, 440, 95, 3, 2, 2, 2, 441, 442, 9, 5, 2,
 	2, 442, 97, 3, 2, 2, 2, 37, 104, 110, 116, 127, 137, 144, 175, 179, 183,
@@ -206,19 +206,19 @@ var parserATN = []uint16{
 	302, 311, 327, 358, 368, 376, 385, 395, 408, 415, 429,
 }
 var literalNames = []string{
-	"", "'{'", "'}'", "':'", "'['", "']'", "']['", "'='", "'.'", "','", "'\"'",
-	"", "", "", "", "", "'||'", "'&&'", "'>'", "'<'", "'=='", "'!='", "'*'",
-	"'/'", "'+'", "'-'", "';'", "'('", "')'", "'if'", "'else'", "'while'",
+	"", "'{'", "'}'", "':'", "'['", "']'", "']['", "'.'", "','", "'\"'", "",
+	"", "", "", "", "'||'", "'&&'", "'>'", "'<'", "'=='", "'!='", "'*'", "'/'",
+	"'+'", "'-'", "';'", "'='", "'('", "')'", "'if'", "'else'", "'while'",
 	"'for'", "'in'", "'class'", "'attributes'", "'methods'", "'write'", "'read'",
 	"'function'", "'return'", "'main'", "'var'", "'int'", "'float'", "'char'",
 	"'string'", "'bool'", "'void'", "'program'",
 }
 var symbolicNames = []string{
-	"", "", "", "", "", "", "", "", "", "", "", "INT", "FLOAT", "CHAR", "BOOL",
+	"", "", "", "", "", "", "", "", "", "", "INT", "FLOAT", "CHAR", "BOOL",
 	"WS", "OR", "AND", "GT", "LT", "EQ", "NEQ", "MUL", "DIV", "ADD", "SUB",
-	"SEMI", "LPAREN", "RPAREN", "IF", "ELSE", "WHILE", "FOR", "IN", "CLASS",
-	"ATTRIBUTES", "METHODS", "WRITE", "READ", "FUNCTION", "RETURN", "MAIN",
-	"VAR", "INT_TYPE", "FLOAT_TYPE", "CHAR_TYPE", "STRING_TYPE", "BOOL_TYPE",
+	"SEMI", "ASSIGN", "LPAREN", "RPAREN", "IF", "ELSE", "WHILE", "FOR", "IN",
+	"CLASS", "ATTRIBUTES", "METHODS", "WRITE", "READ", "FUNCTION", "RETURN",
+	"MAIN", "VAR", "INT_TYPE", "FLOAT_TYPE", "CHAR_TYPE", "STRING_TYPE", "BOOL_TYPE",
 	"VOID", "PROGRAM", "ID",
 }
 
@@ -274,23 +274,23 @@ const (
 	ProyectoParserT__6        = 7
 	ProyectoParserT__7        = 8
 	ProyectoParserT__8        = 9
-	ProyectoParserT__9        = 10
-	ProyectoParserINT         = 11
-	ProyectoParserFLOAT       = 12
-	ProyectoParserCHAR        = 13
-	ProyectoParserBOOL        = 14
-	ProyectoParserWS          = 15
-	ProyectoParserOR          = 16
-	ProyectoParserAND         = 17
-	ProyectoParserGT          = 18
-	ProyectoParserLT          = 19
-	ProyectoParserEQ          = 20
-	ProyectoParserNEQ         = 21
-	ProyectoParserMUL         = 22
-	ProyectoParserDIV         = 23
-	ProyectoParserADD         = 24
-	ProyectoParserSUB         = 25
-	ProyectoParserSEMI        = 26
+	ProyectoParserINT         = 10
+	ProyectoParserFLOAT       = 11
+	ProyectoParserCHAR        = 12
+	ProyectoParserBOOL        = 13
+	ProyectoParserWS          = 14
+	ProyectoParserOR          = 15
+	ProyectoParserAND         = 16
+	ProyectoParserGT          = 17
+	ProyectoParserLT          = 18
+	ProyectoParserEQ          = 19
+	ProyectoParserNEQ         = 20
+	ProyectoParserMUL         = 21
+	ProyectoParserDIV         = 22
+	ProyectoParserADD         = 23
+	ProyectoParserSUB         = 24
+	ProyectoParserSEMI        = 25
+	ProyectoParserASSIGN      = 26
 	ProyectoParserLPAREN      = 27
 	ProyectoParserRPAREN      = 28
 	ProyectoParserIF          = 29
@@ -1214,6 +1214,10 @@ func (s *VarsTypeInitContext) ID() antlr.TerminalNode {
 	return s.GetToken(ProyectoParserID, 0)
 }
 
+func (s *VarsTypeInitContext) ASSIGN() antlr.TerminalNode {
+	return s.GetToken(ProyectoParserASSIGN, 0)
+}
+
 func (s *VarsTypeInitContext) Exp() IExpContext {
 	var t = s.GetTypedRuleContext(reflect.TypeOf((*IExpContext)(nil)).Elem(), 0)
 
@@ -1289,10 +1293,10 @@ func (p *ProyectoParser) VarsTypeInit() (localctx IVarsTypeInitContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if _la == ProyectoParserT__6 {
+	if _la == ProyectoParserASSIGN {
 		{
 			p.SetState(179)
-			p.Match(ProyectoParserT__6)
+			p.Match(ProyectoParserASSIGN)
 		}
 		{
 			p.SetState(180)
@@ -1423,10 +1427,10 @@ func (p *ProyectoParser) Vars() (localctx IVarsContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if _la == ProyectoParserT__7 {
+	if _la == ProyectoParserT__6 {
 		{
 			p.SetState(184)
-			p.Match(ProyectoParserT__7)
+			p.Match(ProyectoParserT__6)
 		}
 		{
 			p.SetState(185)
@@ -1770,10 +1774,10 @@ func (p *ProyectoParser) Parameters() (localctx IParametersContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserT__8 {
+	for _la == ProyectoParserT__7 {
 		{
 			p.SetState(214)
-			p.Match(ProyectoParserT__8)
+			p.Match(ProyectoParserT__7)
 		}
 		{
 			p.SetState(215)
@@ -2055,7 +2059,7 @@ func (p *ProyectoParser) FunctionBlock() (localctx IFunctionBlockContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__9)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN)|(1<<ProyectoParserIF)|(1<<ProyectoParserWHILE))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(ProyectoParserFOR-32))|(1<<(ProyectoParserWRITE-32))|(1<<(ProyectoParserREAD-32))|(1<<(ProyectoParserID-32)))) != 0) {
+	for (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__8)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN)|(1<<ProyectoParserIF)|(1<<ProyectoParserWHILE))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(ProyectoParserFOR-32))|(1<<(ProyectoParserWRITE-32))|(1<<(ProyectoParserREAD-32))|(1<<(ProyectoParserID-32)))) != 0) {
 		{
 			p.SetState(232)
 			p.Statutes()
@@ -2183,7 +2187,7 @@ func (p *ProyectoParser) ReturnRule() (localctx IReturnRuleContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__9)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN))) != 0) || _la == ProyectoParserID {
+	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__8)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN))) != 0) || _la == ProyectoParserID {
 		{
 			p.SetState(242)
 			p.Exp()
@@ -2309,7 +2313,7 @@ func (p *ProyectoParser) Block() (localctx IBlockContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__9)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN)|(1<<ProyectoParserIF)|(1<<ProyectoParserWHILE))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(ProyectoParserFOR-32))|(1<<(ProyectoParserWRITE-32))|(1<<(ProyectoParserREAD-32))|(1<<(ProyectoParserID-32)))) != 0) {
+	for (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__8)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN)|(1<<ProyectoParserIF)|(1<<ProyectoParserWHILE))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(ProyectoParserFOR-32))|(1<<(ProyectoParserWRITE-32))|(1<<(ProyectoParserREAD-32))|(1<<(ProyectoParserID-32)))) != 0) {
 		{
 			p.SetState(248)
 			p.Statutes()
@@ -2574,6 +2578,10 @@ func (s *AssignationContext) ID() antlr.TerminalNode {
 	return s.GetToken(ProyectoParserID, 0)
 }
 
+func (s *AssignationContext) ASSIGN() antlr.TerminalNode {
+	return s.GetToken(ProyectoParserASSIGN, 0)
+}
+
 func (s *AssignationContext) Exp() IExpContext {
 	var t = s.GetTypedRuleContext(reflect.TypeOf((*IExpContext)(nil)).Elem(), 0)
 
@@ -2635,7 +2643,7 @@ func (p *ProyectoParser) Assignation() (localctx IAssignationContext) {
 	}
 	{
 		p.SetState(266)
-		p.Match(ProyectoParserT__6)
+		p.Match(ProyectoParserASSIGN)
 	}
 	{
 		p.SetState(267)
@@ -2763,7 +2771,7 @@ func (p *ProyectoParser) FunctionCall() (localctx IFunctionCallContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__9)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN))) != 0) || _la == ProyectoParserID {
+	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__8)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN))) != 0) || _la == ProyectoParserID {
 		{
 			p.SetState(272)
 			p.Arguments()
@@ -2889,10 +2897,10 @@ func (p *ProyectoParser) Arguments() (localctx IArgumentsContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserT__8 {
+	for _la == ProyectoParserT__7 {
 		{
 			p.SetState(278)
-			p.Match(ProyectoParserT__8)
+			p.Match(ProyectoParserT__7)
 		}
 		{
 			p.SetState(279)
@@ -3138,7 +3146,7 @@ func (p *ProyectoParser) MethodCall() (localctx IMethodCallContext) {
 	}
 	{
 		p.SetState(290)
-		p.Match(ProyectoParserT__7)
+		p.Match(ProyectoParserT__6)
 	}
 	{
 		p.SetState(291)
@@ -3152,7 +3160,7 @@ func (p *ProyectoParser) MethodCall() (localctx IMethodCallContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__9)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN))) != 0) || _la == ProyectoParserID {
+	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__8)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN))) != 0) || _la == ProyectoParserID {
 		{
 			p.SetState(293)
 			p.Arguments()
@@ -3422,10 +3430,10 @@ func (p *ProyectoParser) Read() (localctx IReadContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserT__8 {
+	for _la == ProyectoParserT__7 {
 		{
 			p.SetState(305)
-			p.Match(ProyectoParserT__8)
+			p.Match(ProyectoParserT__7)
 		}
 		{
 			p.SetState(306)
@@ -4079,6 +4087,10 @@ func (s *ForLoopContext) ID() antlr.TerminalNode {
 	return s.GetToken(ProyectoParserID, 0)
 }
 
+func (s *ForLoopContext) ASSIGN() antlr.TerminalNode {
+	return s.GetToken(ProyectoParserASSIGN, 0)
+}
+
 func (s *ForLoopContext) AllExp() []IExpContext {
 	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*IExpContext)(nil)).Elem())
 	var tst = make([]IExpContext, len(ts))
@@ -4167,7 +4179,7 @@ func (p *ProyectoParser) ForLoop() (localctx IForLoopContext) {
 	}
 	{
 		p.SetState(338)
-		p.Match(ProyectoParserT__6)
+		p.Match(ProyectoParserASSIGN)
 	}
 	{
 		p.SetState(339)
@@ -5958,7 +5970,7 @@ func (p *ProyectoParser) VarCte() (localctx IVarCteContext) {
 			p.Cte_c()
 		}
 
-	case ProyectoParserT__9:
+	case ProyectoParserT__8:
 		p.EnterOuterAlt(localctx, 4)
 		{
 			p.SetState(411)
@@ -6425,7 +6437,7 @@ func (p *ProyectoParser) Cte_s() (localctx ICte_sContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(423)
-		p.Match(ProyectoParserT__9)
+		p.Match(ProyectoParserT__8)
 	}
 	p.SetState(427)
 	p.GetErrorHandler().Sync(p)
@@ -6443,7 +6455,7 @@ func (p *ProyectoParser) Cte_s() (localctx ICte_sContext) {
 	}
 	{
 		p.SetState(430)
-		p.Match(ProyectoParserT__9)
+		p.Match(ProyectoParserT__8)
 	}
 
 	return localctx

@@ -50,6 +50,7 @@ func NewManager() Manager {
 func (m *Manager) PushOp(op string) {
 	opCode, err := stringToOp(op)
 	if err != nil {
+		log.Fatalln(err)
 		return
 	}
 
@@ -93,6 +94,24 @@ func (m *Manager) GenerateQuad(validOps []int) {
 		// 10: meter result a stack operandos - done
 		m.operands.Push(result)
 	}
+}
+
+func (m *Manager) GenerateAssignationQuad() {
+	op := m.operators.Pop()
+	operand := m.operands.Pop()
+	result := m.operands.Pop()
+
+	resultType := semantic.Cube.ValidateBinaryOperation(result.Type(), operand.Type(), constants.OPASSIGN)
+	if resultType == constants.ERR {
+		log.Fatalf(
+			"Error: (GenerateAssignationQuad) type mismatch, assignation to %s can't be %s\n",
+			result,
+			operand,
+		)
+	}
+
+	q := Quad{op, operand, nil, result}
+	m.quads = append(m.quads, q)
 }
 
 func (m *Manager) AddGotoF() {
@@ -174,6 +193,8 @@ func stringToOp(text string) (QuadAction, error) {
 		return EQ, nil
 	case NEQ.String():
 		return NEQ, nil
+	case ASSIGN.String():
+		return ASSIGN, nil
 	default:
 		return -1, fmt.Errorf("no op code for given string")
 	}

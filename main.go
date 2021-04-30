@@ -45,7 +45,10 @@ func main() {
 	// antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
 	var listener quads.QuadGenListener = quads.NewListener()
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
-	fmt.Println(listener.GetManager().GetQuads())
+	quads := listener.GetManager().GetQuads()
+	for _, q := range quads {
+		fmt.Println(q)
+	}
 }
 
 func testSC() {

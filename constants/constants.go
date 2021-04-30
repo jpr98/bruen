@@ -42,4 +42,5 @@ const (
 	OPNEQ
 	OPAND
 	OPOR
+	OPASSIGN
 )

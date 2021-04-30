@@ -18,6 +18,7 @@ DIV: '/';
 ADD: '+';
 SUB: '-';
 SEMI: ';';
+ASSIGN: '=';
 LPAREN: '(';
 RPAREN: ')';
 
@@ -63,7 +64,7 @@ classBlock: '{' ATTRIBUTES varsDec* METHODS functions* '}';
 varsDec: VAR ID ':' varsTypeInit SEMI
     | VAR ID '['INT']' ':' varsTypeInit SEMI
     | VAR ID '['INT']['INT']' ':' varsTypeInit SEMI;
-varsTypeInit: (typeRule | ID) ('=' exp)?;
+varsTypeInit: (typeRule | ID) (ASSIGN exp)?;
 
 vars: ID ('.' ID)? ('[' exp ']')? ('[' exp ']')?;
 
@@ -83,7 +84,7 @@ statutes: assignation
         | whileLoop
         | exp;
 
-assignation: ID '=' exp SEMI;
+assignation: ID ASSIGN exp SEMI;
 
 functionCall: ID LPAREN arguments? RPAREN;
 arguments: argument (',' argument)*;
@@ -102,7 +103,7 @@ conditional2: LPAREN exp RPAREN;
 conditional3: block;
 conditional4: ELSE block;
 
-forLoop: FOR ID '=' exp IN exp block;
+forLoop: FOR ID ASSIGN exp IN exp block;
 
 whileLoop: WHILE whileLoop2 block;
 whileLoop2: LPAREN exp RPAREN;
