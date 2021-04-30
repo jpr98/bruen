@@ -89,6 +89,9 @@ type ProyectoListener interface {
 	// EnterWhileLoop is called when entering the whileLoop production.
 	EnterWhileLoop(c *WhileLoopContext)
 
+	// EnterWhileLoop2 is called when entering the whileLoop2 production.
+	EnterWhileLoop2(c *WhileLoop2Context)
+
 	// EnterExp is called when entering the exp production.
 	EnterExp(c *ExpContext)
 
@@ -229,6 +232,9 @@ type ProyectoListener interface {
 
 	// ExitWhileLoop is called when exiting the whileLoop production.
 	ExitWhileLoop(c *WhileLoopContext)
+
+	// ExitWhileLoop2 is called when exiting the whileLoop2 production.
+	ExitWhileLoop2(c *WhileLoop2Context)
 
 	// ExitExp is called when exiting the exp production.
 	ExitExp(c *ExpContext)

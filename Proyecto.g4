@@ -104,7 +104,8 @@ conditional4: ELSE block;
 
 forLoop: FOR ID '=' exp IN exp block;
 
-whileLoop: WHILE LPAREN exp RPAREN block;
+whileLoop: WHILE whileLoop2 block;
+whileLoop2: LPAREN exp RPAREN;
 
 exp: t_exp exp2*;
 exp2: (OR t_exp);

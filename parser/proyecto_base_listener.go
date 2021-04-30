@@ -183,6 +183,12 @@ func (s *BaseProyectoListener) EnterWhileLoop(ctx *WhileLoopContext) {}
 // ExitWhileLoop is called when production whileLoop is exited.
 func (s *BaseProyectoListener) ExitWhileLoop(ctx *WhileLoopContext) {}
 
+// EnterWhileLoop2 is called when production whileLoop2 is entered.
+func (s *BaseProyectoListener) EnterWhileLoop2(ctx *WhileLoop2Context) {}
+
+// ExitWhileLoop2 is called when production whileLoop2 is exited.
+func (s *BaseProyectoListener) ExitWhileLoop2(ctx *WhileLoop2Context) {}
+
 // EnterExp is called when production exp is entered.
 func (s *BaseProyectoListener) EnterExp(ctx *ExpContext) {}
 

@@ -129,6 +129,23 @@ func (m *Manager) UpdateGoto() {
 	m.quads[pos].result = NewElement(len(m.quads), constants.ADDR)
 }
 
+func (m *Manager) SaveJumpPosition() {
+	m.jumpStack = append(m.jumpStack, len(m.quads))
+}
+
+func (m *Manager) AddAndUpdateWhileGotos() {
+	posF := m.jumpStack[len(m.jumpStack)-1]
+	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
+
+	posR := m.jumpStack[len(m.jumpStack)-1]
+	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
+
+	q := Quad{GOTO, nil, nil, NewElement(posR, constants.ADDR)}
+	m.quads = append(m.quads, q)
+
+	m.quads[posF].result = NewElement(len(m.quads), constants.ADDR)
+}
+
 func (m *Manager) getNextAvail() string {
 	defer func() { m.avail++ }()
 	return fmt.Sprintf("t%d", m.avail)

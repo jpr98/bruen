@@ -87,3 +87,15 @@ func (l *QuadGenListener) EnterConditional4(c *parser.Conditional4Context) {
 	// Neuralgic point 3
 	l.m.AddAndUpdateGoto()
 }
+
+func (l *QuadGenListener) ExitWhileLoop(c *parser.WhileLoopContext) {
+	l.m.AddAndUpdateWhileGotos()
+}
+
+func (l *QuadGenListener) EnterWhileLoop2(c *parser.WhileLoop2Context) {
+	l.m.SaveJumpPosition()
+}
+
+func (l *QuadGenListener) ExitWhileLoop2(c *parser.WhileLoop2Context) {
+	l.m.AddGotoF()
+}
