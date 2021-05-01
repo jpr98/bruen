@@ -103,7 +103,9 @@ conditional2: LPAREN exp RPAREN;
 conditional3: block;
 conditional4: ELSE block;
 
-forLoop: FOR ID ASSIGN exp IN exp block;
+forLoop: FOR forLoop2 IN forLoop3 block;
+forLoop2: ID ASSIGN exp;
+forLoop3: exp;
 
 whileLoop: WHILE whileLoop2 block;
 whileLoop2: LPAREN exp RPAREN;

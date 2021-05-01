@@ -86,6 +86,12 @@ type ProyectoListener interface {
 	// EnterForLoop is called when entering the forLoop production.
 	EnterForLoop(c *ForLoopContext)
 
+	// EnterForLoop2 is called when entering the forLoop2 production.
+	EnterForLoop2(c *ForLoop2Context)
+
+	// EnterForLoop3 is called when entering the forLoop3 production.
+	EnterForLoop3(c *ForLoop3Context)
+
 	// EnterWhileLoop is called when entering the whileLoop production.
 	EnterWhileLoop(c *WhileLoopContext)
 
@@ -229,6 +235,12 @@ type ProyectoListener interface {
 
 	// ExitForLoop is called when exiting the forLoop production.
 	ExitForLoop(c *ForLoopContext)
+
+	// ExitForLoop2 is called when exiting the forLoop2 production.
+	ExitForLoop2(c *ForLoop2Context)
+
+	// ExitForLoop3 is called when exiting the forLoop3 production.
+	ExitForLoop3(c *ForLoop3Context)
 
 	// ExitWhileLoop is called when exiting the whileLoop production.
 	ExitWhileLoop(c *WhileLoopContext)

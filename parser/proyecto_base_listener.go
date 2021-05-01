@@ -177,6 +177,18 @@ func (s *BaseProyectoListener) EnterForLoop(ctx *ForLoopContext) {}
 // ExitForLoop is called when production forLoop is exited.
 func (s *BaseProyectoListener) ExitForLoop(ctx *ForLoopContext) {}
 
+// EnterForLoop2 is called when production forLoop2 is entered.
+func (s *BaseProyectoListener) EnterForLoop2(ctx *ForLoop2Context) {}
+
+// ExitForLoop2 is called when production forLoop2 is exited.
+func (s *BaseProyectoListener) ExitForLoop2(ctx *ForLoop2Context) {}
+
+// EnterForLoop3 is called when production forLoop3 is entered.
+func (s *BaseProyectoListener) EnterForLoop3(ctx *ForLoop3Context) {}
+
+// ExitForLoop3 is called when production forLoop3 is exited.
+func (s *BaseProyectoListener) ExitForLoop3(ctx *ForLoop3Context) {}
+
 // EnterWhileLoop is called when production whileLoop is entered.
 func (s *BaseProyectoListener) EnterWhileLoop(ctx *WhileLoopContext) {}
 

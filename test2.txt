@@ -5,6 +5,10 @@ var b: bool;
 var c: bool;
 
 main() {
+    for i = 0 in 5+2 {
+        a = a + b;
+    }
+    
     while (a > b) {
         a = a + b;
     }

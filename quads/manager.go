@@ -63,13 +63,18 @@ func (m *Manager) PushOperand(operand string) {
 	m.operands.Push(element)
 }
 
-func (m *Manager) GenerateQuad(validOps []int) {
+func (m *Manager) GenerateQuad(validOps []int, isForLoop bool) {
 	// 1: validar que top op este en validOps - done
 	if arrayContainsElement(m.operators.Top(), validOps) {
 		// 2: obtener right operand - done
 		rOperand := m.operands.Pop()
 		// 3: obtener left operand - done
-		lOperand := m.operands.Pop()
+		var lOperand Element
+		if isForLoop {
+			lOperand = m.operands.Top()
+		} else {
+			lOperand = m.operands.Pop()
+		}
 		// 4: sacar op de stack - done
 		op := m.operators.Pop()
 
@@ -96,7 +101,7 @@ func (m *Manager) GenerateQuad(validOps []int) {
 	}
 }
 
-func (m *Manager) GenerateAssignationQuad() {
+func (m *Manager) GenerateAssignationQuad(retainResult bool) {
 	op := m.operators.Pop()
 	operand := m.operands.Pop()
 	result := m.operands.Pop()
@@ -110,6 +115,9 @@ func (m *Manager) GenerateAssignationQuad() {
 		)
 	}
 
+	if retainResult {
+		m.operands.Push(result)
+	}
 	q := Quad{op, operand, nil, result}
 	m.quads = append(m.quads, q)
 }

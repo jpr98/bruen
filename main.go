@@ -46,8 +46,8 @@ func main() {
 	var listener quads.QuadGenListener = quads.NewListener()
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
 	quads := listener.GetManager().GetQuads()
-	for _, q := range quads {
-		fmt.Println(q)
+	for i, q := range quads {
+		fmt.Printf("%d. %s\n", i, q)
 	}
 }
 
