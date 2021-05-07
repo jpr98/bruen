@@ -131,6 +131,9 @@ type ProyectoListener interface {
 	// EnterFactor is called when entering the factor production.
 	EnterFactor(c *FactorContext)
 
+	// EnterFactor2 is called when entering the factor2 production.
+	EnterFactor2(c *Factor2Context)
+
 	// EnterVarCte is called when entering the varCte production.
 	EnterVarCte(c *VarCteContext)
 
@@ -280,6 +283,9 @@ type ProyectoListener interface {
 
 	// ExitFactor is called when exiting the factor production.
 	ExitFactor(c *FactorContext)
+
+	// ExitFactor2 is called when exiting the factor2 production.
+	ExitFactor2(c *Factor2Context)
 
 	// ExitVarCte is called when exiting the varCte production.
 	ExitVarCte(c *VarCteContext)

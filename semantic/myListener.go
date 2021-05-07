@@ -7,8 +7,6 @@ import (
 	"github.com/jpr98/compis/parser"
 )
 
-// TODO: Store initialized variables value?
-
 type scopeStack struct {
 	stack []string
 }

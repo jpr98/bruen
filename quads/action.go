@@ -14,13 +14,14 @@ const (
 	NEQ
 	AND
 	OR
+	LPAREN
 	ASSIGN
 	GOTOF
 	GOTO
 )
 
 func (a QuadAction) String() string {
-	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||", "=", "GOTOF", "GOTO"}[a]
+	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||", "(", "=", "GOTOF", "GOTO"}[a]
 }
 
 type QuadActionStack struct {

@@ -267,6 +267,12 @@ func (s *BaseProyectoListener) EnterFactor(ctx *FactorContext) {}
 // ExitFactor is called when production factor is exited.
 func (s *BaseProyectoListener) ExitFactor(ctx *FactorContext) {}
 
+// EnterFactor2 is called when production factor2 is entered.
+func (s *BaseProyectoListener) EnterFactor2(ctx *Factor2Context) {}
+
+// ExitFactor2 is called when production factor2 is exited.
+func (s *BaseProyectoListener) ExitFactor2(ctx *Factor2Context) {}
+
 // EnterVarCte is called when production varCte is entered.
 func (s *BaseProyectoListener) EnterVarCte(ctx *VarCteContext) {}
 

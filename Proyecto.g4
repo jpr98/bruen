@@ -125,10 +125,12 @@ m_exp2: (ADD | SUB) term;
 term: factor term2*;
 term2: (MUL | DIV) factor;
 
-factor: LPAREN exp RPAREN
+factor: factor2
       | varCte
       | vars
       | call;
+      
+factor2: LPAREN exp RPAREN;
 
 varCte: cte_i
       | cte_f

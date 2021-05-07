@@ -84,6 +84,18 @@ func (l *QuadGenListener) EnterFactor(c *parser.FactorContext) {
 	}
 }
 
+func (l *QuadGenListener) EnterFactor2(c *parser.Factor2Context) {
+	// Adds false bottom
+	if c.LPAREN() != nil {
+		l.m.PushOp(c.LPAREN().GetText())
+	}
+}
+
+func (l *QuadGenListener) ExitFactor2(c *parser.Factor2Context) {
+	// Removes false bottom
+	l.m.operators.Pop()
+}
+
 func (l *QuadGenListener) ExitConditional(c *parser.ConditionalContext) {
 	// Neuralgic point 2
 	l.m.UpdateGoto()

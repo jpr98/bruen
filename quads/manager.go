@@ -193,6 +193,10 @@ func stringToOp(text string) (QuadAction, error) {
 		return ADD, nil
 	case SUB.String():
 		return SUB, nil
+	case MUL.String():
+		return MUL, nil
+	case DIV.String():
+		return DIV, nil
 	case GT.String():
 		return GT, nil
 	case LT.String():
@@ -203,6 +207,8 @@ func stringToOp(text string) (QuadAction, error) {
 		return NEQ, nil
 	case ASSIGN.String():
 		return ASSIGN, nil
+	case LPAREN.String():
+		return LPAREN, nil
 	default:
 		return -1, fmt.Errorf("no op code for given string")
 	}
