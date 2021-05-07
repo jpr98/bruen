@@ -41,11 +41,16 @@ func main() {
 	// Creates the parser
 	p := parser.NewProyectoParser(stream)
 
-	// listener := semantic.NewListener()
-	// antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
-	var listener quads.QuadGenListener = quads.NewListener()
+	listener := semantic.NewListener()
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
-	quads := listener.GetManager().GetQuads()
+
+	fmt.Println("\n---------")
+	stream.Seek(0)
+	p = parser.NewProyectoParser(stream)
+
+	var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable())
+	antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
+	quads := quadListener.GetManager().GetQuads()
 	for i, q := range quads {
 		fmt.Printf("%d. %s\n", i, q)
 	}

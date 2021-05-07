@@ -1,5 +1,7 @@
 package constants
 
+import "fmt"
+
 type Type int
 
 const (
@@ -28,6 +30,24 @@ func (t Type) String() string {
 		return "Address"
 	default:
 		return "Unkown type"
+	}
+}
+
+func StringToType(str string) Type {
+	fmt.Println(str)
+	switch str {
+	case TYPEINT.String():
+		return TYPEINT
+	case TYPEFLOAT.String():
+		return TYPEFLOAT
+	case TYPECHAR.String():
+		return TYPECHAR
+	case TYPEBOOL.String():
+		return TYPEBOOL
+	case ADDR.String():
+		return ADDR
+	default:
+		return ERR
 	}
 }
 

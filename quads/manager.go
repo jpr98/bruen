@@ -31,6 +31,8 @@ type Manager struct {
 	quads     []Quad
 	jumpStack []int
 
+	functionTable semantic.FunctionTable
+
 	avail int
 }
 
@@ -38,12 +40,13 @@ func (m Manager) GetQuads() []Quad {
 	return m.quads
 }
 
-func NewManager() Manager {
+func NewManager(functionTable semantic.FunctionTable) Manager {
 	return Manager{
-		operands:  NewElementStack(),
-		operators: NewQuadActionStack(),
-		quads:     make([]Quad, 0),
-		avail:     0,
+		operands:      NewElementStack(),
+		operators:     NewQuadActionStack(),
+		quads:         make([]Quad, 0),
+		functionTable: functionTable,
+		avail:         0,
 	}
 }
 
@@ -57,9 +60,29 @@ func (m *Manager) PushOp(op string) {
 	m.operators.Push(opCode)
 }
 
-func (m *Manager) PushOperand(operand string) {
-	// TODO: obtener tipo de tabla de variables
-	element := NewElement(operand, 0)
+// PushConstantOperand sets an operand with a defined (hardcoded) type
+func (m *Manager) PushConstantOperand(operand string, typeOf constants.Type) {
+	element := NewElement(operand, typeOf)
+	m.operands.Push(element)
+}
+
+func (m *Manager) PushOperand(operand, currentFunction, globalName string) {
+	var typeOf string
+	if attr, exists := m.functionTable[currentFunction].Vars[operand]; exists {
+		typeOf = attr.TypeOf
+	} else {
+		if attr, exists := m.functionTable[globalName].Vars[operand]; exists {
+			typeOf = attr.TypeOf
+		}
+	}
+
+	t := constants.StringToType(typeOf)
+	if t == constants.ERR {
+		// TODO: Handle error
+		fmt.Println(operand, " here")
+		return
+	}
+	element := NewElement(operand, t)
 	m.operands.Push(element)
 }
 

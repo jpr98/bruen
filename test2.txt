@@ -1,10 +1,13 @@
 program test2;
 
-var a: bool;
-var b: bool;
-var c: bool;
+var a: int;
+var b: char;
+var c: int;
 
 main() {
-    a = a * (b + (c - a));
+    a = 10;
+    for i = 0 in a {
+        a = c * c;
+    }
     return;
 }

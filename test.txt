@@ -13,7 +13,7 @@ program programa;
 
 	var a : int;
 	var b : float = 1 < 2;
-	
+
 	function start() void {return;}
 	
 	function testTwo(a: int, hello : int, helloTwo : float) int {
@@ -21,13 +21,13 @@ program programa;
 		var array[1]: int;
 		var mat[1][2]: float;
 
-		if (a || b && c) {
+		if (a || b && c > b) {
 			write("helloworld");
 		}
 		return 10;
 	}
 
-	main() {
+main() {
 		var c : float = a + b;
 		var x : char = "x";
 
@@ -40,4 +40,4 @@ program programa;
 		}
 
         return;
-	}
+}
