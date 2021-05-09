@@ -19,3 +19,8 @@ En este avance creamos los tipos para manejar los cuadruplos en el código y gen
 (*01 de mayo de 2021*)
 
 En este avance desarrollamos el código que genera los cuádruplos de los estatutos no lineales: if, if-else, while loop y for loop.
+
+### Avance 5: Soporte de constantes en quads y validación de tipo de variables en expresiones.
+(*08 de mayo de 2021*)
+
+En este avance aprovechamos para completar algunos TODOs que teníamos pendientes como el manejo de constantes en quads, el fondo falso para las expresiones y la validación de tipos de las variables en ellas.
