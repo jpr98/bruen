@@ -47,7 +47,6 @@ VAR: 'var';
 INT_TYPE: 'int';
 FLOAT_TYPE: 'float';
 CHAR_TYPE: 'char';
-STRING_TYPE: 'string';
 BOOL_TYPE: 'bool';
 VOID: 'void';
 // Program
@@ -149,7 +148,6 @@ main: MAIN LPAREN RPAREN functionBlock;
 typeRule: INT_TYPE
     | FLOAT_TYPE
     | CHAR_TYPE
-    | STRING_TYPE
     | BOOL_TYPE;
 
 relop: GT

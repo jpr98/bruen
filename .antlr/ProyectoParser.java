@@ -21,8 +21,8 @@ public class ProyectoParser extends Parser {
 		EQ=19, NEQ=20, MUL=21, DIV=22, ADD=23, SUB=24, SEMI=25, ASSIGN=26, LPAREN=27, 
 		RPAREN=28, IF=29, ELSE=30, WHILE=31, FOR=32, IN=33, CLASS=34, ATTRIBUTES=35, 
 		METHODS=36, WRITE=37, READ=38, FUNCTION=39, RETURN=40, MAIN=41, VAR=42, 
-		INT_TYPE=43, FLOAT_TYPE=44, CHAR_TYPE=45, STRING_TYPE=46, BOOL_TYPE=47, 
-		VOID=48, PROGRAM=49, ID=50;
+		INT_TYPE=43, FLOAT_TYPE=44, CHAR_TYPE=45, BOOL_TYPE=46, VOID=47, PROGRAM=48, 
+		ID=49;
 	public static final int
 		RULE_program = 0, RULE_classDef = 1, RULE_classBlock = 2, RULE_varsDec = 3, 
 		RULE_varsTypeInit = 4, RULE_vars = 5, RULE_functions = 6, RULE_parameters = 7, 
@@ -58,7 +58,7 @@ public class ProyectoParser extends Parser {
 			"'*'", "'/'", "'+'", "'-'", "';'", "'='", "'('", "')'", "'if'", "'else'", 
 			"'while'", "'for'", "'in'", "'class'", "'attributes'", "'methods'", "'write'", 
 			"'read'", "'function'", "'return'", "'main'", "'var'", "'int'", "'float'", 
-			"'char'", "'string'", "'bool'", "'void'", "'program'"
+			"'char'", "'bool'", "'void'", "'program'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -68,8 +68,8 @@ public class ProyectoParser extends Parser {
 			"CHAR", "BOOL", "WS", "OR", "AND", "GT", "LT", "EQ", "NEQ", "MUL", "DIV", 
 			"ADD", "SUB", "SEMI", "ASSIGN", "LPAREN", "RPAREN", "IF", "ELSE", "WHILE", 
 			"FOR", "IN", "CLASS", "ATTRIBUTES", "METHODS", "WRITE", "READ", "FUNCTION", 
-			"RETURN", "MAIN", "VAR", "INT_TYPE", "FLOAT_TYPE", "CHAR_TYPE", "STRING_TYPE", 
-			"BOOL_TYPE", "VOID", "PROGRAM", "ID"
+			"RETURN", "MAIN", "VAR", "INT_TYPE", "FLOAT_TYPE", "CHAR_TYPE", "BOOL_TYPE", 
+			"VOID", "PROGRAM", "ID"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -490,7 +490,6 @@ public class ProyectoParser extends Parser {
 			case INT_TYPE:
 			case FLOAT_TYPE:
 			case CHAR_TYPE:
-			case STRING_TYPE:
 			case BOOL_TYPE:
 				{
 				setState(181);
@@ -662,7 +661,6 @@ public class ProyectoParser extends Parser {
 			case INT_TYPE:
 			case FLOAT_TYPE:
 			case CHAR_TYPE:
-			case STRING_TYPE:
 			case BOOL_TYPE:
 				{
 				setState(213);
@@ -2632,7 +2630,6 @@ public class ProyectoParser extends Parser {
 		public TerminalNode INT_TYPE() { return getToken(ProyectoParser.INT_TYPE, 0); }
 		public TerminalNode FLOAT_TYPE() { return getToken(ProyectoParser.FLOAT_TYPE, 0); }
 		public TerminalNode CHAR_TYPE() { return getToken(ProyectoParser.CHAR_TYPE, 0); }
-		public TerminalNode STRING_TYPE() { return getToken(ProyectoParser.STRING_TYPE, 0); }
 		public TerminalNode BOOL_TYPE() { return getToken(ProyectoParser.BOOL_TYPE, 0); }
 		public TypeRuleContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2649,7 +2646,7 @@ public class ProyectoParser extends Parser {
 			{
 			setState(448);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INT_TYPE) | (1L << FLOAT_TYPE) | (1L << CHAR_TYPE) | (1L << STRING_TYPE) | (1L << BOOL_TYPE))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INT_TYPE) | (1L << FLOAT_TYPE) | (1L << CHAR_TYPE) | (1L << BOOL_TYPE))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -2712,7 +2709,7 @@ public class ProyectoParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\64\u01c7\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\63\u01c7\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -2746,7 +2743,7 @@ public class ProyectoParser extends Parser {
 		"\3\60\3\61\3\61\7\61\u01b7\n\61\f\61\16\61\u01ba\13\61\3\61\3\61\3\62"+
 		"\3\62\3\62\3\62\3\62\3\63\3\63\3\64\3\64\3\64\3\u01b8\2\65\2\4\6\b\n\f"+
 		"\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BDFHJLNPRTVXZ\\^"+
-		"`bdf\2\6\3\2\31\32\3\2\27\30\3\2-\61\3\2\23\26\2\u01c1\2h\3\2\2\2\4\u0080"+
+		"`bdf\2\6\3\2\31\32\3\2\27\30\3\2-\60\3\2\23\26\2\u01c1\2h\3\2\2\2\4\u0080"+
 		"\3\2\2\2\6\u008a\3\2\2\2\b\u00b5\3\2\2\2\n\u00b9\3\2\2\2\f\u00bf\3\2\2"+
 		"\2\16\u00d0\3\2\2\2\20\u00dd\3\2\2\2\22\u00e5\3\2\2\2\24\u00e9\3\2\2\2"+
 		"\26\u00f9\3\2\2\2\30\u00ff\3\2\2\2\32\u010f\3\2\2\2\34\u0111\3\2\2\2\36"+
@@ -2758,12 +2755,12 @@ public class ProyectoParser extends Parser {
 		"\2\2L\u018e\3\2\2\2N\u0191\3\2\2\2P\u0198\3\2\2\2R\u019f\3\2\2\2T\u01a1"+
 		"\3\2\2\2V\u01aa\3\2\2\2X\u01ac\3\2\2\2Z\u01ae\3\2\2\2\\\u01b0\3\2\2\2"+
 		"^\u01b2\3\2\2\2`\u01b4\3\2\2\2b\u01bd\3\2\2\2d\u01c2\3\2\2\2f\u01c4\3"+
-		"\2\2\2hi\7\63\2\2ij\7\64\2\2jn\7\33\2\2km\5\4\3\2lk\3\2\2\2mp\3\2\2\2"+
+		"\2\2\2hi\7\62\2\2ij\7\63\2\2jn\7\33\2\2km\5\4\3\2lk\3\2\2\2mp\3\2\2\2"+
 		"nl\3\2\2\2no\3\2\2\2ot\3\2\2\2pn\3\2\2\2qs\5\b\5\2rq\3\2\2\2sv\3\2\2\2"+
 		"tr\3\2\2\2tu\3\2\2\2uz\3\2\2\2vt\3\2\2\2wy\5\16\b\2xw\3\2\2\2y|\3\2\2"+
 		"\2zx\3\2\2\2z{\3\2\2\2{}\3\2\2\2|z\3\2\2\2}~\5b\62\2~\177\7\2\2\3\177"+
-		"\3\3\2\2\2\u0080\u0081\7$\2\2\u0081\u0085\7\64\2\2\u0082\u0083\7\24\2"+
-		"\2\u0083\u0084\7\64\2\2\u0084\u0086\7\23\2\2\u0085\u0082\3\2\2\2\u0085"+
+		"\3\3\2\2\2\u0080\u0081\7$\2\2\u0081\u0085\7\63\2\2\u0082\u0083\7\24\2"+
+		"\2\u0083\u0084\7\63\2\2\u0084\u0086\7\23\2\2\u0085\u0082\3\2\2\2\u0085"+
 		"\u0086\3\2\2\2\u0086\u0087\3\2\2\2\u0087\u0088\5\6\4\2\u0088\u0089\7\33"+
 		"\2\2\u0089\5\3\2\2\2\u008a\u008b\7\3\2\2\u008b\u008f\7%\2\2\u008c\u008e"+
 		"\5\b\5\2\u008d\u008c\3\2\2\2\u008e\u0091\3\2\2\2\u008f\u008d\3\2\2\2\u008f"+
@@ -2771,30 +2768,30 @@ public class ProyectoParser extends Parser {
 		"\2\2\u0093\u0095\5\16\b\2\u0094\u0093\3\2\2\2\u0095\u0098\3\2\2\2\u0096"+
 		"\u0094\3\2\2\2\u0096\u0097\3\2\2\2\u0097\u0099\3\2\2\2\u0098\u0096\3\2"+
 		"\2\2\u0099\u009a\7\4\2\2\u009a\7\3\2\2\2\u009b\u009c\7,\2\2\u009c\u009d"+
-		"\7\64\2\2\u009d\u009e\7\5\2\2\u009e\u009f\5\n\6\2\u009f\u00a0\7\33\2\2"+
-		"\u00a0\u00b6\3\2\2\2\u00a1\u00a2\7,\2\2\u00a2\u00a3\7\64\2\2\u00a3\u00a4"+
+		"\7\63\2\2\u009d\u009e\7\5\2\2\u009e\u009f\5\n\6\2\u009f\u00a0\7\33\2\2"+
+		"\u00a0\u00b6\3\2\2\2\u00a1\u00a2\7,\2\2\u00a2\u00a3\7\63\2\2\u00a3\u00a4"+
 		"\7\6\2\2\u00a4\u00a5\7\f\2\2\u00a5\u00a6\7\7\2\2\u00a6\u00a7\7\5\2\2\u00a7"+
 		"\u00a8\5\n\6\2\u00a8\u00a9\7\33\2\2\u00a9\u00b6\3\2\2\2\u00aa\u00ab\7"+
-		",\2\2\u00ab\u00ac\7\64\2\2\u00ac\u00ad\7\6\2\2\u00ad\u00ae\7\f\2\2\u00ae"+
+		",\2\2\u00ab\u00ac\7\63\2\2\u00ac\u00ad\7\6\2\2\u00ad\u00ae\7\f\2\2\u00ae"+
 		"\u00af\7\b\2\2\u00af\u00b0\7\f\2\2\u00b0\u00b1\7\7\2\2\u00b1\u00b2\7\5"+
 		"\2\2\u00b2\u00b3\5\n\6\2\u00b3\u00b4\7\33\2\2\u00b4\u00b6\3\2\2\2\u00b5"+
 		"\u009b\3\2\2\2\u00b5\u00a1\3\2\2\2\u00b5\u00aa\3\2\2\2\u00b6\t\3\2\2\2"+
-		"\u00b7\u00ba\5d\63\2\u00b8\u00ba\7\64\2\2\u00b9\u00b7\3\2\2\2\u00b9\u00b8"+
+		"\u00b7\u00ba\5d\63\2\u00b8\u00ba\7\63\2\2\u00b9\u00b7\3\2\2\2\u00b9\u00b8"+
 		"\3\2\2\2\u00ba\u00bd\3\2\2\2\u00bb\u00bc\7\34\2\2\u00bc\u00be\5> \2\u00bd"+
-		"\u00bb\3\2\2\2\u00bd\u00be\3\2\2\2\u00be\13\3\2\2\2\u00bf\u00c2\7\64\2"+
-		"\2\u00c0\u00c1\7\t\2\2\u00c1\u00c3\7\64\2\2\u00c2\u00c0\3\2\2\2\u00c2"+
+		"\u00bb\3\2\2\2\u00bd\u00be\3\2\2\2\u00be\13\3\2\2\2\u00bf\u00c2\7\63\2"+
+		"\2\u00c0\u00c1\7\t\2\2\u00c1\u00c3\7\63\2\2\u00c2\u00c0\3\2\2\2\u00c2"+
 		"\u00c3\3\2\2\2\u00c3\u00c8\3\2\2\2\u00c4\u00c5\7\6\2\2\u00c5\u00c6\5>"+
 		" \2\u00c6\u00c7\7\7\2\2\u00c7\u00c9\3\2\2\2\u00c8\u00c4\3\2\2\2\u00c8"+
 		"\u00c9\3\2\2\2\u00c9\u00ce\3\2\2\2\u00ca\u00cb\7\6\2\2\u00cb\u00cc\5>"+
 		" \2\u00cc\u00cd\7\7\2\2\u00cd\u00cf\3\2\2\2\u00ce\u00ca\3\2\2\2\u00ce"+
-		"\u00cf\3\2\2\2\u00cf\r\3\2\2\2\u00d0\u00d1\7)\2\2\u00d1\u00d2\7\64\2\2"+
+		"\u00cf\3\2\2\2\u00cf\r\3\2\2\2\u00d0\u00d1\7)\2\2\u00d1\u00d2\7\63\2\2"+
 		"\u00d2\u00d4\7\35\2\2\u00d3\u00d5\5\20\t\2\u00d4\u00d3\3\2\2\2\u00d4\u00d5"+
 		"\3\2\2\2\u00d5\u00d6\3\2\2\2\u00d6\u00d9\7\36\2\2\u00d7\u00da\5d\63\2"+
-		"\u00d8\u00da\7\62\2\2\u00d9\u00d7\3\2\2\2\u00d9\u00d8\3\2\2\2\u00da\u00db"+
+		"\u00d8\u00da\7\61\2\2\u00d9\u00d7\3\2\2\2\u00d9\u00d8\3\2\2\2\u00da\u00db"+
 		"\3\2\2\2\u00db\u00dc\5\24\13\2\u00dc\17\3\2\2\2\u00dd\u00e2\5\22\n\2\u00de"+
 		"\u00df\7\n\2\2\u00df\u00e1\5\22\n\2\u00e0\u00de\3\2\2\2\u00e1\u00e4\3"+
 		"\2\2\2\u00e2\u00e0\3\2\2\2\u00e2\u00e3\3\2\2\2\u00e3\21\3\2\2\2\u00e4"+
-		"\u00e2\3\2\2\2\u00e5\u00e6\7\64\2\2\u00e6\u00e7\7\5\2\2\u00e7\u00e8\5"+
+		"\u00e2\3\2\2\2\u00e5\u00e6\7\63\2\2\u00e6\u00e7\7\5\2\2\u00e7\u00e8\5"+
 		"d\63\2\u00e8\23\3\2\2\2\u00e9\u00ed\7\3\2\2\u00ea\u00ec\5\b\5\2\u00eb"+
 		"\u00ea\3\2\2\2\u00ec\u00ef\3\2\2\2\u00ed\u00eb\3\2\2\2\u00ed\u00ee\3\2"+
 		"\2\2\u00ee\u00f3\3\2\2\2\u00ef\u00ed\3\2\2\2\u00f0\u00f2\5\32\16\2\u00f1"+
@@ -2809,15 +2806,15 @@ public class ProyectoParser extends Parser {
 		"\2\u010b\u0110\5,\27\2\u010c\u0110\5\64\33\2\u010d\u0110\5:\36\2\u010e"+
 		"\u0110\5> \2\u010f\u0108\3\2\2\2\u010f\u0109\3\2\2\2\u010f\u010a\3\2\2"+
 		"\2\u010f\u010b\3\2\2\2\u010f\u010c\3\2\2\2\u010f\u010d\3\2\2\2\u010f\u010e"+
-		"\3\2\2\2\u0110\33\3\2\2\2\u0111\u0112\7\64\2\2\u0112\u0113\7\34\2\2\u0113"+
-		"\u0114\5> \2\u0114\u0115\7\33\2\2\u0115\35\3\2\2\2\u0116\u0117\7\64\2"+
+		"\3\2\2\2\u0110\33\3\2\2\2\u0111\u0112\7\63\2\2\u0112\u0113\7\34\2\2\u0113"+
+		"\u0114\5> \2\u0114\u0115\7\33\2\2\u0115\35\3\2\2\2\u0116\u0117\7\63\2"+
 		"\2\u0117\u0119\7\35\2\2\u0118\u011a\5 \21\2\u0119\u0118\3\2\2\2\u0119"+
 		"\u011a\3\2\2\2\u011a\u011b\3\2\2\2\u011b\u011c\7\36\2\2\u011c\37\3\2\2"+
 		"\2\u011d\u0122\5\"\22\2\u011e\u011f\7\n\2\2\u011f\u0121\5\"\22\2\u0120"+
 		"\u011e\3\2\2\2\u0121\u0124\3\2\2\2\u0122\u0120\3\2\2\2\u0122\u0123\3\2"+
 		"\2\2\u0123!\3\2\2\2\u0124\u0122\3\2\2\2\u0125\u0128\5\f\7\2\u0126\u0128"+
 		"\5> \2\u0127\u0125\3\2\2\2\u0127\u0126\3\2\2\2\u0128#\3\2\2\2\u0129\u012a"+
-		"\7\64\2\2\u012a\u012b\7\t\2\2\u012b\u012c\7\64\2\2\u012c\u012e\7\35\2"+
+		"\7\63\2\2\u012a\u012b\7\t\2\2\u012b\u012c\7\63\2\2\u012c\u012e\7\35\2"+
 		"\2\u012d\u012f\5 \21\2\u012e\u012d\3\2\2\2\u012e\u012f\3\2\2\2\u012f\u0130"+
 		"\3\2\2\2\u0130\u0131\7\36\2\2\u0131%\3\2\2\2\u0132\u0135\5\36\20\2\u0133"+
 		"\u0135\5$\23\2\u0134\u0132\3\2\2\2\u0134\u0133\3\2\2\2\u0135\'\3\2\2\2"+
@@ -2832,7 +2829,7 @@ public class ProyectoParser extends Parser {
 		"\5> \2\u0151\u0152\7\36\2\2\u0152/\3\2\2\2\u0153\u0154\5\30\r\2\u0154"+
 		"\61\3\2\2\2\u0155\u0156\7 \2\2\u0156\u0157\5\30\r\2\u0157\63\3\2\2\2\u0158"+
 		"\u0159\7\"\2\2\u0159\u015a\5\66\34\2\u015a\u015b\7#\2\2\u015b\u015c\5"+
-		"8\35\2\u015c\u015d\5\30\r\2\u015d\65\3\2\2\2\u015e\u015f\7\64\2\2\u015f"+
+		"8\35\2\u015c\u015d\5\30\r\2\u015d\65\3\2\2\2\u015e\u015f\7\63\2\2\u015f"+
 		"\u0160\7\34\2\2\u0160\u0161\5> \2\u0161\67\3\2\2\2\u0162\u0163\5> \2\u0163"+
 		"9\3\2\2\2\u0164\u0165\7!\2\2\u0165\u0166\5<\37\2\u0166\u0167\5\30\r\2"+
 		"\u0167;\3\2\2\2\u0168\u0169\7\35\2\2\u0169\u016a\5> \2\u016a\u016b\7\36"+

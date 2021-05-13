@@ -1,23 +1,12 @@
 program programa;
 
-	class Car {
-		attributes
-		var doors: int;
-
-		methods
-		function start() void {
-			return;
-		}
-
-	};
-
 	var a : int;
-	var b : float = 1 < 2;
+	var b : float;
 
 	function start() void {return;}
 	
 	function testTwo(a: int, hello : int, helloTwo : float) int {
-		var local: string;
+		var local: Car;
 		var array[1]: int;
 		var mat[1][2]: float;
 
@@ -28,8 +17,8 @@ program programa;
 	}
 
 main() {
-		var c : float = a + b;
-		var x : char = "x";
+		var c : float;
+		var x : char;
 
         a = test();
 

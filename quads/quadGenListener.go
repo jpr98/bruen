@@ -85,8 +85,6 @@ func (l *QuadGenListener) ExitTerm2(c *parser.Term2Context) {
 func (l *QuadGenListener) EnterFactor(c *parser.FactorContext) {
 	if c.Vars() != nil {
 		l.m.PushOperand(c.Vars().GetText(), l.currentFunction, l.globalName)
-	} else if c.VarCte() != nil {
-		l.m.PushOperand(c.VarCte().GetText(), l.currentFunction, l.globalName)
 	}
 }
 

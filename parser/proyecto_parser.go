@@ -16,7 +16,7 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 52, 455,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 51, 455,
 	4, 2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 4, 5, 9, 5, 4, 6, 9, 6, 4, 7, 9, 7,
 	4, 8, 9, 8, 4, 9, 9, 9, 4, 10, 9, 10, 4, 11, 9, 11, 4, 12, 9, 12, 4, 13,
 	9, 13, 4, 14, 9, 14, 4, 15, 9, 15, 4, 16, 9, 16, 4, 17, 9, 17, 4, 18, 9,
@@ -67,7 +67,7 @@ var parserATN = []uint16{
 	16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50,
 	52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86,
 	88, 90, 92, 94, 96, 98, 100, 102, 2, 6, 3, 2, 25, 26, 3, 2, 23, 24, 3,
-	2, 45, 49, 3, 2, 19, 22, 2, 449, 2, 104, 3, 2, 2, 2, 4, 128, 3, 2, 2, 2,
+	2, 45, 48, 3, 2, 19, 22, 2, 449, 2, 104, 3, 2, 2, 2, 4, 128, 3, 2, 2, 2,
 	6, 138, 3, 2, 2, 2, 8, 181, 3, 2, 2, 2, 10, 185, 3, 2, 2, 2, 12, 191, 3,
 	2, 2, 2, 14, 208, 3, 2, 2, 2, 16, 221, 3, 2, 2, 2, 18, 229, 3, 2, 2, 2,
 	20, 233, 3, 2, 2, 2, 22, 249, 3, 2, 2, 2, 24, 255, 3, 2, 2, 2, 26, 271,
@@ -82,7 +82,7 @@ var parserATN = []uint16{
 	3, 2, 2, 2, 84, 417, 3, 2, 2, 2, 86, 426, 3, 2, 2, 2, 88, 428, 3, 2, 2,
 	2, 90, 430, 3, 2, 2, 2, 92, 432, 3, 2, 2, 2, 94, 434, 3, 2, 2, 2, 96, 436,
 	3, 2, 2, 2, 98, 445, 3, 2, 2, 2, 100, 450, 3, 2, 2, 2, 102, 452, 3, 2,
-	2, 2, 104, 105, 7, 51, 2, 2, 105, 106, 7, 52, 2, 2, 106, 110, 7, 27, 2,
+	2, 2, 104, 105, 7, 50, 2, 2, 105, 106, 7, 51, 2, 2, 106, 110, 7, 27, 2,
 	2, 107, 109, 5, 4, 3, 2, 108, 107, 3, 2, 2, 2, 109, 112, 3, 2, 2, 2, 110,
 	108, 3, 2, 2, 2, 110, 111, 3, 2, 2, 2, 111, 116, 3, 2, 2, 2, 112, 110,
 	3, 2, 2, 2, 113, 115, 5, 8, 5, 2, 114, 113, 3, 2, 2, 2, 115, 118, 3, 2,
@@ -90,8 +90,8 @@ var parserATN = []uint16{
 	118, 116, 3, 2, 2, 2, 119, 121, 5, 14, 8, 2, 120, 119, 3, 2, 2, 2, 121,
 	124, 3, 2, 2, 2, 122, 120, 3, 2, 2, 2, 122, 123, 3, 2, 2, 2, 123, 125,
 	3, 2, 2, 2, 124, 122, 3, 2, 2, 2, 125, 126, 5, 98, 50, 2, 126, 127, 7,
-	2, 2, 3, 127, 3, 3, 2, 2, 2, 128, 129, 7, 36, 2, 2, 129, 133, 7, 52, 2,
-	2, 130, 131, 7, 20, 2, 2, 131, 132, 7, 52, 2, 2, 132, 134, 7, 19, 2, 2,
+	2, 2, 3, 127, 3, 3, 2, 2, 2, 128, 129, 7, 36, 2, 2, 129, 133, 7, 51, 2,
+	2, 130, 131, 7, 20, 2, 2, 131, 132, 7, 51, 2, 2, 132, 134, 7, 19, 2, 2,
 	133, 130, 3, 2, 2, 2, 133, 134, 3, 2, 2, 2, 134, 135, 3, 2, 2, 2, 135,
 	136, 5, 6, 4, 2, 136, 137, 7, 27, 2, 2, 137, 5, 3, 2, 2, 2, 138, 139, 7,
 	3, 2, 2, 139, 143, 7, 37, 2, 2, 140, 142, 5, 8, 5, 2, 141, 140, 3, 2, 2,
@@ -100,32 +100,32 @@ var parserATN = []uint16{
 	5, 14, 8, 2, 148, 147, 3, 2, 2, 2, 149, 152, 3, 2, 2, 2, 150, 148, 3, 2,
 	2, 2, 150, 151, 3, 2, 2, 2, 151, 153, 3, 2, 2, 2, 152, 150, 3, 2, 2, 2,
 	153, 154, 7, 4, 2, 2, 154, 7, 3, 2, 2, 2, 155, 156, 7, 44, 2, 2, 156, 157,
-	7, 52, 2, 2, 157, 158, 7, 5, 2, 2, 158, 159, 5, 10, 6, 2, 159, 160, 7,
-	27, 2, 2, 160, 182, 3, 2, 2, 2, 161, 162, 7, 44, 2, 2, 162, 163, 7, 52,
+	7, 51, 2, 2, 157, 158, 7, 5, 2, 2, 158, 159, 5, 10, 6, 2, 159, 160, 7,
+	27, 2, 2, 160, 182, 3, 2, 2, 2, 161, 162, 7, 44, 2, 2, 162, 163, 7, 51,
 	2, 2, 163, 164, 7, 6, 2, 2, 164, 165, 7, 12, 2, 2, 165, 166, 7, 7, 2, 2,
 	166, 167, 7, 5, 2, 2, 167, 168, 5, 10, 6, 2, 168, 169, 7, 27, 2, 2, 169,
-	182, 3, 2, 2, 2, 170, 171, 7, 44, 2, 2, 171, 172, 7, 52, 2, 2, 172, 173,
+	182, 3, 2, 2, 2, 170, 171, 7, 44, 2, 2, 171, 172, 7, 51, 2, 2, 172, 173,
 	7, 6, 2, 2, 173, 174, 7, 12, 2, 2, 174, 175, 7, 8, 2, 2, 175, 176, 7, 12,
 	2, 2, 176, 177, 7, 7, 2, 2, 177, 178, 7, 5, 2, 2, 178, 179, 5, 10, 6, 2,
 	179, 180, 7, 27, 2, 2, 180, 182, 3, 2, 2, 2, 181, 155, 3, 2, 2, 2, 181,
 	161, 3, 2, 2, 2, 181, 170, 3, 2, 2, 2, 182, 9, 3, 2, 2, 2, 183, 186, 5,
-	100, 51, 2, 184, 186, 7, 52, 2, 2, 185, 183, 3, 2, 2, 2, 185, 184, 3, 2,
+	100, 51, 2, 184, 186, 7, 51, 2, 2, 185, 183, 3, 2, 2, 2, 185, 184, 3, 2,
 	2, 2, 186, 189, 3, 2, 2, 2, 187, 188, 7, 28, 2, 2, 188, 190, 5, 62, 32,
 	2, 189, 187, 3, 2, 2, 2, 189, 190, 3, 2, 2, 2, 190, 11, 3, 2, 2, 2, 191,
-	194, 7, 52, 2, 2, 192, 193, 7, 9, 2, 2, 193, 195, 7, 52, 2, 2, 194, 192,
+	194, 7, 51, 2, 2, 192, 193, 7, 9, 2, 2, 193, 195, 7, 51, 2, 2, 194, 192,
 	3, 2, 2, 2, 194, 195, 3, 2, 2, 2, 195, 200, 3, 2, 2, 2, 196, 197, 7, 6,
 	2, 2, 197, 198, 5, 62, 32, 2, 198, 199, 7, 7, 2, 2, 199, 201, 3, 2, 2,
 	2, 200, 196, 3, 2, 2, 2, 200, 201, 3, 2, 2, 2, 201, 206, 3, 2, 2, 2, 202,
 	203, 7, 6, 2, 2, 203, 204, 5, 62, 32, 2, 204, 205, 7, 7, 2, 2, 205, 207,
 	3, 2, 2, 2, 206, 202, 3, 2, 2, 2, 206, 207, 3, 2, 2, 2, 207, 13, 3, 2,
-	2, 2, 208, 209, 7, 41, 2, 2, 209, 210, 7, 52, 2, 2, 210, 212, 7, 29, 2,
+	2, 2, 208, 209, 7, 41, 2, 2, 209, 210, 7, 51, 2, 2, 210, 212, 7, 29, 2,
 	2, 211, 213, 5, 16, 9, 2, 212, 211, 3, 2, 2, 2, 212, 213, 3, 2, 2, 2, 213,
 	214, 3, 2, 2, 2, 214, 217, 7, 30, 2, 2, 215, 218, 5, 100, 51, 2, 216, 218,
-	7, 50, 2, 2, 217, 215, 3, 2, 2, 2, 217, 216, 3, 2, 2, 2, 218, 219, 3, 2,
+	7, 49, 2, 2, 217, 215, 3, 2, 2, 2, 217, 216, 3, 2, 2, 2, 218, 219, 3, 2,
 	2, 2, 219, 220, 5, 20, 11, 2, 220, 15, 3, 2, 2, 2, 221, 226, 5, 18, 10,
 	2, 222, 223, 7, 10, 2, 2, 223, 225, 5, 18, 10, 2, 224, 222, 3, 2, 2, 2,
 	225, 228, 3, 2, 2, 2, 226, 224, 3, 2, 2, 2, 226, 227, 3, 2, 2, 2, 227,
-	17, 3, 2, 2, 2, 228, 226, 3, 2, 2, 2, 229, 230, 7, 52, 2, 2, 230, 231,
+	17, 3, 2, 2, 2, 228, 226, 3, 2, 2, 2, 229, 230, 7, 51, 2, 2, 230, 231,
 	7, 5, 2, 2, 231, 232, 5, 100, 51, 2, 232, 19, 3, 2, 2, 2, 233, 237, 7,
 	3, 2, 2, 234, 236, 5, 8, 5, 2, 235, 234, 3, 2, 2, 2, 236, 239, 3, 2, 2,
 	2, 237, 235, 3, 2, 2, 2, 237, 238, 3, 2, 2, 2, 238, 243, 3, 2, 2, 2, 239,
@@ -142,16 +142,16 @@ var parserATN = []uint16{
 	272, 5, 52, 27, 2, 269, 272, 5, 58, 30, 2, 270, 272, 5, 62, 32, 2, 271,
 	264, 3, 2, 2, 2, 271, 265, 3, 2, 2, 2, 271, 266, 3, 2, 2, 2, 271, 267,
 	3, 2, 2, 2, 271, 268, 3, 2, 2, 2, 271, 269, 3, 2, 2, 2, 271, 270, 3, 2,
-	2, 2, 272, 27, 3, 2, 2, 2, 273, 274, 7, 52, 2, 2, 274, 275, 7, 28, 2, 2,
+	2, 2, 272, 27, 3, 2, 2, 2, 273, 274, 7, 51, 2, 2, 274, 275, 7, 28, 2, 2,
 	275, 276, 5, 62, 32, 2, 276, 277, 7, 27, 2, 2, 277, 29, 3, 2, 2, 2, 278,
-	279, 7, 52, 2, 2, 279, 281, 7, 29, 2, 2, 280, 282, 5, 32, 17, 2, 281, 280,
+	279, 7, 51, 2, 2, 279, 281, 7, 29, 2, 2, 280, 282, 5, 32, 17, 2, 281, 280,
 	3, 2, 2, 2, 281, 282, 3, 2, 2, 2, 282, 283, 3, 2, 2, 2, 283, 284, 7, 30,
 	2, 2, 284, 31, 3, 2, 2, 2, 285, 290, 5, 34, 18, 2, 286, 287, 7, 10, 2,
 	2, 287, 289, 5, 34, 18, 2, 288, 286, 3, 2, 2, 2, 289, 292, 3, 2, 2, 2,
 	290, 288, 3, 2, 2, 2, 290, 291, 3, 2, 2, 2, 291, 33, 3, 2, 2, 2, 292, 290,
 	3, 2, 2, 2, 293, 296, 5, 12, 7, 2, 294, 296, 5, 62, 32, 2, 295, 293, 3,
-	2, 2, 2, 295, 294, 3, 2, 2, 2, 296, 35, 3, 2, 2, 2, 297, 298, 7, 52, 2,
-	2, 298, 299, 7, 9, 2, 2, 299, 300, 7, 52, 2, 2, 300, 302, 7, 29, 2, 2,
+	2, 2, 2, 295, 294, 3, 2, 2, 2, 296, 35, 3, 2, 2, 2, 297, 298, 7, 51, 2,
+	2, 298, 299, 7, 9, 2, 2, 299, 300, 7, 51, 2, 2, 300, 302, 7, 29, 2, 2,
 	301, 303, 5, 32, 17, 2, 302, 301, 3, 2, 2, 2, 302, 303, 3, 2, 2, 2, 303,
 	304, 3, 2, 2, 2, 304, 305, 7, 30, 2, 2, 305, 37, 3, 2, 2, 2, 306, 309,
 	5, 30, 16, 2, 307, 309, 5, 36, 19, 2, 308, 306, 3, 2, 2, 2, 308, 307, 3,
@@ -168,7 +168,7 @@ var parserATN = []uint16{
 	2, 2, 339, 340, 5, 24, 13, 2, 340, 49, 3, 2, 2, 2, 341, 342, 7, 32, 2,
 	2, 342, 343, 5, 24, 13, 2, 343, 51, 3, 2, 2, 2, 344, 345, 7, 34, 2, 2,
 	345, 346, 5, 54, 28, 2, 346, 347, 7, 35, 2, 2, 347, 348, 5, 56, 29, 2,
-	348, 349, 5, 24, 13, 2, 349, 53, 3, 2, 2, 2, 350, 351, 7, 52, 2, 2, 351,
+	348, 349, 5, 24, 13, 2, 349, 53, 3, 2, 2, 2, 350, 351, 7, 51, 2, 2, 351,
 	352, 7, 28, 2, 2, 352, 353, 5, 62, 32, 2, 353, 55, 3, 2, 2, 2, 354, 355,
 	5, 62, 32, 2, 355, 57, 3, 2, 2, 2, 356, 357, 7, 33, 2, 2, 357, 358, 5,
 	60, 31, 2, 358, 359, 5, 24, 13, 2, 359, 59, 3, 2, 2, 2, 360, 361, 7, 29,
@@ -215,15 +215,15 @@ var literalNames = []string{
 	"'+'", "'-'", "';'", "'='", "'('", "')'", "'if'", "'else'", "'while'",
 	"'for'", "'in'", "'class'", "'attributes'", "'methods'", "'write'", "'read'",
 	"'function'", "'return'", "'main'", "'var'", "'int'", "'float'", "'char'",
-	"'string'", "'bool'", "'void'", "'program'",
+	"'bool'", "'void'", "'program'",
 }
 var symbolicNames = []string{
 	"", "", "", "", "", "", "", "", "", "", "INT", "FLOAT", "CHAR", "BOOL",
 	"WS", "OR", "AND", "GT", "LT", "EQ", "NEQ", "MUL", "DIV", "ADD", "SUB",
 	"SEMI", "ASSIGN", "LPAREN", "RPAREN", "IF", "ELSE", "WHILE", "FOR", "IN",
 	"CLASS", "ATTRIBUTES", "METHODS", "WRITE", "READ", "FUNCTION", "RETURN",
-	"MAIN", "VAR", "INT_TYPE", "FLOAT_TYPE", "CHAR_TYPE", "STRING_TYPE", "BOOL_TYPE",
-	"VOID", "PROGRAM", "ID",
+	"MAIN", "VAR", "INT_TYPE", "FLOAT_TYPE", "CHAR_TYPE", "BOOL_TYPE", "VOID",
+	"PROGRAM", "ID",
 }
 
 var ruleNames = []string{
@@ -268,57 +268,56 @@ func NewProyectoParser(input antlr.TokenStream) *ProyectoParser {
 
 // ProyectoParser tokens.
 const (
-	ProyectoParserEOF         = antlr.TokenEOF
-	ProyectoParserT__0        = 1
-	ProyectoParserT__1        = 2
-	ProyectoParserT__2        = 3
-	ProyectoParserT__3        = 4
-	ProyectoParserT__4        = 5
-	ProyectoParserT__5        = 6
-	ProyectoParserT__6        = 7
-	ProyectoParserT__7        = 8
-	ProyectoParserT__8        = 9
-	ProyectoParserINT         = 10
-	ProyectoParserFLOAT       = 11
-	ProyectoParserCHAR        = 12
-	ProyectoParserBOOL        = 13
-	ProyectoParserWS          = 14
-	ProyectoParserOR          = 15
-	ProyectoParserAND         = 16
-	ProyectoParserGT          = 17
-	ProyectoParserLT          = 18
-	ProyectoParserEQ          = 19
-	ProyectoParserNEQ         = 20
-	ProyectoParserMUL         = 21
-	ProyectoParserDIV         = 22
-	ProyectoParserADD         = 23
-	ProyectoParserSUB         = 24
-	ProyectoParserSEMI        = 25
-	ProyectoParserASSIGN      = 26
-	ProyectoParserLPAREN      = 27
-	ProyectoParserRPAREN      = 28
-	ProyectoParserIF          = 29
-	ProyectoParserELSE        = 30
-	ProyectoParserWHILE       = 31
-	ProyectoParserFOR         = 32
-	ProyectoParserIN          = 33
-	ProyectoParserCLASS       = 34
-	ProyectoParserATTRIBUTES  = 35
-	ProyectoParserMETHODS     = 36
-	ProyectoParserWRITE       = 37
-	ProyectoParserREAD        = 38
-	ProyectoParserFUNCTION    = 39
-	ProyectoParserRETURN      = 40
-	ProyectoParserMAIN        = 41
-	ProyectoParserVAR         = 42
-	ProyectoParserINT_TYPE    = 43
-	ProyectoParserFLOAT_TYPE  = 44
-	ProyectoParserCHAR_TYPE   = 45
-	ProyectoParserSTRING_TYPE = 46
-	ProyectoParserBOOL_TYPE   = 47
-	ProyectoParserVOID        = 48
-	ProyectoParserPROGRAM     = 49
-	ProyectoParserID          = 50
+	ProyectoParserEOF        = antlr.TokenEOF
+	ProyectoParserT__0       = 1
+	ProyectoParserT__1       = 2
+	ProyectoParserT__2       = 3
+	ProyectoParserT__3       = 4
+	ProyectoParserT__4       = 5
+	ProyectoParserT__5       = 6
+	ProyectoParserT__6       = 7
+	ProyectoParserT__7       = 8
+	ProyectoParserT__8       = 9
+	ProyectoParserINT        = 10
+	ProyectoParserFLOAT      = 11
+	ProyectoParserCHAR       = 12
+	ProyectoParserBOOL       = 13
+	ProyectoParserWS         = 14
+	ProyectoParserOR         = 15
+	ProyectoParserAND        = 16
+	ProyectoParserGT         = 17
+	ProyectoParserLT         = 18
+	ProyectoParserEQ         = 19
+	ProyectoParserNEQ        = 20
+	ProyectoParserMUL        = 21
+	ProyectoParserDIV        = 22
+	ProyectoParserADD        = 23
+	ProyectoParserSUB        = 24
+	ProyectoParserSEMI       = 25
+	ProyectoParserASSIGN     = 26
+	ProyectoParserLPAREN     = 27
+	ProyectoParserRPAREN     = 28
+	ProyectoParserIF         = 29
+	ProyectoParserELSE       = 30
+	ProyectoParserWHILE      = 31
+	ProyectoParserFOR        = 32
+	ProyectoParserIN         = 33
+	ProyectoParserCLASS      = 34
+	ProyectoParserATTRIBUTES = 35
+	ProyectoParserMETHODS    = 36
+	ProyectoParserWRITE      = 37
+	ProyectoParserREAD       = 38
+	ProyectoParserFUNCTION   = 39
+	ProyectoParserRETURN     = 40
+	ProyectoParserMAIN       = 41
+	ProyectoParserVAR        = 42
+	ProyectoParserINT_TYPE   = 43
+	ProyectoParserFLOAT_TYPE = 44
+	ProyectoParserCHAR_TYPE  = 45
+	ProyectoParserBOOL_TYPE  = 46
+	ProyectoParserVOID       = 47
+	ProyectoParserPROGRAM    = 48
+	ProyectoParserID         = 49
 )
 
 // ProyectoParser rules.
@@ -1281,7 +1280,7 @@ func (p *ProyectoParser) VarsTypeInit() (localctx IVarsTypeInitContext) {
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case ProyectoParserINT_TYPE, ProyectoParserFLOAT_TYPE, ProyectoParserCHAR_TYPE, ProyectoParserSTRING_TYPE, ProyectoParserBOOL_TYPE:
+	case ProyectoParserINT_TYPE, ProyectoParserFLOAT_TYPE, ProyectoParserCHAR_TYPE, ProyectoParserBOOL_TYPE:
 		{
 			p.SetState(181)
 			p.TypeRule()
@@ -1647,7 +1646,7 @@ func (p *ProyectoParser) Functions() (localctx IFunctionsContext) {
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case ProyectoParserINT_TYPE, ProyectoParserFLOAT_TYPE, ProyectoParserCHAR_TYPE, ProyectoParserSTRING_TYPE, ProyectoParserBOOL_TYPE:
+	case ProyectoParserINT_TYPE, ProyectoParserFLOAT_TYPE, ProyectoParserCHAR_TYPE, ProyectoParserBOOL_TYPE:
 		{
 			p.SetState(213)
 			p.TypeRule()
@@ -6927,10 +6926,6 @@ func (s *TypeRuleContext) CHAR_TYPE() antlr.TerminalNode {
 	return s.GetToken(ProyectoParserCHAR_TYPE, 0)
 }
 
-func (s *TypeRuleContext) STRING_TYPE() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSTRING_TYPE, 0)
-}
-
 func (s *TypeRuleContext) BOOL_TYPE() antlr.TerminalNode {
 	return s.GetToken(ProyectoParserBOOL_TYPE, 0)
 }
@@ -6981,7 +6976,7 @@ func (p *ProyectoParser) TypeRule() (localctx ITypeRuleContext) {
 		p.SetState(448)
 		_la = p.GetTokenStream().LA(1)
 
-		if !(((_la-43)&-(0x1f+1)) == 0 && ((1<<uint((_la-43)))&((1<<(ProyectoParserINT_TYPE-43))|(1<<(ProyectoParserFLOAT_TYPE-43))|(1<<(ProyectoParserCHAR_TYPE-43))|(1<<(ProyectoParserSTRING_TYPE-43))|(1<<(ProyectoParserBOOL_TYPE-43)))) != 0) {
+		if !(((_la-43)&-(0x1f+1)) == 0 && ((1<<uint((_la-43)))&((1<<(ProyectoParserINT_TYPE-43))|(1<<(ProyectoParserFLOAT_TYPE-43))|(1<<(ProyectoParserCHAR_TYPE-43))|(1<<(ProyectoParserBOOL_TYPE-43)))) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)

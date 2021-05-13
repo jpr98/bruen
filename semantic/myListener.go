@@ -98,12 +98,17 @@ func (l *MyListener) EnterParameter(c *parser.ParameterContext) {
 	// TODO: agregar tipo a arreglo de parámetros
 }
 
-func (l *MyListener) EnterTypeRule(c *parser.TypeRuleContext) {
-
+func (l *MyListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {
 	for _, id := range l.unassignedVariables {
 		l.validateVariableInScope(id)
-		currVariable := VariableAttributes{id, c.GetText()}
-		l.functionTable[l.currentFunction].Vars[id] = &currVariable
+		if c.TypeRule() != nil {
+			currVariable := VariableAttributes{id, c.TypeRule().GetText()}
+			l.functionTable[l.currentFunction].Vars[id] = &currVariable
+		} else if c.ID() != nil {
+			// TODO: Asegurarnos que la clase existe
+			currVariable := VariableAttributes{id, c.ID().GetText() + " - Class"}
+			l.functionTable[l.currentFunction].Vars[id] = &currVariable
+		}
 	}
 	l.unassignedVariables = nil
 }
