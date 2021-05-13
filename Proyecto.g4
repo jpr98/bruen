@@ -63,7 +63,8 @@ classBlock: '{' ATTRIBUTES varsDec* METHODS functions* '}';
 varsDec: VAR ID ':' varsTypeInit SEMI
     | VAR ID '['INT']' ':' varsTypeInit SEMI
     | VAR ID '['INT']['INT']' ':' varsTypeInit SEMI;
-varsTypeInit: (typeRule | ID) (ASSIGN exp)?;
+varsTypeInit: (typeRule | ID) varsTypeInit2?;
+varsTypeInit2: (ASSIGN exp);
 
 vars: ID ('.' ID)? ('[' exp ']')? ('[' exp ']')?;
 

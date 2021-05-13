@@ -55,7 +55,7 @@ func main() {
 		fmt.Printf("%d. %s\n", i, q)
 	}
 	fmt.Println("\n---------")
-	debugFT(listener.GetFunctionTable())
+	//debugFT(listener.GetFunctionTable())
 }
 
 func testSC() {

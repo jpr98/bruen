@@ -51,6 +51,12 @@ func (s *BaseProyectoListener) EnterVarsTypeInit(ctx *VarsTypeInitContext) {}
 // ExitVarsTypeInit is called when production varsTypeInit is exited.
 func (s *BaseProyectoListener) ExitVarsTypeInit(ctx *VarsTypeInitContext) {}
 
+// EnterVarsTypeInit2 is called when production varsTypeInit2 is entered.
+func (s *BaseProyectoListener) EnterVarsTypeInit2(ctx *VarsTypeInit2Context) {}
+
+// ExitVarsTypeInit2 is called when production varsTypeInit2 is exited.
+func (s *BaseProyectoListener) ExitVarsTypeInit2(ctx *VarsTypeInit2Context) {}
+
 // EnterVars is called when production vars is entered.
 func (s *BaseProyectoListener) EnterVars(ctx *VarsContext) {}
 

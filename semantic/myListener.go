@@ -121,7 +121,7 @@ func (l *MyListener) EnterForLoop2(c *parser.ForLoop2Context) {
 
 func (l *MyListener) ExitProgram(c *parser.ProgramContext) {
 	l.scopeStack.Pop()
-	l.printFunctions()
+	//l.printFunctions()
 }
 
 //Debugger Helpers

@@ -23,6 +23,9 @@ type ProyectoListener interface {
 	// EnterVarsTypeInit is called when entering the varsTypeInit production.
 	EnterVarsTypeInit(c *VarsTypeInitContext)
 
+	// EnterVarsTypeInit2 is called when entering the varsTypeInit2 production.
+	EnterVarsTypeInit2(c *VarsTypeInit2Context)
+
 	// EnterVars is called when entering the vars production.
 	EnterVars(c *VarsContext)
 
@@ -175,6 +178,9 @@ type ProyectoListener interface {
 
 	// ExitVarsTypeInit is called when exiting the varsTypeInit production.
 	ExitVarsTypeInit(c *VarsTypeInitContext)
+
+	// ExitVarsTypeInit2 is called when exiting the varsTypeInit2 production.
+	ExitVarsTypeInit2(c *VarsTypeInit2Context)
 
 	// ExitVars is called when exiting the vars production.
 	ExitVars(c *VarsContext)

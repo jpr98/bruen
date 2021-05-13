@@ -34,6 +34,18 @@ func (l *QuadGenListener) ExitAssignation(c *parser.AssignationContext) {
 	l.m.GenerateAssignationQuad(false)
 }
 
+func (l *QuadGenListener) EnterVarsDec(c *parser.VarsDecContext) {
+	l.m.PushOperand(c.ID().GetText(), l.currentFunction, l.globalName)
+}
+
+func (l *QuadGenListener) EnterVarsTypeInit2(c *parser.VarsTypeInit2Context) {
+	l.m.PushOp(c.ASSIGN().GetText())
+}
+
+func (l *QuadGenListener) ExitVarsTypeInit2(c *parser.VarsTypeInit2Context) {
+	l.m.GenerateAssignationQuad(false)
+}
+
 func (l *QuadGenListener) EnterG_exp2(c *parser.G_exp2Context) {
 	if c.Relop() != nil {
 		l.m.PushOp(c.Relop().GetText())
