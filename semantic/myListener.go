@@ -92,7 +92,10 @@ func (l *MyListener) EnterVarsDec(c *parser.VarsDecContext) {
 
 func (l *MyListener) EnterParameter(c *parser.ParameterContext) {
 	id := c.ID().GetText()
-	l.unassignedVariables = append(l.unassignedVariables, id)
+	typeOf := c.TypeRule().GetText()
+	currVariable := VariableAttributes{id, typeOf}
+	l.functionTable[l.currentFunction].Vars[id] = &currVariable
+	// TODO: agregar tipo a arreglo de parámetros
 }
 
 func (l *MyListener) EnterTypeRule(c *parser.TypeRuleContext) {

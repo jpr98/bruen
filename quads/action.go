@@ -18,10 +18,11 @@ const (
 	ASSIGN
 	GOTOF
 	GOTO
+	ENDFUNC
 )
 
 func (a QuadAction) String() string {
-	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||", "(", "=", "GOTOF", "GOTO"}[a]
+	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||", "(", "=", "GOTOF", "GOTO", "ENDFUNC"}[a]
 }
 
 type QuadActionStack struct {

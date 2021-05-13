@@ -9,9 +9,12 @@ type VariableAttributes struct {
 }
 
 type FunctionTableContent struct {
-	TypeOf string
-	Vars   map[string]*VariableAttributes
-	Scope  string
+	TypeOf  string
+	Dir     int
+	EraSize string
+	Vars    map[string]*VariableAttributes
+	// Params constants.TYPE[]
+	Scope string
 }
 
 func (ft FunctionTable) GetVarType(varName string) string {

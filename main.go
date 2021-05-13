@@ -54,9 +54,22 @@ func main() {
 	for i, q := range quads {
 		fmt.Printf("%d. %s\n", i, q)
 	}
+	fmt.Println("\n---------")
+	debugFT(listener.GetFunctionTable())
 }
 
 func testSC() {
 	sc := semantic.NewCube(nil)
 	fmt.Println(sc.ValidateBinaryOperation(constants.TYPEBOOL, constants.TYPEBOOL, constants.OPAND))
+}
+
+func debugFT(ft semantic.FunctionTable) {
+	for fname, function := range ft {
+		fmt.Printf("\n *Function: %s Returns: %s Scope: %s\n", fname, function.TypeOf, function.Scope)
+		fmt.Println("VarTable:")
+		for id, variable := range function.Vars {
+			fmt.Printf("%s: %s \n", id, variable.TypeOf)
+		}
+		fmt.Printf("Dir: %d\n", function.Dir)
+	}
 }

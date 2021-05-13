@@ -186,6 +186,13 @@ func (l *QuadGenListener) ExitClassDef(c *parser.ClassDefContext) {
 
 func (l *QuadGenListener) EnterFunctions(c *parser.FunctionsContext) {
 	l.currentFunction = c.ID().GetText()
+	l.m.functionTable[l.currentFunction].Dir = len(l.m.GetQuads())
+}
+
+func (l *QuadGenListener) ExitFunctions(c *parser.FunctionsContext) {
+	l.m.AddEndFuncQuad()
+	l.m.functionTable[l.currentFunction].Vars = nil
+	l.m.functionTable[l.currentFunction].EraSize = "0i1f2c3b"
 }
 
 func (l *QuadGenListener) EnterMain(c *parser.MainContext) {

@@ -196,6 +196,11 @@ func (m *Manager) AddAndUpdateWhileGotos() {
 	m.quads[posF].result = NewElement(len(m.quads), constants.ADDR)
 }
 
+func (m *Manager) AddEndFuncQuad() {
+	q := Quad{ENDFUNC, nil, nil, nil}
+	m.quads = append(m.quads, q)
+}
+
 func (m *Manager) getNextAvail() string {
 	defer func() { m.avail++ }()
 	return fmt.Sprintf("t%d", m.avail)
