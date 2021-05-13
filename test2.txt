@@ -4,10 +4,16 @@ var a: int;
 var b: char;
 var c: int;
 
+function test() void {
+    var ch : char = "a";
+
+    if (ch == "b") {
+        a = 99;
+    }
+    return;
+}
+
 main() {
     a = 10;
-    for i = 0 in a {
-        a = c * c;
-    }
     return;
 }

@@ -17,10 +17,8 @@ program programa;
 	}
 
 main() {
-		var c : float;
-		var x : char;
-
-        a = test();
+		var c : float = 1.0;
+		var x : char = "a";
 
 		if (a > z) {
 			read(car.doors, a, b);

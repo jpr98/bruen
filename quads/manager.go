@@ -78,8 +78,10 @@ func (m *Manager) PushOperand(operand, currentFunction, globalName string) {
 
 	t := constants.StringToType(typeOf)
 	if t == constants.ERR {
-		// TODO: Handle error
-		fmt.Println(operand, " here")
+		log.Fatalf(
+			"Error: (PushOperand) undeclared variable %s\n",
+			operand,
+		)
 		return
 	}
 	element := NewElement(operand, t)
