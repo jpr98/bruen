@@ -6,7 +6,8 @@ var c: int;
 
 function test() void {
     var ch : char = "a";
-    var number : int = 1 + 3 * 2;
+    var number : int = -1;
+    var neg : float = -1.0;
 
     if (ch == "b") {
         a = 99;

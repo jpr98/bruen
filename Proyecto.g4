@@ -2,8 +2,8 @@
 grammar Proyecto;
 
 // Tokens
-INT: [0-9]+;
-FLOAT: INT ('.' INT)? ('E' [+-]? INT)?;
+INT: '-'? [0-9]+;
+FLOAT: INT ('.' [0-9]+)?;
 CHAR: '"'[A-Za-z]'"';
 BOOL: 'true' | 'false';
 WS: [ \r\n\t]+ -> skip;
