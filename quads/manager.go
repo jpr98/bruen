@@ -33,7 +33,9 @@ type Manager struct {
 
 	functionTable semantic.FunctionTable
 
-	avail int
+	currentFunctionCall string
+	paramCounter        int
+	avail               int
 }
 
 func (m Manager) GetQuads() []Quad {
@@ -200,6 +202,38 @@ func (m *Manager) AddAndUpdateWhileGotos() {
 
 func (m *Manager) AddEndFuncQuad() {
 	q := Quad{ENDFUNC, nil, nil, nil}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddEraQuad(name string) {
+	n := NewElement(name, constants.TYPEINT)
+	q := Quad{ERA, n, nil, nil}
+	m.quads = append(m.quads, q)
+
+	m.currentFunctionCall = name
+	m.paramCounter = 0
+}
+
+func (m *Manager) AddParamQuad() {
+	arg := m.operands.Pop()
+	t := semantic.Cube.ValidateBinaryOperation(m.functionTable[m.currentFunctionCall].Params[m.paramCounter], arg.Type(), int(constants.OPASSIGN))
+	if t == constants.ERR {
+		log.Fatalf(
+			"Error: (AddParamQuad) type mismatch, parameter %s must be of type %s",
+			arg,
+			m.functionTable[m.currentFunctionCall].Params[m.paramCounter],
+		)
+	}
+	argNum := NewElement(m.paramCounter, m.functionTable[m.currentFunctionCall].Params[m.paramCounter])
+	q := Quad{PARAM, arg, argNum, nil}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddGoSubQuad(name string) {
+	dir := m.functionTable[m.currentFunctionCall].Dir
+	n := NewElement(name, constants.TYPEINT)
+	dirElement := NewElement(dir, constants.ADDR)
+	q := Quad{GOSUB, n, nil, dirElement}
 	m.quads = append(m.quads, q)
 }
 

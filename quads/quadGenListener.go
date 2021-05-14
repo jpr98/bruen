@@ -1,6 +1,8 @@
 package quads
 
 import (
+	"log"
+
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/parser"
 	"github.com/jpr98/compis/semantic"
@@ -211,4 +213,21 @@ func (l *QuadGenListener) EnterMain(c *parser.MainContext) {
 
 func (l *QuadGenListener) ExitProgram(c *parser.ProgramContext) {
 	l.scopeStack.Pop()
+}
+
+func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {
+	_, exists := l.m.functionTable[c.ID().GetText()]
+	if !exists {
+		log.Fatalf("Error: (EnterFunctionCall) undeclared function %s", c.ID().GetText())
+	}
+	l.m.AddEraQuad(c.ID().GetText())
+}
+
+func (l *QuadGenListener) ExitFunctionCall(c *parser.FunctionCallContext) {
+	l.m.AddGoSubQuad(c.ID().GetText())
+}
+
+func (l *QuadGenListener) EnterArguments2(c *parser.Arguments2Context) {
+	l.m.AddParamQuad()
+	l.m.paramCounter++
 }

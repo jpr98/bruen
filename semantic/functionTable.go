@@ -1,5 +1,7 @@
 package semantic
 
+import "github.com/jpr98/compis/constants"
+
 type FunctionTable map[string]*FunctionTableContent
 
 // Stores all attributes of the variables
@@ -13,8 +15,8 @@ type FunctionTableContent struct {
 	Dir     int
 	EraSize string
 	Vars    map[string]*VariableAttributes
-	// Params constants.TYPE[]
-	Scope string
+	Params  []constants.Type
+	Scope   string
 }
 
 func (ft FunctionTable) GetVarType(varName string) string {

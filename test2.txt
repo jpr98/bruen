@@ -15,7 +15,12 @@ function test() void {
     return;
 }
 
+function paramTest(a: int, b: float) int {
+    a = a;
+    return a;
+}
+
 main() {
-    a = 10;
+    paramTest(a + c, 10);
     return;
 }

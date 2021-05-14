@@ -59,8 +59,8 @@ type ProyectoListener interface {
 	// EnterArguments is called when entering the arguments production.
 	EnterArguments(c *ArgumentsContext)
 
-	// EnterArgument is called when entering the argument production.
-	EnterArgument(c *ArgumentContext)
+	// EnterArguments2 is called when entering the arguments2 production.
+	EnterArguments2(c *Arguments2Context)
 
 	// EnterMethodCall is called when entering the methodCall production.
 	EnterMethodCall(c *MethodCallContext)
@@ -100,6 +100,9 @@ type ProyectoListener interface {
 
 	// EnterWhileLoop2 is called when entering the whileLoop2 production.
 	EnterWhileLoop2(c *WhileLoop2Context)
+
+	// EnterExpression is called when entering the expression production.
+	EnterExpression(c *ExpressionContext)
 
 	// EnterExp is called when entering the exp production.
 	EnterExp(c *ExpContext)
@@ -215,8 +218,8 @@ type ProyectoListener interface {
 	// ExitArguments is called when exiting the arguments production.
 	ExitArguments(c *ArgumentsContext)
 
-	// ExitArgument is called when exiting the argument production.
-	ExitArgument(c *ArgumentContext)
+	// ExitArguments2 is called when exiting the arguments2 production.
+	ExitArguments2(c *Arguments2Context)
 
 	// ExitMethodCall is called when exiting the methodCall production.
 	ExitMethodCall(c *MethodCallContext)
@@ -256,6 +259,9 @@ type ProyectoListener interface {
 
 	// ExitWhileLoop2 is called when exiting the whileLoop2 production.
 	ExitWhileLoop2(c *WhileLoop2Context)
+
+	// ExitExpression is called when exiting the expression production.
+	ExitExpression(c *ExpressionContext)
 
 	// ExitExp is called when exiting the exp production.
 	ExitExp(c *ExpContext)

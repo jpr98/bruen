@@ -123,11 +123,11 @@ func (s *BaseProyectoListener) EnterArguments(ctx *ArgumentsContext) {}
 // ExitArguments is called when production arguments is exited.
 func (s *BaseProyectoListener) ExitArguments(ctx *ArgumentsContext) {}
 
-// EnterArgument is called when production argument is entered.
-func (s *BaseProyectoListener) EnterArgument(ctx *ArgumentContext) {}
+// EnterArguments2 is called when production arguments2 is entered.
+func (s *BaseProyectoListener) EnterArguments2(ctx *Arguments2Context) {}
 
-// ExitArgument is called when production argument is exited.
-func (s *BaseProyectoListener) ExitArgument(ctx *ArgumentContext) {}
+// ExitArguments2 is called when production arguments2 is exited.
+func (s *BaseProyectoListener) ExitArguments2(ctx *Arguments2Context) {}
 
 // EnterMethodCall is called when production methodCall is entered.
 func (s *BaseProyectoListener) EnterMethodCall(ctx *MethodCallContext) {}
@@ -206,6 +206,12 @@ func (s *BaseProyectoListener) EnterWhileLoop2(ctx *WhileLoop2Context) {}
 
 // ExitWhileLoop2 is called when production whileLoop2 is exited.
 func (s *BaseProyectoListener) ExitWhileLoop2(ctx *WhileLoop2Context) {}
+
+// EnterExpression is called when production expression is entered.
+func (s *BaseProyectoListener) EnterExpression(ctx *ExpressionContext) {}
+
+// ExitExpression is called when production expression is exited.
+func (s *BaseProyectoListener) ExitExpression(ctx *ExpressionContext) {}
 
 // EnterExp is called when production exp is entered.
 func (s *BaseProyectoListener) EnterExp(ctx *ExpContext) {}

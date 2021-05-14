@@ -19,10 +19,13 @@ const (
 	GOTOF
 	GOTO
 	ENDFUNC
+	ERA
+	PARAM
+	GOSUB
 )
 
 func (a QuadAction) String() string {
-	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||", "(", "=", "GOTOF", "GOTO", "ENDFUNC"}[a]
+	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||", "(", "=", "GOTOF", "GOTO", "ENDFUNC", "ERA", "PARAM", "GOSUB"}[a]
 }
 
 type QuadActionStack struct {

@@ -96,6 +96,11 @@ func (l *MyListener) EnterParameter(c *parser.ParameterContext) {
 	currVariable := VariableAttributes{id, typeOf}
 	l.functionTable[l.currentFunction].Vars[id] = &currVariable
 	// TODO: agregar tipo a arreglo de parámetros
+	t := constants.StringToType(typeOf)
+	if t == constants.ERR {
+		log.Fatalf("Error: (EnterParameter) unkown type from %s", typeOf)
+	}
+	l.functionTable[l.currentFunction].Params = append(l.functionTable[l.currentFunction].Params, t)
 }
 
 func (l *MyListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {

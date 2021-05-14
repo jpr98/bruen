@@ -82,13 +82,13 @@ statutes: assignation
         | conditional
         | forLoop
         | whileLoop
-        | exp;
+        | expression;
 
 assignation: ID ASSIGN exp SEMI;
 
 functionCall: ID LPAREN arguments? RPAREN;
-arguments: argument (',' argument)*;
-argument: (vars | exp);
+arguments: exp arguments2;
+arguments2: ',' arguments | ;
 
 methodCall: ID '.' ID LPAREN arguments? RPAREN;
 
@@ -110,6 +110,7 @@ forLoop3: exp;
 whileLoop: WHILE whileLoop2 block;
 whileLoop2: LPAREN exp RPAREN;
 
+expression: exp SEMI;
 exp: t_exp exp2*;
 exp2: (OR t_exp);
 
