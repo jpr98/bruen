@@ -215,6 +215,13 @@ func (m *Manager) AddEraQuad(name string) {
 }
 
 func (m *Manager) AddParamQuad() {
+	if m.paramCounter >= len(m.functionTable[m.currentFunctionCall].Params) {
+		log.Fatalf(
+			"Error: (AddGoSubQuad) function %s has too many arguments",
+			m.currentFunctionCall,
+		)
+	}
+
 	arg := m.operands.Pop()
 	t := semantic.Cube.ValidateBinaryOperation(m.functionTable[m.currentFunctionCall].Params[m.paramCounter], arg.Type(), int(constants.OPASSIGN))
 	if t == constants.ERR {
@@ -230,6 +237,13 @@ func (m *Manager) AddParamQuad() {
 }
 
 func (m *Manager) AddGoSubQuad(name string) {
+	if m.paramCounter < len(m.functionTable[m.currentFunctionCall].Params) {
+		log.Fatalf(
+			"Error: (AddGoSubQuad) function %s has too few arguments",
+			m.currentFunctionCall,
+		)
+	}
+
 	dir := m.functionTable[m.currentFunctionCall].Dir
 	n := NewElement(name, constants.TYPEINT)
 	dirElement := NewElement(dir, constants.ADDR)
