@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/jpr98/compis/constants"
+	"github.com/jpr98/compis/memory"
 	"github.com/jpr98/compis/semantic"
 )
 
@@ -63,22 +64,28 @@ func (m *Manager) PushOp(op string) {
 }
 
 // PushConstantOperand sets an operand with a defined (hardcoded) type
-func (m *Manager) PushConstantOperand(operand string, typeOf constants.Type) {
-	element := NewElement(operand, typeOf)
+func (m *Manager) PushConstantOperand(operand string) {
+	op, exists := semantic.ConstantsTable[operand]
+	if !exists {
+		log.Fatalf("Error: (PushConstantOperand) %s is not a known constant", operand)
+	}
+	element := NewElement(op.Dir, operand, op.TypeOf)
 	m.operands.Push(element)
 }
 
 func (m *Manager) PushOperand(operand, currentFunction, globalName string) {
-	var typeOf string
+	t := constants.ERR
+	var dir int
 	if attr, exists := m.functionTable[currentFunction].Vars[operand]; exists {
-		typeOf = attr.TypeOf
+		t = attr.TypeOf
+		dir = attr.Dir
 	} else {
 		if attr, exists := m.functionTable[globalName].Vars[operand]; exists {
-			typeOf = attr.TypeOf
+			t = attr.TypeOf
+			dir = attr.Dir
 		}
 	}
 
-	t := constants.StringToType(typeOf)
 	if t == constants.ERR {
 		log.Fatalf(
 			"Error: (PushOperand) undeclared variable %s\n",
@@ -86,7 +93,7 @@ func (m *Manager) PushOperand(operand, currentFunction, globalName string) {
 		)
 		return
 	}
-	element := NewElement(operand, t)
+	element := NewElement(dir, operand, t)
 	m.operands.Push(element)
 }
 
@@ -118,11 +125,18 @@ func (m *Manager) GenerateQuad(validOps []int, isForLoop bool) {
 		}
 
 		// 7: pedir espacio para resultado - done
-		result := NewElement(m.getNextAvail(), resultType)
+		dir, err := memory.Manager.GetNextAddr(resultType, memory.Temp)
+		if err != nil {
+			log.Fatalf("Error: (GenerateQuad) %s\n", err)
+		}
+		result := NewElement(dir, m.getNextAvail(), resultType)
+
 		// 8: generar quad - done
 		q := Quad{op, lOperand, rOperand, result}
+
 		// 9: meter quad a lista - done
 		m.quads = append(m.quads, q)
+
 		// 10: meter result a stack operandos - done
 		m.operands.Push(result)
 	}
@@ -173,14 +187,14 @@ func (m *Manager) AddAndUpdateGoto() {
 	m.quads = append(m.quads, q)
 
 	// Update quad
-	m.quads[pos].result = NewElement(len(m.quads), constants.ADDR)
+	m.quads[pos].result = NewElement(len(m.quads), "", constants.ADDR)
 }
 
 func (m *Manager) UpdateGoto() {
 	pos := m.jumpStack[len(m.jumpStack)-1]
 	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
 
-	m.quads[pos].result = NewElement(len(m.quads), constants.ADDR)
+	m.quads[pos].result = NewElement(len(m.quads), "", constants.ADDR)
 }
 
 func (m *Manager) SaveJumpPosition() {
@@ -194,19 +208,28 @@ func (m *Manager) AddAndUpdateWhileGotos() {
 	posR := m.jumpStack[len(m.jumpStack)-1]
 	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
 
-	q := Quad{GOTO, nil, nil, NewElement(posR, constants.ADDR)}
+	q := Quad{GOTO, nil, nil, NewElement(posR, "", constants.ADDR)}
 	m.quads = append(m.quads, q)
 
-	m.quads[posF].result = NewElement(len(m.quads), constants.ADDR)
+	m.quads[posF].result = NewElement(len(m.quads), "", constants.ADDR)
 }
 
+func (m *Manager) AddForLoopIterator(id string) {
+	dir, err := memory.Manager.GetNextAddr(constants.TYPEINT, memory.Local)
+	if err != nil {
+		log.Fatalf("Error: (AddForLoopIterator) %s\n", err)
+	}
+
+	e := NewElement(dir, id, constants.TYPEINT)
+	m.operands.Push(e)
+}
 func (m *Manager) AddEndFuncQuad() {
 	q := Quad{ENDFUNC, nil, nil, nil}
 	m.quads = append(m.quads, q)
 }
 
 func (m *Manager) AddEraQuad(name string) {
-	n := NewElement(name, constants.TYPEINT)
+	n := NewElement(name, "", constants.TYPEINT)
 	q := Quad{ERA, n, nil, nil}
 	m.quads = append(m.quads, q)
 
@@ -231,7 +254,12 @@ func (m *Manager) AddParamQuad() {
 			m.functionTable[m.currentFunctionCall].Params[m.paramCounter],
 		)
 	}
-	argNum := NewElement(m.paramCounter, m.functionTable[m.currentFunctionCall].Params[m.paramCounter])
+
+	// dir, err := memory.Manager.GetNextAddr(t, memory.Local)
+	// if err != nil {
+	// 	log.Fatalf("Error: (AddParamQuad) %s\n", err)
+	// }
+	argNum := NewElement(nil, fmt.Sprintf("%d", m.paramCounter), m.functionTable[m.currentFunctionCall].Params[m.paramCounter])
 	q := Quad{PARAM, arg, argNum, nil}
 	m.quads = append(m.quads, q)
 }
@@ -245,8 +273,8 @@ func (m *Manager) AddGoSubQuad(name string) {
 	}
 
 	dir := m.functionTable[m.currentFunctionCall].Dir
-	n := NewElement(name, constants.TYPEINT)
-	dirElement := NewElement(dir, constants.ADDR)
+	n := NewElement(nil, name, constants.TYPEINT)
+	dirElement := NewElement(dir, "", constants.ADDR)
 	q := Quad{GOSUB, n, nil, dirElement}
 	m.quads = append(m.quads, q)
 }

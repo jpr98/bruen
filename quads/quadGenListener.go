@@ -99,20 +99,22 @@ func (l *QuadGenListener) ExitTerm2(c *parser.Term2Context) {
 func (l *QuadGenListener) EnterFactor(c *parser.FactorContext) {
 	if c.Vars() != nil {
 		l.m.PushOperand(c.Vars().GetText(), l.currentFunction, l.globalName)
+	} else if c.VarCte() != nil {
+		l.m.PushConstantOperand(c.VarCte().GetText())
 	}
 }
 
-func (l *QuadGenListener) EnterVarCte(c *parser.VarCteContext) {
-	if c.Cte_i() != nil {
-		l.m.PushConstantOperand(c.Cte_i().GetText(), constants.TYPEINT)
-	} else if c.Cte_f() != nil {
-		l.m.PushConstantOperand(c.Cte_f().GetText(), constants.TYPEFLOAT)
-	} else if c.Cte_c() != nil {
-		l.m.PushConstantOperand(c.Cte_c().GetText(), constants.TYPECHAR)
-	} else if c.Cte_b() != nil {
-		l.m.PushConstantOperand(c.Cte_b().GetText(), constants.TYPEBOOL)
-	}
-}
+// func (l *QuadGenListener) EnterVarCte(c *parser.VarCteContext) {
+// 	if c.Cte_i() != nil {
+// 		l.m.PushConstantOperand(c.Cte_i().GetText())
+// 	} else if c.Cte_f() != nil {
+// 		l.m.PushConstantOperand(c.Cte_f().GetText())
+// 	} else if c.Cte_c() != nil {
+// 		l.m.PushConstantOperand(c.Cte_c().GetText())
+// 	} else if c.Cte_b() != nil {
+// 		l.m.PushConstantOperand(c.Cte_b().GetText())
+// 	}
+// }
 
 func (l *QuadGenListener) EnterFactor2(c *parser.Factor2Context) {
 	// Adds false bottom
@@ -155,7 +157,7 @@ func (l *QuadGenListener) ExitWhileLoop2(c *parser.WhileLoop2Context) {
 
 func (l *QuadGenListener) ExitForLoop(c *parser.ForLoopContext) {
 	// TODO: change this string to constant(1) address
-	l.m.PushConstantOperand("1", constants.TYPEINT)
+	l.m.PushConstantOperand("1")
 	l.m.PushOp("+")
 	l.m.GenerateQuad([]int{constants.OPPLUS}, true)
 
@@ -166,7 +168,7 @@ func (l *QuadGenListener) ExitForLoop(c *parser.ForLoopContext) {
 }
 
 func (l *QuadGenListener) EnterForLoop2(c *parser.ForLoop2Context) {
-	l.m.PushConstantOperand(c.ID().GetText(), constants.TYPEINT)
+	l.m.AddForLoopIterator(c.ID().GetText())
 	l.m.PushOp(c.ASSIGN().GetText())
 }
 func (l *QuadGenListener) ExitForLoop2(c *parser.ForLoop2Context) {

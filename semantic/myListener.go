@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/jpr98/compis/constants"
+	"github.com/jpr98/compis/memory"
 	"github.com/jpr98/compis/parser"
 	"github.com/jpr98/compis/utils"
 )
@@ -14,6 +15,7 @@ type MyListener struct {
 	*parser.BaseProyectoListener
 	scopeStack      utils.StringStack
 	currentFunction string
+	programName     string
 	//TODO: store type of function (create FunctionAttributes?)
 	functionTable       FunctionTable
 	unassignedVariables []string
@@ -23,6 +25,7 @@ func NewListener() MyListener {
 	var listener MyListener
 	listener.scopeStack = utils.StringStack{}
 	listener.currentFunction = ""
+	listener.programName = ""
 	listener.functionTable = make(map[string]*FunctionTableContent)
 	listener.unassignedVariables = make([]string, 0)
 	return listener
@@ -52,8 +55,16 @@ func (l *MyListener) addToFunctionTable(typeOf string, scope string) {
 
 func (l *MyListener) EnterProgram(c *parser.ProgramContext) {
 	l.currentFunction = c.ID().GetText()
+	l.programName = c.ID().GetText()
 	l.addToFunctionTable("void", "")
 	l.scopeStack.Push(c.ID().GetText())
+
+	// Setting a constant 1 int
+	dir, err := memory.Manager.GetNextAddr(constants.TYPEINT, memory.Constant)
+	if err != nil {
+		log.Fatalf("Error: (EnterProgram) setting constant 1, %s", err)
+	}
+	ConstantsTable["1"] = &constantsTableContent{constants.TYPEINT, dir}
 }
 
 func (l *MyListener) EnterClassDef(c *parser.ClassDefContext) {
@@ -92,35 +103,85 @@ func (l *MyListener) EnterVarsDec(c *parser.VarsDecContext) {
 
 func (l *MyListener) EnterParameter(c *parser.ParameterContext) {
 	id := c.ID().GetText()
-	typeOf := c.TypeRule().GetText()
-	currVariable := VariableAttributes{id, typeOf}
-	l.functionTable[l.currentFunction].Vars[id] = &currVariable
-	// TODO: agregar tipo a arreglo de parámetros
-	t := constants.StringToType(typeOf)
+	t := constants.StringToType(c.TypeRule().GetText())
 	if t == constants.ERR {
-		log.Fatalf("Error: (EnterParameter) unkown type from %s", typeOf)
+		log.Fatalf("Error: (EnterParameter) unkown type from %s", c.TypeRule().GetText())
 	}
+
+	dir, err := memory.Manager.GetNextAddr(t, memory.Local)
+	if err != nil {
+		log.Fatalf("Error: (EnterParameter) %s\n", err)
+	}
+
+	currVariable := VariableAttributes{id, t, dir}
+	l.functionTable[l.currentFunction].Vars[id] = &currVariable
 	l.functionTable[l.currentFunction].Params = append(l.functionTable[l.currentFunction].Params, t)
 }
 
 func (l *MyListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {
 	for _, id := range l.unassignedVariables {
 		l.validateVariableInScope(id)
+
 		if c.TypeRule() != nil {
-			currVariable := VariableAttributes{id, c.TypeRule().GetText()}
+			t := constants.StringToType(c.TypeRule().GetText())
+			if t == constants.ERR {
+				log.Fatalf("Error: (EnterVarsTypeInit) unkown type from %s", c.TypeRule().GetText())
+			}
+
+			var memCtx memory.Context
+			if l.currentFunction == l.programName {
+				memCtx = memory.Global
+			} else {
+				memCtx = memory.Local
+			}
+			dir, err := memory.Manager.GetNextAddr(t, memCtx)
+			if err != nil {
+				log.Fatalf("Error: (EnterVarsTypeInit) %s\n", err)
+			}
+
+			currVariable := VariableAttributes{id, t, dir}
 			l.functionTable[l.currentFunction].Vars[id] = &currVariable
+
 		} else if c.ID() != nil {
 			// TODO: Asegurarnos que la clase existe
-			currVariable := VariableAttributes{id, c.ID().GetText() + " - Class"}
+			currVariable := VariableAttributes{id, constants.TYPECLASS, 20000}
 			l.functionTable[l.currentFunction].Vars[id] = &currVariable
 		}
 	}
 	l.unassignedVariables = nil
 }
 
+func (l *MyListener) EnterVarCte(c *parser.VarCteContext) {
+	if c.Cte_i() != nil {
+		dir, err := memory.Manager.GetNextAddr(constants.TYPEINT, memory.Constant)
+		if err != nil {
+			log.Fatalf("Error: (EnterVarCte) %s\n", err)
+		}
+		ConstantsTable[c.Cte_i().GetText()] = &constantsTableContent{constants.TYPEINT, dir}
+	} else if c.Cte_f() != nil {
+		dir, err := memory.Manager.GetNextAddr(constants.TYPEFLOAT, memory.Constant)
+		if err != nil {
+			log.Fatalf("Error: (EnterVarCte) %s\n", err)
+		}
+		ConstantsTable[c.Cte_f().GetText()] = &constantsTableContent{constants.TYPEFLOAT, dir}
+	} else if c.Cte_c() != nil {
+		dir, err := memory.Manager.GetNextAddr(constants.TYPECHAR, memory.Constant)
+		if err != nil {
+			log.Fatalf("Error: (EnterVarCte) %s\n", err)
+		}
+		ConstantsTable[c.Cte_c().GetText()] = &constantsTableContent{constants.TYPECHAR, dir}
+	} else if c.Cte_b() != nil {
+		dir, err := memory.Manager.GetNextAddr(constants.TYPEBOOL, memory.Constant)
+		if err != nil {
+			log.Fatalf("Error: (EnterVarCte) %s\n", err)
+		}
+		ConstantsTable[c.Cte_b().GetText()] = &constantsTableContent{constants.TYPEBOOL, dir}
+	}
+}
+
 func (l *MyListener) EnterForLoop2(c *parser.ForLoop2Context) {
 	id := c.ID().GetText()
-	currVariable := VariableAttributes{id, constants.TYPEINT.String()}
+	currVariable := VariableAttributes{id, constants.TYPEINT, memory.LOCAL_INT}
 	l.functionTable[l.currentFunction].Vars[id] = &currVariable
 }
 

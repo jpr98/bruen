@@ -19,12 +19,13 @@ type Element interface {
 
 type quadElement struct {
 	value  value
+	id     string
 	typeOf constants.Type
 }
 
 // NewElement creates a new quad.Element
-func NewElement(val value, typeOf constants.Type) Element {
-	return quadElement{value: val, typeOf: typeOf}
+func NewElement(val value, id string, typeOf constants.Type) Element {
+	return quadElement{value: val, id: id, typeOf: typeOf}
 }
 
 func (e quadElement) Value() value {
@@ -36,7 +37,7 @@ func (e quadElement) Type() constants.Type {
 }
 
 func (e quadElement) String() string {
-	return fmt.Sprintf("%s (type: %s)", e.Value(), e.Type())
+	return fmt.Sprintf("%s (type: %s, addr: %d)", e.id, e.Type(), e.Value())
 }
 
 // ElementStack is a stack of quad.Element

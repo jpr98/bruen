@@ -7,7 +7,8 @@ type FunctionTable map[string]*FunctionTableContent
 // Stores all attributes of the variables
 type VariableAttributes struct {
 	Name   string
-	TypeOf string
+	TypeOf constants.Type
+	Dir    int
 }
 
 type FunctionTableContent struct {
@@ -19,11 +20,11 @@ type FunctionTableContent struct {
 	Scope   string
 }
 
-func (ft FunctionTable) GetVarType(varName string) string {
+func (ft FunctionTable) GetVarType(varName string) constants.Type {
 	for _, v := range ft {
 		if attr, ok := v.Vars[varName]; ok {
 			return attr.TypeOf
 		}
 	}
-	return "error"
+	return constants.ERR
 }
