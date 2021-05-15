@@ -2,11 +2,13 @@
 grammar Proyecto;
 
 // Tokens
-INT: [0-9]+;
-FLOAT: INT ('.' INT)? ('E' [+-]? INT)?;
+INT: '-'? [0-9]+;
+FLOAT: INT ('.' [0-9]+)?;
 CHAR: '"'[A-Za-z]'"';
 BOOL: 'true' | 'false';
 WS: [ \r\n\t]+ -> skip;
+OR: '||';
+AND: '&&';
 GT: '>';
 LT: '<';
 EQ: '==';
@@ -16,6 +18,9 @@ DIV: '/';
 ADD: '+';
 SUB: '-';
 SEMI: ';';
+ASSIGN: '=';
+LPAREN: '(';
+RPAREN: ')';
 
 // -- Keywords -- 
 // Conditionals
@@ -42,7 +47,6 @@ VAR: 'var';
 INT_TYPE: 'int';
 FLOAT_TYPE: 'float';
 CHAR_TYPE: 'char';
-STRING_TYPE: 'string';
 BOOL_TYPE: 'bool';
 VOID: 'void';
 // Program
@@ -59,11 +63,12 @@ classBlock: '{' ATTRIBUTES varsDec* METHODS functions* '}';
 varsDec: VAR ID ':' varsTypeInit SEMI
     | VAR ID '['INT']' ':' varsTypeInit SEMI
     | VAR ID '['INT']['INT']' ':' varsTypeInit SEMI;
-varsTypeInit: (typeRule | ID) ('=' exp)?;
+varsTypeInit: (typeRule | ID) varsTypeInit2?;
+varsTypeInit2: (ASSIGN exp);
 
 vars: ID ('.' ID)? ('[' exp ']')? ('[' exp ']')?;
 
-functions: FUNCTION ID '(' parameters? ')' (typeRule | VOID) functionBlock;
+functions: FUNCTION ID LPAREN parameters? RPAREN (typeRule | VOID) functionBlock;
 parameters: parameter (',' parameter)*;
 parameter: ID ':' typeRule;
 functionBlock: '{' varsDec* statutes* returnRule'}';
@@ -77,37 +82,56 @@ statutes: assignation
         | conditional
         | forLoop
         | whileLoop
-        | exp;
+        | expression;
 
-assignation: ID '=' exp SEMI;
+assignation: ID ASSIGN exp SEMI;
 
-functionCall: ID '(' arguments? ')';
-arguments: argument (',' argument)*;
-argument: (vars | exp);
+functionCall: ID LPAREN arguments? RPAREN;
+arguments: exp arguments2;
+arguments2: ',' arguments | ;
 
-methodCall: ID '.' ID '(' arguments? ')';
+methodCall: ID '.' ID LPAREN arguments? RPAREN;
 
 call: functionCall | methodCall;
 
-read: READ '(' vars (',' vars)* ')' SEMI;
+read: READ LPAREN vars (',' vars)* RPAREN SEMI;
 
-write: WRITE '(' arguments ')' SEMI;
+write: WRITE LPAREN arguments RPAREN SEMI;
 
-conditional: IF '(' exp ')' block (ELSE block)?;
+conditional: IF conditional2 conditional3 conditional4?;
+conditional2: LPAREN exp RPAREN;
+conditional3: block;
+conditional4: ELSE block;
 
-forLoop: FOR ID '=' exp IN exp block;
+forLoop: FOR forLoop2 IN forLoop3 block;
+forLoop2: ID ASSIGN exp;
+forLoop3: exp;
 
-whileLoop: WHILE '(' exp ')' block;
+whileLoop: WHILE whileLoop2 block;
+whileLoop2: LPAREN exp RPAREN;
 
-exp: t_exp ('||' t_exp)*;
-t_exp: g_exp ('&&' g_exp)*;
-g_exp: m_exp (relop m_exp)?;
-m_exp: term ((ADD | SUB) term)*;
-term: factor ((MUL | DIV) factor)*;
-factor: '(' exp ')'
+expression: exp SEMI;
+exp: t_exp exp2*;
+exp2: (OR t_exp);
+
+t_exp: g_exp t_exp2*;
+t_exp2: (AND g_exp);
+
+g_exp: m_exp (g_exp2)?;
+g_exp2: relop m_exp;
+
+m_exp: term m_exp2*;
+m_exp2: (ADD | SUB) term;
+
+term: factor term2*;
+term2: (MUL | DIV) factor;
+
+factor: factor2
       | varCte
       | vars
       | call;
+      
+factor2: LPAREN exp RPAREN;
 
 varCte: cte_i
       | cte_f
@@ -121,12 +145,11 @@ cte_c: CHAR;
 cte_b: BOOL;
 cte_s: '"' .*? '"'; // checar espacios en strings
 
-main: MAIN '('')' functionBlock;
+main: MAIN LPAREN RPAREN functionBlock;
 
 typeRule: INT_TYPE
     | FLOAT_TYPE
     | CHAR_TYPE
-    | STRING_TYPE
     | BOOL_TYPE;
 
 relop: GT

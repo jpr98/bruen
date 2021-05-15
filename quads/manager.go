@@ -1,0 +1,293 @@
+package quads
+
+import (
+	"fmt"
+	"log"
+
+	"github.com/jpr98/compis/constants"
+	"github.com/jpr98/compis/semantic"
+)
+
+type Quad struct {
+	action QuadAction // operator
+	left   Element    // operand
+	right  Element    // operand
+	result Element
+}
+
+func (q Quad) String() string {
+	return fmt.Sprintf(
+		"Quad {%s %s %s %s}",
+		q.action,
+		q.left,
+		q.right,
+		q.result,
+	)
+}
+
+type Manager struct {
+	operands  ElementStack    // stack operands
+	operators QuadActionStack // stack operators
+	quads     []Quad
+	jumpStack []int
+
+	functionTable semantic.FunctionTable
+
+	currentFunctionCall string
+	paramCounter        int
+	avail               int
+}
+
+func (m Manager) GetQuads() []Quad {
+	return m.quads
+}
+
+func NewManager(functionTable semantic.FunctionTable) Manager {
+	return Manager{
+		operands:      NewElementStack(),
+		operators:     NewQuadActionStack(),
+		quads:         make([]Quad, 0),
+		functionTable: functionTable,
+		avail:         0,
+	}
+}
+
+func (m *Manager) PushOp(op string) {
+	opCode, err := stringToOp(op)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	m.operators.Push(opCode)
+}
+
+// PushConstantOperand sets an operand with a defined (hardcoded) type
+func (m *Manager) PushConstantOperand(operand string, typeOf constants.Type) {
+	element := NewElement(operand, typeOf)
+	m.operands.Push(element)
+}
+
+func (m *Manager) PushOperand(operand, currentFunction, globalName string) {
+	var typeOf string
+	if attr, exists := m.functionTable[currentFunction].Vars[operand]; exists {
+		typeOf = attr.TypeOf
+	} else {
+		if attr, exists := m.functionTable[globalName].Vars[operand]; exists {
+			typeOf = attr.TypeOf
+		}
+	}
+
+	t := constants.StringToType(typeOf)
+	if t == constants.ERR {
+		log.Fatalf(
+			"Error: (PushOperand) undeclared variable %s\n",
+			operand,
+		)
+		return
+	}
+	element := NewElement(operand, t)
+	m.operands.Push(element)
+}
+
+func (m *Manager) GenerateQuad(validOps []int, isForLoop bool) {
+	// 1: validar que top op este en validOps - done
+	if arrayContainsElement(m.operators.Top(), validOps) {
+		// 2: obtener right operand - done
+		rOperand := m.operands.Pop()
+		// 3: obtener left operand - done
+		var lOperand Element
+		if isForLoop {
+			lOperand = m.operands.Top()
+		} else {
+			lOperand = m.operands.Pop()
+		}
+		// 4: sacar op de stack - done
+		op := m.operators.Pop()
+
+		// 5: obtener tipo de cubo semantico - done
+		resultType := semantic.Cube.ValidateBinaryOperation(lOperand.Type(), rOperand.Type(), int(op))
+		// 6: validar tipo no sea error (manejar error en caso de haber) - done
+		if resultType == constants.ERR {
+			log.Fatalf(
+				"Error: (GenerateQuad) type mismatch, operator (%s) can't be done between %s and %s\n",
+				op,
+				lOperand,
+				rOperand,
+			)
+		}
+
+		// 7: pedir espacio para resultado - done
+		result := NewElement(m.getNextAvail(), resultType)
+		// 8: generar quad - done
+		q := Quad{op, lOperand, rOperand, result}
+		// 9: meter quad a lista - done
+		m.quads = append(m.quads, q)
+		// 10: meter result a stack operandos - done
+		m.operands.Push(result)
+	}
+}
+
+func (m *Manager) GenerateAssignationQuad(retainResult bool) {
+	op := m.operators.Pop()
+	operand := m.operands.Pop()
+	result := m.operands.Pop()
+
+	resultType := semantic.Cube.ValidateBinaryOperation(result.Type(), operand.Type(), constants.OPASSIGN)
+	if resultType == constants.ERR {
+		log.Fatalf(
+			"Error: (GenerateAssignationQuad) type mismatch, assignation to %s can't be %s\n",
+			result,
+			operand,
+		)
+	}
+
+	if retainResult {
+		m.operands.Push(result)
+	}
+	q := Quad{op, operand, nil, result}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddGotoF() {
+	m.jumpStack = append(m.jumpStack, len(m.quads))
+	operand := m.operands.Pop()
+	if operand.Type() != constants.TYPEBOOL {
+		log.Fatalf(
+			"Error: (AddGotoF) if statement needs bool, received %s\n",
+			operand,
+		)
+	}
+	q := Quad{GOTOF, operand, nil, nil}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddAndUpdateGoto() {
+	// Get pos of quad to update
+	pos := m.jumpStack[len(m.jumpStack)-1]
+	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
+
+	// Add goto quad
+	m.jumpStack = append(m.jumpStack, len(m.quads))
+	q := Quad{GOTO, nil, nil, nil}
+	m.quads = append(m.quads, q)
+
+	// Update quad
+	m.quads[pos].result = NewElement(len(m.quads), constants.ADDR)
+}
+
+func (m *Manager) UpdateGoto() {
+	pos := m.jumpStack[len(m.jumpStack)-1]
+	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
+
+	m.quads[pos].result = NewElement(len(m.quads), constants.ADDR)
+}
+
+func (m *Manager) SaveJumpPosition() {
+	m.jumpStack = append(m.jumpStack, len(m.quads))
+}
+
+func (m *Manager) AddAndUpdateWhileGotos() {
+	posF := m.jumpStack[len(m.jumpStack)-1]
+	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
+
+	posR := m.jumpStack[len(m.jumpStack)-1]
+	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
+
+	q := Quad{GOTO, nil, nil, NewElement(posR, constants.ADDR)}
+	m.quads = append(m.quads, q)
+
+	m.quads[posF].result = NewElement(len(m.quads), constants.ADDR)
+}
+
+func (m *Manager) AddEndFuncQuad() {
+	q := Quad{ENDFUNC, nil, nil, nil}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddEraQuad(name string) {
+	n := NewElement(name, constants.TYPEINT)
+	q := Quad{ERA, n, nil, nil}
+	m.quads = append(m.quads, q)
+
+	m.currentFunctionCall = name
+	m.paramCounter = 0
+}
+
+func (m *Manager) AddParamQuad() {
+	if m.paramCounter >= len(m.functionTable[m.currentFunctionCall].Params) {
+		log.Fatalf(
+			"Error: (AddGoSubQuad) function %s has too many arguments",
+			m.currentFunctionCall,
+		)
+	}
+
+	arg := m.operands.Pop()
+	t := semantic.Cube.ValidateBinaryOperation(m.functionTable[m.currentFunctionCall].Params[m.paramCounter], arg.Type(), int(constants.OPASSIGN))
+	if t == constants.ERR {
+		log.Fatalf(
+			"Error: (AddParamQuad) type mismatch, parameter %s must be of type %s",
+			arg,
+			m.functionTable[m.currentFunctionCall].Params[m.paramCounter],
+		)
+	}
+	argNum := NewElement(m.paramCounter, m.functionTable[m.currentFunctionCall].Params[m.paramCounter])
+	q := Quad{PARAM, arg, argNum, nil}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddGoSubQuad(name string) {
+	if m.paramCounter < len(m.functionTable[m.currentFunctionCall].Params) {
+		log.Fatalf(
+			"Error: (AddGoSubQuad) function %s has too few arguments",
+			m.currentFunctionCall,
+		)
+	}
+
+	dir := m.functionTable[m.currentFunctionCall].Dir
+	n := NewElement(name, constants.TYPEINT)
+	dirElement := NewElement(dir, constants.ADDR)
+	q := Quad{GOSUB, n, nil, dirElement}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) getNextAvail() string {
+	defer func() { m.avail++ }()
+	return fmt.Sprintf("t%d", m.avail)
+}
+
+func arrayContainsElement(element QuadAction, array []int) bool {
+	for _, value := range array {
+		if int(element) == value {
+			return true
+		}
+	}
+	return false
+}
+
+func stringToOp(text string) (QuadAction, error) {
+	switch text {
+	case ADD.String():
+		return ADD, nil
+	case SUB.String():
+		return SUB, nil
+	case MUL.String():
+		return MUL, nil
+	case DIV.String():
+		return DIV, nil
+	case GT.String():
+		return GT, nil
+	case LT.String():
+		return LT, nil
+	case EQ.String():
+		return EQ, nil
+	case NEQ.String():
+		return NEQ, nil
+	case ASSIGN.String():
+		return ASSIGN, nil
+	case LPAREN.String():
+		return LPAREN, nil
+	default:
+		return -1, fmt.Errorf("no op code for given string")
+	}
+}

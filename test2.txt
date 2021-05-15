@@ -1,0 +1,26 @@
+program test2;
+
+var a: int;
+var b: char;
+var c: int;
+
+function test() void {
+    var ch : char = "a";
+    var number : int = -1;
+    var neg : float = -1.0;
+
+    if (ch == "b") {
+        a = 99;
+    }
+    return;
+}
+
+function paramTest(a: int, b: float) int {
+    a = a;
+    return a;
+}
+
+main() {
+    paramTest(a + c, 10);
+    return;
+}

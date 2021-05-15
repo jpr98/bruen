@@ -8,6 +8,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/parser"
+	"github.com/jpr98/compis/quads"
 	"github.com/jpr98/compis/semantic"
 )
 
@@ -40,13 +41,35 @@ func main() {
 	// Creates the parser
 	p := parser.NewProyectoParser(stream)
 
-	var listener MyListener = NewListener()
+	listener := semantic.NewListener()
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
 
-	testSC()
+	fmt.Println("\n---------")
+	stream.Seek(0)
+	p = parser.NewProyectoParser(stream)
+
+	var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable())
+	antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
+	quads := quadListener.GetManager().GetQuads()
+	for i, q := range quads {
+		fmt.Printf("%d. %s\n", i, q)
+	}
+	fmt.Println("\n---------")
+	//debugFT(listener.GetFunctionTable())
 }
 
 func testSC() {
 	sc := semantic.NewCube(nil)
-	fmt.Println(sc.ValidateBinaryOperation(constants.TYPEBOOL, constants.TYPEBOOL, constants.OPAND).String())
+	fmt.Println(sc.ValidateBinaryOperation(constants.TYPEBOOL, constants.TYPEBOOL, constants.OPAND))
+}
+
+func debugFT(ft semantic.FunctionTable) {
+	for fname, function := range ft {
+		fmt.Printf("\n *Function: %s Returns: %s Scope: %s\n", fname, function.TypeOf, function.Scope)
+		fmt.Println("VarTable:")
+		for id, variable := range function.Vars {
+			fmt.Printf("%s: %s \n", id, variable.TypeOf)
+		}
+		fmt.Printf("Dir: %d\n", function.Dir)
+	}
 }

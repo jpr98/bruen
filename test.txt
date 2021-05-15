@@ -1,37 +1,24 @@
 program programa;
 
-	class Car {
-		attributes
-		var doors: int;
-
-		methods
-		function start() void {
-			return;
-		}
-
-	};
-
 	var a : int;
-	var b : float = 1 < 2;
-	
+	var b : float;
+
 	function start() void {return;}
 	
 	function testTwo(a: int, hello : int, helloTwo : float) int {
-		var local: string;
+		var local: Car;
 		var array[1]: int;
 		var mat[1][2]: float;
 
-		if (a || b && c) {
+		if (a || b && c > b) {
 			write("helloworld");
 		}
 		return 10;
 	}
 
-	main() {
-		var c : float = a + b;
-		var x : char = "x";
-
-        a = test();
+main() {
+		var c : float = 1.0;
+		var x : char = "a";
 
 		if (a > z) {
 			read(car.doors, a, b);
@@ -40,4 +27,4 @@ program programa;
 		}
 
         return;
-	}
+}
