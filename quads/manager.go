@@ -1,6 +1,7 @@
 package quads
 
 import (
+	"encoding/gob"
 	"fmt"
 	"log"
 
@@ -10,19 +11,24 @@ import (
 )
 
 type Quad struct {
-	action QuadAction // operator
-	left   Element    // operand
-	right  Element    // operand
-	result Element
+	Action QuadAction // operator
+	Left   Element    // operand
+	Right  Element    // operand
+	Result Element
+}
+
+func init() {
+	gob.Register(Quad{})
+	gob.Register(quadElement{})
 }
 
 func (q Quad) String() string {
 	return fmt.Sprintf(
 		"Quad {%s %s %s %s}",
-		q.action,
-		q.left,
-		q.right,
-		q.result,
+		q.Action,
+		q.Left,
+		q.Right,
+		q.Result,
 	)
 }
 
@@ -100,9 +106,9 @@ func (m *Manager) PushOperand(operand, currentFunction, globalName string) {
 func (m *Manager) GenerateQuad(validOps []int, isForLoop bool) {
 	// 1: validar que top op este en validOps - done
 	if arrayContainsElement(m.operators.Top(), validOps) {
-		// 2: obtener right operand - done
+		// 2: obtener Right operand - done
 		rOperand := m.operands.Pop()
-		// 3: obtener left operand - done
+		// 3: obtener Left operand - done
 		var lOperand Element
 		if isForLoop {
 			lOperand = m.operands.Top()
@@ -142,7 +148,7 @@ func (m *Manager) GenerateQuad(validOps []int, isForLoop bool) {
 	}
 }
 
-func (m *Manager) GenerateAssignationQuad(retainResult bool) {
+func (m *Manager) GenerateAssignationQuad(retainresult bool) {
 	op := m.operators.Pop()
 	operand := m.operands.Pop()
 	result := m.operands.Pop()
@@ -156,7 +162,7 @@ func (m *Manager) GenerateAssignationQuad(retainResult bool) {
 		)
 	}
 
-	if retainResult {
+	if retainresult {
 		m.operands.Push(result)
 	}
 	q := Quad{op, operand, nil, result}
@@ -187,14 +193,14 @@ func (m *Manager) AddAndUpdateGoto() {
 	m.quads = append(m.quads, q)
 
 	// Update quad
-	m.quads[pos].result = NewElement(len(m.quads), "", constants.ADDR)
+	m.quads[pos].Result = NewElement(len(m.quads), "", constants.ADDR)
 }
 
 func (m *Manager) UpdateGoto() {
 	pos := m.jumpStack[len(m.jumpStack)-1]
 	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
 
-	m.quads[pos].result = NewElement(len(m.quads), "", constants.ADDR)
+	m.quads[pos].Result = NewElement(len(m.quads), "", constants.ADDR)
 }
 
 func (m *Manager) SaveJumpPosition() {
@@ -211,7 +217,7 @@ func (m *Manager) AddAndUpdateWhileGotos() {
 	q := Quad{GOTO, nil, nil, NewElement(posR, "", constants.ADDR)}
 	m.quads = append(m.quads, q)
 
-	m.quads[posF].result = NewElement(len(m.quads), "", constants.ADDR)
+	m.quads[posF].Result = NewElement(len(m.quads), "", constants.ADDR)
 }
 
 func (m *Manager) AddForLoopIterator(id string) {
@@ -229,7 +235,7 @@ func (m *Manager) AddEndFuncQuad() {
 }
 
 func (m *Manager) AddEraQuad(name string) {
-	n := NewElement(name, "", constants.TYPEINT)
+	n := NewElement(0, name, constants.TYPEINT)
 	q := Quad{ERA, n, nil, nil}
 	m.quads = append(m.quads, q)
 
@@ -259,7 +265,7 @@ func (m *Manager) AddParamQuad() {
 	// if err != nil {
 	// 	log.Fatalf("Error: (AddParamQuad) %s\n", err)
 	// }
-	argNum := NewElement(nil, fmt.Sprintf("%d", m.paramCounter), m.functionTable[m.currentFunctionCall].Params[m.paramCounter])
+	argNum := NewElement(0, fmt.Sprintf("%d", m.paramCounter), m.functionTable[m.currentFunctionCall].Params[m.paramCounter])
 	q := Quad{PARAM, arg, argNum, nil}
 	m.quads = append(m.quads, q)
 }
@@ -273,7 +279,7 @@ func (m *Manager) AddGoSubQuad(name string) {
 	}
 
 	dir := m.functionTable[m.currentFunctionCall].Dir
-	n := NewElement(nil, name, constants.TYPEINT)
+	n := NewElement(0, name, constants.TYPEINT)
 	dirElement := NewElement(dir, "", constants.ADDR)
 	q := Quad{GOSUB, n, nil, dirElement}
 	m.quads = append(m.quads, q)

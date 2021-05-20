@@ -1,6 +1,10 @@
 package semantic
 
-import "github.com/jpr98/compis/constants"
+import (
+	"encoding/gob"
+
+	"github.com/jpr98/compis/constants"
+)
 
 type FunctionTable map[string]*FunctionTableContent
 
@@ -18,6 +22,10 @@ type FunctionTableContent struct {
 	Vars    map[string]*VariableAttributes
 	Params  []constants.Type
 	Scope   string
+}
+
+func init() {
+	gob.Register(FunctionTable{})
 }
 
 func (ft FunctionTable) GetVarType(varName string) constants.Type {

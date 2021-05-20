@@ -16,6 +16,9 @@ function test() void {
 }
 
 function paramTest(a: int, b: float) int {
+    for i = 0 in 10 {
+        a = a + a;
+    }
     a = a;
     return a;
 }
