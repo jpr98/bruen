@@ -115,6 +115,43 @@ func (m *manager) GetNextAddr(typeOf constants.Type, context Context) (int, erro
 	return 0, fmt.Errorf("(GetNextAddr) invalid context %s", context)
 }
 
+// ConvertAddr returns the memory reference minus the offset to get the real memory address
+func ConvertAddr(addr int) int {
+	if addr < GLOBAL_FLOAT {
+		return addr - GLOBAL_INT
+	} else if addr < GLOBAL_CHAR {
+		return addr - GLOBAL_FLOAT
+	} else if addr < GLOBAL_BOOL {
+		return addr - GLOBAL_CHAR
+	} else if addr < LOCAL_INT {
+		return addr - GLOBAL_BOOL
+	} else if addr < LOCAL_FLOAT {
+		return addr - LOCAL_INT
+	} else if addr < LOCAL_CHAR {
+		return addr - LOCAL_FLOAT
+	} else if addr < LOCAL_BOOL {
+		return addr - LOCAL_CHAR
+	} else if addr < TEMP_INT {
+		return addr - LOCAL_BOOL
+	} else if addr < TEMP_FLOAT {
+		return addr - TEMP_INT
+	} else if addr < TEMP_CHAR {
+		return addr - TEMP_FLOAT
+	} else if addr < TEMP_BOOL {
+		return addr - TEMP_CHAR
+	} else if addr < CONST_INT {
+		return addr - TEMP_BOOL
+	} else if addr < CONST_FLOAT {
+		return addr - CONST_INT
+	} else if addr < CONST_CHAR {
+		return addr - CONST_FLOAT
+	} else if addr < CONST_BOOL {
+		return addr - CONST_CHAR
+	} else {
+		return addr - CONST_BOOL
+	}
+}
+
 func (m *manager) getGlobalForType(typeOf constants.Type) int {
 	var result int
 	switch typeOf {
