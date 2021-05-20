@@ -24,3 +24,8 @@ En este avance desarrollamos el código que genera los cuádruplos de los estatu
 (*08 de mayo de 2021*)
 
 En este avance aprovechamos para completar algunos TODOs que teníamos pendientes como el manejo de constantes en quads, el fondo falso para las expresiones y la validación de tipos de las variables en ellas.
+
+### Avance 6: Funciones y Ejecución de Expresiones
+(*15 de mayo de 2021*)
+
+En este avance se desarrolló la generación de quads para las funciones y llamadas a funciones. Además se realizó el mapa de memoria para la máquina virtual.
