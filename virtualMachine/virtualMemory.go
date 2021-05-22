@@ -1,17 +1,15 @@
 package virtualMachine
 
 import (
-	"log"
+	"fmt"
 
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/memory"
 )
 
 type Memory interface {
-	GetInt(vAddr int, isTemp bool) int
-	GetFloat(vAddr int, isTemp bool) float32
-	GetChar(vAddr int, isTemp bool) rune
-	GetBool(vAddr int, isTemp bool) bool
+	Get(addr int) interface{}
+	Set(value interface{}, addr int) error
 }
 
 type mem struct {
@@ -53,76 +51,57 @@ func NewMemory(varSizes, tempSizes [4]int) Memory {
 	return &m
 }
 
-func (m mem) GetInt(vAddr int, isTemp bool) int {
-	addr := memory.ConvertAddr(vAddr)
-	var value interface{}
-	if isTemp {
-		value = m.temps[constants.TYPEINT][addr]
-	} else {
-		value = m.vars[constants.TYPEINT][addr]
+func (m *mem) Get(addr int) interface{} {
+	vAddr := memory.ConvertAddr(addr)
+	typeOf := memory.TypeForAddr(addr)
+
+	if memory.IsTempAddr(addr) {
+		return m.temps[typeOf][vAddr]
 	}
-	intValue, ok := value.(int)
-	if !ok {
-		log.Fatalf(
-			"Error: (GetInt) failed to type-cast %v into an int",
-			value,
-		)
-	}
-	return intValue
+	return m.vars[typeOf][vAddr]
 }
 
-func (m mem) GetFloat(vAddr int, isTemp bool) float32 {
-	addr := memory.ConvertAddr(vAddr)
-	var value interface{}
-	if isTemp {
-		value = m.temps[constants.TYPEFLOAT][addr]
-	} else {
-		value = m.vars[constants.TYPEFLOAT][addr]
-	}
-	floatValue, ok := value.(float32)
-	if !ok {
-		log.Fatalf(
-			"Error: (GetFloat) failed to type-cast %v into a float",
-			value,
-		)
-	}
-	return floatValue
-}
+func (m *mem) Set(value interface{}, addr int) error {
+	vAddr := memory.ConvertAddr(addr)
+	typeOf := memory.TypeForAddr(addr)
 
-func (m mem) GetChar(vAddr int, isTemp bool) rune {
-	addr := memory.ConvertAddr(vAddr)
-	var value interface{}
-	if isTemp {
-		value = m.temps[constants.TYPECHAR][addr]
-	} else {
-		value = m.vars[constants.TYPECHAR][addr]
+	switch typeOf {
+	case constants.TYPEINT, constants.TYPEFLOAT:
+		numberValue, ok := value.(float64)
+		if !ok {
+			return fmt.Errorf("Error: (Set) couldn't cast %v to float64", value)
+		}
+		if memory.IsTempAddr(addr) {
+			m.temps[typeOf][vAddr] = numberValue
+		} else {
+			m.vars[typeOf][vAddr] = numberValue
+		}
+		return nil
+	case constants.TYPECHAR:
+		runeValue, ok := value.(rune)
+		if !ok {
+			return fmt.Errorf("Error: (Set) couldn't cast %v to rune", value)
+		}
+		if memory.IsTempAddr(addr) {
+			m.temps[typeOf][vAddr] = runeValue
+		} else {
+			m.vars[typeOf][vAddr] = runeValue
+		}
+		return nil
+	case constants.TYPEBOOL:
+		boolValue, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("Error: (Set) couldn't cast %v to bool", value)
+		}
+		if memory.IsTempAddr(addr) {
+			m.temps[typeOf][vAddr] = boolValue
+		} else {
+			m.vars[typeOf][vAddr] = boolValue
+		}
+		return nil
+	default:
+		return fmt.Errorf("Error: (Set) unexpected type to set in memory block")
 	}
-	charValue, ok := value.(rune)
-	if !ok {
-		log.Fatalf(
-			"Error: (GetChar) failed to type-cast %v into a char",
-			value,
-		)
-	}
-	return charValue
-}
-
-func (m mem) GetBool(vAddr int, isTemp bool) bool {
-	addr := memory.ConvertAddr(vAddr)
-	var value interface{}
-	if isTemp {
-		value = m.temps[constants.TYPECHAR][addr]
-	} else {
-		value = m.vars[constants.TYPECHAR][addr]
-	}
-	boolValue, ok := value.(bool)
-	if !ok {
-		log.Fatalf(
-			"Error: (GetBool) failed to type-cast %v into a bool",
-			value,
-		)
-	}
-	return boolValue
 }
 
 /*

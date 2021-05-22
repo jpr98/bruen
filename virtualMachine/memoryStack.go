@@ -15,3 +15,7 @@ func (ms *MemoryStack) Push(mem Memory) {
 func (ms *MemoryStack) Pop() {
 	ms.stack = ms.stack[:len(ms.stack)-1]
 }
+
+func (ms *MemoryStack) Empty() bool {
+	return len(ms.stack) == 0
+}

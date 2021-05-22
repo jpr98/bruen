@@ -152,6 +152,10 @@ func ConvertAddr(addr int) int {
 	}
 }
 
+func IsTempAddr(addr int) bool {
+	return addr >= TEMP_INT && addr < CONST_INT
+}
+
 func (m *manager) getGlobalForType(typeOf constants.Type) int {
 	var result int
 	switch typeOf {
