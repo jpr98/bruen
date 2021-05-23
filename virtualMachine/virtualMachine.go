@@ -81,6 +81,7 @@ func (vm *VirtualMachine) Run() {
 		case quads.ERA:
 			fmb := NewMemory(vm.functionTable[quad.Left.ID()].VarsSize, vm.functionTable[quad.Left.ID()].TempSize)
 			vm.memBlocks.Push(fmb)
+			vm.pointer++
 
 		case quads.PARAM:
 			memblock := vm.getMemBlockForAddr(quad.Left.GetAddr())
@@ -105,13 +106,6 @@ func (vm *VirtualMachine) Run() {
 			vm.pointer++
 		}
 	}
-}
-
-func (vm *VirtualMachine) currentMemBlock() Memory {
-	if vm.memBlocks.Empty() {
-		return vm.globalMemBlock
-	}
-	return vm.memBlocks.Top()
 }
 
 func (vm *VirtualMachine) getMemBlockForAddr(addr int) Memory {
@@ -167,6 +161,8 @@ func (vm *VirtualMachine) handleArithmeticOp(quad quads.Quad) {
 	if quad.Result.Type() == constants.TYPEINT {
 		res = math.Round(res)
 	}
+
+	memblock = vm.getMemBlockForAddr(quad.Result.GetAddr())
 	err := memblock.Set(res, quad.Result.GetAddr())
 	if err != nil {
 		log.Fatalf("Error (handleArithmeticOp) %s", err)
@@ -180,7 +176,7 @@ func (vm *VirtualMachine) handleRelOp(quad quads.Quad) {
 	switch lTemp.(type) {
 	case rune:
 		left := lTemp.(rune)
-		memblock := vm.getMemBlockForAddr(quad.Right.GetAddr())
+		memblock = vm.getMemBlockForAddr(quad.Right.GetAddr())
 		right, ok := memblock.Get(quad.Right.GetAddr()).(rune)
 		if !ok {
 			log.Fatalf(
@@ -201,6 +197,7 @@ func (vm *VirtualMachine) handleRelOp(quad quads.Quad) {
 		}
 	case float64:
 		left := lTemp.(float64)
+		memblock = vm.getMemBlockForAddr(quad.Right.GetAddr())
 		right, ok := memblock.Get(quad.Right.GetAddr()).(float64)
 		if !ok {
 			log.Fatalf(
@@ -221,6 +218,7 @@ func (vm *VirtualMachine) handleRelOp(quad quads.Quad) {
 		}
 	}
 
+	memblock = vm.getMemBlockForAddr(quad.Result.GetAddr())
 	err := memblock.Set(res, quad.Result.GetAddr())
 	if err != nil {
 		log.Fatalf("Error: (handleRelOp) %s", err)
