@@ -117,7 +117,6 @@ func (l *MyListener) EnterParameter(c *parser.ParameterContext) {
 		log.Fatalf("Error: (EnterParameter) %s\n", err)
 	}
 
-	fmt.Println("Param# ", len(l.functionTable[l.currentFunction].Params))
 	currVariable := VariableAttributes{id, t, dir}
 	l.functionTable[l.currentFunction].Vars[id] = &currVariable
 	l.functionTable[l.currentFunction].Params = append(l.functionTable[l.currentFunction].Params, dir)
@@ -196,6 +195,10 @@ func (l *MyListener) EnterForLoop2(c *parser.ForLoop2Context) {
 	id := c.ID().GetText()
 	currVariable := VariableAttributes{id, constants.TYPEINT, memory.LOCAL_INT}
 	l.functionTable[l.currentFunction].Vars[id] = &currVariable
+}
+
+func (l *MyListener) ExitMain(c *parser.MainContext) {
+	l.functionTable[l.currentFunction].VarsSize = memory.Manager.ResetLocalCounter()
 }
 
 func (l *MyListener) ExitProgram(c *parser.ProgramContext) {

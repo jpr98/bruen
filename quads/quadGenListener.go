@@ -187,6 +187,8 @@ func (l *QuadGenListener) EnterProgram(c *parser.ProgramContext) {
 	l.scopeStack.Push(c.ID().GetText())
 	l.currentFunction = l.scopeStack.Top()
 	l.globalName = l.scopeStack.Top()
+	l.m.SaveJumpPosition()
+	l.m.AddSimpleGOTO()
 }
 
 func (l *QuadGenListener) EnterClassDef(c *parser.ClassDefContext) {
@@ -213,6 +215,12 @@ func (l *QuadGenListener) ExitFunctions(c *parser.FunctionsContext) {
 
 func (l *QuadGenListener) EnterMain(c *parser.MainContext) {
 	l.currentFunction = c.MAIN().GetText()
+	l.m.UpdateGoto()
+	l.m.AddEraQuad(c.MAIN().GetText())
+}
+
+func (l *QuadGenListener) ExitMain(c *parser.MainContext) {
+	l.m.functionTable[l.currentFunction].TempSize = memory.Manager.ResetTempCounter()
 }
 
 func (l *QuadGenListener) ExitProgram(c *parser.ProgramContext) {

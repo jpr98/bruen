@@ -220,6 +220,11 @@ func (m *Manager) AddAndUpdateWhileGotos() {
 	m.quads[posF].Result = NewElement(len(m.quads), "", constants.ADDR)
 }
 
+func (m *Manager) AddSimpleGOTO() {
+	q := Quad{GOTO, nil, nil, nil}
+	m.quads = append(m.quads, q)
+}
+
 func (m *Manager) AddForLoopIterator(id string) {
 	dir, err := memory.Manager.GetNextAddr(constants.TYPEINT, memory.Local)
 	if err != nil {
