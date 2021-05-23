@@ -117,9 +117,10 @@ func (l *MyListener) EnterParameter(c *parser.ParameterContext) {
 		log.Fatalf("Error: (EnterParameter) %s\n", err)
 	}
 
+	fmt.Println("Param# ", len(l.functionTable[l.currentFunction].Params))
 	currVariable := VariableAttributes{id, t, dir}
 	l.functionTable[l.currentFunction].Vars[id] = &currVariable
-	l.functionTable[l.currentFunction].Params = append(l.functionTable[l.currentFunction].Params, t)
+	l.functionTable[l.currentFunction].Params = append(l.functionTable[l.currentFunction].Params, dir)
 }
 
 func (l *MyListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {

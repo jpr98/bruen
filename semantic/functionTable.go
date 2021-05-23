@@ -20,7 +20,7 @@ type FunctionTableContent struct {
 	Dir      int
 	EraSize  string
 	Vars     map[string]*VariableAttributes
-	Params   []constants.Type
+	Params   []int
 	Scope    string
 	VarsSize [4]int
 	TempSize [4]int

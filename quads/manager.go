@@ -251,21 +251,18 @@ func (m *Manager) AddParamQuad() {
 		)
 	}
 
+	expectedType := memory.TypeForAddr(m.functionTable[m.currentFunctionCall].Params[m.paramCounter])
 	arg := m.operands.Pop()
-	t := semantic.Cube.ValidateBinaryOperation(m.functionTable[m.currentFunctionCall].Params[m.paramCounter], arg.Type(), int(constants.OPASSIGN))
+	t := semantic.Cube.ValidateBinaryOperation(expectedType, arg.Type(), int(constants.OPASSIGN))
 	if t == constants.ERR {
 		log.Fatalf(
 			"Error: (AddParamQuad) type mismatch, parameter %s must be of type %s",
 			arg,
-			m.functionTable[m.currentFunctionCall].Params[m.paramCounter],
+			expectedType,
 		)
 	}
 
-	// dir, err := memory.Manager.GetNextAddr(t, memory.Local)
-	// if err != nil {
-	// 	log.Fatalf("Error: (AddParamQuad) %s\n", err)
-	// }
-	argNum := NewElement(0, fmt.Sprintf("%d", m.paramCounter), m.functionTable[m.currentFunctionCall].Params[m.paramCounter])
+	argNum := NewElement(m.functionTable[m.currentFunctionCall].Params[m.paramCounter], fmt.Sprintf("%d", m.paramCounter), expectedType)
 	q := Quad{PARAM, arg, argNum, nil}
 	m.quads = append(m.quads, q)
 }

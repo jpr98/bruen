@@ -19,3 +19,25 @@ func (ms *MemoryStack) Pop() {
 func (ms *MemoryStack) Empty() bool {
 	return len(ms.stack) == 0
 }
+
+type PointerStack struct {
+	stack []int
+}
+
+func (ps *PointerStack) Top() int {
+	return ps.stack[len(ps.stack)-1]
+}
+
+func (ps *PointerStack) Push(pointer int) {
+	ps.stack = append(ps.stack, pointer)
+}
+
+func (ps *PointerStack) Pop() int {
+	pointer := ps.Top()
+	ps.stack = ps.stack[:len(ps.stack)-1]
+	return pointer
+}
+
+func (ps *PointerStack) Empty() bool {
+	return len(ps.stack) == 0
+}

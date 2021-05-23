@@ -21,7 +21,7 @@ function testfunc2(a: int, b: bool) void {
 main() {
     var a: int;
     var b: float;
-
+    testfunc(1, true);
     a = 10;
     b = 5;
 

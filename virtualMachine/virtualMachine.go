@@ -14,14 +14,22 @@ type VirtualMachine struct {
 	memBlocks        MemoryStack
 	constantMemBlock Memory
 	pointer          int // the index of current Quad
+	pointerStack     PointerStack
 
-	quads       []quads.Quad
-	programName string
+	quads         []quads.Quad
+	programName   string
+	functionTable semantic.FunctionTable
 }
 
 func NewVM(programName string, functionTable semantic.FunctionTable, quads []quads.Quad) VirtualMachine {
 	gmb := NewMemory(functionTable[programName].VarsSize, functionTable[programName].TempSize)
-	return VirtualMachine{globalMemBlock: gmb, constantMemBlock: MakeConstantMemory(), quads: quads, programName: programName}
+	return VirtualMachine{
+		globalMemBlock:   gmb,
+		constantMemBlock: MakeConstantMemory(),
+		quads:            quads,
+		programName:      programName,
+		functionTable:    functionTable,
+	}
 }
 
 func (vm *VirtualMachine) Run() {
@@ -65,6 +73,27 @@ func (vm *VirtualMachine) Run() {
 			} else {
 				vm.pointer++
 			}
+
+		case quads.ERA:
+			fmb := NewMemory(vm.functionTable[quad.Left.ID()].VarsSize, vm.functionTable[quad.Left.ID()].TempSize)
+			vm.memBlocks.Push(fmb)
+
+		case quads.PARAM:
+			value := vm.globalMemBlock.Get(quad.Left.GetAddr())
+			err := vm.globalMemBlock.Set(value, quad.Right.GetAddr())
+			if err != nil {
+				log.Fatalf("Error: (Run) quads.PARAM %s", err)
+			}
+			log.Println("Passing param ", value)
+			vm.pointer++
+
+		case quads.GOSUB:
+			vm.pointerStack.Push(vm.pointer + 1)
+			vm.pointer = vm.functionTable[quad.Left.ID()].Dir
+
+		case quads.ENDFUNC:
+			vm.memBlocks.Pop()
+			vm.pointer = vm.pointerStack.Pop()
 
 		default:
 			vm.pointer++

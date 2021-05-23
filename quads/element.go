@@ -11,6 +11,7 @@ type Element interface {
 	GetAddr() int
 	Type() constants.Type
 	String() string
+	ID() string
 }
 
 type quadElement struct {
@@ -34,6 +35,10 @@ func (e quadElement) Type() constants.Type {
 
 func (e quadElement) String() string {
 	return fmt.Sprintf("%s (type: %s, addr: %d)", e.Id, e.Type(), e.GetAddr())
+}
+
+func (e quadElement) ID() string {
+	return e.Id
 }
 
 // ElementStack is a stack of quad.Element
