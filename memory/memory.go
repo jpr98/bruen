@@ -35,6 +35,7 @@ const (
 	Local    Context = "local"
 	Temp     Context = "temp"
 	Constant Context = "constant"
+	Invalid  Context = "invalid"
 )
 
 func TypeForAddr(addr int) constants.Type {
@@ -50,6 +51,22 @@ func TypeForAddr(addr int) constants.Type {
 		return constants.TYPEBOOL
 	default:
 		return constants.ERR
+	}
+}
+
+func ContextForAddr(addr int) Context {
+	n := addr / 1000
+	switch n {
+	case 1, 2, 3, 4:
+		return Global
+	case 5, 6, 7, 8:
+		return Local
+	case 9, 10, 11, 12:
+		return Temp
+	case 13, 14, 15, 16:
+		return Constant
+	default:
+		return Invalid
 	}
 }
 
