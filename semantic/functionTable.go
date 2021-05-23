@@ -16,12 +16,14 @@ type VariableAttributes struct {
 }
 
 type FunctionTableContent struct {
-	TypeOf  string
-	Dir     int
-	EraSize string
-	Vars    map[string]*VariableAttributes
-	Params  []constants.Type
-	Scope   string
+	TypeOf   string
+	Dir      int
+	EraSize  string
+	Vars     map[string]*VariableAttributes
+	Params   []constants.Type
+	Scope    string
+	VarsSize [4]int
+	TempSize [4]int
 }
 
 func init() {

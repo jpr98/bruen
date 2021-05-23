@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/jpr98/compis/constants"
+	"github.com/jpr98/compis/memory"
 	"github.com/jpr98/compis/parser"
 	"github.com/jpr98/compis/semantic"
 	"github.com/jpr98/compis/utils"
@@ -207,6 +208,7 @@ func (l *QuadGenListener) ExitFunctions(c *parser.FunctionsContext) {
 	l.m.AddEndFuncQuad()
 	l.m.functionTable[l.currentFunction].Vars = nil
 	l.m.functionTable[l.currentFunction].EraSize = "0i1f2c3b"
+	l.m.functionTable[l.currentFunction].TempSize = memory.Manager.ResetTempCounter()
 }
 
 func (l *QuadGenListener) EnterMain(c *parser.MainContext) {
@@ -215,6 +217,7 @@ func (l *QuadGenListener) EnterMain(c *parser.MainContext) {
 
 func (l *QuadGenListener) ExitProgram(c *parser.ProgramContext) {
 	l.scopeStack.Pop()
+	l.m.functionTable[l.globalName].VarsSize = memory.Manager.GetGlobalSize()
 }
 
 func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {

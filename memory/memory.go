@@ -232,16 +232,24 @@ func (m *manager) getConstForType(typeOf constants.Type) int {
 	return result
 }
 
-func (m *manager) ResetLocalCounter() {
+func (m *manager) ResetLocalCounter() [4]int {
+	size := [4]int{m.lInt - LOCAL_INT, m.lFloat - LOCAL_FLOAT, m.lChar - LOCAL_CHAR, m.lBool - LOCAL_BOOL}
 	m.lInt = LOCAL_INT
 	m.lFloat = LOCAL_FLOAT
 	m.lChar = LOCAL_CHAR
 	m.lBool = LOCAL_BOOL
+	return size
 }
 
-func (m *manager) ResetTempCounter() {
+func (m *manager) ResetTempCounter() [4]int {
+	size := [4]int{m.tInt - TEMP_INT, m.tFloat - TEMP_FLOAT, m.tChar - TEMP_CHAR, m.tBool - TEMP_BOOL}
 	m.tInt = TEMP_INT
 	m.tFloat = TEMP_FLOAT
 	m.tChar = TEMP_CHAR
 	m.tBool = TEMP_BOOL
+	return size
+}
+
+func (m *manager) GetGlobalSize() [4]int {
+	return [4]int{m.gInt - GLOBAL_INT, m.gFloat - GLOBAL_FLOAT, m.gChar - GLOBAL_CHAR, m.gBool - GLOBAL_BOOL}
 }

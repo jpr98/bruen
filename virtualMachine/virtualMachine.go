@@ -10,16 +10,18 @@ import (
 )
 
 type VirtualMachine struct {
-	globalMemBlock Memory
-	memBlocks      MemoryStack
-	pointer        int // the index of current Quad
+	globalMemBlock   Memory
+	memBlocks        MemoryStack
+	constantMemBlock Memory
+	pointer          int // the index of current Quad
 
-	quads []quads.Quad
+	quads       []quads.Quad
+	programName string
 }
 
-func NewVM(functionTable semantic.FunctionTable, quads []quads.Quad) VirtualMachine {
-	gmb := NewMemory([4]int{0, 0, 0, 0}, [4]int{0, 0, 0, 0}) // TODO: NewMemory() de functionTable sacar tamaño para el bloque global
-	return VirtualMachine{globalMemBlock: gmb, quads: quads}
+func NewVM(programName string, functionTable semantic.FunctionTable, quads []quads.Quad) VirtualMachine {
+	gmb := NewMemory(functionTable[programName].VarsSize, functionTable[programName].TempSize)
+	return VirtualMachine{globalMemBlock: gmb, constantMemBlock: MakeConstantMemory(), quads: quads, programName: programName}
 }
 
 func (vm *VirtualMachine) Run() {
@@ -29,16 +31,27 @@ func (vm *VirtualMachine) Run() {
 		case quads.ADD, quads.SUB, quads.MUL, quads.DIV:
 			vm.handleArithmeticOp(quad)
 			vm.pointer++
+
 		case quads.GT, quads.LT, quads.EQ, quads.NEQ:
 			vm.handleRelOp(quad)
 			vm.pointer++
+
 		case quads.AND, quads.OR:
 			vm.handleLogicOp(quad)
 			vm.pointer++
+
 		case quads.ASSIGN:
+			value := vm.globalMemBlock.Get(quad.Left.GetAddr())
+			err := vm.globalMemBlock.Set(value, quad.Result.GetAddr())
+			if err != nil {
+				log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
+			}
+			log.Println("Assigning ", value)
 			vm.pointer++
+
 		case quads.GOTO:
 			vm.pointer = quad.Result.GetAddr()
+
 		case quads.GOTOF:
 			value, ok := vm.globalMemBlock.Get(quad.Left.GetAddr()).(bool)
 			if !ok {
@@ -52,6 +65,7 @@ func (vm *VirtualMachine) Run() {
 			} else {
 				vm.pointer++
 			}
+
 		default:
 			vm.pointer++
 		}

@@ -15,7 +15,7 @@ type MyListener struct {
 	*parser.BaseProyectoListener
 	scopeStack      utils.StringStack
 	currentFunction string
-	programName     string
+	ProgramName     string
 	//TODO: store type of function (create FunctionAttributes?)
 	functionTable       FunctionTable
 	unassignedVariables []string
@@ -25,7 +25,7 @@ func NewListener() MyListener {
 	var listener MyListener
 	listener.scopeStack = utils.StringStack{}
 	listener.currentFunction = ""
-	listener.programName = ""
+	listener.ProgramName = ""
 	listener.functionTable = make(map[string]*FunctionTableContent)
 	listener.unassignedVariables = make([]string, 0)
 	return listener
@@ -55,7 +55,7 @@ func (l *MyListener) addToFunctionTable(typeOf string, scope string) {
 
 func (l *MyListener) EnterProgram(c *parser.ProgramContext) {
 	l.currentFunction = c.ID().GetText()
-	l.programName = c.ID().GetText()
+	l.ProgramName = c.ID().GetText()
 	l.addToFunctionTable("void", "")
 	l.scopeStack.Push(c.ID().GetText())
 
@@ -89,6 +89,10 @@ func (l *MyListener) EnterFunctions(c *parser.FunctionsContext) {
 	}
 
 	l.addToFunctionTable(typeString, l.scopeStack.Top())
+}
+
+func (l *MyListener) ExitFunctions(c *parser.FunctionsContext) {
+	l.functionTable[l.currentFunction].VarsSize = memory.Manager.ResetLocalCounter()
 }
 
 func (l *MyListener) EnterMain(c *parser.MainContext) {
@@ -129,7 +133,7 @@ func (l *MyListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {
 			}
 
 			var memCtx memory.Context
-			if l.currentFunction == l.programName {
+			if l.currentFunction == l.ProgramName {
 				memCtx = memory.Global
 			} else {
 				memCtx = memory.Local
@@ -153,29 +157,37 @@ func (l *MyListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {
 
 func (l *MyListener) EnterVarCte(c *parser.VarCteContext) {
 	if c.Cte_i() != nil {
-		dir, err := memory.Manager.GetNextAddr(constants.TYPEINT, memory.Constant)
-		if err != nil {
-			log.Fatalf("Error: (EnterVarCte) %s\n", err)
+		if _, exists := ConstantsTable[c.Cte_i().GetText()]; !exists {
+			dir, err := memory.Manager.GetNextAddr(constants.TYPEINT, memory.Constant)
+			if err != nil {
+				log.Fatalf("Error: (EnterVarCte) %s\n", err)
+			}
+			ConstantsTable[c.Cte_i().GetText()] = &constantsTableContent{constants.TYPEINT, dir}
 		}
-		ConstantsTable[c.Cte_i().GetText()] = &constantsTableContent{constants.TYPEINT, dir}
 	} else if c.Cte_f() != nil {
-		dir, err := memory.Manager.GetNextAddr(constants.TYPEFLOAT, memory.Constant)
-		if err != nil {
-			log.Fatalf("Error: (EnterVarCte) %s\n", err)
+		if _, exists := ConstantsTable[c.Cte_f().GetText()]; !exists {
+			dir, err := memory.Manager.GetNextAddr(constants.TYPEFLOAT, memory.Constant)
+			if err != nil {
+				log.Fatalf("Error: (EnterVarCte) %s\n", err)
+			}
+			ConstantsTable[c.Cte_f().GetText()] = &constantsTableContent{constants.TYPEFLOAT, dir}
 		}
-		ConstantsTable[c.Cte_f().GetText()] = &constantsTableContent{constants.TYPEFLOAT, dir}
 	} else if c.Cte_c() != nil {
-		dir, err := memory.Manager.GetNextAddr(constants.TYPECHAR, memory.Constant)
-		if err != nil {
-			log.Fatalf("Error: (EnterVarCte) %s\n", err)
+		if _, exists := ConstantsTable[c.Cte_c().GetText()]; !exists {
+			dir, err := memory.Manager.GetNextAddr(constants.TYPECHAR, memory.Constant)
+			if err != nil {
+				log.Fatalf("Error: (EnterVarCte) %s\n", err)
+			}
+			ConstantsTable[c.Cte_c().GetText()] = &constantsTableContent{constants.TYPECHAR, dir}
 		}
-		ConstantsTable[c.Cte_c().GetText()] = &constantsTableContent{constants.TYPECHAR, dir}
 	} else if c.Cte_b() != nil {
-		dir, err := memory.Manager.GetNextAddr(constants.TYPEBOOL, memory.Constant)
-		if err != nil {
-			log.Fatalf("Error: (EnterVarCte) %s\n", err)
+		if _, exists := ConstantsTable[c.Cte_b().GetText()]; !exists {
+			dir, err := memory.Manager.GetNextAddr(constants.TYPEBOOL, memory.Constant)
+			if err != nil {
+				log.Fatalf("Error: (EnterVarCte) %s\n", err)
+			}
+			ConstantsTable[c.Cte_b().GetText()] = &constantsTableContent{constants.TYPEBOOL, dir}
 		}
-		ConstantsTable[c.Cte_b().GetText()] = &constantsTableContent{constants.TYPEBOOL, dir}
 	}
 }
 

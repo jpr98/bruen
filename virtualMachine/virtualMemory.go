@@ -2,9 +2,11 @@ package virtualMachine
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/memory"
+	"github.com/jpr98/compis/semantic"
 )
 
 type Memory interface {
@@ -21,6 +23,8 @@ type memblock map[constants.Type][]interface{}
 
 func NewMemory(varSizes, tempSizes [4]int) Memory {
 	m := mem{}
+	m.vars = make(memblock)
+	m.temps = make(memblock)
 	// Variables block
 	if varSizes[constants.TYPEINT] > 0 {
 		m.vars[constants.TYPEINT] = make([]interface{}, varSizes[constants.TYPEINT])
@@ -102,6 +106,39 @@ func (m *mem) Set(value interface{}, addr int) error {
 	default:
 		return fmt.Errorf("Error: (Set) unexpected type to set in memory block")
 	}
+}
+
+func MakeConstantMemory() Memory {
+	m := mem{}
+	m.vars = make(memblock)
+	var size [4]int
+	for _, content := range semantic.ConstantsTable {
+		size[content.TypeOf]++
+	}
+
+	for cte, content := range semantic.ConstantsTable {
+		vAddr := memory.ConvertAddr(content.Dir)
+		switch content.TypeOf {
+		case constants.TYPEINT:
+			if intValue, err := strconv.ParseFloat(cte, 64); err != nil {
+				m.vars[constants.TYPEINT][vAddr] = intValue
+			}
+		case constants.TYPEFLOAT:
+			if floatValue, err := strconv.ParseFloat(cte, 64); err != nil {
+				m.vars[constants.TYPEFLOAT][vAddr] = floatValue
+			}
+		case constants.TYPECHAR:
+			runes := []rune(cte)
+			if len(runes) > 0 {
+				m.vars[constants.TYPECHAR][vAddr] = runes[0]
+			}
+		case constants.TYPEBOOL:
+			if boolValue, err := strconv.ParseBool(cte); err != nil {
+				m.vars[constants.TYPEBOOL][vAddr] = boolValue
+			}
+		}
+	}
+	return &m
 }
 
 /*

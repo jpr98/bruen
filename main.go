@@ -3,92 +3,120 @@ package main
 import (
 	"encoding/gob"
 	"fmt"
+	"log"
 	"os"
 
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/jpr98/compis/constants"
+	"github.com/jpr98/compis/parser"
 	"github.com/jpr98/compis/quads"
 	"github.com/jpr98/compis/semantic"
+	"github.com/jpr98/compis/virtualMachine"
 )
 
 func main() {
-	testReadObjFile()
-	// if len(os.Args) < 2 {
-	// 	log.Fatal("No filename provided")
-	// }
+	if len(os.Args) < 3 {
+		log.Fatal("No args")
+	}
 
-	// // Open file stream
-	// filename := os.Args[1]
-	// is, err := antlr.NewFileStream(filename)
-	// if err != nil {
-	// 	log.Fatalf("Error: %s", err.Error())
-	// }
-
-	// // Creates the lexer
-	// lexer := parser.NewProyectoLexer(is)
-
-	// // Read all tokens
-	// // for {
-	// // 	t := lexer.NextToken()
-	// // 	if t.GetTokenType() == antlr.TokenEOF {
-	// // 		break
-	// // 	}
-	// // 	fmt.Printf("%s (%q)\n",
-	// // 		lexer.SymbolicNames[t.GetTokenType()], t.GetText())
-	// // }
-	// stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
-
-	// // Creates the parser
-	// p := parser.NewProyectoParser(stream)
-
-	// listener := semantic.NewListener()
-	// antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
-
-	// fmt.Println("\n---------")
-	// stream.Seek(0)
-	// p = parser.NewProyectoParser(stream)
-
-	// var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable())
-	// antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
-	// quads := quadListener.GetManager().GetQuads()
-	// for i, q := range quads {
-	// 	fmt.Printf("%d. %s\n", i, q)
-	// }
-	// fmt.Println("\n---------")
-	// //debugFT(listener.GetFunctionTable())
-
-	// f, err := os.Create("out.obj")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// defer f.Close()
-
-	// enc := gob.NewEncoder(f)
-	// enc.Encode(quads)
-	// enc.Encode(listener.GetFunctionTable())
+	if os.Args[2] == "b" {
+		compile()
+	} else {
+		execute()
+	}
 }
 
-func testReadObjFile() {
+func compile() {
+	if len(os.Args) < 2 {
+		log.Fatal("No filename provided")
+	}
+
+	// Open file stream
+	filename := os.Args[1]
+	is, err := antlr.NewFileStream(filename)
+	if err != nil {
+		log.Fatalf("Error: %s", err.Error())
+	}
+
+	// Creates the lexer
+	lexer := parser.NewProyectoLexer(is)
+
+	// Read all tokens
+	// for {
+	// 	t := lexer.NextToken()
+	// 	if t.GetTokenType() == antlr.TokenEOF {
+	// 		break
+	// 	}
+	// 	fmt.Printf("%s (%q)\n",
+	// 		lexer.SymbolicNames[t.GetTokenType()], t.GetText())
+	// }
+	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
+
+	// Creates the parser
+	p := parser.NewProyectoParser(stream)
+
+	listener := semantic.NewListener()
+	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
+
+	fmt.Println("\n---------")
+	stream.Seek(0)
+	p = parser.NewProyectoParser(stream)
+
+	var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable())
+	antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
+	quads := quadListener.GetManager().GetQuads()
+	for i, q := range quads {
+		fmt.Printf("%d. %s\n", i, q)
+	}
+	fmt.Println("\n---------")
+	debugFT(listener.GetFunctionTable())
+
+	f, err := os.Create("out.obj")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	enc := gob.NewEncoder(f)
+	enc.Encode(listener.ProgramName)
+	enc.Encode(quads)
+	enc.Encode(listener.GetFunctionTable())
+}
+
+func execute() {
 	f, err := os.Open("out.obj")
 	if err != nil {
 		panic(err)
 	}
 
-	var m []quads.Quad
 	dec := gob.NewDecoder(f)
+
+	var programName string
+	err = dec.Decode(&programName)
+	if err != nil {
+		panic(err)
+	}
+
+	var m []quads.Quad
 	err = dec.Decode(&m)
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("\n---------")
 	for i, q := range m {
 		fmt.Printf("%d. %s\n", i, q)
 	}
+	fmt.Println("\n---------")
 
 	var ft semantic.FunctionTable
 	err = dec.Decode(&ft)
 	if err != nil {
 		panic(err)
 	}
-	debugFT(ft)
+	//debugFT(ft)
+
+	vm := virtualMachine.NewVM(programName, ft, m)
+	vm.Run()
 }
 
 func testSC() {
@@ -98,7 +126,7 @@ func testSC() {
 
 func debugFT(ft semantic.FunctionTable) {
 	for fname, function := range ft {
-		fmt.Printf("\n *Function: %s Returns: %s Scope: %s\n", fname, function.TypeOf, function.Scope)
+		fmt.Printf("\n *Function: %s Returns: %s Scope: %s, VarSize: %v, TempSize: %v\n", fname, function.TypeOf, function.Scope, function.VarsSize, function.TempSize)
 		fmt.Println("VarTable:")
 		for id, variable := range function.Vars {
 			fmt.Printf("%s: %s \n", id, variable.TypeOf)
