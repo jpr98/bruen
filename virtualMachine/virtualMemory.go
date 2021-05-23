@@ -115,16 +115,20 @@ func MakeConstantMemory() Memory {
 	for _, content := range semantic.ConstantsTable {
 		size[content.TypeOf]++
 	}
+	m.vars[constants.TYPEINT] = make([]interface{}, size[constants.TYPEINT])
+	m.vars[constants.TYPEFLOAT] = make([]interface{}, size[constants.TYPEFLOAT])
+	m.vars[constants.TYPECHAR] = make([]interface{}, size[constants.TYPECHAR])
+	m.vars[constants.TYPEBOOL] = make([]interface{}, size[constants.TYPEBOOL])
 
 	for cte, content := range semantic.ConstantsTable {
 		vAddr := memory.ConvertAddr(content.Dir)
 		switch content.TypeOf {
 		case constants.TYPEINT:
-			if intValue, err := strconv.ParseFloat(cte, 64); err != nil {
+			if intValue, err := strconv.ParseFloat(cte, 64); err == nil {
 				m.vars[constants.TYPEINT][vAddr] = intValue
 			}
 		case constants.TYPEFLOAT:
-			if floatValue, err := strconv.ParseFloat(cte, 64); err != nil {
+			if floatValue, err := strconv.ParseFloat(cte, 64); err == nil {
 				m.vars[constants.TYPEFLOAT][vAddr] = floatValue
 			}
 		case constants.TYPECHAR:
@@ -133,7 +137,7 @@ func MakeConstantMemory() Memory {
 				m.vars[constants.TYPECHAR][vAddr] = runes[0]
 			}
 		case constants.TYPEBOOL:
-			if boolValue, err := strconv.ParseBool(cte); err != nil {
+			if boolValue, err := strconv.ParseBool(cte); err == nil {
 				m.vars[constants.TYPEBOOL][vAddr] = boolValue
 			}
 		}

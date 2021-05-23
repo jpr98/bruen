@@ -81,6 +81,7 @@ func compile() {
 	enc.Encode(listener.ProgramName)
 	enc.Encode(quads)
 	enc.Encode(listener.GetFunctionTable())
+	enc.Encode(semantic.ConstantsTable)
 }
 
 func execute() {
@@ -114,6 +115,11 @@ func execute() {
 		panic(err)
 	}
 	//debugFT(ft)
+
+	err = dec.Decode(&semantic.ConstantsTable)
+	if err != nil {
+		panic(err)
+	}
 
 	vm := virtualMachine.NewVM(programName, ft, m)
 	vm.Run()
