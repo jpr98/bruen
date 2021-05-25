@@ -20,7 +20,9 @@ function testfunc2(a: int, b: bool) void {
 main() {
     var a: int;
     var b: float;
-    testfunc2(0, true);
+
+    a = 10;
+    read(a, temp);
     
     return;
 }

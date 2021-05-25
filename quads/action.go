@@ -15,6 +15,8 @@ const (
 	AND
 	OR
 	LPAREN
+	READ
+	WRITE
 	ASSIGN
 	GOTOF
 	GOTO
@@ -25,7 +27,7 @@ const (
 )
 
 func (a QuadAction) String() string {
-	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||", "(", "=", "GOTOF", "GOTO", "ENDFUNC", "ERA", "PARAM", "GOSUB"}[a]
+	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||", "(", "READ", "WRITE", "=", "GOTOF", "GOTO", "ENDFUNC", "ERA", "PARAM", "GOSUB"}[a]
 }
 
 type QuadActionStack struct {

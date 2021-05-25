@@ -1,6 +1,7 @@
 package quads
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/jpr98/compis/constants"
@@ -16,6 +17,8 @@ type QuadGenListener struct {
 	scopeStack      utils.StringStack
 	currentFunction string
 	globalName      string
+
+	enteredVarInit bool
 }
 
 func NewListener(functionTable semantic.FunctionTable) QuadGenListener {
@@ -41,7 +44,15 @@ func (l *QuadGenListener) EnterVarsDec(c *parser.VarsDecContext) {
 	l.m.PushOperand(c.ID().GetText(), l.currentFunction, l.globalName)
 }
 
+func (l *QuadGenListener) ExitVarsTypeInit(c *parser.VarsTypeInitContext) {
+	defer func() { l.enteredVarInit = false }()
+	if !l.enteredVarInit {
+		l.m.operands.Pop()
+	}
+}
+
 func (l *QuadGenListener) EnterVarsTypeInit2(c *parser.VarsTypeInit2Context) {
+	l.enteredVarInit = true
 	l.m.PushOp(c.ASSIGN().GetText())
 }
 
@@ -213,6 +224,10 @@ func (l *QuadGenListener) ExitFunctions(c *parser.FunctionsContext) {
 	l.m.functionTable[l.currentFunction].TempSize = memory.Manager.ResetTempCounter()
 }
 
+func (l *QuadGenListener) EnterRead2(c *parser.Read2Context) {
+	l.m.AddReadQuad(c.Vars().GetText(), l.currentFunction, l.globalName)
+}
+
 func (l *QuadGenListener) EnterMain(c *parser.MainContext) {
 	l.currentFunction = c.MAIN().GetText()
 	l.m.UpdateGoto()
@@ -226,6 +241,7 @@ func (l *QuadGenListener) ExitMain(c *parser.MainContext) {
 func (l *QuadGenListener) ExitProgram(c *parser.ProgramContext) {
 	l.scopeStack.Pop()
 	l.m.functionTable[l.globalName].VarsSize = memory.Manager.GetGlobalSize()
+	fmt.Println(l.m.operands)
 }
 
 func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {

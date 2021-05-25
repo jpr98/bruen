@@ -94,7 +94,9 @@ methodCall: ID '.' ID LPAREN arguments? RPAREN;
 
 call: functionCall | methodCall;
 
-read: READ LPAREN vars (',' vars)* RPAREN SEMI;
+read: READ LPAREN read2 RPAREN SEMI;
+read2: vars read3;
+read3: ',' read2 | ;
 
 write: WRITE LPAREN arguments RPAREN SEMI;
 
