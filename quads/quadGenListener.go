@@ -18,7 +18,8 @@ type QuadGenListener struct {
 	currentFunction string
 	globalName      string
 
-	enteredVarInit bool
+	enteredVarInit  bool
+	isArgumentParam bool
 }
 
 func NewListener(functionTable semantic.FunctionTable) QuadGenListener {
@@ -250,13 +251,19 @@ func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {
 		log.Fatalf("Error: (EnterFunctionCall) undeclared function %s", c.ID().GetText())
 	}
 	l.m.AddEraQuad(c.ID().GetText())
+	l.isArgumentParam = true
 }
 
 func (l *QuadGenListener) ExitFunctionCall(c *parser.FunctionCallContext) {
 	l.m.AddGoSubQuad(c.ID().GetText())
+	l.isArgumentParam = false
 }
 
 func (l *QuadGenListener) EnterArguments2(c *parser.Arguments2Context) {
+	if !l.isArgumentParam {
+		l.m.AddWriteQuad()
+		return
+	}
 	l.m.AddParamQuad()
 	l.m.paramCounter++
 }

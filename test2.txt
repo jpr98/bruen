@@ -22,7 +22,7 @@ main() {
     var b: float;
 
     a = 10;
-    read(a, temp);
+    write(a, temp);
     
     return;
 }

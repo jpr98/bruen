@@ -244,6 +244,12 @@ func (m *Manager) AddReadQuad(operand, functionName, globalName string) {
 	m.quads = append(m.quads, q)
 }
 
+func (m *Manager) AddWriteQuad() {
+	operand := m.operands.Pop()
+	q := Quad{WRITE, nil, nil, operand}
+	m.quads = append(m.quads, q)
+}
+
 func (m *Manager) AddEndFuncQuad() {
 	q := Quad{ENDFUNC, nil, nil, nil}
 	m.quads = append(m.quads, q)
