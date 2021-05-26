@@ -20,9 +20,10 @@ function testfunc2(a: int, b: bool) void {
 main() {
     var a: int;
     var b: float;
-
+    temp = 5;
     a = 10;
     write(a, temp);
+    a = 10 + 5;
     
     return;
 }

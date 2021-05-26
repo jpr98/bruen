@@ -1,8 +1,10 @@
 package virtualMachine
 
 import (
+	"fmt"
 	"log"
 	"math"
+	"strconv"
 
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/memory"
@@ -49,6 +51,17 @@ func (vm *VirtualMachine) Run() {
 			vm.handleLogicOp(quad)
 			vm.pointer++
 
+		case quads.READ:
+			vm.pointer++
+
+		case quads.WRITE:
+			vm.handleWrite(quad)
+			vm.pointer++
+
+		case quads.WRITENEWLINE:
+			fmt.Println("")
+			vm.pointer++
+
 		case quads.ASSIGN:
 			memblock := vm.getMemBlockForAddr(quad.Left.GetAddr())
 			value := memblock.Get(quad.Left.GetAddr())
@@ -57,7 +70,6 @@ func (vm *VirtualMachine) Run() {
 			if err != nil {
 				log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
 			}
-			log.Println("Assigning ", value)
 			vm.pointer++
 
 		case quads.GOTO:
@@ -254,6 +266,17 @@ func (vm *VirtualMachine) handleLogicOp(quad quads.Quad) {
 	err := memblock.Set(res, quad.Result.GetAddr())
 	if err != nil {
 		log.Fatalf("Error: (handleLogicOp) %s", err)
+	}
+}
+
+func (vm *VirtualMachine) handleWrite(quad quads.Quad) {
+	memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+	value := memblock.Get(quad.Result.GetAddr())
+	switch value.(type) {
+	case float64:
+		fmt.Print(value.(float64))
+	case rune:
+		fmt.Print(strconv.QuoteRune(value.(rune)))
 	}
 }
 
