@@ -1,10 +1,13 @@
 package virtualMachine
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"math"
+	"os"
 	"strconv"
+	"strings"
 
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/memory"
@@ -52,6 +55,7 @@ func (vm *VirtualMachine) Run() {
 			vm.pointer++
 
 		case quads.READ:
+			vm.handleRead(quad)
 			vm.pointer++
 
 		case quads.WRITE:
@@ -269,6 +273,57 @@ func (vm *VirtualMachine) handleLogicOp(quad quads.Quad) {
 	}
 }
 
+func (vm *VirtualMachine) handleRead(quad quads.Quad) {
+	reader := bufio.NewReader(os.Stdin)
+	bytes, _ := reader.ReadBytes('\n')
+	str := strings.TrimSpace(string(bytes))
+	memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+
+	switch quad.Result.Type() {
+	case constants.TYPEINT:
+		floatVal, err := strconv.ParseFloat(str, 64)
+		if err != nil {
+			log.Println("Warning: read to int expects int")
+		}
+
+		err = memblock.Set(float64(int(floatVal)), quad.Result.GetAddr())
+		if err != nil {
+			log.Fatalf("Error: (handleRead) %s", err)
+		}
+
+	case constants.TYPEFLOAT:
+		floatVal, err := strconv.ParseFloat(str, 64)
+		if err != nil {
+			//TODO: handle err
+		}
+		err = memblock.Set(floatVal, quad.Result.GetAddr())
+		if err != nil {
+			//TODO: handle err
+		}
+
+	case constants.TYPECHAR:
+		if len(str) > 0 {
+			runeVal := str[0]
+			err := memblock.Set(runeVal, quad.Result.GetAddr())
+			if err != nil {
+				//TODO: handle err
+			}
+		} else {
+			//TODO: handle err
+		}
+
+	case constants.TYPEBOOL:
+		boolVal, err := strconv.ParseBool(str)
+		if err != nil {
+			fmt.Println("Warning:")
+		}
+		err = memblock.Set(boolVal, quad.Result.GetAddr())
+		if err != nil {
+			//TODO: handle err
+		}
+	}
+}
+
 func (vm *VirtualMachine) handleWrite(quad quads.Quad) {
 	memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
 	value := memblock.Get(quad.Result.GetAddr())
@@ -277,6 +332,10 @@ func (vm *VirtualMachine) handleWrite(quad quads.Quad) {
 		fmt.Print(value.(float64))
 	case rune:
 		fmt.Print(strconv.QuoteRune(value.(rune)))
+	case bool:
+		fmt.Println(value.(bool))
+	default:
+		log.Fatalln("Accesing uninitialized variable")
 	}
 }
 
