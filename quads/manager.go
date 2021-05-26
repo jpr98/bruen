@@ -250,6 +250,11 @@ func (m *Manager) AddWriteQuad() {
 	m.quads = append(m.quads, q)
 }
 
+func (m *Manager) AddNewLineWriteQuad() {
+	q := Quad{WRITENEWLINE, nil, nil, nil}
+	m.quads = append(m.quads, q)
+}
+
 func (m *Manager) AddEndFuncQuad() {
 	q := Quad{ENDFUNC, nil, nil, nil}
 	m.quads = append(m.quads, q)

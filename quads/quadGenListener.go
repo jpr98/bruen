@@ -229,6 +229,10 @@ func (l *QuadGenListener) EnterRead2(c *parser.Read2Context) {
 	l.m.AddReadQuad(c.Vars().GetText(), l.currentFunction, l.globalName)
 }
 
+func (l *QuadGenListener) ExitWrite(c *parser.WriteContext) {
+	l.m.AddNewLineWriteQuad()
+}
+
 func (l *QuadGenListener) EnterMain(c *parser.MainContext) {
 	l.currentFunction = c.MAIN().GetText()
 	l.m.UpdateGoto()
