@@ -39,6 +39,7 @@ func NewVM(programName string, functionTable semantic.FunctionTable, quads []qua
 }
 
 func (vm *VirtualMachine) Run() {
+	var fmb Memory
 	for vm.pointer < len(vm.quads) {
 		quad := vm.quads[vm.pointer]
 		switch quad.Action {
@@ -95,22 +96,24 @@ func (vm *VirtualMachine) Run() {
 			}
 
 		case quads.ERA:
-			fmb := NewMemory(vm.functionTable[quad.Left.ID()].VarsSize, vm.functionTable[quad.Left.ID()].TempSize)
-			vm.memBlocks.Push(fmb)
+			fmb = NewMemory(vm.functionTable[quad.Left.ID()].VarsSize, vm.functionTable[quad.Left.ID()].TempSize)
+			if quad.Left.ID() == "main" {
+				vm.memBlocks.Push(fmb)
+			}
 			vm.pointer++
 
 		case quads.PARAM:
 			memblock := vm.getMemBlockForAddr(quad.Left.GetAddr())
 			value := memblock.Get(quad.Left.GetAddr())
-			memblock = vm.getMemBlockForAddr(quad.Right.GetAddr())
-			err := memblock.Set(value, quad.Right.GetAddr())
+
+			err := fmb.Set(value, quad.Right.GetAddr())
 			if err != nil {
 				log.Fatalf("Error: (Run) quads.PARAM %s", err)
 			}
-			log.Println("Passing param ", value)
 			vm.pointer++
 
 		case quads.GOSUB:
+			vm.memBlocks.Push(fmb)
 			vm.pointerStack.Push(vm.pointer + 1)
 			vm.pointer = vm.functionTable[quad.Left.ID()].Dir
 
@@ -119,11 +122,14 @@ func (vm *VirtualMachine) Run() {
 			vm.pointer = vm.pointerStack.Pop()
 
 		case quads.RETURN:
-			memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
-			value := memblock.Get(quad.Result.GetAddr())
-			memblock = vm.getMemBlockForAddr(quad.Left.GetAddr())
-			memblock.Set(value, quad.Left.GetAddr())
-			vm.pointer++
+			if quad.Result != nil {
+				memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+				value := memblock.Get(quad.Result.GetAddr())
+				memblock = vm.getMemBlockForAddr(quad.Left.GetAddr())
+				memblock.Set(value, quad.Left.GetAddr())
+			}
+			vm.memBlocks.Pop()
+			vm.pointer = vm.pointerStack.Pop()
 
 		default:
 			vm.pointer++
@@ -152,7 +158,7 @@ func (vm *VirtualMachine) handleArithmeticOp(quad quads.Quad) {
 	left, ok := memblock.Get(quad.Left.GetAddr()).(float64)
 	if !ok {
 		log.Fatalf(
-			"Error: (handleAdd) couldn't cast %v to float64",
+			"Error: (handleArithmeticOp) 1 couldn't cast %v to float64",
 			memblock.Get(quad.Left.GetAddr()),
 		)
 	}
@@ -161,7 +167,7 @@ func (vm *VirtualMachine) handleArithmeticOp(quad quads.Quad) {
 	right, ok := memblock.Get(quad.Right.GetAddr()).(float64)
 	if !ok {
 		log.Fatalf(
-			"Error: (handleAdd) couldn't cast %v to float64",
+			"Error: (handleArithmeticOp) 2 couldn't cast %v to float64",
 			memblock.Get(quad.Right.GetAddr()),
 		)
 	}

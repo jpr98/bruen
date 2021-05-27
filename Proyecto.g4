@@ -71,7 +71,7 @@ vars: ID ('.' ID)? ('[' exp ']')? ('[' exp ']')?;
 functions: FUNCTION ID LPAREN parameters? RPAREN (typeRule | VOID) functionBlock;
 parameters: parameter (',' parameter)*;
 parameter: ID ':' typeRule;
-functionBlock: '{' varsDec* statutes* returnRule?'}';
+functionBlock: '{' varsDec* statutes* '}';
 returnRule: RETURN exp? SEMI;
 
 block: '{' statutes* '}';
@@ -82,7 +82,8 @@ statutes: assignation
         | conditional
         | forLoop
         | whileLoop
-        | expression;
+        | expression
+        | returnRule;
 
 assignation: ID ASSIGN exp SEMI;
 

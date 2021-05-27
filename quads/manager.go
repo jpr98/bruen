@@ -261,8 +261,14 @@ func (m *Manager) AddEndFuncQuad() {
 }
 
 func (m *Manager) AddReturnQuad(currentFunction string) {
+	if m.functionTable[currentFunction].TypeOf == constants.VOID {
+		q := Quad{RETURN, nil, nil, nil}
+		m.quads = append(m.quads, q)
+		return
+	}
+
 	returnValue := m.operands.Pop()
-	functionType := constants.StringToType(m.functionTable[currentFunction].TypeOf)
+	functionType := m.functionTable[currentFunction].TypeOf
 	if returnValue.Type() != functionType {
 		log.Fatalf("Error: (AddReturnQuad) %s expects to return type %s", currentFunction, functionType)
 	}
@@ -320,8 +326,8 @@ func (m *Manager) AddGoSubQuad(name string) {
 	q := Quad{GOSUB, n, nil, dirElement}
 	m.quads = append(m.quads, q)
 
-	if m.functionTable[m.currentFunctionCall].TypeOf != "void" {
-		resultType := constants.StringToType(m.functionTable[m.currentFunctionCall].TypeOf)
+	if m.functionTable[m.currentFunctionCall].TypeOf != constants.VOID {
+		resultType := m.functionTable[m.currentFunctionCall].TypeOf
 		if resultType == constants.ERR {
 			log.Fatalf(
 				"Error: (AddGoSubQuad) error in return type %s",

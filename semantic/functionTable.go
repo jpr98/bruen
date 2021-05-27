@@ -16,7 +16,7 @@ type VariableAttributes struct {
 }
 
 type FunctionTableContent struct {
-	TypeOf    string
+	TypeOf    constants.Type
 	Dir       int
 	ReturnDir int
 	EraSize   string
