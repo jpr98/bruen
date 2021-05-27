@@ -71,7 +71,7 @@ vars: ID ('.' ID)? ('[' exp ']')? ('[' exp ']')?;
 functions: FUNCTION ID LPAREN parameters? RPAREN (typeRule | VOID) functionBlock;
 parameters: parameter (',' parameter)*;
 parameter: ID ':' typeRule;
-functionBlock: '{' varsDec* statutes* returnRule'}';
+functionBlock: '{' varsDec* statutes* returnRule?'}';
 returnRule: RETURN exp? SEMI;
 
 block: '{' statutes* '}';

@@ -219,10 +219,26 @@ func (l *QuadGenListener) EnterFunctions(c *parser.FunctionsContext) {
 }
 
 func (l *QuadGenListener) ExitFunctions(c *parser.FunctionsContext) {
+	if len(l.m.quads) > 0 {
+		if c.TypeRule() != nil && l.m.quads[len(l.m.quads)-1].Action != RETURN {
+			log.Fatalf("Error: (ExitFunctions) missing return statement in non-void function\n")
+		}
+		fmt.Println(l.m.quads[len(l.m.quads)-1])
+		if c.VOID() != nil && l.m.quads[len(l.m.quads)-1].Action == RETURN && l.m.quads[len(l.m.quads)-1].Result != nil {
+			log.Fatalf("Error: (ExitFunctions) void function shouldn't return a value")
+		}
+	}
+
 	l.m.AddEndFuncQuad()
 	l.m.functionTable[l.currentFunction].Vars = nil
 	l.m.functionTable[l.currentFunction].EraSize = "0i1f2c3b"
 	l.m.functionTable[l.currentFunction].TempSize = memory.Manager.ResetTempCounter()
+}
+
+func (l *QuadGenListener) ExitReturnRule(c *parser.ReturnRuleContext) {
+	if c.Exp() != nil {
+		l.m.AddReturnQuad(l.currentFunction)
+	}
 }
 
 func (l *QuadGenListener) EnterRead2(c *parser.Read2Context) {

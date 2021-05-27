@@ -10,11 +10,15 @@ function testfunc(a: int, b: bool) void {
     return;
 }
 
-function testfunc2(a: int, b: bool) void {
+function testfunc2(a: int, b: bool) int {
     while (a < 10) {
         a = a + 1;
     }
-    return;
+    return a;
+}
+
+function empty() void {
+    temp = 1;
 }
 
 main() {

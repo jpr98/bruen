@@ -260,6 +260,16 @@ func (m *Manager) AddEndFuncQuad() {
 	m.quads = append(m.quads, q)
 }
 
+func (m *Manager) AddReturnQuad(currentFunction string) {
+	returnValue := m.operands.Pop()
+	functionType := constants.StringToType(m.functionTable[currentFunction].TypeOf)
+	if returnValue.Type() != functionType {
+		log.Fatalf("Error: (AddReturnQuad) %s expects to return type %s", currentFunction, functionType)
+	}
+	q := Quad{RETURN, nil, nil, returnValue}
+	m.quads = append(m.quads, q)
+}
+
 func (m *Manager) AddEraQuad(name string) {
 	n := NewElement(0, name, constants.TYPEINT)
 	q := Quad{ERA, n, nil, nil}
