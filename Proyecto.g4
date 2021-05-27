@@ -55,7 +55,8 @@ PROGRAM: 'program';
 ID: [a-zA-Z_][a-zA-Z0-9]*;
 
 // Rules
-program: PROGRAM ID SEMI classDef* varsDec* functions* main EOF;
+program: PROGRAM ID SEMI classDef* varsDec* program2;
+program2: functions* main EOF;
 
 classDef: CLASS ID ('<' ID '>')? classBlock SEMI;
 classBlock: '{' ATTRIBUTES varsDec* METHODS functions* '}';

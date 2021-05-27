@@ -11,6 +11,9 @@ type ProyectoListener interface {
 	// EnterProgram is called when entering the program production.
 	EnterProgram(c *ProgramContext)
 
+	// EnterProgram2 is called when entering the program2 production.
+	EnterProgram2(c *Program2Context)
+
 	// EnterClassDef is called when entering the classDef production.
 	EnterClassDef(c *ClassDefContext)
 
@@ -178,6 +181,9 @@ type ProyectoListener interface {
 
 	// ExitProgram is called when exiting the program production.
 	ExitProgram(c *ProgramContext)
+
+	// ExitProgram2 is called when exiting the program2 production.
+	ExitProgram2(c *Program2Context)
 
 	// ExitClassDef is called when exiting the classDef production.
 	ExitClassDef(c *ClassDefContext)

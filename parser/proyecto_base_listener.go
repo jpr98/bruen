@@ -27,6 +27,12 @@ func (s *BaseProyectoListener) EnterProgram(ctx *ProgramContext) {}
 // ExitProgram is called when production program is exited.
 func (s *BaseProyectoListener) ExitProgram(ctx *ProgramContext) {}
 
+// EnterProgram2 is called when production program2 is entered.
+func (s *BaseProyectoListener) EnterProgram2(ctx *Program2Context) {}
+
+// ExitProgram2 is called when production program2 is exited.
+func (s *BaseProyectoListener) ExitProgram2(ctx *Program2Context) {}
+
 // EnterClassDef is called when production classDef is entered.
 func (s *BaseProyectoListener) EnterClassDef(ctx *ClassDefContext) {}
 

@@ -73,13 +73,13 @@ func (l *QuadGenListener) ExitExp2(c *parser.Exp2Context) {
 	}, false)
 }
 
-func (l *QuadGenListener) EnterTExp2(c *parser.T_exp2Context) {
+func (l *QuadGenListener) EnterT_exp2(c *parser.T_exp2Context) {
 	if c.AND() != nil {
 		l.m.PushOp(c.AND().GetText())
 	}
 }
 
-func (l *QuadGenListener) ExitTExp2(c *parser.T_exp2Context) {
+func (l *QuadGenListener) ExitT_exp2(c *parser.T_exp2Context) {
 	l.m.GenerateQuad([]int{
 		constants.OPAND,
 	}, false)
@@ -223,6 +223,9 @@ func (l *QuadGenListener) EnterProgram(c *parser.ProgramContext) {
 	l.scopeStack.Push(c.ID().GetText())
 	l.currentFunction = l.scopeStack.Top()
 	l.globalName = l.scopeStack.Top()
+}
+
+func (l *QuadGenListener) EnterProgram2(c *parser.Program2Context) {
 	l.m.SaveJumpPosition()
 	l.m.AddSimpleGOTO()
 }

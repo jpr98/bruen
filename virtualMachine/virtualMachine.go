@@ -346,9 +346,9 @@ func (vm *VirtualMachine) handleWrite(quad quads.Quad) {
 	case rune:
 		fmt.Print(strconv.QuoteRune(value.(rune)))
 	case bool:
-		fmt.Println(value.(bool))
+		fmt.Print(value.(bool))
 	default:
-		log.Fatalln("Accesing uninitialized variable")
+		log.Fatalf("Accesing uninitialized variable %s", quad.Result.ID())
 	}
 }
 

@@ -1,6 +1,6 @@
 program test2;
 
-var ch: char;
+var ch: char = "c";
 
 function testFunc(a: int) void {
     write(a);
@@ -25,7 +25,7 @@ function factorial(n: int) int {
 }
 
 main() {
-    var a: int;
-    var b: bool;
-    write(fib(9));
+    var a: int = 10;
+    var b: bool = true && true;
+    write(ch);
 }
