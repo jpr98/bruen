@@ -167,6 +167,9 @@ type ProyectoListener interface {
 	// EnterMain is called when entering the main production.
 	EnterMain(c *MainContext)
 
+	// EnterMainBlock is called when entering the mainBlock production.
+	EnterMainBlock(c *MainBlockContext)
+
 	// EnterTypeRule is called when entering the typeRule production.
 	EnterTypeRule(c *TypeRuleContext)
 
@@ -331,6 +334,9 @@ type ProyectoListener interface {
 
 	// ExitMain is called when exiting the main production.
 	ExitMain(c *MainContext)
+
+	// ExitMainBlock is called when exiting the mainBlock production.
+	ExitMainBlock(c *MainBlockContext)
 
 	// ExitTypeRule is called when exiting the typeRule production.
 	ExitTypeRule(c *TypeRuleContext)

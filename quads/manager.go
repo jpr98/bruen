@@ -266,7 +266,10 @@ func (m *Manager) AddReturnQuad(currentFunction string) {
 	if returnValue.Type() != functionType {
 		log.Fatalf("Error: (AddReturnQuad) %s expects to return type %s", currentFunction, functionType)
 	}
-	q := Quad{RETURN, nil, nil, returnValue}
+
+	returnDir := m.functionTable[currentFunction].ReturnDir
+	funcReturnElement := NewElement(returnDir, "", constants.ADDR)
+	q := Quad{RETURN, funcReturnElement, nil, returnValue}
 	m.quads = append(m.quads, q)
 }
 
@@ -316,6 +319,28 @@ func (m *Manager) AddGoSubQuad(name string) {
 	dirElement := NewElement(dir, "", constants.ADDR)
 	q := Quad{GOSUB, n, nil, dirElement}
 	m.quads = append(m.quads, q)
+
+	if m.functionTable[m.currentFunctionCall].TypeOf != "void" {
+		resultType := constants.StringToType(m.functionTable[m.currentFunctionCall].TypeOf)
+		if resultType == constants.ERR {
+			log.Fatalf(
+				"Error: (AddGoSubQuad) error in return type %s",
+				m.functionTable[m.currentFunctionCall].TypeOf,
+			)
+		}
+
+		dir, err := memory.Manager.GetNextAddr(resultType, memory.Temp)
+		if err != nil {
+			log.Fatalf("Error: (AddGoSubQuad) %s\n", err)
+		}
+		result := NewElement(dir, m.getNextAvail(), resultType)
+		m.operands.Push(result)
+
+		returnDir := m.functionTable[m.currentFunctionCall].ReturnDir
+		funcReturnElement := NewElement(returnDir, "", constants.ADDR)
+		q := Quad{ASSIGN, funcReturnElement, nil, result}
+		m.quads = append(m.quads, q)
+	}
 }
 
 func (m *Manager) getNextAvail() string {

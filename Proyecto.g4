@@ -147,7 +147,8 @@ cte_c: CHAR;
 cte_b: BOOL;
 cte_s: '"' .*? '"'; // checar espacios en strings
 
-main: MAIN LPAREN RPAREN functionBlock;
+main: MAIN LPAREN RPAREN mainBlock;
+mainBlock: '{' varsDec* statutes* '}';
 
 typeRule: INT_TYPE
     | FLOAT_TYPE

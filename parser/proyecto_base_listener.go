@@ -339,6 +339,12 @@ func (s *BaseProyectoListener) EnterMain(ctx *MainContext) {}
 // ExitMain is called when production main is exited.
 func (s *BaseProyectoListener) ExitMain(ctx *MainContext) {}
 
+// EnterMainBlock is called when production mainBlock is entered.
+func (s *BaseProyectoListener) EnterMainBlock(ctx *MainBlockContext) {}
+
+// ExitMainBlock is called when production mainBlock is exited.
+func (s *BaseProyectoListener) ExitMainBlock(ctx *MainBlockContext) {}
+
 // EnterTypeRule is called when production typeRule is entered.
 func (s *BaseProyectoListener) EnterTypeRule(ctx *TypeRuleContext) {}
 

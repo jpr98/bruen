@@ -118,6 +118,13 @@ func (vm *VirtualMachine) Run() {
 			vm.memBlocks.Pop()
 			vm.pointer = vm.pointerStack.Pop()
 
+		case quads.RETURN:
+			memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+			value := memblock.Get(quad.Result.GetAddr())
+			memblock = vm.getMemBlockForAddr(quad.Left.GetAddr())
+			memblock.Set(value, quad.Left.GetAddr())
+			vm.pointer++
+
 		default:
 			vm.pointer++
 		}

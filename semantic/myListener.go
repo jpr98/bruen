@@ -82,13 +82,20 @@ func (l *MyListener) ExitClassDef(c *parser.ClassDefContext) {
 func (l *MyListener) EnterFunctions(c *parser.FunctionsContext) {
 	l.currentFunction = c.ID().GetText()
 	var typeString string
+	var returnDir int
+	var err error
 	if c.TypeRule() != nil {
 		typeString = c.TypeRule().GetText()
+		returnDir, err = memory.Manager.GetNextAddr(constants.StringToType(typeString), memory.Global)
+		if err != nil {
+			log.Fatalf("Error: (EnterFunctions) %s", err)
+		}
 	} else if c.VOID() != nil {
 		typeString = c.VOID().GetText()
 	}
 
 	l.addToFunctionTable(typeString, l.scopeStack.Top())
+	l.functionTable[l.currentFunction].ReturnDir = returnDir
 }
 
 func (l *MyListener) ExitFunctions(c *parser.FunctionsContext) {

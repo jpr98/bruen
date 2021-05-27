@@ -10,9 +10,9 @@ function testfunc(a: int, b: bool) void {
     return;
 }
 
-function testfunc2(a: int, b: bool) int {
-    while (a < 10) {
-        a = a + 1;
+function testfunc2(a: int) int {
+    if (a < 16) {
+        testfunc2(a + 3);
     }
     return a;
 }
@@ -25,7 +25,6 @@ main() {
     var a: int;
     var b: bool;
     temp = 5;
-    read(a);
-    write(a + temp);
+    write(testfunc2(10););
     return;
 }
