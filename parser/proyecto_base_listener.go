@@ -147,6 +147,18 @@ func (s *BaseProyectoListener) EnterRead(ctx *ReadContext) {}
 // ExitRead is called when production read is exited.
 func (s *BaseProyectoListener) ExitRead(ctx *ReadContext) {}
 
+// EnterRead2 is called when production read2 is entered.
+func (s *BaseProyectoListener) EnterRead2(ctx *Read2Context) {}
+
+// ExitRead2 is called when production read2 is exited.
+func (s *BaseProyectoListener) ExitRead2(ctx *Read2Context) {}
+
+// EnterRead3 is called when production read3 is entered.
+func (s *BaseProyectoListener) EnterRead3(ctx *Read3Context) {}
+
+// ExitRead3 is called when production read3 is exited.
+func (s *BaseProyectoListener) ExitRead3(ctx *Read3Context) {}
+
 // EnterWrite is called when production write is entered.
 func (s *BaseProyectoListener) EnterWrite(ctx *WriteContext) {}
 
@@ -326,6 +338,12 @@ func (s *BaseProyectoListener) EnterMain(ctx *MainContext) {}
 
 // ExitMain is called when production main is exited.
 func (s *BaseProyectoListener) ExitMain(ctx *MainContext) {}
+
+// EnterMainBlock is called when production mainBlock is entered.
+func (s *BaseProyectoListener) EnterMainBlock(ctx *MainBlockContext) {}
+
+// ExitMainBlock is called when production mainBlock is exited.
+func (s *BaseProyectoListener) ExitMainBlock(ctx *MainBlockContext) {}
 
 // EnterTypeRule is called when production typeRule is entered.
 func (s *BaseProyectoListener) EnterTypeRule(ctx *TypeRuleContext) {}

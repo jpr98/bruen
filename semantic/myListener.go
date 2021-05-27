@@ -45,7 +45,7 @@ func (l *MyListener) handleFunctionRedefinition(scope string) {
 }
 
 // Adds function ID to the functionTable
-func (l *MyListener) addToFunctionTable(typeOf string, scope string) {
+func (l *MyListener) addToFunctionTable(typeOf constants.Type, scope string) {
 	l.handleFunctionRedefinition(scope)
 	l.functionTable[l.currentFunction] = &FunctionTableContent{}
 	l.functionTable[l.currentFunction].Vars = make(map[string]*VariableAttributes)
@@ -56,7 +56,7 @@ func (l *MyListener) addToFunctionTable(typeOf string, scope string) {
 func (l *MyListener) EnterProgram(c *parser.ProgramContext) {
 	l.currentFunction = c.ID().GetText()
 	l.ProgramName = c.ID().GetText()
-	l.addToFunctionTable("void", "")
+	l.addToFunctionTable(constants.VOID, "")
 	l.scopeStack.Push(c.ID().GetText())
 
 	// Setting a constant 1 int
@@ -69,7 +69,7 @@ func (l *MyListener) EnterProgram(c *parser.ProgramContext) {
 
 func (l *MyListener) EnterClassDef(c *parser.ClassDefContext) {
 	l.currentFunction = c.ID(0).GetText()
-	l.addToFunctionTable("void", l.scopeStack.Top())
+	l.addToFunctionTable(constants.VOID, l.scopeStack.Top())
 	l.scopeStack.Push(c.ID(0).GetText())
 }
 
@@ -81,14 +81,21 @@ func (l *MyListener) ExitClassDef(c *parser.ClassDefContext) {
 
 func (l *MyListener) EnterFunctions(c *parser.FunctionsContext) {
 	l.currentFunction = c.ID().GetText()
-	var typeString string
+	var typeOf constants.Type
+	var returnDir int
+	var err error
 	if c.TypeRule() != nil {
-		typeString = c.TypeRule().GetText()
+		typeOf = constants.StringToType(c.TypeRule().GetText())
+		returnDir, err = memory.Manager.GetNextAddr(typeOf, memory.Global)
+		if err != nil {
+			log.Fatalf("Error: (EnterFunctions) %s", err)
+		}
 	} else if c.VOID() != nil {
-		typeString = c.VOID().GetText()
+		typeOf = constants.VOID
 	}
 
-	l.addToFunctionTable(typeString, l.scopeStack.Top())
+	l.addToFunctionTable(typeOf, l.scopeStack.Top())
+	l.functionTable[l.currentFunction].ReturnDir = returnDir
 }
 
 func (l *MyListener) ExitFunctions(c *parser.FunctionsContext) {
@@ -97,7 +104,7 @@ func (l *MyListener) ExitFunctions(c *parser.FunctionsContext) {
 
 func (l *MyListener) EnterMain(c *parser.MainContext) {
 	l.currentFunction = c.MAIN().GetText()
-	l.addToFunctionTable("void", l.scopeStack.Top())
+	l.addToFunctionTable(constants.VOID, l.scopeStack.Top())
 }
 
 func (l *MyListener) EnterVarsDec(c *parser.VarsDecContext) {

@@ -1,8 +1,13 @@
 package virtualMachine
 
 import (
+	"bufio"
+	"fmt"
 	"log"
 	"math"
+	"os"
+	"strconv"
+	"strings"
 
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/memory"
@@ -34,6 +39,7 @@ func NewVM(programName string, functionTable semantic.FunctionTable, quads []qua
 }
 
 func (vm *VirtualMachine) Run() {
+	var fmb Memory
 	for vm.pointer < len(vm.quads) {
 		quad := vm.quads[vm.pointer]
 		switch quad.Action {
@@ -49,6 +55,18 @@ func (vm *VirtualMachine) Run() {
 			vm.handleLogicOp(quad)
 			vm.pointer++
 
+		case quads.READ:
+			vm.handleRead(quad)
+			vm.pointer++
+
+		case quads.WRITE:
+			vm.handleWrite(quad)
+			vm.pointer++
+
+		case quads.WRITENEWLINE:
+			fmt.Println("")
+			vm.pointer++
+
 		case quads.ASSIGN:
 			memblock := vm.getMemBlockForAddr(quad.Left.GetAddr())
 			value := memblock.Get(quad.Left.GetAddr())
@@ -57,7 +75,6 @@ func (vm *VirtualMachine) Run() {
 			if err != nil {
 				log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
 			}
-			log.Println("Assigning ", value)
 			vm.pointer++
 
 		case quads.GOTO:
@@ -79,26 +96,38 @@ func (vm *VirtualMachine) Run() {
 			}
 
 		case quads.ERA:
-			fmb := NewMemory(vm.functionTable[quad.Left.ID()].VarsSize, vm.functionTable[quad.Left.ID()].TempSize)
-			vm.memBlocks.Push(fmb)
+			fmb = NewMemory(vm.functionTable[quad.Left.ID()].VarsSize, vm.functionTable[quad.Left.ID()].TempSize)
+			if quad.Left.ID() == "main" {
+				vm.memBlocks.Push(fmb)
+			}
 			vm.pointer++
 
 		case quads.PARAM:
 			memblock := vm.getMemBlockForAddr(quad.Left.GetAddr())
 			value := memblock.Get(quad.Left.GetAddr())
-			memblock = vm.getMemBlockForAddr(quad.Right.GetAddr())
-			err := memblock.Set(value, quad.Right.GetAddr())
+
+			err := fmb.Set(value, quad.Right.GetAddr())
 			if err != nil {
 				log.Fatalf("Error: (Run) quads.PARAM %s", err)
 			}
-			log.Println("Passing param ", value)
 			vm.pointer++
 
 		case quads.GOSUB:
+			vm.memBlocks.Push(fmb)
 			vm.pointerStack.Push(vm.pointer + 1)
 			vm.pointer = vm.functionTable[quad.Left.ID()].Dir
 
 		case quads.ENDFUNC:
+			vm.memBlocks.Pop()
+			vm.pointer = vm.pointerStack.Pop()
+
+		case quads.RETURN:
+			if quad.Result != nil {
+				memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+				value := memblock.Get(quad.Result.GetAddr())
+				memblock = vm.getMemBlockForAddr(quad.Left.GetAddr())
+				memblock.Set(value, quad.Left.GetAddr())
+			}
 			vm.memBlocks.Pop()
 			vm.pointer = vm.pointerStack.Pop()
 
@@ -129,7 +158,7 @@ func (vm *VirtualMachine) handleArithmeticOp(quad quads.Quad) {
 	left, ok := memblock.Get(quad.Left.GetAddr()).(float64)
 	if !ok {
 		log.Fatalf(
-			"Error: (handleAdd) couldn't cast %v to float64",
+			"Error: (handleArithmeticOp) 1 couldn't cast %v to float64",
 			memblock.Get(quad.Left.GetAddr()),
 		)
 	}
@@ -138,7 +167,7 @@ func (vm *VirtualMachine) handleArithmeticOp(quad quads.Quad) {
 	right, ok := memblock.Get(quad.Right.GetAddr()).(float64)
 	if !ok {
 		log.Fatalf(
-			"Error: (handleAdd) couldn't cast %v to float64",
+			"Error: (handleArithmeticOp) 2 couldn't cast %v to float64",
 			memblock.Get(quad.Right.GetAddr()),
 		)
 	}
@@ -254,6 +283,72 @@ func (vm *VirtualMachine) handleLogicOp(quad quads.Quad) {
 	err := memblock.Set(res, quad.Result.GetAddr())
 	if err != nil {
 		log.Fatalf("Error: (handleLogicOp) %s", err)
+	}
+}
+
+func (vm *VirtualMachine) handleRead(quad quads.Quad) {
+	reader := bufio.NewReader(os.Stdin)
+	bytes, _ := reader.ReadBytes('\n')
+	str := strings.TrimSpace(string(bytes))
+	memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+
+	switch quad.Result.Type() {
+	case constants.TYPEINT:
+		floatVal, err := strconv.ParseFloat(str, 64)
+		if err != nil {
+			log.Println("Warning: read to int expects int")
+		}
+
+		err = memblock.Set(float64(int(floatVal)), quad.Result.GetAddr())
+		if err != nil {
+			log.Fatalf("Error: (handleRead) %s", err)
+		}
+
+	case constants.TYPEFLOAT:
+		floatVal, err := strconv.ParseFloat(str, 64)
+		if err != nil {
+			//TODO: handle err
+		}
+		err = memblock.Set(floatVal, quad.Result.GetAddr())
+		if err != nil {
+			//TODO: handle err
+		}
+
+	case constants.TYPECHAR:
+		if len(str) > 0 {
+			runeVal := str[0]
+			err := memblock.Set(runeVal, quad.Result.GetAddr())
+			if err != nil {
+				//TODO: handle err
+			}
+		} else {
+			//TODO: handle err
+		}
+
+	case constants.TYPEBOOL:
+		boolVal, err := strconv.ParseBool(str)
+		if err != nil {
+			fmt.Println("Warning:")
+		}
+		err = memblock.Set(boolVal, quad.Result.GetAddr())
+		if err != nil {
+			//TODO: handle err
+		}
+	}
+}
+
+func (vm *VirtualMachine) handleWrite(quad quads.Quad) {
+	memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+	value := memblock.Get(quad.Result.GetAddr())
+	switch value.(type) {
+	case float64:
+		fmt.Print(value.(float64))
+	case rune:
+		fmt.Print(strconv.QuoteRune(value.(rune)))
+	case bool:
+		fmt.Println(value.(bool))
+	default:
+		log.Fatalln("Accesing uninitialized variable")
 	}
 }
 

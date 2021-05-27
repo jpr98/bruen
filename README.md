@@ -29,3 +29,9 @@ En este avance aprovechamos para completar algunos TODOs que teníamos pendiente
 (*15 de mayo de 2021*)
 
 En este avance se desarrolló la generación de quads para las funciones y llamadas a funciones. Además se realizó el mapa de memoria para la máquina virtual.
+
+### Avance 7: Ejecución de Estatutos Condicionales
+(*21 de mayo de 2021*)
+
+En este avance se desarrolló la maquina virtual donde actualmente se ejecutan los quads con operadores aritméticos (ADD,SUB,MUL,DIV), operadores relacionales (GT,LT,EQ,NEQ) y operadores lógicos (AND,OR). Asi mismo se ejecutan ya los estatutos condicionales. También ejecutan todos los quads relacionados a funciones sin embargo, todavía no se maneja recursividad. Finalmente se implemento en la máquina virtual el read y write.
+

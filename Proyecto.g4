@@ -71,7 +71,7 @@ vars: ID ('.' ID)? ('[' exp ']')? ('[' exp ']')?;
 functions: FUNCTION ID LPAREN parameters? RPAREN (typeRule | VOID) functionBlock;
 parameters: parameter (',' parameter)*;
 parameter: ID ':' typeRule;
-functionBlock: '{' varsDec* statutes* returnRule'}';
+functionBlock: '{' varsDec* statutes* '}';
 returnRule: RETURN exp? SEMI;
 
 block: '{' statutes* '}';
@@ -82,7 +82,8 @@ statutes: assignation
         | conditional
         | forLoop
         | whileLoop
-        | expression;
+        | expression
+        | returnRule;
 
 assignation: ID ASSIGN exp SEMI;
 
@@ -94,7 +95,9 @@ methodCall: ID '.' ID LPAREN arguments? RPAREN;
 
 call: functionCall | methodCall;
 
-read: READ LPAREN vars (',' vars)* RPAREN SEMI;
+read: READ LPAREN read2 RPAREN SEMI;
+read2: vars read3;
+read3: ',' read2 | ;
 
 write: WRITE LPAREN arguments RPAREN SEMI;
 
@@ -145,7 +148,8 @@ cte_c: CHAR;
 cte_b: BOOL;
 cte_s: '"' .*? '"'; // checar espacios en strings
 
-main: MAIN LPAREN RPAREN functionBlock;
+main: MAIN LPAREN RPAREN mainBlock;
+mainBlock: '{' varsDec* statutes* '}';
 
 typeRule: INT_TYPE
     | FLOAT_TYPE

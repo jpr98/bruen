@@ -1,26 +1,32 @@
 program test2;
 
-var temp: int;
+var ch: char;
 
-function testfunc(a: int, b: bool) void {
-    var x: char;
-    a = 10;
-    b = true;
-    x = "b";
-    return;
+function testFunc(a: int) void {
+    write(a);
+    if (a > 15) {
+        return;
+    }
+    testFunc(a + 1);
 }
 
-function testfunc2(a: int, b: bool) void {
-    while (a < 10) {
-        a = a + 1;
+function fib(n: int) int {
+    write(n);
+    if (n<2) {
+        return n;
     }
-    return;
+    return fib(n - 1) + fib(n - 2);
+}
+
+function factorial(n: int) int {
+    if (n < 2) {
+        return 1;
+    }
+    return n * factorial(n - 1);
 }
 
 main() {
     var a: int;
-    var b: float;
-    testfunc2(0, true);
-    
-    return;
+    var b: bool;
+    write(factorial(6));
 }

@@ -10,8 +10,9 @@ const (
 
 	TYPECLASS Type = 4
 
-	ERR  Type = 5 // 5
-	ADDR Type = 6
+	VOID Type = 5
+	ERR  Type = 6 // 5
+	ADDR Type = 7
 )
 
 func (t Type) String() string {
@@ -24,6 +25,8 @@ func (t Type) String() string {
 		return "char"
 	case TYPEBOOL:
 		return "bool"
+	case VOID:
+		return "void"
 	case ERR:
 		return "Type error"
 	case ADDR:
@@ -45,6 +48,8 @@ func StringToType(str string) Type {
 		return TYPEBOOL
 	case ADDR.String():
 		return ADDR
+	case VOID.String():
+		return VOID
 	default:
 		return ERR
 	}

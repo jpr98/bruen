@@ -1,6 +1,7 @@
 package quads
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/jpr98/compis/constants"
@@ -16,6 +17,9 @@ type QuadGenListener struct {
 	scopeStack      utils.StringStack
 	currentFunction string
 	globalName      string
+
+	enteredVarInit  bool
+	isArgumentParam bool
 }
 
 func NewListener(functionTable semantic.FunctionTable) QuadGenListener {
@@ -41,7 +45,15 @@ func (l *QuadGenListener) EnterVarsDec(c *parser.VarsDecContext) {
 	l.m.PushOperand(c.ID().GetText(), l.currentFunction, l.globalName)
 }
 
+func (l *QuadGenListener) ExitVarsTypeInit(c *parser.VarsTypeInitContext) {
+	defer func() { l.enteredVarInit = false }()
+	if !l.enteredVarInit {
+		l.m.operands.Pop()
+	}
+}
+
 func (l *QuadGenListener) EnterVarsTypeInit2(c *parser.VarsTypeInit2Context) {
+	l.enteredVarInit = true
 	l.m.PushOp(c.ASSIGN().GetText())
 }
 
@@ -207,10 +219,31 @@ func (l *QuadGenListener) EnterFunctions(c *parser.FunctionsContext) {
 }
 
 func (l *QuadGenListener) ExitFunctions(c *parser.FunctionsContext) {
+	if len(l.m.quads) > 0 {
+		if c.TypeRule() != nil && l.m.quads[len(l.m.quads)-1].Action != RETURN {
+			log.Fatalf("Error: (ExitFunctions) missing return statement in non-void function\n")
+		}
+		if c.VOID() != nil && l.m.quads[len(l.m.quads)-1].Action == RETURN && l.m.quads[len(l.m.quads)-1].Result != nil {
+			log.Fatalf("Error: (ExitFunctions) void function shouldn't return a value")
+		}
+	}
+
 	l.m.AddEndFuncQuad()
 	l.m.functionTable[l.currentFunction].Vars = nil
 	l.m.functionTable[l.currentFunction].EraSize = "0i1f2c3b"
 	l.m.functionTable[l.currentFunction].TempSize = memory.Manager.ResetTempCounter()
+}
+
+func (l *QuadGenListener) ExitReturnRule(c *parser.ReturnRuleContext) {
+	l.m.AddReturnQuad(l.currentFunction)
+}
+
+func (l *QuadGenListener) EnterRead2(c *parser.Read2Context) {
+	l.m.AddReadQuad(c.Vars().GetText(), l.currentFunction, l.globalName)
+}
+
+func (l *QuadGenListener) ExitWrite(c *parser.WriteContext) {
+	l.m.AddNewLineWriteQuad()
 }
 
 func (l *QuadGenListener) EnterMain(c *parser.MainContext) {
@@ -226,6 +259,7 @@ func (l *QuadGenListener) ExitMain(c *parser.MainContext) {
 func (l *QuadGenListener) ExitProgram(c *parser.ProgramContext) {
 	l.scopeStack.Pop()
 	l.m.functionTable[l.globalName].VarsSize = memory.Manager.GetGlobalSize()
+	fmt.Println(l.m.operands)
 }
 
 func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {
@@ -234,13 +268,19 @@ func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {
 		log.Fatalf("Error: (EnterFunctionCall) undeclared function %s", c.ID().GetText())
 	}
 	l.m.AddEraQuad(c.ID().GetText())
+	l.isArgumentParam = true
 }
 
 func (l *QuadGenListener) ExitFunctionCall(c *parser.FunctionCallContext) {
 	l.m.AddGoSubQuad(c.ID().GetText())
+	l.isArgumentParam = false
 }
 
 func (l *QuadGenListener) EnterArguments2(c *parser.Arguments2Context) {
+	if !l.isArgumentParam {
+		l.m.AddWriteQuad()
+		return
+	}
 	l.m.AddParamQuad()
 	l.m.paramCounter++
 }

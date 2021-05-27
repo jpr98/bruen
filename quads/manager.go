@@ -79,27 +79,29 @@ func (m *Manager) PushConstantOperand(operand string) {
 	m.operands.Push(element)
 }
 
-func (m *Manager) PushOperand(operand, currentFunction, globalName string) {
-	t := constants.ERR
-	var dir int
+func (m *Manager) getOperandData(operand, currentFunction, globalName string) *semantic.VariableAttributes {
+	data := &semantic.VariableAttributes{TypeOf: constants.ERR}
 	if attr, exists := m.functionTable[currentFunction].Vars[operand]; exists {
-		t = attr.TypeOf
-		dir = attr.Dir
+		data = attr
 	} else {
 		if attr, exists := m.functionTable[globalName].Vars[operand]; exists {
-			t = attr.TypeOf
-			dir = attr.Dir
+			data = attr
 		}
 	}
 
-	if t == constants.ERR {
+	if data.TypeOf == constants.ERR {
 		log.Fatalf(
 			"Error: (PushOperand) undeclared variable %s\n",
 			operand,
 		)
-		return
+		return nil
 	}
-	element := NewElement(dir, operand, t)
+	return data
+}
+
+func (m *Manager) PushOperand(operand, currentFunction, globalName string) {
+	operandData := m.getOperandData(operand, currentFunction, globalName)
+	element := NewElement(operandData.Dir, operand, operandData.TypeOf)
 	m.operands.Push(element)
 }
 
@@ -234,8 +236,46 @@ func (m *Manager) AddForLoopIterator(id string) {
 	e := NewElement(dir, id, constants.TYPEINT)
 	m.operands.Push(e)
 }
+
+func (m *Manager) AddReadQuad(operand, functionName, globalName string) {
+	operandData := m.getOperandData(operand, functionName, globalName)
+	element := NewElement(operandData.Dir, operandData.Name, operandData.TypeOf)
+	q := Quad{READ, nil, nil, element}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddWriteQuad() {
+	operand := m.operands.Pop()
+	q := Quad{WRITE, nil, nil, operand}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddNewLineWriteQuad() {
+	q := Quad{WRITENEWLINE, nil, nil, nil}
+	m.quads = append(m.quads, q)
+}
+
 func (m *Manager) AddEndFuncQuad() {
 	q := Quad{ENDFUNC, nil, nil, nil}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddReturnQuad(currentFunction string) {
+	if m.functionTable[currentFunction].TypeOf == constants.VOID {
+		q := Quad{RETURN, nil, nil, nil}
+		m.quads = append(m.quads, q)
+		return
+	}
+
+	returnValue := m.operands.Pop()
+	functionType := m.functionTable[currentFunction].TypeOf
+	if returnValue.Type() != functionType {
+		log.Fatalf("Error: (AddReturnQuad) %s expects to return type %s", currentFunction, functionType)
+	}
+
+	returnDir := m.functionTable[currentFunction].ReturnDir
+	funcReturnElement := NewElement(returnDir, "", constants.ADDR)
+	q := Quad{RETURN, funcReturnElement, nil, returnValue}
 	m.quads = append(m.quads, q)
 }
 
@@ -285,6 +325,28 @@ func (m *Manager) AddGoSubQuad(name string) {
 	dirElement := NewElement(dir, "", constants.ADDR)
 	q := Quad{GOSUB, n, nil, dirElement}
 	m.quads = append(m.quads, q)
+
+	if m.functionTable[m.currentFunctionCall].TypeOf != constants.VOID {
+		resultType := m.functionTable[m.currentFunctionCall].TypeOf
+		if resultType == constants.ERR {
+			log.Fatalf(
+				"Error: (AddGoSubQuad) error in return type %s",
+				m.functionTable[m.currentFunctionCall].TypeOf,
+			)
+		}
+
+		dir, err := memory.Manager.GetNextAddr(resultType, memory.Temp)
+		if err != nil {
+			log.Fatalf("Error: (AddGoSubQuad) %s\n", err)
+		}
+		result := NewElement(dir, m.getNextAvail(), resultType)
+		m.operands.Push(result)
+
+		returnDir := m.functionTable[m.currentFunctionCall].ReturnDir
+		funcReturnElement := NewElement(returnDir, "", constants.ADDR)
+		q := Quad{ASSIGN, funcReturnElement, nil, result}
+		m.quads = append(m.quads, q)
+	}
 }
 
 func (m *Manager) getNextAvail() string {
