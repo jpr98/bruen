@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"log"
 	"os"
@@ -10,9 +11,22 @@ import (
 	"github.com/jpr98/compis/parser"
 	"github.com/jpr98/compis/quads"
 	"github.com/jpr98/compis/semantic"
+	"github.com/jpr98/compis/virtualMachine"
 )
 
 func main() {
+	if len(os.Args) < 3 {
+		log.Fatal("No args")
+	}
+
+	if os.Args[2] == "b" {
+		compile()
+	} else {
+		execute()
+	}
+}
+
+func compile() {
 	if len(os.Args) < 2 {
 		log.Fatal("No filename provided")
 	}
@@ -55,7 +69,60 @@ func main() {
 		fmt.Printf("%d. %s\n", i, q)
 	}
 	fmt.Println("\n---------")
-	//debugFT(listener.GetFunctionTable())
+	debugFT(listener.GetFunctionTable())
+
+	f, err := os.Create("out.obj")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	enc := gob.NewEncoder(f)
+	enc.Encode(listener.ProgramName)
+	enc.Encode(quads)
+	enc.Encode(listener.GetFunctionTable())
+	enc.Encode(semantic.ConstantsTable)
+}
+
+func execute() {
+	f, err := os.Open("out.obj")
+	if err != nil {
+		panic(err)
+	}
+
+	dec := gob.NewDecoder(f)
+
+	var programName string
+	err = dec.Decode(&programName)
+	if err != nil {
+		panic(err)
+	}
+
+	var m []quads.Quad
+	err = dec.Decode(&m)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("\n---------")
+	for i, q := range m {
+		fmt.Printf("%d. %s\n", i, q)
+	}
+	fmt.Println("\n---------")
+
+	var ft semantic.FunctionTable
+	err = dec.Decode(&ft)
+	if err != nil {
+		panic(err)
+	}
+	//debugFT(ft)
+
+	err = dec.Decode(&semantic.ConstantsTable)
+	if err != nil {
+		panic(err)
+	}
+
+	vm := virtualMachine.NewVM(programName, ft, m)
+	vm.Run()
 }
 
 func testSC() {
@@ -65,7 +132,7 @@ func testSC() {
 
 func debugFT(ft semantic.FunctionTable) {
 	for fname, function := range ft {
-		fmt.Printf("\n *Function: %s Returns: %s Scope: %s\n", fname, function.TypeOf, function.Scope)
+		fmt.Printf("\n *Function: %s Returns: %s Scope: %s, VarSize: %v, TempSize: %v\n", fname, function.TypeOf, function.Scope, function.VarsSize, function.TempSize)
 		fmt.Println("VarTable:")
 		for id, variable := range function.Vars {
 			fmt.Printf("%s: %s \n", id, variable.TypeOf)

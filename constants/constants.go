@@ -8,8 +8,10 @@ const (
 	TYPECHAR  Type = 2 // 2
 	TYPEBOOL  Type = 3 // 3
 
-	ERR  Type = 4 // 4
-	ADDR Type = 5
+	TYPECLASS Type = 4
+
+	ERR  Type = 5 // 5
+	ADDR Type = 6
 )
 
 func (t Type) String() string {

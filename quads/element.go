@@ -6,37 +6,39 @@ import (
 	"github.com/jpr98/compis/constants"
 )
 
-type value interface {
-	//Value()
-}
-
 // Element represents an element in a Quadruple
 type Element interface {
-	Value() value
+	GetAddr() int
 	Type() constants.Type
 	String() string
+	ID() string
 }
 
 type quadElement struct {
-	value  value
-	typeOf constants.Type
+	Addr   int
+	Id     string
+	TypeOf constants.Type
 }
 
 // NewElement creates a new quad.Element
-func NewElement(val value, typeOf constants.Type) Element {
-	return quadElement{value: val, typeOf: typeOf}
+func NewElement(addr int, id string, typeOf constants.Type) Element {
+	return quadElement{Addr: addr, Id: id, TypeOf: typeOf}
 }
 
-func (e quadElement) Value() value {
-	return e.value
+func (e quadElement) GetAddr() int {
+	return e.Addr
 }
 
 func (e quadElement) Type() constants.Type {
-	return e.typeOf
+	return e.TypeOf
 }
 
 func (e quadElement) String() string {
-	return fmt.Sprintf("%s (type: %s)", e.Value(), e.Type())
+	return fmt.Sprintf("%s (type: %s, addr: %d)", e.Id, e.Type(), e.GetAddr())
+}
+
+func (e quadElement) ID() string {
+	return e.Id
 }
 
 // ElementStack is a stack of quad.Element

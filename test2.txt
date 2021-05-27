@@ -1,26 +1,26 @@
 program test2;
 
-var a: int;
-var b: char;
-var c: int;
+var temp: int;
 
-function test() void {
-    var ch : char = "a";
-    var number : int = -1;
-    var neg : float = -1.0;
+function testfunc(a: int, b: bool) void {
+    var x: char;
+    a = 10;
+    b = true;
+    x = "b";
+    return;
+}
 
-    if (ch == "b") {
-        a = 99;
+function testfunc2(a: int, b: bool) void {
+    while (a < 10) {
+        a = a + 1;
     }
     return;
 }
 
-function paramTest(a: int, b: float) int {
-    a = a;
-    return a;
-}
-
 main() {
-    paramTest(a + c, 10);
+    var a: int;
+    var b: float;
+    testfunc2(0, true);
+    
     return;
 }

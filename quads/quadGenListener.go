@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/jpr98/compis/constants"
+	"github.com/jpr98/compis/memory"
 	"github.com/jpr98/compis/parser"
 	"github.com/jpr98/compis/semantic"
 	"github.com/jpr98/compis/utils"
@@ -99,20 +100,22 @@ func (l *QuadGenListener) ExitTerm2(c *parser.Term2Context) {
 func (l *QuadGenListener) EnterFactor(c *parser.FactorContext) {
 	if c.Vars() != nil {
 		l.m.PushOperand(c.Vars().GetText(), l.currentFunction, l.globalName)
+	} else if c.VarCte() != nil {
+		l.m.PushConstantOperand(c.VarCte().GetText())
 	}
 }
 
-func (l *QuadGenListener) EnterVarCte(c *parser.VarCteContext) {
-	if c.Cte_i() != nil {
-		l.m.PushConstantOperand(c.Cte_i().GetText(), constants.TYPEINT)
-	} else if c.Cte_f() != nil {
-		l.m.PushConstantOperand(c.Cte_f().GetText(), constants.TYPEFLOAT)
-	} else if c.Cte_c() != nil {
-		l.m.PushConstantOperand(c.Cte_c().GetText(), constants.TYPECHAR)
-	} else if c.Cte_b() != nil {
-		l.m.PushConstantOperand(c.Cte_b().GetText(), constants.TYPEBOOL)
-	}
-}
+// func (l *QuadGenListener) EnterVarCte(c *parser.VarCteContext) {
+// 	if c.Cte_i() != nil {
+// 		l.m.PushConstantOperand(c.Cte_i().GetText())
+// 	} else if c.Cte_f() != nil {
+// 		l.m.PushConstantOperand(c.Cte_f().GetText())
+// 	} else if c.Cte_c() != nil {
+// 		l.m.PushConstantOperand(c.Cte_c().GetText())
+// 	} else if c.Cte_b() != nil {
+// 		l.m.PushConstantOperand(c.Cte_b().GetText())
+// 	}
+// }
 
 func (l *QuadGenListener) EnterFactor2(c *parser.Factor2Context) {
 	// Adds false bottom
@@ -155,7 +158,7 @@ func (l *QuadGenListener) ExitWhileLoop2(c *parser.WhileLoop2Context) {
 
 func (l *QuadGenListener) ExitForLoop(c *parser.ForLoopContext) {
 	// TODO: change this string to constant(1) address
-	l.m.PushConstantOperand("1", constants.TYPEINT)
+	l.m.PushConstantOperand("1")
 	l.m.PushOp("+")
 	l.m.GenerateQuad([]int{constants.OPPLUS}, true)
 
@@ -166,7 +169,7 @@ func (l *QuadGenListener) ExitForLoop(c *parser.ForLoopContext) {
 }
 
 func (l *QuadGenListener) EnterForLoop2(c *parser.ForLoop2Context) {
-	l.m.PushConstantOperand(c.ID().GetText(), constants.TYPEINT)
+	l.m.AddForLoopIterator(c.ID().GetText())
 	l.m.PushOp(c.ASSIGN().GetText())
 }
 func (l *QuadGenListener) ExitForLoop2(c *parser.ForLoop2Context) {
@@ -184,6 +187,8 @@ func (l *QuadGenListener) EnterProgram(c *parser.ProgramContext) {
 	l.scopeStack.Push(c.ID().GetText())
 	l.currentFunction = l.scopeStack.Top()
 	l.globalName = l.scopeStack.Top()
+	l.m.SaveJumpPosition()
+	l.m.AddSimpleGOTO()
 }
 
 func (l *QuadGenListener) EnterClassDef(c *parser.ClassDefContext) {
@@ -205,14 +210,22 @@ func (l *QuadGenListener) ExitFunctions(c *parser.FunctionsContext) {
 	l.m.AddEndFuncQuad()
 	l.m.functionTable[l.currentFunction].Vars = nil
 	l.m.functionTable[l.currentFunction].EraSize = "0i1f2c3b"
+	l.m.functionTable[l.currentFunction].TempSize = memory.Manager.ResetTempCounter()
 }
 
 func (l *QuadGenListener) EnterMain(c *parser.MainContext) {
 	l.currentFunction = c.MAIN().GetText()
+	l.m.UpdateGoto()
+	l.m.AddEraQuad(c.MAIN().GetText())
+}
+
+func (l *QuadGenListener) ExitMain(c *parser.MainContext) {
+	l.m.functionTable[l.currentFunction].TempSize = memory.Manager.ResetTempCounter()
 }
 
 func (l *QuadGenListener) ExitProgram(c *parser.ProgramContext) {
 	l.scopeStack.Pop()
+	l.m.functionTable[l.globalName].VarsSize = memory.Manager.GetGlobalSize()
 }
 
 func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {

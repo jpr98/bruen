@@ -35,6 +35,7 @@ const (
 	Local    Context = "local"
 	Temp     Context = "temp"
 	Constant Context = "constant"
+	Invalid  Context = "invalid"
 )
 
 func TypeForAddr(addr int) constants.Type {
@@ -50,6 +51,22 @@ func TypeForAddr(addr int) constants.Type {
 		return constants.TYPEBOOL
 	default:
 		return constants.ERR
+	}
+}
+
+func ContextForAddr(addr int) Context {
+	n := addr / 1000
+	switch n {
+	case 1, 2, 3, 4:
+		return Global
+	case 5, 6, 7, 8:
+		return Local
+	case 9, 10, 11, 12:
+		return Temp
+	case 13, 14, 15, 16:
+		return Constant
+	default:
+		return Invalid
 	}
 }
 
@@ -113,6 +130,47 @@ func (m *manager) GetNextAddr(typeOf constants.Type, context Context) (int, erro
 		return m.getConstForType(typeOf), nil
 	}
 	return 0, fmt.Errorf("(GetNextAddr) invalid context %s", context)
+}
+
+// ConvertAddr returns the memory reference minus the offset to get the real memory address
+func ConvertAddr(addr int) int {
+	if addr < GLOBAL_FLOAT {
+		return addr - GLOBAL_INT
+	} else if addr < GLOBAL_CHAR {
+		return addr - GLOBAL_FLOAT
+	} else if addr < GLOBAL_BOOL {
+		return addr - GLOBAL_CHAR
+	} else if addr < LOCAL_INT {
+		return addr - GLOBAL_BOOL
+	} else if addr < LOCAL_FLOAT {
+		return addr - LOCAL_INT
+	} else if addr < LOCAL_CHAR {
+		return addr - LOCAL_FLOAT
+	} else if addr < LOCAL_BOOL {
+		return addr - LOCAL_CHAR
+	} else if addr < TEMP_INT {
+		return addr - LOCAL_BOOL
+	} else if addr < TEMP_FLOAT {
+		return addr - TEMP_INT
+	} else if addr < TEMP_CHAR {
+		return addr - TEMP_FLOAT
+	} else if addr < TEMP_BOOL {
+		return addr - TEMP_CHAR
+	} else if addr < CONST_INT {
+		return addr - TEMP_BOOL
+	} else if addr < CONST_FLOAT {
+		return addr - CONST_INT
+	} else if addr < CONST_CHAR {
+		return addr - CONST_FLOAT
+	} else if addr < CONST_BOOL {
+		return addr - CONST_CHAR
+	} else {
+		return addr - CONST_BOOL
+	}
+}
+
+func IsTempAddr(addr int) bool {
+	return addr >= TEMP_INT && addr < CONST_INT
 }
 
 func (m *manager) getGlobalForType(typeOf constants.Type) int {
@@ -191,16 +249,24 @@ func (m *manager) getConstForType(typeOf constants.Type) int {
 	return result
 }
 
-func (m *manager) ResetLocalCounter() {
+func (m *manager) ResetLocalCounter() [4]int {
+	size := [4]int{m.lInt - LOCAL_INT, m.lFloat - LOCAL_FLOAT, m.lChar - LOCAL_CHAR, m.lBool - LOCAL_BOOL}
 	m.lInt = LOCAL_INT
 	m.lFloat = LOCAL_FLOAT
 	m.lChar = LOCAL_CHAR
 	m.lBool = LOCAL_BOOL
+	return size
 }
 
-func (m *manager) ResetTempCounter() {
+func (m *manager) ResetTempCounter() [4]int {
+	size := [4]int{m.tInt - TEMP_INT, m.tFloat - TEMP_FLOAT, m.tChar - TEMP_CHAR, m.tBool - TEMP_BOOL}
 	m.tInt = TEMP_INT
 	m.tFloat = TEMP_FLOAT
 	m.tChar = TEMP_CHAR
 	m.tBool = TEMP_BOOL
+	return size
+}
+
+func (m *manager) GetGlobalSize() [4]int {
+	return [4]int{m.gInt - GLOBAL_INT, m.gFloat - GLOBAL_FLOAT, m.gChar - GLOBAL_CHAR, m.gBool - GLOBAL_BOOL}
 }
