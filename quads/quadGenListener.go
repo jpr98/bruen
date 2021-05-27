@@ -61,6 +61,30 @@ func (l *QuadGenListener) ExitVarsTypeInit2(c *parser.VarsTypeInit2Context) {
 	l.m.GenerateAssignationQuad(false)
 }
 
+func (l *QuadGenListener) EnterExp2(c *parser.Exp2Context) {
+	if c.OR() != nil {
+		l.m.PushOp(c.OR().GetText())
+	}
+}
+
+func (l *QuadGenListener) ExitExp2(c *parser.Exp2Context) {
+	l.m.GenerateQuad([]int{
+		constants.OPOR,
+	}, false)
+}
+
+func (l *QuadGenListener) EnterTExp2(c *parser.T_exp2Context) {
+	if c.AND() != nil {
+		l.m.PushOp(c.AND().GetText())
+	}
+}
+
+func (l *QuadGenListener) ExitTExp2(c *parser.T_exp2Context) {
+	l.m.GenerateQuad([]int{
+		constants.OPAND,
+	}, false)
+}
+
 func (l *QuadGenListener) EnterG_exp2(c *parser.G_exp2Context) {
 	if c.Relop() != nil {
 		l.m.PushOp(c.Relop().GetText())

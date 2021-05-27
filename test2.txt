@@ -11,8 +11,7 @@ function testFunc(a: int) void {
 }
 
 function fib(n: int) int {
-    write(n);
-    if (n<2) {
+    if (n == 1 || n == 0) {
         return n;
     }
     return fib(n - 1) + fib(n - 2);
@@ -28,5 +27,5 @@ function factorial(n: int) int {
 main() {
     var a: int;
     var b: bool;
-    write(factorial(6));
+    write(fib(9));
 }

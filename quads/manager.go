@@ -381,6 +381,10 @@ func stringToOp(text string) (QuadAction, error) {
 		return EQ, nil
 	case NEQ.String():
 		return NEQ, nil
+	case OR.String():
+		return OR, nil
+	case AND.String():
+		return AND, nil
 	case ASSIGN.String():
 		return ASSIGN, nil
 	case LPAREN.String():
