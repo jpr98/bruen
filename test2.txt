@@ -24,8 +24,15 @@ function factorial(n: int) int {
     return n * factorial(n - 1);
 }
 
+function twoParams(a: int, b: int) void {
+    write(a, b);
+    if (a < b) {
+        twoParams(a + 1, b);
+    }
+}
+
 main() {
     var a: int = 10;
     var b: bool = true && true;
-    write(ch);
+    twoParams(0, 5);
 }
