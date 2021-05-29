@@ -264,8 +264,8 @@ func (l *QuadGenListener) ExitReturnRule(c *parser.ReturnRuleContext) {
 	l.m.AddReturnQuad(l.currentFunction)
 }
 
-func (l *QuadGenListener) EnterRead2(c *parser.Read2Context) {
-	l.m.AddReadQuad(c.Vars().GetText(), l.currentFunction, l.globalName)
+func (l *QuadGenListener) ExitRead2(c *parser.Read2Context) {
+	l.m.AddReadQuad()
 }
 
 func (l *QuadGenListener) ExitWrite(c *parser.WriteContext) {

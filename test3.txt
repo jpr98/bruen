@@ -5,5 +5,8 @@ main() {
     var x: int;
     
     b[2] = 10;
-    x = b[4];
+    x = b[2] * 2;
+    write(x);
+    read(b[0]);
+    write(b[2] * 3);
 }

@@ -179,7 +179,7 @@ func (m *Manager) AddVerifyQuad(id, currentFunction, globalName string, isArray 
 
 	if isArray {
 		array := m.getOperandData(id, currentFunction, globalName)
-		maxIndexVal := NewElement(array.Dim[0], fmt.Sprint(array.Dir), constants.TYPEINT)
+		maxIndexVal := NewElement(array.Dim[0], array.Name, constants.TYPEINT)
 		q := Quad{VER, index, nil, maxIndexVal}
 		m.quads = append(m.quads, q)
 	}
@@ -193,8 +193,7 @@ func (m *Manager) AddArrayAccessQuad(id string) {
 	if err != nil {
 		log.Fatalf("Error: (GenerateQuad) %s\n", err)
 	}
-	result := NewElement(dir, m.getNextAvail(), constants.TYPEINT)
-
+	result := NewElement(dir, "ptr_"+m.getNextAvail(), constants.TYPEINT)
 	q := Quad{CALCDIR, array, index, result}
 	m.quads = append(m.quads, q)
 
@@ -267,10 +266,9 @@ func (m *Manager) AddForLoopIterator(id string) {
 	m.operands.Push(e)
 }
 
-func (m *Manager) AddReadQuad(operand, functionName, globalName string) {
-	operandData := m.getOperandData(operand, functionName, globalName)
-	element := NewElement(operandData.Dir, operandData.Name, operandData.TypeOf)
-	q := Quad{READ, nil, nil, element}
+func (m *Manager) AddReadQuad() {
+	operand := m.operands.Pop()
+	q := Quad{READ, nil, nil, operand}
 	m.quads = append(m.quads, q)
 }
 

@@ -15,14 +15,15 @@ type Element interface {
 }
 
 type quadElement struct {
-	Addr   int
-	Id     string
-	TypeOf constants.Type
+	Addr      int
+	Id        string
+	TypeOf    constants.Type
+	IsPointer bool
 }
 
 // NewElement creates a new quad.Element
 func NewElement(addr int, id string, typeOf constants.Type) Element {
-	return quadElement{Addr: addr, Id: id, TypeOf: typeOf}
+	return quadElement{Addr: addr, Id: id, TypeOf: typeOf, IsPointer: false}
 }
 
 func (e quadElement) GetAddr() int {
