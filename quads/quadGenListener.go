@@ -257,7 +257,9 @@ func (l *QuadGenListener) ExitFunctions(c *parser.FunctionsContext) {
 	l.m.AddEndFuncQuad()
 	l.m.functionTable[l.currentFunction].Vars = nil
 	l.m.functionTable[l.currentFunction].EraSize = "0i1f2c3b"
-	l.m.functionTable[l.currentFunction].TempSize = memory.Manager.ResetTempCounter()
+	tempSize, objSize := memory.Manager.ResetTempCounter()
+	l.m.functionTable[l.currentFunction].TempSize = tempSize
+	l.m.functionTable[l.currentFunction].ObjSize += objSize
 }
 
 func (l *QuadGenListener) ExitReturnRule(c *parser.ReturnRuleContext) {
@@ -279,12 +281,16 @@ func (l *QuadGenListener) EnterMain(c *parser.MainContext) {
 }
 
 func (l *QuadGenListener) ExitMain(c *parser.MainContext) {
-	l.m.functionTable[l.currentFunction].TempSize = memory.Manager.ResetTempCounter()
+	tempSize, objSize := memory.Manager.ResetTempCounter()
+	l.m.functionTable[l.currentFunction].TempSize = tempSize
+	l.m.functionTable[l.currentFunction].ObjSize += objSize
 }
 
 func (l *QuadGenListener) ExitProgram(c *parser.ProgramContext) {
 	l.scopeStack.Pop()
-	l.m.functionTable[l.globalName].VarsSize = memory.Manager.GetGlobalSize()
+	varsSize, objSize := memory.Manager.GetGlobalSize()
+	l.m.functionTable[l.globalName].VarsSize = varsSize
+	l.m.functionTable[l.globalName].ObjSize = objSize
 	fmt.Println(l.m.operands)
 }
 

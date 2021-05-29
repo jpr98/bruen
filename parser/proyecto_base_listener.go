@@ -45,6 +45,12 @@ func (s *BaseProyectoListener) EnterClassBlock(ctx *ClassBlockContext) {}
 // ExitClassBlock is called when production classBlock is exited.
 func (s *BaseProyectoListener) ExitClassBlock(ctx *ClassBlockContext) {}
 
+// EnterClassAttributes is called when production classAttributes is entered.
+func (s *BaseProyectoListener) EnterClassAttributes(ctx *ClassAttributesContext) {}
+
+// ExitClassAttributes is called when production classAttributes is exited.
+func (s *BaseProyectoListener) ExitClassAttributes(ctx *ClassAttributesContext) {}
+
 // EnterVariableDeclaration is called when production variableDeclaration is entered.
 func (s *BaseProyectoListener) EnterVariableDeclaration(ctx *VariableDeclarationContext) {}
 

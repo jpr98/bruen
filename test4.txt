@@ -1,0 +1,24 @@
+program test4;
+
+class Car {
+    attributes
+    var motorNum: int;
+    var color: float;
+    var fast: bool;
+
+    methods
+    function start() void {
+        var a: int;
+        write(a);
+    }
+};
+
+var fast: bool;
+
+function fast() void {
+
+}
+
+main() {
+    var car: Car;
+}

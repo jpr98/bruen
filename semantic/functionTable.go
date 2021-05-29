@@ -15,6 +15,7 @@ type VariableAttributes struct {
 	Dir        int
 	ArrayOrMat int // 0 = nothing, 1 = array, 2 = mat
 	Dim        [2]int
+	Class      string
 }
 
 func NewVariableAttributes(id string, typeOf constants.Type, dir int) *VariableAttributes {
@@ -24,6 +25,7 @@ func NewVariableAttributes(id string, typeOf constants.Type, dir int) *VariableA
 		Dir:        dir,
 		ArrayOrMat: 0,
 		Dim:        [2]int{},
+		Class:      "",
 	}
 }
 
@@ -37,6 +39,7 @@ type FunctionTableContent struct {
 	Scope     string
 	VarsSize  [4]int
 	TempSize  [4]int
+	ObjSize   int
 }
 
 func init() {

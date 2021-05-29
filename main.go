@@ -40,16 +40,6 @@ func compile() {
 
 	// Creates the lexer
 	lexer := parser.NewProyectoLexer(is)
-
-	// Read all tokens
-	// for {
-	// 	t := lexer.NextToken()
-	// 	if t.GetTokenType() == antlr.TokenEOF {
-	// 		break
-	// 	}
-	// 	fmt.Printf("%s (%q)\n",
-	// 		lexer.SymbolicNames[t.GetTokenType()], t.GetText())
-	// }
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 
 	// Creates the parser
@@ -57,31 +47,41 @@ func compile() {
 
 	listener := semantic.NewListener()
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
-
-	fmt.Println("\n---------")
-	stream.Seek(0)
-	p = parser.NewProyectoParser(stream)
-
-	var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable())
-	antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
-	quads := quadListener.GetManager().GetQuads()
-	for i, q := range quads {
-		fmt.Printf("%d. %s\n", i, q)
+	ct := listener.GetClassTable()
+	for class, classContent := range ct {
+		fmt.Println(class)
+		for attr, attrContent := range classContent.Attributes {
+			fmt.Printf("%s: %s\n", attr, attrContent.TypeOf)
+		}
+		for funct, functContent := range classContent.Methods {
+			fmt.Printf("Func %s: %s\n", funct, functContent.TypeOf)
+		}
 	}
-	fmt.Println("\n---------")
-	debugFT(listener.GetFunctionTable())
 
-	f, err := os.Create("out.obj")
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
+	// fmt.Println("\n---------")
+	// stream.Seek(0)
+	// p = parser.NewProyectoParser(stream)
 
-	enc := gob.NewEncoder(f)
-	enc.Encode(listener.ProgramName)
-	enc.Encode(quads)
-	enc.Encode(listener.GetFunctionTable())
-	enc.Encode(semantic.ConstantsTable)
+	// var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable())
+	// antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
+	// quads := quadListener.GetManager().GetQuads()
+	// for i, q := range quads {
+	// 	fmt.Printf("%d. %s\n", i, q)
+	// }
+	// fmt.Println("\n---------")
+	// debugFT(listener.GetFunctionTable())
+
+	// f, err := os.Create("out.obj")
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer f.Close()
+
+	// enc := gob.NewEncoder(f)
+	// enc.Encode(listener.ProgramName)
+	// enc.Encode(quads)
+	// enc.Encode(listener.GetFunctionTable())
+	// enc.Encode(semantic.ConstantsTable)
 }
 
 func execute() {

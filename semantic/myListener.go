@@ -20,6 +20,10 @@ type MyListener struct {
 	//TODO: store type of function (create FunctionAttributes?)
 	functionTable       FunctionTable
 	unassignedVariables []string
+
+	classTable          ClassTable
+	isInClassAttributes bool
+	isInClassMethods    bool
 }
 
 func NewListener() MyListener {
@@ -28,6 +32,7 @@ func NewListener() MyListener {
 	listener.currentFunction = ""
 	listener.ProgramName = ""
 	listener.functionTable = make(map[string]*FunctionTableContent)
+	listener.classTable = make(map[string]*ClassTableContent)
 	listener.unassignedVariables = make([]string, 0)
 	return listener
 }
@@ -36,29 +41,50 @@ func (l *MyListener) GetFunctionTable() map[string]*FunctionTableContent {
 	return l.functionTable
 }
 
+func (l *MyListener) GetClassTable() ClassTable {
+	return l.classTable
+}
+
 // Validates uniqueness of the function ID defined by the developer
 func (l *MyListener) handleFunctionRedefinition(scope string) {
-	if function, exists := l.functionTable[l.currentFunction]; exists {
-		if function.Scope == scope {
+	if l.isInClassMethods {
+		if _, exists := l.classTable[l.scopeStack.Top()].Methods[l.currentFunction]; exists {
 			log.Fatal(l.currentFunction + " is already Defined in scope " + l.scopeStack.Top())
+		}
+		if _, exists := l.classTable[l.scopeStack.Top()].Attributes[l.currentFunction]; exists {
+			log.Fatal(l.currentFunction + " is already Defined in scope " + l.scopeStack.Top())
+		}
+	} else {
+		if function, exists := l.functionTable[l.currentFunction]; exists {
+			if function.Scope == scope {
+				log.Fatal(l.currentFunction + " is already Defined in scope " + l.scopeStack.Top())
+			}
 		}
 	}
 }
 
+func (l *MyListener) getCurrentFunctionTable() FunctionTable {
+	if l.scopeStack.Top() == l.ProgramName {
+		return l.functionTable
+	}
+	return l.classTable[l.scopeStack.Top()].Methods
+}
+
 // Adds function ID to the functionTable
-func (l *MyListener) addToFunctionTable(typeOf constants.Type, scope string) {
-	l.handleFunctionRedefinition(scope)
-	l.functionTable[l.currentFunction] = &FunctionTableContent{}
-	l.functionTable[l.currentFunction].Vars = make(map[string]*VariableAttributes)
-	l.functionTable[l.currentFunction].TypeOf = typeOf
-	l.functionTable[l.currentFunction].Scope = scope
+func (l *MyListener) addToFunctionTable(typeOf constants.Type) {
+	functionTable := l.getCurrentFunctionTable()
+	l.handleFunctionRedefinition(l.scopeStack.Top())
+	functionTable[l.currentFunction] = &FunctionTableContent{}
+	functionTable[l.currentFunction].Vars = make(map[string]*VariableAttributes)
+	functionTable[l.currentFunction].TypeOf = typeOf
+	functionTable[l.currentFunction].Scope = l.scopeStack.Top()
 }
 
 func (l *MyListener) EnterProgram(c *parser.ProgramContext) {
+	l.scopeStack.Push(c.ID().GetText())
 	l.currentFunction = c.ID().GetText()
 	l.ProgramName = c.ID().GetText()
-	l.addToFunctionTable(constants.VOID, "")
-	l.scopeStack.Push(c.ID().GetText())
+	l.addToFunctionTable(constants.VOID)
 
 	// Setting a constant 1 int
 	dir, err := memory.Manager.GetNextAddr(constants.TYPEINT, memory.Constant)
@@ -69,15 +95,29 @@ func (l *MyListener) EnterProgram(c *parser.ProgramContext) {
 }
 
 func (l *MyListener) EnterClassDef(c *parser.ClassDefContext) {
-	l.currentFunction = c.ID(0).GetText()
-	l.addToFunctionTable(constants.VOID, l.scopeStack.Top())
 	l.scopeStack.Push(c.ID(0).GetText())
+	l.classTable[c.ID(0).GetText()] = &ClassTableContent{}
+	l.classTable[c.ID(0).GetText()].Methods = make(FunctionTable)
+	l.classTable[c.ID(0).GetText()].Attributes = make(map[string]*VariableAttributes)
 }
 
 // After defining the classes, we need to continue addressing variables to the program function.
 func (l *MyListener) ExitClassDef(c *parser.ClassDefContext) {
 	l.scopeStack.Pop()
-	l.currentFunction = l.scopeStack.Top()
+	l.isInClassMethods = false
+	l.currentFunction = l.ProgramName
+}
+
+func (l *MyListener) EnterClassAttributes(c *parser.ClassAttributesContext) {
+	l.isInClassAttributes = true
+}
+
+func (l *MyListener) ExitClassAttributes(c *parser.ClassAttributesContext) {
+	varSize, objSize := memory.Manager.ResetLocalCounter()
+	l.classTable[l.scopeStack.Top()].VarsSize = varSize
+	l.classTable[l.scopeStack.Top()].ObjSize = objSize
+	l.isInClassAttributes = false
+	l.isInClassMethods = true
 }
 
 func (l *MyListener) EnterFunctions(c *parser.FunctionsContext) {
@@ -95,17 +135,19 @@ func (l *MyListener) EnterFunctions(c *parser.FunctionsContext) {
 		typeOf = constants.VOID
 	}
 
-	l.addToFunctionTable(typeOf, l.scopeStack.Top())
-	l.functionTable[l.currentFunction].ReturnDir = returnDir
+	l.addToFunctionTable(typeOf)
+	l.getCurrentFunctionTable()[l.currentFunction].ReturnDir = returnDir
 }
 
 func (l *MyListener) ExitFunctions(c *parser.FunctionsContext) {
-	l.functionTable[l.currentFunction].VarsSize = memory.Manager.ResetLocalCounter()
+	varSize, objSize := memory.Manager.ResetLocalCounter()
+	l.getCurrentFunctionTable()[l.currentFunction].VarsSize = varSize
+	l.getCurrentFunctionTable()[l.currentFunction].ObjSize = objSize
 }
 
 func (l *MyListener) EnterMain(c *parser.MainContext) {
 	l.currentFunction = c.MAIN().GetText()
-	l.addToFunctionTable(constants.VOID, l.scopeStack.Top())
+	l.addToFunctionTable(constants.VOID)
 }
 
 func (l *MyListener) EnterVarsDec(c *parser.VarsDecContext) {
@@ -114,7 +156,7 @@ func (l *MyListener) EnterVarsDec(c *parser.VarsDecContext) {
 }
 
 func (l *MyListener) EnterVarsDecArray(c *parser.VarsDecArrayContext) {
-	id := c.ID(0).GetText()
+	id := c.ID().GetText()
 	l.validateVariableInScope(id)
 
 	dim, err := strconv.Atoi(c.INT().GetText())
@@ -129,7 +171,7 @@ func (l *MyListener) EnterVarsDecArray(c *parser.VarsDecArrayContext) {
 	var currVariable *VariableAttributes
 	var t constants.Type
 	var memCtx memory.Context
-	if l.currentFunction == l.ProgramName {
+	if l.scopeStack.Top() == l.ProgramName && l.currentFunction == l.ProgramName {
 		memCtx = memory.Global
 	} else {
 		memCtx = memory.Local
@@ -148,10 +190,14 @@ func (l *MyListener) EnterVarsDecArray(c *parser.VarsDecArrayContext) {
 
 		currVariable = NewVariableAttributes(id, t, dir)
 
-	} else if c.ID(1) != nil {
+	} /*else if c.ID(1) != nil { Arreglos de objetos
 		// TODO: Asegurarnos que la clase existe
+		if _, exists := l.classTable[c.ID(1).GetText()]; !exists {
+			log.Fatalf("Error: Undefined type %s", c.ID(0).GetText())
+		}
 		currVariable = NewVariableAttributes(id, constants.TYPECLASS, 20000)
-	}
+		currVariable.Class = c.ID(1).GetText()
+	}*/
 
 	for i := 1; i < dim; i++ {
 		_, err := memory.Manager.GetNextAddr(t, memCtx)
@@ -166,7 +212,7 @@ func (l *MyListener) EnterVarsDecArray(c *parser.VarsDecArrayContext) {
 }
 
 func (l *MyListener) EnterVarsDecMat(c *parser.VarsDecMatContext) {
-	id := c.ID(0).GetText()
+	id := c.ID().GetText()
 	l.unassignedVariables = append(l.unassignedVariables, id)
 }
 
@@ -192,30 +238,41 @@ func (l *MyListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {
 	for _, id := range l.unassignedVariables {
 		l.validateVariableInScope(id)
 
+		var t constants.Type
 		if c.TypeRule() != nil {
-			t := constants.StringToType(c.TypeRule().GetText())
+			t = constants.StringToType(c.TypeRule().GetText())
 			if t == constants.ERR {
 				log.Fatalf("Error: (EnterVarsTypeInit) unkown type from %s", c.TypeRule().GetText())
 			}
 
-			var memCtx memory.Context
-			if l.currentFunction == l.ProgramName {
-				memCtx = memory.Global
-			} else {
-				memCtx = memory.Local
-			}
-			dir, err := memory.Manager.GetNextAddr(t, memCtx)
-			if err != nil {
-				log.Fatalf("Error: (EnterVarsTypeInit) %s\n", err)
-			}
-
-			currVariable := NewVariableAttributes(id, t, dir)
-			l.functionTable[l.currentFunction].Vars[id] = currVariable
-
 		} else if c.ID() != nil {
-			// TODO: Asegurarnos que la clase existe
-			currVariable := NewVariableAttributes(id, constants.TYPECLASS, 20000)
-			l.functionTable[l.currentFunction].Vars[id] = currVariable
+			if _, exists := l.classTable[c.ID().GetText()]; !exists {
+				log.Fatalf("Error: Undefined type %s", c.ID().GetText())
+			}
+			t = constants.TYPECLASS
+		}
+
+		var memCtx memory.Context
+		if l.scopeStack.Top() == l.ProgramName && l.currentFunction == l.currentFunction {
+			memCtx = memory.Global
+		} else {
+			memCtx = memory.Local
+		}
+
+		dir, err := memory.Manager.GetNextAddr(t, memCtx)
+		if err != nil {
+			log.Fatalf("Error: (EnterVarsTypeInit) %s\n", err)
+		}
+
+		currVariable := NewVariableAttributes(id, t, dir)
+		if t == constants.TYPECLASS {
+			currVariable.Class = c.ID().GetText()
+		}
+
+		if l.isInClassAttributes {
+			l.classTable[l.scopeStack.Top()].Attributes[id] = currVariable
+		} else {
+			l.getCurrentFunctionTable()[l.currentFunction].Vars[id] = currVariable
 		}
 	}
 	l.unassignedVariables = nil
@@ -264,7 +321,9 @@ func (l *MyListener) EnterForLoop2(c *parser.ForLoop2Context) {
 }
 
 func (l *MyListener) ExitMain(c *parser.MainContext) {
-	l.functionTable[l.currentFunction].VarsSize = memory.Manager.ResetLocalCounter()
+	varSize, objSize := memory.Manager.ResetLocalCounter()
+	l.functionTable[l.currentFunction].VarsSize = varSize
+	l.functionTable[l.currentFunction].ObjSize = objSize
 }
 
 func (l *MyListener) ExitProgram(c *parser.ProgramContext) {
@@ -283,7 +342,13 @@ func (l *MyListener) printFunctions() {
 }
 
 func (l *MyListener) validateVariableInScope(id string) {
-	if _, exists := l.functionTable[l.currentFunction].Vars[id]; exists {
-		log.Fatal(id + " is already Defined")
+	if l.isInClassAttributes {
+		if _, exists := l.classTable[l.scopeStack.Top()].Attributes[id]; exists {
+			log.Fatal(id + "is already Defined")
+		}
+	} else {
+		if _, exists := l.getCurrentFunctionTable()[l.currentFunction].Vars[id]; exists {
+			log.Fatal(id + " is already Defined")
+		}
 	}
 }

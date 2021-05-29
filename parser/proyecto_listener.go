@@ -20,6 +20,9 @@ type ProyectoListener interface {
 	// EnterClassBlock is called when entering the classBlock production.
 	EnterClassBlock(c *ClassBlockContext)
 
+	// EnterClassAttributes is called when entering the classAttributes production.
+	EnterClassAttributes(c *ClassAttributesContext)
+
 	// EnterVariableDeclaration is called when entering the variableDeclaration production.
 	EnterVariableDeclaration(c *VariableDeclarationContext)
 
@@ -205,6 +208,9 @@ type ProyectoListener interface {
 
 	// ExitClassBlock is called when exiting the classBlock production.
 	ExitClassBlock(c *ClassBlockContext)
+
+	// ExitClassAttributes is called when exiting the classAttributes production.
+	ExitClassAttributes(c *ClassAttributesContext)
 
 	// ExitVariableDeclaration is called when exiting the variableDeclaration production.
 	ExitVariableDeclaration(c *VariableDeclarationContext)

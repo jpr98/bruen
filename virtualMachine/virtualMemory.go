@@ -15,8 +15,9 @@ type Memory interface {
 }
 
 type mem struct {
-	vars  memblock
-	temps memblock
+	vars    memblock
+	temps   memblock
+	objects map[string]memblock // Con el id de la instancia de una clase (dado por id.), buscamos si bloque de memoria y de ahi todo normal
 }
 
 type memblock map[constants.Type][]interface{}

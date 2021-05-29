@@ -59,12 +59,13 @@ program: PROGRAM ID SEMI classDef* variableDeclaration* program2;
 program2: functions* main EOF;
 
 classDef: CLASS ID ('<' ID '>')? classBlock SEMI;
-classBlock: '{' ATTRIBUTES variableDeclaration* METHODS functions* '}';
+classBlock: '{' classAttributes METHODS functions* '}';
+classAttributes: ATTRIBUTES variableDeclaration*;
 
 variableDeclaration: varsDec | varsDecArray | varsDecMat;
 varsDec: VAR ID ':' varsTypeInit SEMI;
-varsDecArray: VAR ID ':' '['INT']'(typeRule | ID) SEMI;
-varsDecMat: VAR ID ':' '['INT']['INT']'(typeRule | ID) SEMI;
+varsDecArray: VAR ID ':' '['INT']'typeRule SEMI;
+varsDecMat: VAR ID ':' '['INT']['INT']'typeRule SEMI;
 
 varsTypeInit: (typeRule | ID) varsTypeInit2?;
 varsTypeInit2: (ASSIGN exp);
