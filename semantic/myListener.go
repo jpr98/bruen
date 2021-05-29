@@ -3,6 +3,7 @@ package semantic
 import (
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/memory"
@@ -112,6 +113,63 @@ func (l *MyListener) EnterVarsDec(c *parser.VarsDecContext) {
 	l.unassignedVariables = append(l.unassignedVariables, id)
 }
 
+func (l *MyListener) EnterVarsDecArray(c *parser.VarsDecArrayContext) {
+	id := c.ID(0).GetText()
+	l.validateVariableInScope(id)
+
+	dim, err := strconv.Atoi(c.INT().GetText())
+	if err != nil {
+		log.Fatalf("Error: (EnterVarsDecArray) dimension can't be parsed to int")
+	}
+
+	if dim < 1 {
+		log.Fatalf("Error: Array %s needs to be at least of size 1", id)
+	}
+
+	var currVariable *VariableAttributes
+	var t constants.Type
+	var memCtx memory.Context
+	if l.currentFunction == l.ProgramName {
+		memCtx = memory.Global
+	} else {
+		memCtx = memory.Local
+	}
+
+	if c.TypeRule() != nil {
+		t = constants.StringToType(c.TypeRule().GetText())
+		if t == constants.ERR {
+			log.Fatalf("Error: (EnterVarsTypeInit) unkown type from %s", c.TypeRule().GetText())
+		}
+
+		dir, err := memory.Manager.GetNextAddr(t, memCtx)
+		if err != nil {
+			log.Fatalf("Error: (EnterVarsTypeInit) %s\n", err)
+		}
+
+		currVariable = NewVariableAttributes(id, t, dir)
+
+	} else if c.ID(1) != nil {
+		// TODO: Asegurarnos que la clase existe
+		currVariable = NewVariableAttributes(id, constants.TYPECLASS, 20000)
+	}
+
+	for i := 1; i < dim; i++ {
+		_, err := memory.Manager.GetNextAddr(t, memCtx)
+		if err != nil {
+			log.Fatalf("Error: (EnterVarsDecArray) %s", err)
+		}
+	}
+
+	currVariable.ArrayOrMat = 1
+	currVariable.Dim[0] = dim
+	l.functionTable[l.currentFunction].Vars[id] = currVariable
+}
+
+func (l *MyListener) EnterVarsDecMat(c *parser.VarsDecMatContext) {
+	id := c.ID(0).GetText()
+	l.unassignedVariables = append(l.unassignedVariables, id)
+}
+
 func (l *MyListener) EnterParameter(c *parser.ParameterContext) {
 	id := c.ID().GetText()
 	t := constants.StringToType(c.TypeRule().GetText())
@@ -124,8 +182,9 @@ func (l *MyListener) EnterParameter(c *parser.ParameterContext) {
 		log.Fatalf("Error: (EnterParameter) %s\n", err)
 	}
 
-	currVariable := VariableAttributes{id, t, dir}
-	l.functionTable[l.currentFunction].Vars[id] = &currVariable
+	// TODO: Manejar arreglos en ultimo atributo
+	currVariable := NewVariableAttributes(id, t, dir)
+	l.functionTable[l.currentFunction].Vars[id] = currVariable
 	l.functionTable[l.currentFunction].Params = append(l.functionTable[l.currentFunction].Params, dir)
 }
 
@@ -150,13 +209,13 @@ func (l *MyListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {
 				log.Fatalf("Error: (EnterVarsTypeInit) %s\n", err)
 			}
 
-			currVariable := VariableAttributes{id, t, dir}
-			l.functionTable[l.currentFunction].Vars[id] = &currVariable
+			currVariable := NewVariableAttributes(id, t, dir)
+			l.functionTable[l.currentFunction].Vars[id] = currVariable
 
 		} else if c.ID() != nil {
 			// TODO: Asegurarnos que la clase existe
-			currVariable := VariableAttributes{id, constants.TYPECLASS, 20000}
-			l.functionTable[l.currentFunction].Vars[id] = &currVariable
+			currVariable := NewVariableAttributes(id, constants.TYPECLASS, 20000)
+			l.functionTable[l.currentFunction].Vars[id] = currVariable
 		}
 	}
 	l.unassignedVariables = nil
@@ -200,8 +259,8 @@ func (l *MyListener) EnterVarCte(c *parser.VarCteContext) {
 
 func (l *MyListener) EnterForLoop2(c *parser.ForLoop2Context) {
 	id := c.ID().GetText()
-	currVariable := VariableAttributes{id, constants.TYPEINT, memory.LOCAL_INT}
-	l.functionTable[l.currentFunction].Vars[id] = &currVariable
+	currVariable := NewVariableAttributes(id, constants.TYPEINT, memory.LOCAL_INT)
+	l.functionTable[l.currentFunction].Vars[id] = currVariable
 }
 
 func (l *MyListener) ExitMain(c *parser.MainContext) {

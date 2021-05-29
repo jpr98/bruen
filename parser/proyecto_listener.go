@@ -20,8 +20,17 @@ type ProyectoListener interface {
 	// EnterClassBlock is called when entering the classBlock production.
 	EnterClassBlock(c *ClassBlockContext)
 
+	// EnterVariableDeclaration is called when entering the variableDeclaration production.
+	EnterVariableDeclaration(c *VariableDeclarationContext)
+
 	// EnterVarsDec is called when entering the varsDec production.
 	EnterVarsDec(c *VarsDecContext)
+
+	// EnterVarsDecArray is called when entering the varsDecArray production.
+	EnterVarsDecArray(c *VarsDecArrayContext)
+
+	// EnterVarsDecMat is called when entering the varsDecMat production.
+	EnterVarsDecMat(c *VarsDecMatContext)
 
 	// EnterVarsTypeInit is called when entering the varsTypeInit production.
 	EnterVarsTypeInit(c *VarsTypeInitContext)
@@ -31,6 +40,12 @@ type ProyectoListener interface {
 
 	// EnterVars is called when entering the vars production.
 	EnterVars(c *VarsContext)
+
+	// EnterVarArray is called when entering the varArray production.
+	EnterVarArray(c *VarArrayContext)
+
+	// EnterVarMat is called when entering the varMat production.
+	EnterVarMat(c *VarMatContext)
 
 	// EnterFunctions is called when entering the functions production.
 	EnterFunctions(c *FunctionsContext)
@@ -191,8 +206,17 @@ type ProyectoListener interface {
 	// ExitClassBlock is called when exiting the classBlock production.
 	ExitClassBlock(c *ClassBlockContext)
 
+	// ExitVariableDeclaration is called when exiting the variableDeclaration production.
+	ExitVariableDeclaration(c *VariableDeclarationContext)
+
 	// ExitVarsDec is called when exiting the varsDec production.
 	ExitVarsDec(c *VarsDecContext)
+
+	// ExitVarsDecArray is called when exiting the varsDecArray production.
+	ExitVarsDecArray(c *VarsDecArrayContext)
+
+	// ExitVarsDecMat is called when exiting the varsDecMat production.
+	ExitVarsDecMat(c *VarsDecMatContext)
 
 	// ExitVarsTypeInit is called when exiting the varsTypeInit production.
 	ExitVarsTypeInit(c *VarsTypeInitContext)
@@ -202,6 +226,12 @@ type ProyectoListener interface {
 
 	// ExitVars is called when exiting the vars production.
 	ExitVars(c *VarsContext)
+
+	// ExitVarArray is called when exiting the varArray production.
+	ExitVarArray(c *VarArrayContext)
+
+	// ExitVarMat is called when exiting the varMat production.
+	ExitVarMat(c *VarMatContext)
 
 	// ExitFunctions is called when exiting the functions production.
 	ExitFunctions(c *FunctionsContext)

@@ -1,0 +1,9 @@
+program test3;
+
+main() {
+    var b: [4]int;
+    var x: int;
+    
+    b[2] = 10;
+    x = b[4];
+}

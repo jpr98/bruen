@@ -171,6 +171,36 @@ func (m *Manager) GenerateAssignationQuad(retainresult bool) {
 	m.quads = append(m.quads, q)
 }
 
+func (m *Manager) AddVerifyQuad(id, currentFunction, globalName string, isArray bool) {
+	index := m.operands.Top()
+	if index.Type() != constants.TYPEINT {
+		log.Fatalf("Error: (AddVerifyQuad) index to %s should be an int, got %s", id, index.Type())
+	}
+
+	if isArray {
+		array := m.getOperandData(id, currentFunction, globalName)
+		maxIndexVal := NewElement(array.Dim[0], fmt.Sprint(array.Dir), constants.TYPEINT)
+		q := Quad{VER, index, nil, maxIndexVal}
+		m.quads = append(m.quads, q)
+	}
+}
+
+func (m *Manager) AddArrayAccessQuad(id string) {
+	index := m.operands.Pop()
+	array := m.operands.Pop()
+
+	dir, err := memory.Manager.GetNextAddr(constants.TYPEINT, memory.Temp)
+	if err != nil {
+		log.Fatalf("Error: (GenerateQuad) %s\n", err)
+	}
+	result := NewElement(dir, m.getNextAvail(), constants.TYPEINT)
+
+	q := Quad{CALCDIR, array, index, result}
+	m.quads = append(m.quads, q)
+
+	m.operands.Push(result)
+}
+
 func (m *Manager) AddGotoF() {
 	m.jumpStack = append(m.jumpStack, len(m.quads))
 	operand := m.operands.Pop()
