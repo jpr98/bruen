@@ -6,6 +6,11 @@ import (
 	"github.com/jpr98/compis/constants"
 )
 
+type MemObjInfo struct {
+	VarSize [4]int
+	ObjSize []MemObjInfo
+}
+
 const (
 	GLOBAL_INT   = 1000
 	GLOBAL_FLOAT = 2000

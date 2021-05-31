@@ -87,13 +87,19 @@ func (m *Manager) PushConstantOperand(operand string) {
 	m.operands.Push(element)
 }
 
+// Acceso a atributos
+// a.b = explicito = a es la clase
+// b = implicito = self es la clase
 func (m *Manager) getOperandData(operand string) *semantic.VariableAttributes {
 	data := &semantic.VariableAttributes{TypeOf: constants.ERR}
 	if attr, exists := m.getCurrentFunctionTable()[m.currentFunction].Vars[operand]; exists {
 		data = attr
 	} else if m.scopeStack.Top() != m.globalName {
+		// Seguro es atributo
 		if attr, exists := m.classTable[m.scopeStack.Top()].Attributes[operand]; exists {
 			data = attr
+			data.FromSelf = true
+			data.SelfDir = m.classTable[m.scopeStack.Top()].Methods[m.currentFunction].Vars["self"].Dir
 		}
 	} else {
 		if attr, exists := m.functionTable[m.globalName].Vars[operand]; exists {
@@ -113,7 +119,11 @@ func (m *Manager) getOperandData(operand string) *semantic.VariableAttributes {
 
 func (m *Manager) PushOperand(operand string) {
 	operandData := m.getOperandData(operand)
-	element := NewElement(operandData.Dir, operand, operandData.TypeOf, operandData.Class)
+	operandName := operand
+	if operandData.FromSelf {
+		operandName = fmt.Sprintf("self_%d_%s", operandData.SelfDir, operand)
+	}
+	element := NewElement(operandData.Dir, operandName, operandData.TypeOf, operandData.Class)
 	m.operands.Push(element)
 }
 
@@ -358,7 +368,7 @@ func (m *Manager) AddInitReturnQuad() {
 func (m *Manager) AddEraQuad(name, className string) {
 	n := NewElement(0, name, constants.ADDR, "")
 	if name == "init" {
-		n = NewElement(0, className, constants.ADDR, className)
+		n = NewElement(0, name, constants.ADDR, className)
 	}
 	q := Quad{ERA, n, nil, nil}
 	m.quads = append(m.quads, q)
@@ -437,7 +447,7 @@ func (m *Manager) AddClassGoSubQuad(className string) {
 	}
 
 	dir := m.classTable[className].Methods[m.currentFunctionCall].Dir
-	n := NewElement(0, m.currentFunctionCall, constants.TYPEINT, "")
+	n := NewElement(0, m.currentFunctionCall, constants.TYPEINT, className)
 	dirElement := NewElement(dir, "", constants.ADDR, "")
 	q := Quad{GOSUB, n, nil, dirElement}
 	m.quads = append(m.quads, q)
@@ -459,6 +469,7 @@ func (m *Manager) AddClassGoSubQuad(className string) {
 		var resultClass string
 		if m.currentFunctionCall == "init" {
 			resultClass = className
+			m.getCurrentFunctionTable()[m.currentFunction].Objects = append(m.getCurrentFunctionTable()[m.currentFunction].Objects, className)
 		}
 		result := NewElement(dir, m.getNextAvail(), resultType, resultClass)
 		m.operands.Push(result)
@@ -469,6 +480,7 @@ func (m *Manager) AddClassGoSubQuad(className string) {
 		m.quads = append(m.quads, q)
 	}
 }
+
 func (m *Manager) getNextAvail() string {
 	defer func() { m.avail++ }()
 	return fmt.Sprintf("t%d", m.avail)
@@ -481,6 +493,18 @@ func arrayContainsElement(element QuadAction, array []int) bool {
 		}
 	}
 	return false
+}
+
+func (m *Manager) setObjectSize() {
+	fmt.Println("setObjSize - ", m.currentFunction, "-", m.getCurrentFunctionTable()[m.currentFunction].Objects)
+	if len(m.getCurrentFunctionTable()[m.currentFunction].Objects) == m.getCurrentFunctionTable()[m.currentFunction].ObjectCount {
+		for _, objName := range m.getCurrentFunctionTable()[m.currentFunction].Objects {
+			obj := memory.MemObjInfo{VarSize: m.classTable[objName].VarsSize, ObjSize: m.classTable[objName].ObjSize}
+			m.getCurrentFunctionTable()[m.currentFunction].ObjSize = append(m.getCurrentFunctionTable()[m.currentFunction].ObjSize, obj)
+		}
+	}
+	m.getCurrentFunctionTable()[m.currentFunction].Objects = nil
+	m.getCurrentFunctionTable()[m.currentFunction].ObjectCount = 0
 }
 
 func stringToOp(text string) (QuadAction, error) {

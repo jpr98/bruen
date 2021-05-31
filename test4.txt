@@ -1,7 +1,6 @@
 program test4;
 
 var fast: bool;
-var carr: Car;
 
 class Car {
     attributes
@@ -17,6 +16,9 @@ class Car {
         fast = true;
         if (fast) {
             color = 1.0;
+        }
+        for i = 0 in 4 {
+            tires[i] = i;
         }
     }
 
@@ -34,4 +36,5 @@ function getInt() int {
 main() {
     var c: Car;
     c = new Car();
+    write(c.fast);
 }

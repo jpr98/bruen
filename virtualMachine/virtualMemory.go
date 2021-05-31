@@ -17,15 +17,20 @@ type Memory interface {
 type mem struct {
 	vars    memblock
 	temps   memblock
-	objects []memblock // Con el id de la instancia de una clase (dado por id.), buscamos si bloque de memoria y de ahi todo normal
+	objects []Memory // Con el id de la instancia de una clase (dado por id.), buscamos si bloque de memoria y de ahi todo normal
 }
 
 type memblock map[constants.Type][]interface{}
 
-func NewMemory(varSizes, tempSizes [4]int) Memory {
+func (m mem) String() string {
+	return fmt.Sprintf("Local: %v, Temp: %v, Objects: %v", m.vars, m.temps, m.objects)
+}
+
+func NewMemory(varSizes, tempSizes [4]int, objInfo []memory.MemObjInfo) Memory {
 	m := mem{}
 	m.vars = make(memblock)
 	m.temps = make(memblock)
+	m.objects = make([]Memory, len(objInfo))
 	// Variables block
 	if varSizes[constants.TYPEINT] > 0 {
 		m.vars[constants.TYPEINT] = make([]interface{}, varSizes[constants.TYPEINT])
@@ -52,6 +57,10 @@ func NewMemory(varSizes, tempSizes [4]int) Memory {
 	}
 	if tempSizes[constants.TYPEBOOL] > 0 {
 		m.temps[constants.TYPEBOOL] = make([]interface{}, tempSizes[constants.TYPEBOOL])
+	}
+
+	for index, obj := range objInfo {
+		m.objects[index] = NewMemory(obj.VarSize, [4]int{}, obj.ObjSize)
 	}
 	return &m
 }
@@ -108,11 +117,11 @@ func (m *mem) Set(value interface{}, addr int) error {
 		}
 		return nil
 	case constants.TYPECLASS:
-		memBlockValue, ok := value.(memblock)
+		memValue, ok := value.(Memory)
 		if !ok {
-			return fmt.Errorf("Error: (Set) couldn't cast %v to memblock", value)
+			return fmt.Errorf("Error: (Set) couldn't cast %v to Memory", value)
 		}
-		m.objects[vAddr] = memBlockValue
+		m.objects[vAddr] = memValue
 		return nil
 	default:
 		return fmt.Errorf("Error: (Set) unexpected type to set in memory block")

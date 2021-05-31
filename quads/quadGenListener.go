@@ -250,10 +250,10 @@ func (l *QuadGenListener) ExitFunctions(c *parser.FunctionsContext) {
 	}
 
 	l.m.AddEndFuncQuad()
-	l.m.getCurrentFunctionTable()[l.m.currentFunction].Vars = nil
 	tempSize, objSize := memory.Manager.ResetTempCounter()
 	l.m.getCurrentFunctionTable()[l.m.currentFunction].TempSize = tempSize
-	l.m.getCurrentFunctionTable()[l.m.currentFunction].ObjSize += objSize
+	l.m.getCurrentFunctionTable()[l.m.currentFunction].ObjectCount += objSize
+	l.m.setObjectSize()
 }
 
 func (l *QuadGenListener) ExitReturnRule(c *parser.ReturnRuleContext) {
@@ -277,14 +277,17 @@ func (l *QuadGenListener) EnterMain(c *parser.MainContext) {
 func (l *QuadGenListener) ExitMain(c *parser.MainContext) {
 	tempSize, objSize := memory.Manager.ResetTempCounter()
 	l.m.functionTable[l.m.currentFunction].TempSize = tempSize
-	l.m.functionTable[l.m.currentFunction].ObjSize += objSize
+	l.m.functionTable[l.m.currentFunction].ObjectCount += objSize
+	l.m.setObjectSize()
+	l.m.currentFunction = l.m.scopeStack.Top()
 }
 
 func (l *QuadGenListener) ExitProgram(c *parser.ProgramContext) {
-	l.m.scopeStack.Pop()
 	varsSize, objSize := memory.Manager.GetGlobalSize()
 	l.m.functionTable[l.m.globalName].VarsSize = varsSize
-	l.m.functionTable[l.m.globalName].ObjSize = objSize
+	l.m.functionTable[l.m.globalName].ObjectCount = objSize
+	l.m.setObjectSize()
+	l.m.scopeStack.Pop()
 	fmt.Println(l.m.operands)
 }
 
@@ -345,10 +348,10 @@ func (l *QuadGenListener) EnterClassInit(c *parser.ClassInitContext) {
 func (l *QuadGenListener) ExitClassInit(c *parser.ClassInitContext) {
 	l.m.AddInitReturnQuad()
 	l.m.AddEndFuncQuad()
-	l.m.classTable[l.m.scopeStack.Top()].Methods[c.INIT().GetText()].Vars = nil
 	tempSize, objSize := memory.Manager.ResetTempCounter()
 	l.m.classTable[l.m.scopeStack.Top()].Methods[c.INIT().GetText()].TempSize = tempSize
-	l.m.classTable[l.m.scopeStack.Top()].Methods[c.INIT().GetText()].ObjSize += objSize
+	l.m.classTable[l.m.scopeStack.Top()].Methods[c.INIT().GetText()].ObjectCount += objSize
+	l.m.setObjectSize()
 }
 
 func (l *QuadGenListener) EnterInitCall(c *parser.InitCallContext) {

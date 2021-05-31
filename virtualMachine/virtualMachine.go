@@ -25,16 +25,18 @@ type VirtualMachine struct {
 	quads         []quads.Quad
 	programName   string
 	functionTable semantic.FunctionTable
+	classTable    semantic.ClassTable
 }
 
-func NewVM(programName string, functionTable semantic.FunctionTable, quads []quads.Quad) VirtualMachine {
-	gmb := NewMemory(functionTable[programName].VarsSize, functionTable[programName].TempSize)
+func NewVM(programName string, functionTable semantic.FunctionTable, classTable semantic.ClassTable, quads []quads.Quad) VirtualMachine {
+	gmb := NewMemory(functionTable[programName].VarsSize, functionTable[programName].TempSize, functionTable[programName].ObjSize)
 	return VirtualMachine{
 		globalMemBlock:   gmb,
 		constantMemBlock: MakeConstantMemory(),
 		quads:            quads,
 		programName:      programName,
 		functionTable:    functionTable,
+		classTable:       classTable,
 	}
 }
 
@@ -42,6 +44,7 @@ func (vm *VirtualMachine) Run() {
 	var fmb Memory
 	for vm.pointer < len(vm.quads) {
 		quad := vm.quads[vm.pointer]
+		fmt.Println(quad)
 		switch quad.Action {
 		case quads.ADD, quads.SUB, quads.MUL, quads.DIV:
 			vm.handleArithmeticOp(quad)
@@ -68,28 +71,7 @@ func (vm *VirtualMachine) Run() {
 			vm.pointer++
 
 		case quads.ASSIGN:
-			value := vm.getValueForElement(quad.Left)
-			memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
-			if strings.Contains(quad.Result.ID(), "ptr_") {
-				addr, ok := memblock.Get(quad.Result.GetAddr()).(float64)
-				if !ok {
-					log.Fatalf("Error: (RUN) quads.ASSIGN couldn't cast %v to float64",
-						memblock.Get(quad.Result.GetAddr()),
-					)
-				}
-				memblock = vm.getMemBlockForAddr(int(addr))
-				fmt.Println("here: ", value)
-				err := memblock.Set(value, int(addr))
-				if err != nil {
-					log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
-				}
-			} else {
-				fmt.Println("here1: ", value)
-				err := memblock.Set(value, quad.Result.GetAddr())
-				if err != nil {
-					log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
-				}
-			}
+			vm.handleAssign(quad)
 			vm.pointer++
 
 		case quads.VER:
@@ -125,14 +107,17 @@ func (vm *VirtualMachine) Run() {
 			}
 
 		case quads.ERA:
-			if quad.Right != nil {
-				// buscar clase y de ahi sacamos su init
-				// con eso ya inicializamos la memory de init
+			if quad.Left.ClassName() == "" {
+				ftc := vm.functionTable[quad.Left.ID()]
+				fmb = NewMemory(ftc.VarsSize, ftc.TempSize, ftc.ObjSize)
+				if quad.Left.ID() == "main" {
+					vm.memBlocks.Push(fmb)
+				}
+			} else {
+				methodInfo := vm.classTable[quad.Left.ClassName()].Methods[quad.Left.ID()]
+				fmb = NewMemory(methodInfo.VarsSize, methodInfo.TempSize, methodInfo.ObjSize)
 			}
-			fmb = NewMemory(vm.functionTable[quad.Left.ID()].VarsSize, vm.functionTable[quad.Left.ID()].TempSize)
-			if quad.Left.ID() == "main" {
-				vm.memBlocks.Push(fmb)
-			}
+
 			vm.pointer++
 
 		case quads.PARAM: // TODO : revisar con arreglos
@@ -148,7 +133,11 @@ func (vm *VirtualMachine) Run() {
 		case quads.GOSUB:
 			vm.memBlocks.Push(fmb)
 			vm.pointerStack.Push(vm.pointer + 1)
-			vm.pointer = vm.functionTable[quad.Left.ID()].Dir
+			if quad.Left.ClassName() != "" {
+				vm.pointer = vm.classTable[quad.Left.ClassName()].Methods[quad.Left.ID()].Dir
+			} else {
+				vm.pointer = vm.functionTable[quad.Left.ID()].Dir
+			}
 
 		case quads.ENDFUNC:
 			vm.memBlocks.Pop()
@@ -168,6 +157,26 @@ func (vm *VirtualMachine) Run() {
 			vm.pointer++
 		}
 	}
+}
+
+func (vm *VirtualMachine) getMemBlockForElement(elem quads.Element) Memory {
+	if strings.Contains(elem.ID(), "self_") {
+		strElements := strings.Split(elem.ID(), "_")
+		if len(strElements) != 3 {
+			log.Fatalf("Error: (getMemBlockForElement) unexpected object attribute id format")
+		}
+		objInstanceAddr, err := strconv.Atoi(strElements[1])
+		if err != nil {
+			log.Fatalf("Error: (getMemBlockForElement) couldn't cast objInstanceAddr to int")
+		}
+		memblock := vm.getMemBlockForAddr(objInstanceAddr)
+		objInstance, ok := memblock.Get(objInstanceAddr).(Memory)
+		if !ok {
+			log.Fatalf("Error: (getMemBlockForElement) couldn't cast %v to Memory", memblock.Get(objInstanceAddr))
+		}
+		return objInstance
+	}
+	return vm.getMemBlockForAddr(elem.GetAddr())
 }
 
 func (vm *VirtualMachine) getMemBlockForAddr(addr int) Memory {
@@ -222,7 +231,7 @@ func (vm *VirtualMachine) handleArithmeticOp(quad quads.Quad) {
 		res = math.Round(res)
 	}
 
-	memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+	memblock := vm.getMemBlockForElement(quad.Result)
 	err := memblock.Set(res, quad.Result.GetAddr())
 	if err != nil {
 		log.Fatalf("Error (handleArithmeticOp) %s", err)
@@ -275,7 +284,7 @@ func (vm *VirtualMachine) handleRelOp(quad quads.Quad) {
 		}
 	}
 
-	memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+	memblock := vm.getMemBlockForElement(quad.Result)
 	err := memblock.Set(res, quad.Result.GetAddr())
 	if err != nil {
 		log.Fatalf("Error: (handleRelOp) %s", err)
@@ -305,7 +314,7 @@ func (vm *VirtualMachine) handleLogicOp(quad quads.Quad) {
 	case quads.OR:
 		res = left || right
 	}
-	memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+	memblock := vm.getMemBlockForElement(quad.Result)
 	err := memblock.Set(res, quad.Result.GetAddr())
 	if err != nil {
 		log.Fatalf("Error: (handleLogicOp) %s", err)
@@ -317,7 +326,7 @@ func (vm *VirtualMachine) handleRead(quad quads.Quad) {
 	bytes, _ := reader.ReadBytes('\n')
 	str := strings.TrimSpace(string(bytes))
 
-	memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+	memblock := vm.getMemBlockForElement(quad.Result)
 	addr := quad.Result.GetAddr()
 	if strings.Contains(quad.Result.ID(), "ptr_") {
 		addrFloat, ok := memblock.Get(addr).(float64)
@@ -326,7 +335,7 @@ func (vm *VirtualMachine) handleRead(quad quads.Quad) {
 				memblock.Get(int(addr)))
 		}
 		addr = int(addrFloat)
-		memblock = vm.getMemBlockForAddr(addr)
+		memblock = vm.getMemBlockForAddr(addr) // TODO: Revisar que onda con atributos aqui
 	}
 
 	switch quad.Result.Type() {
@@ -389,28 +398,52 @@ func (vm *VirtualMachine) handleWrite(quad quads.Quad) {
 }
 
 func (vm *VirtualMachine) handleCalcDir(quad quads.Quad) {
-	memblock := vm.getMemBlockForAddr(quad.Right.GetAddr())
+	memblock := vm.getMemBlockForElement(quad.Right)
 	index, ok := memblock.Get(quad.Right.GetAddr()).(float64)
 	if !ok {
 		log.Fatalf("Error: (handleCalcDir) couldn't cast index to float64")
 	}
 	realAddr := float64(quad.Left.GetAddr()) + index
-	memblock = vm.getMemBlockForAddr(quad.Result.GetAddr())
+	memblock = vm.getMemBlockForElement(quad.Result)
 	err := memblock.Set(realAddr, quad.Result.GetAddr())
 	if err != nil {
 		log.Fatalf("Error: (handleCalcDir) %s", err)
 	}
 }
 
+func (vm *VirtualMachine) handleAssign(quad quads.Quad) {
+	value := vm.getValueForElement(quad.Left)
+	memblock := vm.getMemBlockForElement(quad.Result)
+	if strings.Contains(quad.Result.ID(), "ptr_") {
+		addr, ok := memblock.Get(quad.Result.GetAddr()).(float64)
+		if !ok {
+			log.Fatalf("Error: (RUN) quads.ASSIGN couldn't cast %v to float64",
+				memblock.Get(quad.Result.GetAddr()),
+			)
+		}
+		memblock = vm.getMemBlockForAddr(int(addr)) // TODO: revisar que onda con arreglos atributos
+		err := memblock.Set(value, int(addr))
+		if err != nil {
+			log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
+		}
+	} else {
+		err := memblock.Set(value, quad.Result.GetAddr())
+		if err != nil {
+			log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
+		}
+	}
+}
+
 func (vm *VirtualMachine) getValueForElement(e quads.Element) interface{} {
-	memblock := vm.getMemBlockForAddr(e.GetAddr())
+	memblock := vm.getMemBlockForElement(e)
+	fmt.Println(memblock)
 	if strings.Contains(e.ID(), "ptr_") {
 		ptrAddr, ok := memblock.Get(e.GetAddr()).(float64)
 		if !ok {
 			log.Fatalf("Error: (pointerValue) couldn't cast index to float64")
 		}
 
-		memblock = vm.getMemBlockForAddr(int(ptrAddr))
+		memblock = vm.getMemBlockForAddr(int(ptrAddr)) // TODO: revisar que onda con arreglos atributos
 		realValue := memblock.Get(int(ptrAddr))
 		return realValue
 	}

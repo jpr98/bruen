@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/jpr98/compis/constants"
+	"github.com/jpr98/compis/memory"
 	"github.com/jpr98/compis/parser"
 	"github.com/jpr98/compis/quads"
 	"github.com/jpr98/compis/semantic"
@@ -19,10 +19,16 @@ func main() {
 		log.Fatal("No args")
 	}
 
-	if os.Args[2] == "b" {
+	switch os.Args[2] {
+	case "b": // build
 		compile()
-	} else {
+	case "e": // execute
 		execute()
+	case "r": // run
+		compile()
+		execute()
+	default:
+		fmt.Println("What? Unknown command")
 	}
 }
 
@@ -65,6 +71,7 @@ func compile() {
 	stream.Seek(0)
 	p = parser.NewProyectoParser(stream)
 
+	//debugFT(listener.GetFunctionTable())
 	var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable(), ct)
 	antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
 	quads := quadListener.GetManager().GetQuads()
@@ -73,6 +80,20 @@ func compile() {
 	}
 	fmt.Println("\n---------")
 	debugFT(listener.GetFunctionTable())
+
+	for class, classContent := range ct {
+		fmt.Println(class)
+		for attr, attrContent := range classContent.Attributes {
+			fmt.Printf("\t%s: %s\n", attr, attrContent.TypeOf)
+		}
+		for funct, functContent := range classContent.Methods {
+			fmt.Printf("Func %s: %s\n", funct, functContent.TypeOf)
+			for v, vattr := range functContent.Vars {
+				fmt.Printf("\t%s : %s\n", v, vattr.TypeOf)
+			}
+			debugObjSize(functContent.ObjSize)
+		}
+	}
 
 	f, err := os.Create("out.obj")
 	if err != nil {
@@ -84,6 +105,7 @@ func compile() {
 	enc.Encode(listener.ProgramName)
 	enc.Encode(quads)
 	enc.Encode(listener.GetFunctionTable())
+	enc.Encode(listener.GetClassTable())
 	enc.Encode(semantic.ConstantsTable)
 }
 
@@ -119,18 +141,19 @@ func execute() {
 	}
 	//debugFT(ft)
 
+	var classTable semantic.ClassTable
+	err = dec.Decode(&classTable)
+	if err != nil {
+		panic(err)
+	}
+
 	err = dec.Decode(&semantic.ConstantsTable)
 	if err != nil {
 		panic(err)
 	}
 
-	vm := virtualMachine.NewVM(programName, ft, m)
+	vm := virtualMachine.NewVM(programName, ft, classTable, m)
 	vm.Run()
-}
-
-func testSC() {
-	sc := semantic.NewCube(nil)
-	fmt.Println(sc.ValidateBinaryOperation(constants.TYPEBOOL, constants.TYPEBOOL, constants.OPAND))
 }
 
 func debugFT(ft semantic.FunctionTable) {
@@ -141,5 +164,13 @@ func debugFT(ft semantic.FunctionTable) {
 			fmt.Printf("%s: %s \n", id, variable.TypeOf)
 		}
 		fmt.Printf("Dir: %d\n", function.Dir)
+		debugObjSize(function.ObjSize)
+	}
+}
+
+func debugObjSize(objsize []memory.MemObjInfo) {
+	for _, moi := range objsize {
+		fmt.Println(moi.VarSize)
+		debugObjSize(moi.ObjSize)
 	}
 }

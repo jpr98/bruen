@@ -116,6 +116,8 @@ func (l *MyListener) EnterClassInit(c *parser.ClassInitContext) {
 	if err != nil {
 		log.Fatalf("Error: (EnterClassInit) %s", err)
 	}
+	l.functionTable[l.ProgramName].Objects = append(l.functionTable[l.ProgramName].Objects, l.scopeStack.Top())
+
 	ftc.ReturnDir = returnDir
 	l.classTable[l.scopeStack.Top()].Methods[l.currentFunction] = ftc
 	l.classTable[l.scopeStack.Top()].Methods[l.currentFunction].Vars = make(map[string]*VariableAttributes)
@@ -129,10 +131,11 @@ func (l *MyListener) ExitClassInit(c *parser.ClassInitContext) {
 	selfVariable := NewVariableAttributes("self", constants.TYPECLASS, selfDir)
 	selfVariable.Class = l.scopeStack.Top()
 	l.classTable[l.scopeStack.Top()].Methods[l.currentFunction].Vars["self"] = selfVariable
+	l.countInObjSize(l.scopeStack.Top())
 
 	varSize, objSize := memory.Manager.ResetLocalCounter()
 	l.classTable[l.scopeStack.Top()].Methods[l.currentFunction].VarsSize = varSize
-	l.classTable[l.scopeStack.Top()].Methods[l.currentFunction].ObjSize = objSize
+	l.classTable[l.scopeStack.Top()].Methods[l.currentFunction].ObjectCount = objSize
 	l.currentFunction = l.scopeStack.Top()
 }
 
@@ -143,7 +146,17 @@ func (l *MyListener) EnterClassAttributes(c *parser.ClassAttributesContext) {
 func (l *MyListener) ExitClassAttributes(c *parser.ClassAttributesContext) {
 	varSize, objSize := memory.Manager.ResetLocalCounter()
 	l.classTable[l.scopeStack.Top()].VarsSize = varSize
-	l.classTable[l.scopeStack.Top()].ObjSize = objSize
+	l.classTable[l.scopeStack.Top()].ObjectCount = objSize
+	// Sets objects size according to attributes which are objects
+	if len(l.classTable[l.scopeStack.Top()].Objects) == objSize {
+		for _, objName := range l.classTable[l.scopeStack.Top()].Objects {
+			for _, objInfo := range l.classTable[objName].ObjSize {
+				l.classTable[l.scopeStack.Top()].ObjSize = append(l.classTable[l.scopeStack.Top()].ObjSize, objInfo)
+			}
+		}
+	}
+	l.classTable[l.scopeStack.Top()].Objects = nil
+	l.classTable[l.scopeStack.Top()].ObjectCount = 0
 	l.isInClassAttributes = false
 	l.isInClassMethods = true
 }
@@ -170,7 +183,7 @@ func (l *MyListener) EnterFunctions(c *parser.FunctionsContext) {
 func (l *MyListener) ExitFunctions(c *parser.FunctionsContext) {
 	varSize, objSize := memory.Manager.ResetLocalCounter()
 	l.getCurrentFunctionTable()[l.currentFunction].VarsSize = varSize
-	l.getCurrentFunctionTable()[l.currentFunction].ObjSize = objSize
+	l.getCurrentFunctionTable()[l.currentFunction].ObjectCount = objSize
 }
 
 func (l *MyListener) EnterMain(c *parser.MainContext) {
@@ -206,12 +219,21 @@ func (l *MyListener) EnterAttributesDec(c *parser.AttributesDecContext) {
 	currVariable := NewVariableAttributes(id, t, dir)
 	if t == constants.TYPECLASS {
 		currVariable.Class = c.ID(1).GetText()
+		l.countInObjSize(c.ID(1).GetText())
 	}
 
 	if l.isInClassAttributes {
 		l.classTable[l.scopeStack.Top()].Attributes[id] = currVariable
 	} else {
 		l.getCurrentFunctionTable()[l.currentFunction].Vars[id] = currVariable
+	}
+}
+
+func (l *MyListener) countInObjSize(className string) {
+	if l.isInClassAttributes {
+		l.classTable[l.scopeStack.Top()].Objects = append(l.classTable[l.scopeStack.Top()].Objects, className)
+	} else {
+		l.getCurrentFunctionTable()[l.currentFunction].Objects = append(l.getCurrentFunctionTable()[l.currentFunction].Objects, className)
 	}
 }
 
@@ -250,6 +272,7 @@ func (l *MyListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {
 		currVariable := NewVariableAttributes(id, t, dir)
 		if t == constants.TYPECLASS {
 			currVariable.Class = c.ID().GetText()
+			l.countInObjSize(c.ID().GetText())
 		}
 
 		if l.isInClassAttributes {
@@ -383,13 +406,13 @@ func (l *MyListener) EnterVarCte(c *parser.VarCteContext) {
 func (l *MyListener) EnterForLoop2(c *parser.ForLoop2Context) {
 	id := c.ID().GetText()
 	currVariable := NewVariableAttributes(id, constants.TYPEINT, memory.LOCAL_INT)
-	l.functionTable[l.currentFunction].Vars[id] = currVariable
+	l.getCurrentFunctionTable()[l.currentFunction].Vars[id] = currVariable
 }
 
 func (l *MyListener) ExitMain(c *parser.MainContext) {
 	varSize, objSize := memory.Manager.ResetLocalCounter()
 	l.functionTable[l.currentFunction].VarsSize = varSize
-	l.functionTable[l.currentFunction].ObjSize = objSize
+	l.functionTable[l.currentFunction].ObjectCount = objSize
 }
 
 func (l *MyListener) ExitProgram(c *parser.ProgramContext) {
