@@ -125,6 +125,10 @@ func (vm *VirtualMachine) Run() {
 			}
 
 		case quads.ERA:
+			if quad.Right != nil {
+				// buscar clase y de ahi sacamos su init
+				// con eso ya inicializamos la memory de init
+			}
 			fmb = NewMemory(vm.functionTable[quad.Left.ID()].VarsSize, vm.functionTable[quad.Left.ID()].TempSize)
 			if quad.Left.ID() == "main" {
 				vm.memBlocks.Push(fmb)

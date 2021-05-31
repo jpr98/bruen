@@ -51,37 +51,40 @@ func compile() {
 	for class, classContent := range ct {
 		fmt.Println(class)
 		for attr, attrContent := range classContent.Attributes {
-			fmt.Printf("%s: %s\n", attr, attrContent.TypeOf)
+			fmt.Printf("\t%s: %s\n", attr, attrContent.TypeOf)
 		}
 		for funct, functContent := range classContent.Methods {
 			fmt.Printf("Func %s: %s\n", funct, functContent.TypeOf)
+			for v, vattr := range functContent.Vars {
+				fmt.Printf("\t%s : %s\n", v, vattr.TypeOf)
+			}
 		}
 	}
 
-	// fmt.Println("\n---------")
-	// stream.Seek(0)
-	// p = parser.NewProyectoParser(stream)
+	fmt.Println("\n---------")
+	stream.Seek(0)
+	p = parser.NewProyectoParser(stream)
 
-	// var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable())
-	// antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
-	// quads := quadListener.GetManager().GetQuads()
-	// for i, q := range quads {
-	// 	fmt.Printf("%d. %s\n", i, q)
-	// }
-	// fmt.Println("\n---------")
-	// debugFT(listener.GetFunctionTable())
+	var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable(), ct)
+	antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
+	quads := quadListener.GetManager().GetQuads()
+	for i, q := range quads {
+		fmt.Printf("%d. %s\n", i, q)
+	}
+	fmt.Println("\n---------")
+	debugFT(listener.GetFunctionTable())
 
-	// f, err := os.Create("out.obj")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// defer f.Close()
+	f, err := os.Create("out.obj")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
 
-	// enc := gob.NewEncoder(f)
-	// enc.Encode(listener.ProgramName)
-	// enc.Encode(quads)
-	// enc.Encode(listener.GetFunctionTable())
-	// enc.Encode(semantic.ConstantsTable)
+	enc := gob.NewEncoder(f)
+	enc.Encode(listener.ProgramName)
+	enc.Encode(quads)
+	enc.Encode(listener.GetFunctionTable())
+	enc.Encode(semantic.ConstantsTable)
 }
 
 func execute() {

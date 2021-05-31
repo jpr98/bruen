@@ -1,10 +1,24 @@
 program test4;
 
+var fast: bool;
+var carr: Car;
+
 class Car {
     attributes
     var motorNum: int;
     var color: float;
     var fast: bool;
+    var tires: [4]int;
+
+    init() {
+        var x: int;
+        x = 8 * 2;
+        motorNum = 0;
+        fast = true;
+        if (fast) {
+            color = 1.0;
+        }
+    }
 
     methods
     function start() void {
@@ -13,12 +27,11 @@ class Car {
     }
 };
 
-var fast: bool;
-
-function fast() void {
-
+function getInt() int {
+    return 1;
 }
 
 main() {
-    var car: Car;
+    var c: Car;
+    c = new Car();
 }

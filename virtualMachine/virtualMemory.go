@@ -17,7 +17,7 @@ type Memory interface {
 type mem struct {
 	vars    memblock
 	temps   memblock
-	objects map[string]memblock // Con el id de la instancia de una clase (dado por id.), buscamos si bloque de memoria y de ahi todo normal
+	objects []memblock // Con el id de la instancia de una clase (dado por id.), buscamos si bloque de memoria y de ahi todo normal
 }
 
 type memblock map[constants.Type][]interface{}
@@ -60,6 +60,9 @@ func (m *mem) Get(addr int) interface{} {
 	vAddr := memory.ConvertAddr(addr)
 	typeOf := memory.TypeForAddr(addr)
 
+	if typeOf == constants.TYPECLASS {
+		return m.objects[vAddr]
+	}
 	if memory.IsTempAddr(addr) {
 		return m.temps[typeOf][vAddr]
 	}
@@ -103,6 +106,13 @@ func (m *mem) Set(value interface{}, addr int) error {
 		} else {
 			m.vars[typeOf][vAddr] = boolValue
 		}
+		return nil
+	case constants.TYPECLASS:
+		memBlockValue, ok := value.(memblock)
+		if !ok {
+			return fmt.Errorf("Error: (Set) couldn't cast %v to memblock", value)
+		}
+		m.objects[vAddr] = memBlockValue
 		return nil
 	default:
 		return fmt.Errorf("Error: (Set) unexpected type to set in memory block")

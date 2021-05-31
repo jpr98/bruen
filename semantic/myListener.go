@@ -108,6 +108,34 @@ func (l *MyListener) ExitClassDef(c *parser.ClassDefContext) {
 	l.currentFunction = l.ProgramName
 }
 
+func (l *MyListener) EnterClassInit(c *parser.ClassInitContext) {
+	l.currentFunction = c.INIT().GetText()
+	ftc := &FunctionTableContent{}
+	ftc.TypeOf = constants.TYPECLASS
+	returnDir, err := memory.Manager.GetNextAddr(constants.TYPECLASS, memory.Global)
+	if err != nil {
+		log.Fatalf("Error: (EnterClassInit) %s", err)
+	}
+	ftc.ReturnDir = returnDir
+	l.classTable[l.scopeStack.Top()].Methods[l.currentFunction] = ftc
+	l.classTable[l.scopeStack.Top()].Methods[l.currentFunction].Vars = make(map[string]*VariableAttributes)
+}
+
+func (l *MyListener) ExitClassInit(c *parser.ClassInitContext) {
+	selfDir, err := memory.Manager.GetNextAddr(constants.TYPECLASS, memory.Local)
+	if err != nil {
+		log.Fatalf("Error: (ExitClassInit) %s", err)
+	}
+	selfVariable := NewVariableAttributes("self", constants.TYPECLASS, selfDir)
+	selfVariable.Class = l.scopeStack.Top()
+	l.classTable[l.scopeStack.Top()].Methods[l.currentFunction].Vars["self"] = selfVariable
+
+	varSize, objSize := memory.Manager.ResetLocalCounter()
+	l.classTable[l.scopeStack.Top()].Methods[l.currentFunction].VarsSize = varSize
+	l.classTable[l.scopeStack.Top()].Methods[l.currentFunction].ObjSize = objSize
+	l.currentFunction = l.scopeStack.Top()
+}
+
 func (l *MyListener) EnterClassAttributes(c *parser.ClassAttributesContext) {
 	l.isInClassAttributes = true
 }
@@ -150,9 +178,87 @@ func (l *MyListener) EnterMain(c *parser.MainContext) {
 	l.addToFunctionTable(constants.VOID)
 }
 
+func (l *MyListener) EnterAttributesDec(c *parser.AttributesDecContext) {
+	id := c.ID(0).GetText()
+	var t constants.Type
+	if c.TypeRule() != nil {
+		t = constants.StringToType(c.TypeRule().GetText())
+		if t == constants.ERR {
+			log.Fatalf("Error: (EnterVarsTypeInit) unkown type from %s", c.TypeRule().GetText())
+		}
+
+	} else if c.ID(1) != nil {
+		t = constants.TYPECLASS
+	}
+
+	var memCtx memory.Context
+	if l.scopeStack.Top() == l.ProgramName && l.currentFunction == l.ProgramName {
+		memCtx = memory.Global
+	} else {
+		memCtx = memory.Local
+	}
+
+	dir, err := memory.Manager.GetNextAddr(t, memCtx)
+	if err != nil {
+		log.Fatalf("Error: (EnterVarsTypeInit) %s\n", err)
+	}
+
+	currVariable := NewVariableAttributes(id, t, dir)
+	if t == constants.TYPECLASS {
+		currVariable.Class = c.ID(1).GetText()
+	}
+
+	if l.isInClassAttributes {
+		l.classTable[l.scopeStack.Top()].Attributes[id] = currVariable
+	} else {
+		l.getCurrentFunctionTable()[l.currentFunction].Vars[id] = currVariable
+	}
+}
+
 func (l *MyListener) EnterVarsDec(c *parser.VarsDecContext) {
 	id := c.ID().GetText()
 	l.unassignedVariables = append(l.unassignedVariables, id)
+}
+
+func (l *MyListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {
+	for _, id := range l.unassignedVariables {
+		l.validateVariableInScope(id)
+
+		var t constants.Type
+		if c.TypeRule() != nil {
+			t = constants.StringToType(c.TypeRule().GetText())
+			if t == constants.ERR {
+				log.Fatalf("Error: (EnterVarsTypeInit) unkown type from %s", c.TypeRule().GetText())
+			}
+
+		} else if c.ID() != nil {
+			t = constants.TYPECLASS
+		}
+
+		var memCtx memory.Context
+		if l.scopeStack.Top() == l.ProgramName && l.currentFunction == l.ProgramName {
+			memCtx = memory.Global
+		} else {
+			memCtx = memory.Local
+		}
+
+		dir, err := memory.Manager.GetNextAddr(t, memCtx)
+		if err != nil {
+			log.Fatalf("Error: (EnterVarsTypeInit) %s\n", err)
+		}
+
+		currVariable := NewVariableAttributes(id, t, dir)
+		if t == constants.TYPECLASS {
+			currVariable.Class = c.ID().GetText()
+		}
+
+		if l.isInClassAttributes {
+			l.classTable[l.scopeStack.Top()].Attributes[id] = currVariable
+		} else {
+			l.getCurrentFunctionTable()[l.currentFunction].Vars[id] = currVariable
+		}
+	}
+	l.unassignedVariables = nil
 }
 
 func (l *MyListener) EnterVarsDecArray(c *parser.VarsDecArrayContext) {
@@ -208,7 +314,11 @@ func (l *MyListener) EnterVarsDecArray(c *parser.VarsDecArrayContext) {
 
 	currVariable.ArrayOrMat = 1
 	currVariable.Dim[0] = dim
-	l.functionTable[l.currentFunction].Vars[id] = currVariable
+	if l.isInClassAttributes {
+		l.classTable[l.scopeStack.Top()].Attributes[id] = currVariable
+	} else {
+		l.getCurrentFunctionTable()[l.currentFunction].Vars[id] = currVariable
+	}
 }
 
 func (l *MyListener) EnterVarsDecMat(c *parser.VarsDecMatContext) {
@@ -232,50 +342,6 @@ func (l *MyListener) EnterParameter(c *parser.ParameterContext) {
 	currVariable := NewVariableAttributes(id, t, dir)
 	l.functionTable[l.currentFunction].Vars[id] = currVariable
 	l.functionTable[l.currentFunction].Params = append(l.functionTable[l.currentFunction].Params, dir)
-}
-
-func (l *MyListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {
-	for _, id := range l.unassignedVariables {
-		l.validateVariableInScope(id)
-
-		var t constants.Type
-		if c.TypeRule() != nil {
-			t = constants.StringToType(c.TypeRule().GetText())
-			if t == constants.ERR {
-				log.Fatalf("Error: (EnterVarsTypeInit) unkown type from %s", c.TypeRule().GetText())
-			}
-
-		} else if c.ID() != nil {
-			if _, exists := l.classTable[c.ID().GetText()]; !exists {
-				log.Fatalf("Error: Undefined type %s", c.ID().GetText())
-			}
-			t = constants.TYPECLASS
-		}
-
-		var memCtx memory.Context
-		if l.scopeStack.Top() == l.ProgramName && l.currentFunction == l.currentFunction {
-			memCtx = memory.Global
-		} else {
-			memCtx = memory.Local
-		}
-
-		dir, err := memory.Manager.GetNextAddr(t, memCtx)
-		if err != nil {
-			log.Fatalf("Error: (EnterVarsTypeInit) %s\n", err)
-		}
-
-		currVariable := NewVariableAttributes(id, t, dir)
-		if t == constants.TYPECLASS {
-			currVariable.Class = c.ID().GetText()
-		}
-
-		if l.isInClassAttributes {
-			l.classTable[l.scopeStack.Top()].Attributes[id] = currVariable
-		} else {
-			l.getCurrentFunctionTable()[l.currentFunction].Vars[id] = currVariable
-		}
-	}
-	l.unassignedVariables = nil
 }
 
 func (l *MyListener) EnterVarCte(c *parser.VarCteContext) {

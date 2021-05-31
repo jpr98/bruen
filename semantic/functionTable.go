@@ -33,7 +33,6 @@ type FunctionTableContent struct {
 	TypeOf    constants.Type
 	Dir       int
 	ReturnDir int
-	EraSize   string
 	Vars      map[string]*VariableAttributes
 	Params    []int
 	Scope     string
