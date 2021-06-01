@@ -47,6 +47,7 @@ func (vm *VirtualMachine) Run() {
 	var fmb Memory
 	for vm.pointer < len(vm.quads) {
 		quad := vm.quads[vm.pointer]
+
 		switch quad.Action {
 		case quads.ADD, quads.SUB, quads.MUL, quads.DIV:
 			vm.handleArithmeticOp(quad)
@@ -152,9 +153,8 @@ func (vm *VirtualMachine) Run() {
 
 		case quads.RETURN:
 			if quad.Result != nil {
-				memblock := vm.getMemBlockForElement(quad.Result)
-				value := memblock.Get(quad.Result.GetAddr())
-				memblock = vm.getMemBlockForElement(quad.Left)
+				value := vm.getValueForElement(quad.Result)
+				memblock := vm.getMemBlockForElement(quad.Left)
 				memblock.Set(value, quad.Left.GetAddr())
 			}
 			vm.memBlocks.Pop()
@@ -460,7 +460,7 @@ func (vm *VirtualMachine) handleAssign(quad quads.Quad) {
 		memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
 		addr, ok := memblock.Get(quad.Result.GetAddr()).(float64)
 		if !ok {
-			log.Fatalf("Error: (RUN) quads.ASSIGN couldn't cast %v to float64",
+			log.Fatalf("Error: (handleAssign) couldn't cast %v to float64",
 				memblock.Get(quad.Result.GetAddr()),
 			)
 		}
@@ -469,13 +469,13 @@ func (vm *VirtualMachine) handleAssign(quad quads.Quad) {
 		memblock = vm.getMemBlockForElement(auxElement)
 		err := memblock.Set(value, int(addr))
 		if err != nil {
-			log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
+			log.Fatalf("Error: (handleAssign) 1 %s", err)
 		}
 	} else {
 		memblock := vm.getMemBlockForElement(quad.Result)
 		err := memblock.Set(value, quad.Result.GetAddr())
 		if err != nil {
-			log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
+			log.Fatalf("Error: (handleAssign) 2 %s", err)
 		}
 	}
 }

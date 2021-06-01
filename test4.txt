@@ -38,6 +38,10 @@ class Car {
     function getMotorNum() int {
         return motorNum;
     }
+
+    function getTires(index: int) int {
+        return self.tires[index];
+    }
 };
 
 function getInt() int {
@@ -54,6 +58,6 @@ main() {
     car = new Car();
     car.setMotorNum(1819);
     c.setMotorNum(2021);
-    write(car.getMotorNum());
+    write(car.getTires(0));
     write(c.getMotorNum());
 }
