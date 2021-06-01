@@ -33,6 +33,7 @@ function twoParams(a: int, b: int) void {
 
 main() {
     var a: int = 10;
+    var c: [4]int;
     var b: bool = true && true;
     twoParams(0, 5);
 }

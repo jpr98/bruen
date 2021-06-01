@@ -33,7 +33,6 @@ func (l QuadGenListener) GetManager() Manager {
 }
 
 func (l *QuadGenListener) EnterAssignation(c *parser.AssignationContext) {
-	l.m.PushOperand(c.ID().GetText(), l.currentFunction, l.globalName)
 	l.m.PushOp(c.ASSIGN().GetText())
 }
 
@@ -134,24 +133,10 @@ func (l *QuadGenListener) ExitTerm2(c *parser.Term2Context) {
 }
 
 func (l *QuadGenListener) EnterFactor(c *parser.FactorContext) {
-	if c.Vars() != nil {
-		l.m.PushOperand(c.Vars().GetText(), l.currentFunction, l.globalName)
-	} else if c.VarCte() != nil {
+	if c.VarCte() != nil {
 		l.m.PushConstantOperand(c.VarCte().GetText())
 	}
 }
-
-// func (l *QuadGenListener) EnterVarCte(c *parser.VarCteContext) {
-// 	if c.Cte_i() != nil {
-// 		l.m.PushConstantOperand(c.Cte_i().GetText())
-// 	} else if c.Cte_f() != nil {
-// 		l.m.PushConstantOperand(c.Cte_f().GetText())
-// 	} else if c.Cte_c() != nil {
-// 		l.m.PushConstantOperand(c.Cte_c().GetText())
-// 	} else if c.Cte_b() != nil {
-// 		l.m.PushConstantOperand(c.Cte_b().GetText())
-// 	}
-// }
 
 func (l *QuadGenListener) EnterFactor2(c *parser.Factor2Context) {
 	// Adds false bottom
@@ -163,6 +148,19 @@ func (l *QuadGenListener) EnterFactor2(c *parser.Factor2Context) {
 func (l *QuadGenListener) ExitFactor2(c *parser.Factor2Context) {
 	// Removes false bottom
 	l.m.operators.Pop()
+}
+
+func (l *QuadGenListener) EnterVars(c *parser.VarsContext) {
+	l.m.PushOperand(c.ID(0).GetText(), l.currentFunction, l.globalName)
+}
+
+func (l *QuadGenListener) EnterVarArray(c *parser.VarArrayContext) {
+	l.m.PushOperand(c.ID(0).GetText(), l.currentFunction, l.globalName)
+}
+
+func (l *QuadGenListener) ExitVarArray(c *parser.VarArrayContext) {
+	l.m.AddVerifyQuad(c.ID(0).GetText(), l.currentFunction, l.globalName, true)
+	l.m.AddArrayAccessQuad(c.ID(0).GetText())
 }
 
 func (l *QuadGenListener) ExitConditional(c *parser.ConditionalContext) {
@@ -208,6 +206,7 @@ func (l *QuadGenListener) EnterForLoop2(c *parser.ForLoop2Context) {
 	l.m.AddForLoopIterator(c.ID().GetText())
 	l.m.PushOp(c.ASSIGN().GetText())
 }
+
 func (l *QuadGenListener) ExitForLoop2(c *parser.ForLoop2Context) {
 	l.m.GenerateAssignationQuad(true)
 	l.m.SaveJumpPosition()
@@ -265,8 +264,8 @@ func (l *QuadGenListener) ExitReturnRule(c *parser.ReturnRuleContext) {
 	l.m.AddReturnQuad(l.currentFunction)
 }
 
-func (l *QuadGenListener) EnterRead2(c *parser.Read2Context) {
-	l.m.AddReadQuad(c.Vars().GetText(), l.currentFunction, l.globalName)
+func (l *QuadGenListener) ExitRead2(c *parser.Read2Context) {
+	l.m.AddReadQuad()
 }
 
 func (l *QuadGenListener) ExitWrite(c *parser.WriteContext) {

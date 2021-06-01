@@ -45,11 +45,29 @@ func (s *BaseProyectoListener) EnterClassBlock(ctx *ClassBlockContext) {}
 // ExitClassBlock is called when production classBlock is exited.
 func (s *BaseProyectoListener) ExitClassBlock(ctx *ClassBlockContext) {}
 
+// EnterVariableDeclaration is called when production variableDeclaration is entered.
+func (s *BaseProyectoListener) EnterVariableDeclaration(ctx *VariableDeclarationContext) {}
+
+// ExitVariableDeclaration is called when production variableDeclaration is exited.
+func (s *BaseProyectoListener) ExitVariableDeclaration(ctx *VariableDeclarationContext) {}
+
 // EnterVarsDec is called when production varsDec is entered.
 func (s *BaseProyectoListener) EnterVarsDec(ctx *VarsDecContext) {}
 
 // ExitVarsDec is called when production varsDec is exited.
 func (s *BaseProyectoListener) ExitVarsDec(ctx *VarsDecContext) {}
+
+// EnterVarsDecArray is called when production varsDecArray is entered.
+func (s *BaseProyectoListener) EnterVarsDecArray(ctx *VarsDecArrayContext) {}
+
+// ExitVarsDecArray is called when production varsDecArray is exited.
+func (s *BaseProyectoListener) ExitVarsDecArray(ctx *VarsDecArrayContext) {}
+
+// EnterVarsDecMat is called when production varsDecMat is entered.
+func (s *BaseProyectoListener) EnterVarsDecMat(ctx *VarsDecMatContext) {}
+
+// ExitVarsDecMat is called when production varsDecMat is exited.
+func (s *BaseProyectoListener) ExitVarsDecMat(ctx *VarsDecMatContext) {}
 
 // EnterVarsTypeInit is called when production varsTypeInit is entered.
 func (s *BaseProyectoListener) EnterVarsTypeInit(ctx *VarsTypeInitContext) {}
@@ -68,6 +86,18 @@ func (s *BaseProyectoListener) EnterVars(ctx *VarsContext) {}
 
 // ExitVars is called when production vars is exited.
 func (s *BaseProyectoListener) ExitVars(ctx *VarsContext) {}
+
+// EnterVarArray is called when production varArray is entered.
+func (s *BaseProyectoListener) EnterVarArray(ctx *VarArrayContext) {}
+
+// ExitVarArray is called when production varArray is exited.
+func (s *BaseProyectoListener) ExitVarArray(ctx *VarArrayContext) {}
+
+// EnterVarMat is called when production varMat is entered.
+func (s *BaseProyectoListener) EnterVarMat(ctx *VarMatContext) {}
+
+// ExitVarMat is called when production varMat is exited.
+func (s *BaseProyectoListener) ExitVarMat(ctx *VarMatContext) {}
 
 // EnterFunctions is called when production functions is entered.
 func (s *BaseProyectoListener) EnterFunctions(ctx *FunctionsContext) {}

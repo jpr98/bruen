@@ -10,9 +10,21 @@ type FunctionTable map[string]*FunctionTableContent
 
 // Stores all attributes of the variables
 type VariableAttributes struct {
-	Name   string
-	TypeOf constants.Type
-	Dir    int
+	Name       string
+	TypeOf     constants.Type
+	Dir        int
+	ArrayOrMat int // 0 = nothing, 1 = array, 2 = mat
+	Dim        [2]int
+}
+
+func NewVariableAttributes(id string, typeOf constants.Type, dir int) *VariableAttributes {
+	return &VariableAttributes{
+		Name:       id,
+		TypeOf:     typeOf,
+		Dir:        dir,
+		ArrayOrMat: 0,
+		Dim:        [2]int{},
+	}
 }
 
 type FunctionTableContent struct {

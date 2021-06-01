@@ -55,24 +55,28 @@ PROGRAM: 'program';
 ID: [a-zA-Z_][a-zA-Z0-9]*;
 
 // Rules
-program: PROGRAM ID SEMI classDef* varsDec* program2;
+program: PROGRAM ID SEMI classDef* variableDeclaration* program2;
 program2: functions* main EOF;
 
 classDef: CLASS ID ('<' ID '>')? classBlock SEMI;
-classBlock: '{' ATTRIBUTES varsDec* METHODS functions* '}';
+classBlock: '{' ATTRIBUTES variableDeclaration* METHODS functions* '}';
 
-varsDec: VAR ID ':' varsTypeInit SEMI
-    | VAR ID '['INT']' ':' varsTypeInit SEMI
-    | VAR ID '['INT']['INT']' ':' varsTypeInit SEMI;
+variableDeclaration: varsDec | varsDecArray | varsDecMat;
+varsDec: VAR ID ':' varsTypeInit SEMI;
+varsDecArray: VAR ID ':' '['INT']'(typeRule | ID) SEMI;
+varsDecMat: VAR ID ':' '['INT']['INT']'(typeRule | ID) SEMI;
+
 varsTypeInit: (typeRule | ID) varsTypeInit2?;
 varsTypeInit2: (ASSIGN exp);
 
-vars: ID ('.' ID)? ('[' exp ']')? ('[' exp ']')?;
+vars: ID ('.' ID)?;
+varArray: ID ('.' ID)? '[' exp ']';
+varMat: ID ('.' ID)? ('[' exp ']')? ('[' exp ']')?;
 
 functions: FUNCTION ID LPAREN parameters? RPAREN (typeRule | VOID) functionBlock;
 parameters: parameter (',' parameter)*;
 parameter: ID ':' typeRule;
-functionBlock: '{' varsDec* statutes* '}';
+functionBlock: '{' variableDeclaration* statutes* '}';
 returnRule: RETURN exp? SEMI;
 
 block: '{' statutes* '}';
@@ -86,7 +90,7 @@ statutes: assignation
         | expression
         | returnRule;
 
-assignation: ID ASSIGN exp SEMI;
+assignation: (vars |varArray | varMat) ASSIGN exp SEMI;
 
 functionCall: ID LPAREN arguments? RPAREN;
 arguments: exp arguments2;
@@ -97,7 +101,7 @@ methodCall: ID '.' ID LPAREN arguments? RPAREN;
 call: functionCall | methodCall;
 
 read: READ LPAREN read2 RPAREN SEMI;
-read2: vars read3;
+read2: (vars | varArray | varMat) read3;
 read3: ',' read2 | ;
 
 write: WRITE LPAREN arguments RPAREN SEMI;
@@ -132,7 +136,7 @@ term2: (MUL | DIV) factor;
 
 factor: factor2
       | varCte
-      | vars
+      | (vars | varArray | varMat)
       | call;
       
 factor2: LPAREN exp RPAREN;
@@ -150,7 +154,7 @@ cte_b: BOOL;
 cte_s: '"' .*? '"'; // checar espacios en strings
 
 main: MAIN LPAREN RPAREN mainBlock;
-mainBlock: '{' varsDec* statutes* '}';
+mainBlock: '{' variableDeclaration* statutes* '}';
 
 typeRule: INT_TYPE
     | FLOAT_TYPE
