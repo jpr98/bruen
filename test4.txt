@@ -11,7 +11,6 @@ class Car {
 
     init() {
         var x: int;
-        var b: int;
         x = 8 * 2;
         motorNum = 0;
         fast = true;
@@ -19,8 +18,7 @@ class Car {
             color = 1.0;
         }
         tires[0] = 3;
-        b = tires[0];
-        write(b);
+        write(tires[0]);
     }
 
     methods
@@ -38,7 +36,4 @@ main() {
     var c: Car;
     var arr: [3]bool;
     c = new Car();
-    arr[0] = true;
-    arr[1] = false;
-    write(arr[0], arr[1]);
 }

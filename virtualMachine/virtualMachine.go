@@ -416,13 +416,13 @@ func (vm *VirtualMachine) handleAssign(quad quads.Quad) {
 
 	if strings.Contains(quad.Result.ID(), "ptr_") {
 		memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
-
 		addr, ok := memblock.Get(quad.Result.GetAddr()).(float64)
 		if !ok {
 			log.Fatalf("Error: (RUN) quads.ASSIGN couldn't cast %v to float64",
 				memblock.Get(quad.Result.GetAddr()),
 			)
 		}
+
 		auxElement := quads.NewElement(int(addr), quad.Result.ID(), quad.Result.Type(), "")
 		memblock = vm.getMemBlockForElement(auxElement)
 		err := memblock.Set(value, int(addr))
@@ -439,16 +439,18 @@ func (vm *VirtualMachine) handleAssign(quad quads.Quad) {
 }
 
 func (vm *VirtualMachine) getValueForElement(e quads.Element) interface{} {
-	memblock := vm.getMemBlockForElement(e)
 	if strings.Contains(e.ID(), "ptr_") {
+		memblock := vm.getMemBlockForAddr(e.GetAddr())
 		ptrAddr, ok := memblock.Get(e.GetAddr()).(float64)
 		if !ok {
-			log.Fatalf("Error: (pointerValue) couldn't cast index to float64")
+			log.Fatalf("Error: (getValueForElement) couldn't cast index to float64")
 		}
 
-		memblock = vm.getMemBlockForAddr(int(ptrAddr)) // TODO: revisar que onda con arreglos atributos
+		auxElement := quads.NewElement(int(ptrAddr), e.ID(), e.Type(), "")
+		memblock = vm.getMemBlockForElement(auxElement)
 		realValue := memblock.Get(int(ptrAddr))
 		return realValue
 	}
+	memblock := vm.getMemBlockForElement(e)
 	return memblock.Get(e.GetAddr())
 }
