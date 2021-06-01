@@ -18,7 +18,8 @@ class Car {
             color = 1.0;
         }
         tires[0] = 3;
-        write(tires[0]);
+        read(tires[1]);
+        write(tires[1]);
     }
 
     methods
@@ -36,4 +37,6 @@ main() {
     var c: Car;
     var arr: [3]bool;
     c = new Car();
+    read(arr[2]);
+    write(arr[2]);
 }

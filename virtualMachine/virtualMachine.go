@@ -44,7 +44,6 @@ func (vm *VirtualMachine) Run() {
 	var fmb Memory
 	for vm.pointer < len(vm.quads) {
 		quad := vm.quads[vm.pointer]
-		fmt.Println(quad)
 		switch quad.Action {
 		case quads.ADD, quads.SUB, quads.MUL, quads.DIV:
 			vm.handleArithmeticOp(quad)
@@ -321,21 +320,43 @@ func (vm *VirtualMachine) handleLogicOp(quad quads.Quad) {
 	}
 }
 
+/*
+	memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+	addr, ok := memblock.Get(quad.Result.GetAddr()).(float64)
+	if !ok {
+		log.Fatalf("Error: (RUN) quads.ASSIGN couldn't cast %v to float64",
+			memblock.Get(quad.Result.GetAddr()),
+		)
+	}
+
+	auxElement := quads.NewElement(int(addr), quad.Result.ID(), quad.Result.Type(), "")
+	memblock = vm.getMemBlockForElement(auxElement)
+	err := memblock.Set(value, int(addr))
+	if err != nil {
+		log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
+	}
+*/
 func (vm *VirtualMachine) handleRead(quad quads.Quad) {
 	reader := bufio.NewReader(os.Stdin)
 	bytes, _ := reader.ReadBytes('\n')
 	str := strings.TrimSpace(string(bytes))
 
-	memblock := vm.getMemBlockForElement(quad.Result)
-	addr := quad.Result.GetAddr()
+	var memblock Memory
+	var addr int
 	if strings.Contains(quad.Result.ID(), "ptr_") {
-		addrFloat, ok := memblock.Get(addr).(float64)
+		memblock = vm.getMemBlockForAddr(quad.Result.GetAddr())
+		addrFloat, ok := memblock.Get(quad.Result.GetAddr()).(float64)
 		if !ok {
 			log.Fatalf("Error: (handleRead) couldn't cast %v to float64",
 				memblock.Get(int(addr)))
 		}
+
 		addr = int(addrFloat)
-		memblock = vm.getMemBlockForAddr(addr) // TODO: Revisar que onda con atributos aqui
+		auxElement := quads.NewElement(addr, quad.Result.ID(), quad.Result.Type(), "")
+		memblock = vm.getMemBlockForElement(auxElement)
+	} else {
+		memblock = vm.getMemBlockForElement(quad.Result)
+		addr = quad.Result.GetAddr()
 	}
 
 	switch quad.Result.Type() {
@@ -374,7 +395,7 @@ func (vm *VirtualMachine) handleRead(quad quads.Quad) {
 	case constants.TYPEBOOL:
 		boolVal, err := strconv.ParseBool(str)
 		if err != nil {
-			fmt.Println("Warning:")
+			fmt.Println("Warning: Input does not match to bool value, setting value to false")
 		}
 		err = memblock.Set(boolVal, addr)
 		if err != nil {
