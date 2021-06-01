@@ -89,14 +89,47 @@ func (m *Manager) PushConstantOperand(operand string) {
 }
 
 // Acceso a atributos
-// a.b = explicito = a es la clase
-// b = implicito = self es la clase
+// a.b = explicito = a es el objecto
+// b = implicito = self es el objecto
 func (m *Manager) getOperandData(operand string) *semantic.VariableAttributes {
 	data := &semantic.VariableAttributes{TypeOf: constants.ERR}
+
+	if strings.Contains(operand, ".") {
+		strElements := strings.Split(operand, ".")
+		if len(strElements) != 2 {
+			log.Fatalf("Error: (getOperandData) unexpected instance access syntax")
+		}
+
+		instance, attribute := strElements[0], strElements[1]
+		instanceData := &semantic.VariableAttributes{TypeOf: constants.ERR}
+		if attr, exists := m.getCurrentFunctionTable()[m.currentFunction].Vars[instance]; exists {
+			instanceData = attr
+		} else {
+			if attr, exists := m.functionTable[m.globalName].Vars[instance]; exists {
+				instanceData = attr
+			}
+		}
+
+		if instanceData.TypeOf == constants.ERR {
+			log.Fatalf(
+				"Error: (PushOperand) undeclared variable %s\n",
+				instance,
+			)
+			return nil
+		}
+
+		if attr, exists := m.classTable[instanceData.Class].Attributes[attribute]; exists {
+			data = attr
+			data.FromSelf = true
+			data.SelfDir = instanceData.Dir
+		}
+		return data
+	}
+
 	if attr, exists := m.getCurrentFunctionTable()[m.currentFunction].Vars[operand]; exists {
 		data = attr
 	} else if m.scopeStack.Top() != m.globalName {
-		// Seguro es atributo
+		// Seguro es atributo implicito
 		if attr, exists := m.classTable[m.scopeStack.Top()].Attributes[operand]; exists {
 			data = attr
 			data.FromSelf = true
@@ -120,9 +153,9 @@ func (m *Manager) getOperandData(operand string) *semantic.VariableAttributes {
 
 func (m *Manager) PushOperand(operand string) {
 	operandData := m.getOperandData(operand)
-	operandName := operand
+	operandName := operandData.Name
 	if operandData.FromSelf {
-		operandName = fmt.Sprintf("self_%d_%s", operandData.SelfDir, operand)
+		operandName = fmt.Sprintf("self_%d_%s", operandData.SelfDir, operandData.Name)
 	}
 	element := NewElement(operandData.Dir, operandName, operandData.TypeOf, operandData.Class)
 	m.operands.Push(element)
@@ -227,7 +260,7 @@ func (m *Manager) AddVerifyQuad(id string, isArray bool) {
 	}
 }
 
-func (m *Manager) AddArrayAccessQuad(id string) {
+func (m *Manager) AddArrayAccessQuad() {
 	index := m.operands.Pop()
 	array := m.operands.Pop()
 

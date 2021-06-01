@@ -156,16 +156,30 @@ func (l *QuadGenListener) ExitFactor2(c *parser.Factor2Context) {
 }
 
 func (l *QuadGenListener) EnterVars(c *parser.VarsContext) {
-	l.m.PushOperand(c.ID(0).GetText())
+	if c.ID(1) != nil {
+		l.m.PushOperand(c.GetText())
+	} else {
+		l.m.PushOperand(c.ID(0).GetText())
+	}
 }
 
 func (l *QuadGenListener) EnterVarArray(c *parser.VarArrayContext) {
-	l.m.PushOperand(c.ID(0).GetText())
+	if c.ID(1) != nil {
+		operand := fmt.Sprintf("%s.%s", c.ID(0).GetText(), c.ID(1).GetText())
+		l.m.PushOperand(operand)
+	} else {
+		l.m.PushOperand(c.ID(0).GetText())
+	}
 }
 
 func (l *QuadGenListener) ExitVarArray(c *parser.VarArrayContext) {
-	l.m.AddVerifyQuad(c.ID(0).GetText(), true)
-	l.m.AddArrayAccessQuad(c.ID(0).GetText())
+	if c.ID(1) != nil {
+		operand := fmt.Sprintf("%s.%s", c.ID(0).GetText(), c.ID(1).GetText())
+		l.m.AddVerifyQuad(operand, true)
+	} else {
+		l.m.AddVerifyQuad(c.ID(0).GetText(), true)
+	}
+	l.m.AddArrayAccessQuad()
 }
 
 func (l *QuadGenListener) ExitConditional(c *parser.ConditionalContext) {

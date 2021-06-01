@@ -12,14 +12,12 @@ class Car {
     init() {
         var x: int;
         x = 8 * 2;
-        motorNum = 0;
+        motorNum = 1000;
         fast = true;
         if (fast) {
             color = 1.0;
         }
         tires[0] = 3;
-        read(tires[1]);
-        write(tires[1]);
     }
 
     methods
@@ -37,6 +35,7 @@ main() {
     var c: Car;
     var arr: [3]bool;
     c = new Car();
-    read(arr[2]);
-    write(arr[2]);
+    read(c.motorNum);
+    write(c.motorNum);
+    write(c.tires[0] * 3);
 }
