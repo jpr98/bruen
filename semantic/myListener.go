@@ -81,6 +81,9 @@ func (l *MyListener) addToFunctionTable(typeOf constants.Type) {
 }
 
 func (l *MyListener) EnterProgram(c *parser.ProgramContext) {
+	if c.ID().GetText() == "self" {
+		log.Fatalln("Error: self is a reserved keyword")
+	}
 	l.scopeStack.Push(c.ID().GetText())
 	l.currentFunction = c.ID().GetText()
 	l.ProgramName = c.ID().GetText()
@@ -95,6 +98,9 @@ func (l *MyListener) EnterProgram(c *parser.ProgramContext) {
 }
 
 func (l *MyListener) EnterClassDef(c *parser.ClassDefContext) {
+	if c.ID(0).GetText() == "self" {
+		log.Fatalln("Error: self is a reserved keyword")
+	}
 	l.scopeStack.Push(c.ID(0).GetText())
 	l.classTable[c.ID(0).GetText()] = &ClassTableContent{}
 	l.classTable[c.ID(0).GetText()].Methods = make(FunctionTable)
@@ -162,6 +168,9 @@ func (l *MyListener) ExitClassAttributes(c *parser.ClassAttributesContext) {
 }
 
 func (l *MyListener) EnterFunctions(c *parser.FunctionsContext) {
+	if c.ID().GetText() == "self" {
+		log.Fatalln("Error: self is a reserved keyword")
+	}
 	l.currentFunction = c.ID().GetText()
 	var typeOf constants.Type
 	var returnDir int
@@ -193,6 +202,9 @@ func (l *MyListener) EnterMain(c *parser.MainContext) {
 
 func (l *MyListener) EnterAttributesDec(c *parser.AttributesDecContext) {
 	id := c.ID(0).GetText()
+	if id == "self" {
+		log.Fatalln("Error: self is a reserved keyword")
+	}
 	var t constants.Type
 	if c.TypeRule() != nil {
 		t = constants.StringToType(c.TypeRule().GetText())
@@ -239,6 +251,9 @@ func (l *MyListener) countInObjSize(className string) {
 
 func (l *MyListener) EnterVarsDec(c *parser.VarsDecContext) {
 	id := c.ID().GetText()
+	if id == "self" {
+		log.Fatalln("Error: self is a reserved keyword")
+	}
 	l.unassignedVariables = append(l.unassignedVariables, id)
 }
 
@@ -286,6 +301,9 @@ func (l *MyListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {
 
 func (l *MyListener) EnterVarsDecArray(c *parser.VarsDecArrayContext) {
 	id := c.ID().GetText()
+	if id == "self" {
+		log.Fatalln("Error: self is a reserved keyword")
+	}
 	l.validateVariableInScope(id)
 
 	dim, err := strconv.Atoi(c.INT().GetText())
@@ -351,6 +369,9 @@ func (l *MyListener) EnterVarsDecMat(c *parser.VarsDecMatContext) {
 
 func (l *MyListener) EnterParameter(c *parser.ParameterContext) {
 	id := c.ID().GetText()
+	if id == "self" {
+		log.Fatalln("Error: self is a reserved keyword")
+	}
 	t := constants.StringToType(c.TypeRule().GetText())
 	if t == constants.ERR {
 		log.Fatalf("Error: (EnterParameter) unkown type from %s", c.TypeRule().GetText())
@@ -363,8 +384,8 @@ func (l *MyListener) EnterParameter(c *parser.ParameterContext) {
 
 	// TODO: Manejar arreglos en ultimo atributo
 	currVariable := NewVariableAttributes(id, t, dir)
-	l.functionTable[l.currentFunction].Vars[id] = currVariable
-	l.functionTable[l.currentFunction].Params = append(l.functionTable[l.currentFunction].Params, dir)
+	l.getCurrentFunctionTable()[l.currentFunction].Vars[id] = currVariable
+	l.getCurrentFunctionTable()[l.currentFunction].Params = append(l.getCurrentFunctionTable()[l.currentFunction].Params, dir)
 }
 
 func (l *MyListener) EnterVarCte(c *parser.VarCteContext) {
@@ -405,6 +426,9 @@ func (l *MyListener) EnterVarCte(c *parser.VarCteContext) {
 
 func (l *MyListener) EnterForLoop2(c *parser.ForLoop2Context) {
 	id := c.ID().GetText()
+	if id == "self" {
+		log.Fatalln("Error: self is a reserved keyword")
+	}
 	currVariable := NewVariableAttributes(id, constants.TYPEINT, memory.LOCAL_INT)
 	l.getCurrentFunctionTable()[l.currentFunction].Vars[id] = currVariable
 }

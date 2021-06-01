@@ -11,19 +11,25 @@ class Car {
 
     init() {
         var x: int;
+        var fast: bool = false;
         x = 8 * 2;
         motorNum = 1000;
-        fast = true;
+        self.fast = true;
         if (fast) {
             color = 1.0;
         }
         tires[0] = 3;
+        write(self.fast);
+        write(fast);
     }
 
     methods
-    function start() void {
-        var a: int;
+    function start(a: int) void {
         write(a);
+    }
+
+    function stop() void {
+
     }
 };
 
