@@ -162,7 +162,7 @@ func (vm *VirtualMachine) Run() {
 func (vm *VirtualMachine) getMemBlockForElement(elem quads.Element) Memory {
 	if strings.Contains(elem.ID(), "self_") {
 		strElements := strings.Split(elem.ID(), "_")
-		if len(strElements) != 3 {
+		if len(strElements) < 2 {
 			log.Fatalf("Error: (getMemBlockForElement) unexpected object attribute id format")
 		}
 		objInstanceAddr, err := strconv.Atoi(strElements[1])
@@ -404,7 +404,7 @@ func (vm *VirtualMachine) handleCalcDir(quad quads.Quad) {
 		log.Fatalf("Error: (handleCalcDir) couldn't cast index to float64")
 	}
 	realAddr := float64(quad.Left.GetAddr()) + index
-	memblock = vm.getMemBlockForElement(quad.Result)
+	memblock = vm.getMemBlockForAddr(quad.Result.GetAddr()) // Aqui no usamos getMemBlockForElement porque un pointer siempre es un temporal de la función, nunca un atributo, por lo tanto no queremos buscar una instancia
 	err := memblock.Set(realAddr, quad.Result.GetAddr())
 	if err != nil {
 		log.Fatalf("Error: (handleCalcDir) %s", err)
@@ -413,20 +413,24 @@ func (vm *VirtualMachine) handleCalcDir(quad quads.Quad) {
 
 func (vm *VirtualMachine) handleAssign(quad quads.Quad) {
 	value := vm.getValueForElement(quad.Left)
-	memblock := vm.getMemBlockForElement(quad.Result)
+
 	if strings.Contains(quad.Result.ID(), "ptr_") {
+		memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+
 		addr, ok := memblock.Get(quad.Result.GetAddr()).(float64)
 		if !ok {
 			log.Fatalf("Error: (RUN) quads.ASSIGN couldn't cast %v to float64",
 				memblock.Get(quad.Result.GetAddr()),
 			)
 		}
-		memblock = vm.getMemBlockForAddr(int(addr)) // TODO: revisar que onda con arreglos atributos
+		auxElement := quads.NewElement(int(addr), quad.Result.ID(), quad.Result.Type(), "")
+		memblock = vm.getMemBlockForElement(auxElement)
 		err := memblock.Set(value, int(addr))
 		if err != nil {
 			log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
 		}
 	} else {
+		memblock := vm.getMemBlockForElement(quad.Result)
 		err := memblock.Set(value, quad.Result.GetAddr())
 		if err != nil {
 			log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
@@ -436,7 +440,6 @@ func (vm *VirtualMachine) handleAssign(quad quads.Quad) {
 
 func (vm *VirtualMachine) getValueForElement(e quads.Element) interface{} {
 	memblock := vm.getMemBlockForElement(e)
-	fmt.Println(memblock)
 	if strings.Contains(e.ID(), "ptr_") {
 		ptrAddr, ok := memblock.Get(e.GetAddr()).(float64)
 		if !ok {

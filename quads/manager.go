@@ -4,6 +4,7 @@ import (
 	"encoding/gob"
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/memory"
@@ -234,7 +235,15 @@ func (m *Manager) AddArrayAccessQuad(id string) {
 	if err != nil {
 		log.Fatalf("Error: (GenerateQuad) %s\n", err)
 	}
-	result := NewElement(dir, "ptr_"+m.getNextAvail(), constants.TYPEINT, "")
+	var result Element
+	if strings.Contains(array.ID(), "self_") {
+		strElements := strings.Split(array.ID(), "_")
+		ptrID := fmt.Sprintf("self_%s_ptr_%s", strElements[1], m.getNextAvail())
+		result = NewElement(dir, ptrID, array.Type(), "")
+	} else {
+		result = NewElement(dir, "ptr_"+m.getNextAvail(), array.Type(), "")
+	}
+
 	q := Quad{CALCDIR, array, index, result}
 	m.quads = append(m.quads, q)
 

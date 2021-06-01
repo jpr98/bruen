@@ -11,15 +11,16 @@ class Car {
 
     init() {
         var x: int;
+        var b: int;
         x = 8 * 2;
         motorNum = 0;
         fast = true;
         if (fast) {
             color = 1.0;
         }
-        for i = 0 in 4 {
-            tires[i] = i;
-        }
+        tires[0] = 3;
+        b = tires[0];
+        write(b);
     }
 
     methods
@@ -35,6 +36,9 @@ function getInt() int {
 
 main() {
     var c: Car;
+    var arr: [3]bool;
     c = new Car();
-    write(c.fast);
+    arr[0] = true;
+    arr[1] = false;
+    write(arr[0], arr[1]);
 }
