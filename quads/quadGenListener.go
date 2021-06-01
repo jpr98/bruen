@@ -219,6 +219,9 @@ func (l *QuadGenListener) ExitForLoop(c *parser.ForLoopContext) {
 	l.m.GenerateAssignationQuad(true)
 
 	l.m.AddAndUpdateWhileGotos()
+
+	operand := l.m.operands.Pop()
+	delete(l.m.getCurrentFunctionTable()[l.m.currentFunction].Vars, operand.ID())
 }
 
 func (l *QuadGenListener) EnterForLoop2(c *parser.ForLoop2Context) {

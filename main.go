@@ -58,7 +58,7 @@ func compile() {
 	stream.Seek(0)
 	p = parser.NewProyectoParser(stream)
 
-	//debugFT(listener.GetFunctionTable())
+	debugFT(listener.GetFunctionTable())
 	var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable(), listener.GetClassTable())
 	antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
 	quads := quadListener.GetManager().GetQuads()
@@ -133,7 +133,7 @@ func debugFT(ft semantic.FunctionTable) {
 		fmt.Printf("\n *Function: %s Returns: %s Scope: %s, VarSize: %v, TempSize: %v\n", fname, function.TypeOf, function.Scope, function.VarsSize, function.TempSize)
 		fmt.Println("VarTable:")
 		for id, variable := range function.Vars {
-			fmt.Printf("%s: %s \n", id, variable.TypeOf)
+			fmt.Printf("%s: %s - %d\n", id, variable.TypeOf, variable.Dir)
 		}
 		fmt.Printf("Dir: %d\n", function.Dir)
 		debugObjSize(function.ObjSize)
