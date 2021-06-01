@@ -1,12 +1,9 @@
 program test3;
 
 main() {
-    var b: [4]int;
-    var x: int;
-    
-    b[2] = 10;
-    x = b[2] * 2;
-    write(x);
-    read(b[0]);
-    write(b[2] * 3);
+    for i = 0 in 2 {
+        for j = 0 in 5 {
+            write(2);
+        }
+    }
 }

@@ -224,8 +224,8 @@ func (m *Manager) GenerateQuad(validOps []int, isForLoop bool) {
 
 func (m *Manager) GenerateAssignationQuad(retainresult bool) {
 	op := m.operators.Pop()
-	operand := m.operands.Pop()
-	result := m.operands.Pop()
+	operand := m.operands.Pop() // Value to assign
+	result := m.operands.Pop()  // Place to assing value
 
 	resultType := semantic.Cube.ValidateBinaryOperation(result.Type(), operand.Type(), constants.OPASSIGN)
 	if resultType == constants.ERR {
@@ -347,12 +347,12 @@ func (m *Manager) AddSimpleGOTO() {
 }
 
 func (m *Manager) AddForLoopIterator(id string) {
-	dir, err := memory.Manager.GetNextAddr(constants.TYPEINT, memory.Local)
-	if err != nil {
-		log.Fatalf("Error: (AddForLoopIterator) %s\n", err)
+	attr, exists := m.getCurrentFunctionTable()[m.currentFunction].Vars[id]
+	if !exists {
+		log.Fatalf("Error: (AddForLoopIterator) undeclared variable %s", id)
 	}
 
-	e := NewElement(dir, id, constants.TYPEINT, "")
+	e := NewElement(attr.Dir, id, attr.TypeOf, "")
 	m.operands.Push(e)
 }
 

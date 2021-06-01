@@ -443,7 +443,13 @@ func (l *MyListener) EnterForLoop2(c *parser.ForLoop2Context) {
 	if id == "self" {
 		log.Fatalln("Error: self is a reserved keyword")
 	}
-	currVariable := NewVariableAttributes(id, constants.TYPEINT, memory.LOCAL_INT)
+
+	dir, err := memory.Manager.GetNextAddr(constants.TYPEINT, memory.Local)
+	if err != nil {
+		log.Fatalf("Error: (AddForLoopIterator) %s\n", err)
+	}
+
+	currVariable := NewVariableAttributes(id, constants.TYPEINT, dir)
 	l.getCurrentFunctionTable()[l.currentFunction].Vars[id] = currVariable
 }
 
