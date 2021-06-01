@@ -4,7 +4,7 @@ var fast: bool;
 
 class Car {
     attributes
-    var motorNum: int;
+    private var motorNum: int;
     var color: float;
     var fast: bool;
     var tires: [4]int;
@@ -19,7 +19,7 @@ class Car {
             color = 1.0;
         }
         tires[0] = 3;
-        write(self.fast);
+        write(self.motorNum);
         write(fast);
     }
 
@@ -29,7 +29,7 @@ class Car {
         stop();
     }
 
-    function stop() void {
+    private function stop() void {
         write(12);
     }
 };
@@ -42,5 +42,6 @@ main() {
     var c: Car;
     var arr: [3]bool;
     c = new Car();
+    write(c.fast);
     c.start();
 }

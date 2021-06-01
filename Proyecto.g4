@@ -35,6 +35,8 @@ CLASS: 'class';
 ATTRIBUTES: 'attributes';
 METHODS: 'methods';
 INIT: 'init';
+PRIVATE: 'private';
+PUBLIC: 'public';
 // I/O
 WRITE: 'write';
 READ: 'read';
@@ -60,8 +62,9 @@ program: PROGRAM ID SEMI variableDeclaration* program2;
 program2: classDef* functions* main EOF;
 
 classDef: CLASS ID ('<' ID '>')? classBlock SEMI;
-classBlock: '{' classAttributes classInit METHODS functions* '}';
+classBlock: '{' classAttributes classInit METHODS classMethod* '}';
 classAttributes: ATTRIBUTES attributesDeclaration*;
+classMethod: (PRIVATE | PUBLIC?) functions;
 classInit: INIT LPAREN RPAREN '{' variableDeclaration* statutesNoReturn* '}';
 
 variableDeclaration: varsDec | varsDecArray | varsDecMat;
@@ -69,8 +72,8 @@ varsDec: VAR ID ':' varsTypeInit SEMI;
 varsDecArray: VAR ID ':' '['INT']'typeRule SEMI;
 varsDecMat: VAR ID ':' '['INT']['INT']'typeRule SEMI;
 
-attributesDeclaration: attributesDec | varsDecArray | varsDecMat;
-attributesDec: VAR ID ':' (typeRule | ID) SEMI;
+attributesDeclaration: (PRIVATE | PUBLIC?) (attributesDec | varsDecArray | varsDecMat);
+attributesDec: VAR ID ':' typeRule SEMI;
 
 varsTypeInit: (typeRule | ID) varsTypeInit2?;
 varsTypeInit2: (ASSIGN exp);

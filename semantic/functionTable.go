@@ -19,6 +19,7 @@ type VariableAttributes struct {
 	Class      string
 	FromSelf   bool
 	SelfDir    int
+	IsPrivate  bool
 }
 
 func NewVariableAttributes(id string, typeOf constants.Type, dir int) *VariableAttributes {
@@ -30,6 +31,7 @@ func NewVariableAttributes(id string, typeOf constants.Type, dir int) *VariableA
 		Dim:        [2]int{},
 		Class:      "",
 		FromSelf:   false,
+		IsPrivate:  false,
 	}
 }
 
@@ -45,6 +47,7 @@ type FunctionTableContent struct {
 	ObjSize     []memory.MemObjInfo
 	Objects     []string
 	ObjectCount int
+	IsPrivate   bool
 }
 
 func init() {

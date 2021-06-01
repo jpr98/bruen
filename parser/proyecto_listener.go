@@ -23,6 +23,9 @@ type ProyectoListener interface {
 	// EnterClassAttributes is called when entering the classAttributes production.
 	EnterClassAttributes(c *ClassAttributesContext)
 
+	// EnterClassMethod is called when entering the classMethod production.
+	EnterClassMethod(c *ClassMethodContext)
+
 	// EnterClassInit is called when entering the classInit production.
 	EnterClassInit(c *ClassInitContext)
 
@@ -226,6 +229,9 @@ type ProyectoListener interface {
 
 	// ExitClassAttributes is called when exiting the classAttributes production.
 	ExitClassAttributes(c *ClassAttributesContext)
+
+	// ExitClassMethod is called when exiting the classMethod production.
+	ExitClassMethod(c *ClassMethodContext)
 
 	// ExitClassInit is called when exiting the classInit production.
 	ExitClassInit(c *ClassInitContext)

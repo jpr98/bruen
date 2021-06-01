@@ -94,10 +94,11 @@ func (m *Manager) PushConstantOperand(operand string) {
 func (m *Manager) getOperandData(operand string) *semantic.VariableAttributes {
 	data := &semantic.VariableAttributes{TypeOf: constants.ERR}
 
+	// Explicit access to attribute
 	if strings.Contains(operand, ".") {
 		strElements := strings.Split(operand, ".")
 		if len(strElements) != 2 {
-			log.Fatalf("Error: (getOperandData) unexpected instance access syntax")
+			log.Fatalf("Error: (getOperandData) unexpected instance access syntax\n")
 		}
 
 		instance, attribute := strElements[0], strElements[1]
@@ -122,6 +123,11 @@ func (m *Manager) getOperandData(operand string) *semantic.VariableAttributes {
 			data = attr
 			data.FromSelf = true
 			data.SelfDir = instanceData.Dir
+
+			if data.IsPrivate && m.scopeStack.Top() != instanceData.Class {
+				log.Fatalf("Error: attribute %s is private\n", attribute)
+				return nil
+			}
 		}
 		return data
 	}
@@ -129,7 +135,7 @@ func (m *Manager) getOperandData(operand string) *semantic.VariableAttributes {
 	if attr, exists := m.getCurrentFunctionTable()[m.currentFunction].Vars[operand]; exists {
 		data = attr
 	} else if m.scopeStack.Top() != m.globalName {
-		// Seguro es atributo implicito
+		// Implicit access to attribute
 		if attr, exists := m.classTable[m.scopeStack.Top()].Attributes[operand]; exists {
 			data = attr
 			data.FromSelf = true

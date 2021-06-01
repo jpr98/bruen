@@ -51,6 +51,12 @@ func (s *BaseProyectoListener) EnterClassAttributes(ctx *ClassAttributesContext)
 // ExitClassAttributes is called when production classAttributes is exited.
 func (s *BaseProyectoListener) ExitClassAttributes(ctx *ClassAttributesContext) {}
 
+// EnterClassMethod is called when production classMethod is entered.
+func (s *BaseProyectoListener) EnterClassMethod(ctx *ClassMethodContext) {}
+
+// ExitClassMethod is called when production classMethod is exited.
+func (s *BaseProyectoListener) ExitClassMethod(ctx *ClassMethodContext) {}
+
 // EnterClassInit is called when production classInit is entered.
 func (s *BaseProyectoListener) EnterClassInit(ctx *ClassInitContext) {}
 

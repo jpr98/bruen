@@ -356,14 +356,6 @@ func (l *QuadGenListener) ExitClassDef(c *parser.ClassDefContext) {
 	l.m.currentFunction = l.m.scopeStack.Top()
 }
 
-func (l *QuadGenListener) EnterAttributesDec(c *parser.AttributesDecContext) {
-	if c.ID(1) != nil {
-		if _, exists := l.m.classTable[c.ID(1).GetText()]; !exists {
-			log.Fatalf("Error: Undefined type %s", c.ID(1).GetText())
-		}
-	}
-}
-
 func (l *QuadGenListener) EnterClassInit(c *parser.ClassInitContext) {
 	l.m.currentFunction = c.INIT().GetText()
 	l.m.classTable[l.m.scopeStack.Top()].Methods[c.INIT().GetText()].Dir = len(l.m.GetQuads())
@@ -400,9 +392,14 @@ func (l *QuadGenListener) EnterMethodCall(c *parser.MethodCallContext) {
 		log.Fatalf("Error: Undeclared variable %s", c.ID(0).GetText())
 	}
 
-	if _, exists := l.m.classTable[className].Methods[c.ID(1).GetText()]; !exists {
+	methodData, exists := l.m.classTable[className].Methods[c.ID(1).GetText()]
+	if !exists {
 		log.Fatalf("Error: Class %s doesn't have a method %s", className, c.ID(1).GetText())
 	}
+	if methodData.IsPrivate && l.m.scopeStack.Top() != className {
+		log.Fatalf("Error: method %s is private", c.ID(1).GetText())
+	}
+
 	l.m.AddEraQuad(c.ID(1).GetText(), className)
 	l.isArgumentParam = true
 }
