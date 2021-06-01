@@ -1,9 +1,0 @@
-program test3;
-
-main() {
-    for i = 0 in 2 {
-        for j = 0 in 5 {
-            write(2);
-        }
-    }
-}

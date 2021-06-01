@@ -1,0 +1,26 @@
+program test3;
+
+main() {
+    var n: int = 5;
+    var temp: int;
+    var arr: [5]int;
+    arr[0] = 8;
+    arr[1] = 20;
+    arr[2] = 3;
+    arr[3] = 6;
+    arr[4] = 15;
+
+    for i = 0 in n - 1 {
+        for j = 0 in n - i - 1 {
+            if (arr[j] > arr[j + 1]) {
+                temp = arr[j+1];
+                arr[j+1] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+
+    for i2 = 0 in n {
+        write(arr[i2]);
+    }
+}
