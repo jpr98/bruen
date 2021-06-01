@@ -19,8 +19,6 @@ class Car {
             color = 1.0;
         }
         tires[0] = 3;
-        write(self.motorNum);
-        write(fast);
     }
 
     methods
@@ -42,6 +40,5 @@ main() {
     var c: Car;
     var arr: [3]bool;
     c = new Car();
-    write(c.fast);
     c.start();
 }

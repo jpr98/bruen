@@ -53,47 +53,19 @@ func compile() {
 
 	listener := semantic.NewListener()
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
-	ct := listener.GetClassTable()
-	for class, classContent := range ct {
-		fmt.Println(class)
-		for attr, attrContent := range classContent.Attributes {
-			fmt.Printf("\t%s: %s\n", attr, attrContent.TypeOf)
-		}
-		for funct, functContent := range classContent.Methods {
-			fmt.Printf("Func %s: %s\n", funct, functContent.TypeOf)
-			for v, vattr := range functContent.Vars {
-				fmt.Printf("\t%s : %s\n", v, vattr.TypeOf)
-			}
-		}
-	}
 
 	fmt.Println("\n---------")
 	stream.Seek(0)
 	p = parser.NewProyectoParser(stream)
 
 	//debugFT(listener.GetFunctionTable())
-	var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable(), ct)
+	var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable(), listener.GetClassTable())
 	antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
 	quads := quadListener.GetManager().GetQuads()
 	for i, q := range quads {
 		fmt.Printf("%d. %s\n", i, q)
 	}
 	fmt.Println("\n---------")
-	debugFT(listener.GetFunctionTable())
-
-	for class, classContent := range ct {
-		fmt.Println(class)
-		for attr, attrContent := range classContent.Attributes {
-			fmt.Printf("\t%s: %s\n", attr, attrContent.TypeOf)
-		}
-		for funct, functContent := range classContent.Methods {
-			fmt.Printf("Func %s: %s\n", funct, functContent.TypeOf)
-			for v, vattr := range functContent.Vars {
-				fmt.Printf("\t%s : %s\n", v, vattr.TypeOf)
-			}
-			debugObjSize(functContent.ObjSize)
-		}
-	}
 
 	f, err := os.Create("out.obj")
 	if err != nil {
@@ -165,6 +137,22 @@ func debugFT(ft semantic.FunctionTable) {
 		}
 		fmt.Printf("Dir: %d\n", function.Dir)
 		debugObjSize(function.ObjSize)
+	}
+}
+
+func debugCT(ct semantic.ClassTable) {
+	for class, classContent := range ct {
+		fmt.Println(class)
+		for attr, attrContent := range classContent.Attributes {
+			fmt.Printf("\t%s: %s\n", attr, attrContent.TypeOf)
+		}
+		for funct, functContent := range classContent.Methods {
+			fmt.Printf("Func %s: %s\n", funct, functContent.TypeOf)
+			for v, vattr := range functContent.Vars {
+				fmt.Printf("\t%s : %s\n", v, vattr.TypeOf)
+			}
+			debugObjSize(functContent.ObjSize)
+		}
 	}
 }
 

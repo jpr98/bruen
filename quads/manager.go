@@ -553,7 +553,6 @@ func arrayContainsElement(element QuadAction, array []int) bool {
 }
 
 func (m *Manager) setObjectSize() {
-	fmt.Println("setObjSize - ", m.currentFunction, "-", m.getCurrentFunctionTable()[m.currentFunction].Objects)
 	if len(m.getCurrentFunctionTable()[m.currentFunction].Objects) == m.getCurrentFunctionTable()[m.currentFunction].ObjectCount {
 		for _, objName := range m.getCurrentFunctionTable()[m.currentFunction].Objects {
 			obj := memory.MemObjInfo{VarSize: m.classTable[objName].VarsSize, ObjSize: m.classTable[objName].ObjSize}
