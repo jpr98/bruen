@@ -22,6 +22,8 @@ type VirtualMachine struct {
 	pointer          int // the index of current Quad
 	pointerStack     PointerStack
 
+	currentSelf Memory
+
 	quads         []quads.Quad
 	programName   string
 	functionTable semantic.FunctionTable
@@ -33,6 +35,7 @@ func NewVM(programName string, functionTable semantic.FunctionTable, classTable 
 	return VirtualMachine{
 		globalMemBlock:   gmb,
 		constantMemBlock: MakeConstantMemory(),
+		currentSelf:      nil,
 		quads:            quads,
 		programName:      programName,
 		functionTable:    functionTable,
@@ -130,6 +133,9 @@ func (vm *VirtualMachine) Run() {
 			vm.pointer++
 
 		case quads.GOSUB:
+			// if quad.Left.ClassName() != "" {
+			// 	vm.currentSelf = vm.getMemBlockForAddr(quad.Left.GetAddr())
+			// }
 			vm.memBlocks.Push(fmb)
 			vm.pointerStack.Push(vm.pointer + 1)
 			if quad.Left.ClassName() != "" {

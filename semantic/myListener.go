@@ -190,6 +190,11 @@ func (l *MyListener) EnterFunctions(c *parser.FunctionsContext) {
 }
 
 func (l *MyListener) ExitFunctions(c *parser.FunctionsContext) {
+	if l.scopeStack.Top() != l.ProgramName {
+		selfVariable := NewVariableAttributes("self", constants.TYPECLASS, -1)
+		selfVariable.Class = l.scopeStack.Top()
+		l.classTable[l.scopeStack.Top()].Methods[l.currentFunction].Vars["self"] = selfVariable
+	}
 	varSize, objSize := memory.Manager.ResetLocalCounter()
 	l.getCurrentFunctionTable()[l.currentFunction].VarsSize = varSize
 	l.getCurrentFunctionTable()[l.currentFunction].ObjectCount = objSize

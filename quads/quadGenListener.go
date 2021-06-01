@@ -315,6 +315,11 @@ func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {
 		}
 	}
 	if !exists {
+		if isMethodCall, className := l.m.CheckImplicitMethodCall(c.ID().GetText()); isMethodCall {
+			l.m.AddEraQuad(c.ID().GetText(), className)
+			l.isArgumentParam = true
+			return
+		}
 		log.Fatalf("Error: (EnterFunctionCall) undeclared function %s", c.ID().GetText())
 	}
 	l.m.AddEraQuad(c.ID().GetText(), "")
@@ -322,6 +327,11 @@ func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {
 }
 
 func (l *QuadGenListener) ExitFunctionCall(c *parser.FunctionCallContext) {
+	if isMethodCall, className := l.m.CheckImplicitMethodCall(c.ID().GetText()); isMethodCall {
+		l.m.AddClassGoSubQuad(className)
+		l.isArgumentParam = false
+		return
+	}
 	l.m.AddGoSubQuad()
 	l.isArgumentParam = false
 }
@@ -374,4 +384,43 @@ func (l *QuadGenListener) EnterInitCall(c *parser.InitCallContext) {
 
 func (l *QuadGenListener) ExitInitCall(c *parser.InitCallContext) {
 	l.m.AddClassGoSubQuad(c.ID().GetText())
+}
+
+func (l *QuadGenListener) EnterMethodCall(c *parser.MethodCallContext) {
+	className := ""
+	if attr, exists := l.m.getCurrentFunctionTable()[l.m.currentFunction].Vars[c.ID(0).GetText()]; exists {
+		className = attr.Class
+	} else {
+		if attr, exists := l.m.functionTable[l.m.globalName].Vars[c.ID(0).GetText()]; exists {
+			className = attr.Class
+		}
+	}
+
+	if className == "" {
+		log.Fatalf("Error: Undeclared variable %s", c.ID(0).GetText())
+	}
+
+	if _, exists := l.m.classTable[className].Methods[c.ID(1).GetText()]; !exists {
+		log.Fatalf("Error: Class %s doesn't have a method %s", className, c.ID(1).GetText())
+	}
+	l.m.AddEraQuad(c.ID(1).GetText(), className)
+	l.isArgumentParam = true
+}
+
+func (l *QuadGenListener) ExitMethodCall(c *parser.MethodCallContext) {
+	className := ""
+	if attr, exists := l.m.getCurrentFunctionTable()[l.m.currentFunction].Vars[c.ID(0).GetText()]; exists {
+		className = attr.Class
+	} else {
+		if attr, exists := l.m.functionTable[l.m.globalName].Vars[c.ID(0).GetText()]; exists {
+			className = attr.Class
+		}
+	}
+
+	if className == "" {
+		log.Fatalf("Error: Undeclared variable %s", c.ID(0).GetText())
+	}
+
+	l.m.AddClassGoSubQuad(className)
+	l.isArgumentParam = false
 }

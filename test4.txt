@@ -24,12 +24,13 @@ class Car {
     }
 
     methods
-    function start(a: int) void {
-        write(a);
+    function start() void {
+        write(11);
+        stop();
     }
 
     function stop() void {
-
+        write(12);
     }
 };
 
@@ -41,7 +42,5 @@ main() {
     var c: Car;
     var arr: [3]bool;
     c = new Car();
-    read(c.motorNum);
-    write(c.motorNum);
-    write(c.tires[0] * 3);
+    c.start();
 }

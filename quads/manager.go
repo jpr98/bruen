@@ -408,10 +408,7 @@ func (m *Manager) AddInitReturnQuad() {
 }
 
 func (m *Manager) AddEraQuad(name, className string) {
-	n := NewElement(0, name, constants.ADDR, "")
-	if name == "init" {
-		n = NewElement(0, name, constants.ADDR, className)
-	}
+	n := NewElement(0, name, constants.ADDR, className)
 	q := Quad{ERA, n, nil, nil}
 	m.quads = append(m.quads, q)
 
@@ -521,6 +518,18 @@ func (m *Manager) AddClassGoSubQuad(className string) {
 		q := Quad{ASSIGN, funcReturnElement, nil, result}
 		m.quads = append(m.quads, q)
 	}
+}
+
+// CheckImplicitMethodCall decides if a function call should be thought of as a method
+// this decision is made by checking if the current scope is a class and by checking if the
+// current class contains a method with the given name. If the function is indeed a method call
+// this function returns the class it belongs to.
+func (m *Manager) CheckImplicitMethodCall(name string) (bool, string) {
+	if m.scopeStack.Top() == m.globalName {
+		return false, ""
+	}
+	_, exists := m.classTable[m.scopeStack.Top()].Methods[name]
+	return exists, m.scopeStack.Top()
 }
 
 func (m *Manager) getNextAvail() string {
