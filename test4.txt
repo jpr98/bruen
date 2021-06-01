@@ -24,18 +24,19 @@ class Car {
     methods
     function start(a: int) void {
         write(color);
+        stop();
     }
 
     private function stop() void {
-        write(12);
+        write(getMotorNum());
     }
 
     function setMotorNum(motorNum: int) void {
         self.motorNum = motorNum;
     }
 
-    function getMotorNum() void {
-        write(motorNum);
+    function getMotorNum() int {
+        return motorNum;
     }
 };
 
@@ -53,6 +54,6 @@ main() {
     car = new Car();
     car.setMotorNum(1819);
     c.setMotorNum(2021);
-    car.getMotorNum();
-    c.getMotorNum();
+    write(car.getMotorNum());
+    write(c.getMotorNum());
 }

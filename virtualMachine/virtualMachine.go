@@ -133,15 +133,7 @@ func (vm *VirtualMachine) Run() {
 			vm.pointer++
 
 		case quads.INSTANCE:
-			memblock := vm.getMemBlockForAddr(quad.Left.GetAddr())
-			var ok bool
-			vm.currentSelf, ok = memblock.Get(quad.Left.GetAddr()).(Memory)
-			if !ok {
-				log.Fatalf(
-					"Error: (Run) quads.INSTANCE couldn't cast %v to Memory",
-					memblock.Get(quad.Left.GetAddr()),
-				)
-			}
+			vm.handleInstance(quad)
 			vm.pointer++
 
 		case quads.GOSUB:
@@ -211,6 +203,32 @@ func (vm *VirtualMachine) getMemBlockForAddr(addr int) Memory {
 		log.Fatalf("Error: (getMemBlockForAddr) invalid address %d", addr)
 	}
 	return memBlock
+}
+
+func (vm *VirtualMachine) handleInstance(quad quads.Quad) {
+	if strings.Contains(quad.Left.ID(), "self_") {
+		strElements := strings.Split(quad.Left.ID(), "_")
+		if len(strElements) < 2 {
+			log.Fatalf("Error: (handleInstance) unexpected element id structure")
+		}
+		objInstanceAddr, err := strconv.Atoi(strElements[1])
+		if err != nil {
+			log.Fatalf("Error: (handleInstance) couldn't cast objInstanceAddr to int")
+		}
+		if objInstanceAddr == -1 {
+			return
+		}
+	}
+
+	memblock := vm.getMemBlockForAddr(quad.Left.GetAddr())
+	var ok bool
+	vm.currentSelf, ok = memblock.Get(quad.Left.GetAddr()).(Memory)
+	if !ok {
+		log.Fatalf(
+			"Error: (Run) quads.INSTANCE couldn't cast %v to Memory",
+			memblock.Get(quad.Left.GetAddr()),
+		)
+	}
 }
 
 func (vm *VirtualMachine) handleArithmeticOp(quad quads.Quad) {
@@ -339,22 +357,6 @@ func (vm *VirtualMachine) handleLogicOp(quad quads.Quad) {
 	}
 }
 
-/*
-	memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
-	addr, ok := memblock.Get(quad.Result.GetAddr()).(float64)
-	if !ok {
-		log.Fatalf("Error: (RUN) quads.ASSIGN couldn't cast %v to float64",
-			memblock.Get(quad.Result.GetAddr()),
-		)
-	}
-
-	auxElement := quads.NewElement(int(addr), quad.Result.ID(), quad.Result.Type(), "")
-	memblock = vm.getMemBlockForElement(auxElement)
-	err := memblock.Set(value, int(addr))
-	if err != nil {
-		log.Fatalf("Error: (Run) quads.ASSIGN %s", err)
-	}
-*/
 func (vm *VirtualMachine) handleRead(quad quads.Quad) {
 	reader := bufio.NewReader(os.Stdin)
 	bytes, _ := reader.ReadBytes('\n')

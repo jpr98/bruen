@@ -520,7 +520,8 @@ func (m *Manager) AddClassGoSubQuad(className, instance string) {
 	if m.currentFunctionCall != "init" {
 		selfDir := m.getCurrentFunctionTable()[m.currentFunction].Vars[instance].Dir
 		m.classTable[className].Methods[m.currentFunctionCall].Vars["self"].Dir = selfDir
-		instanceElement := NewElement(selfDir, instance, constants.ADDR, className)
+		instanceName := fmt.Sprintf("self_%d_%s", selfDir, instance)
+		instanceElement := NewElement(selfDir, instanceName, constants.ADDR, className)
 		q := Quad{INSTANCE, instanceElement, nil, nil}
 		m.quads = append(m.quads, q)
 	}
