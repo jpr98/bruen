@@ -12,6 +12,7 @@ type Element interface {
 	Type() constants.Type
 	String() string
 	ID() string
+	ClassName() string
 }
 
 type quadElement struct {
@@ -19,11 +20,12 @@ type quadElement struct {
 	Id        string
 	TypeOf    constants.Type
 	IsPointer bool
+	Class     string
 }
 
 // NewElement creates a new quad.Element
-func NewElement(addr int, id string, typeOf constants.Type) Element {
-	return quadElement{Addr: addr, Id: id, TypeOf: typeOf, IsPointer: false}
+func NewElement(addr int, id string, typeOf constants.Type, class string) Element {
+	return quadElement{Addr: addr, Id: id, TypeOf: typeOf, IsPointer: false, Class: class}
 }
 
 func (e quadElement) GetAddr() int {
@@ -40,6 +42,10 @@ func (e quadElement) String() string {
 
 func (e quadElement) ID() string {
 	return e.Id
+}
+
+func (e quadElement) ClassName() string {
+	return e.Class
 }
 
 // ElementStack is a stack of quad.Element

@@ -31,6 +31,8 @@ func (t Type) String() string {
 		return "Type error"
 	case ADDR:
 		return "Address"
+	case TYPECLASS:
+		return "Class"
 	default:
 		return "Unkown type"
 	}

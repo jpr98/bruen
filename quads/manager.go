@@ -4,10 +4,12 @@ import (
 	"encoding/gob"
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/jpr98/compis/constants"
 	"github.com/jpr98/compis/memory"
 	"github.com/jpr98/compis/semantic"
+	"github.com/jpr98/compis/utils"
 )
 
 type Quad struct {
@@ -33,28 +35,36 @@ func (q Quad) String() string {
 }
 
 type Manager struct {
-	operands  ElementStack    // stack operands
-	operators QuadActionStack // stack operators
-	quads     []Quad
-	jumpStack []int
+	operands   ElementStack    // stack operands
+	operators  QuadActionStack // stack operators
+	quads      []Quad
+	jumpStack  []int
+	scopeStack utils.StringStack
 
 	functionTable semantic.FunctionTable
+	classTable    semantic.ClassTable
 
-	currentFunctionCall string
-	paramCounter        int
-	avail               int
+	globalName      string
+	currentFunction string
+
+	currentFunctionCall      string
+	currentFunctionCallClass string
+	paramCounter             int
+	avail                    int
 }
 
 func (m Manager) GetQuads() []Quad {
 	return m.quads
 }
 
-func NewManager(functionTable semantic.FunctionTable) Manager {
+func NewManager(functionTable semantic.FunctionTable, classTable semantic.ClassTable, ss utils.StringStack) Manager {
 	return Manager{
 		operands:      NewElementStack(),
 		operators:     NewQuadActionStack(),
 		quads:         make([]Quad, 0),
+		scopeStack:    ss,
 		functionTable: functionTable,
+		classTable:    classTable,
 		avail:         0,
 	}
 }
@@ -75,16 +85,65 @@ func (m *Manager) PushConstantOperand(operand string) {
 	if !exists {
 		log.Fatalf("Error: (PushConstantOperand) %s is not a known constant", operand)
 	}
-	element := NewElement(op.Dir, operand, op.TypeOf)
+	element := NewElement(op.Dir, operand, op.TypeOf, "")
 	m.operands.Push(element)
 }
 
-func (m *Manager) getOperandData(operand, currentFunction, globalName string) *semantic.VariableAttributes {
+// Acceso a atributos
+// a.b = explicito = a es el objecto
+// b = implicito = self es el objecto
+func (m *Manager) getOperandData(operand string) *semantic.VariableAttributes {
 	data := &semantic.VariableAttributes{TypeOf: constants.ERR}
-	if attr, exists := m.functionTable[currentFunction].Vars[operand]; exists {
+
+	// Explicit access to attribute
+	if strings.Contains(operand, ".") {
+		strElements := strings.Split(operand, ".")
+		if len(strElements) != 2 {
+			log.Fatalf("Error: (getOperandData) unexpected instance access syntax\n")
+		}
+
+		instance, attribute := strElements[0], strElements[1]
+		instanceData := &semantic.VariableAttributes{TypeOf: constants.ERR}
+		if attr, exists := m.getCurrentFunctionTable()[m.currentFunction].Vars[instance]; exists {
+			instanceData = attr
+		} else {
+			if attr, exists := m.functionTable[m.globalName].Vars[instance]; exists {
+				instanceData = attr
+			}
+		}
+
+		if instanceData.TypeOf == constants.ERR {
+			log.Fatalf(
+				"Error: (PushOperand) undeclared variable %s\n",
+				instance,
+			)
+			return nil
+		}
+
+		if attr, exists := m.classTable[instanceData.Class].Attributes[attribute]; exists {
+			data = attr
+			data.FromSelf = true
+			data.SelfDir = instanceData.Dir
+
+			if data.IsPrivate && m.scopeStack.Top() != instanceData.Class {
+				log.Fatalf("Error: attribute %s is private\n", attribute)
+				return nil
+			}
+		}
+		return data
+	}
+
+	if attr, exists := m.getCurrentFunctionTable()[m.currentFunction].Vars[operand]; exists {
 		data = attr
+	} else if m.scopeStack.Top() != m.globalName {
+		// Implicit access to attribute
+		if attr, exists := m.classTable[m.scopeStack.Top()].Attributes[operand]; exists {
+			data = attr
+			data.FromSelf = true
+			data.SelfDir = m.classTable[m.scopeStack.Top()].Methods[m.currentFunction].Vars["self"].Dir
+		}
 	} else {
-		if attr, exists := m.functionTable[globalName].Vars[operand]; exists {
+		if attr, exists := m.functionTable[m.globalName].Vars[operand]; exists {
 			data = attr
 		}
 	}
@@ -99,9 +158,13 @@ func (m *Manager) getOperandData(operand, currentFunction, globalName string) *s
 	return data
 }
 
-func (m *Manager) PushOperand(operand, currentFunction, globalName string) {
-	operandData := m.getOperandData(operand, currentFunction, globalName)
-	element := NewElement(operandData.Dir, operand, operandData.TypeOf)
+func (m *Manager) PushOperand(operand string) {
+	operandData := m.getOperandData(operand)
+	operandName := operandData.Name
+	if operandData.FromSelf {
+		operandName = fmt.Sprintf("self_%d_%s", operandData.SelfDir, operandData.Name)
+	}
+	element := NewElement(operandData.Dir, operandName, operandData.TypeOf, operandData.Class)
 	m.operands.Push(element)
 }
 
@@ -131,13 +194,22 @@ func (m *Manager) GenerateQuad(validOps []int, isForLoop bool) {
 				rOperand,
 			)
 		}
-
+		if resultType == constants.TYPECLASS {
+			if lOperand.ClassName() != rOperand.ClassName() {
+				log.Fatalf(
+					"Error: (GenerateQuad) type mismatch, operator (%s) can't be done between %s and %s\n",
+					op,
+					lOperand,
+					rOperand,
+				)
+			}
+		}
 		// 7: pedir espacio para resultado - done
 		dir, err := memory.Manager.GetNextAddr(resultType, memory.Temp)
 		if err != nil {
 			log.Fatalf("Error: (GenerateQuad) %s\n", err)
 		}
-		result := NewElement(dir, m.getNextAvail(), resultType)
+		result := NewElement(dir, m.getNextAvail(), resultType, lOperand.ClassName())
 
 		// 8: generar quad - done
 		q := Quad{op, lOperand, rOperand, result}
@@ -163,6 +235,16 @@ func (m *Manager) GenerateAssignationQuad(retainresult bool) {
 			operand,
 		)
 	}
+	if resultType == constants.TYPECLASS {
+		if operand.ClassName() != result.ClassName() {
+			log.Fatalf(
+				"Error: (GenerateQuad) type mismatch, operator (%s) can't be done between %s and %s\n",
+				op,
+				operand,
+				result,
+			)
+		}
+	}
 
 	if retainresult {
 		m.operands.Push(result)
@@ -171,21 +253,21 @@ func (m *Manager) GenerateAssignationQuad(retainresult bool) {
 	m.quads = append(m.quads, q)
 }
 
-func (m *Manager) AddVerifyQuad(id, currentFunction, globalName string, isArray bool) {
+func (m *Manager) AddVerifyQuad(id string, isArray bool) {
 	index := m.operands.Top()
 	if index.Type() != constants.TYPEINT {
 		log.Fatalf("Error: (AddVerifyQuad) index to %s should be an int, got %s", id, index.Type())
 	}
 
 	if isArray {
-		array := m.getOperandData(id, currentFunction, globalName)
-		maxIndexVal := NewElement(array.Dim[0], array.Name, constants.TYPEINT)
+		array := m.getOperandData(id)
+		maxIndexVal := NewElement(array.Dim[0], array.Name, constants.TYPEINT, "")
 		q := Quad{VER, index, nil, maxIndexVal}
 		m.quads = append(m.quads, q)
 	}
 }
 
-func (m *Manager) AddArrayAccessQuad(id string) {
+func (m *Manager) AddArrayAccessQuad() {
 	index := m.operands.Pop()
 	array := m.operands.Pop()
 
@@ -193,7 +275,15 @@ func (m *Manager) AddArrayAccessQuad(id string) {
 	if err != nil {
 		log.Fatalf("Error: (GenerateQuad) %s\n", err)
 	}
-	result := NewElement(dir, "ptr_"+m.getNextAvail(), constants.TYPEINT)
+	var result Element
+	if strings.Contains(array.ID(), "self_") {
+		strElements := strings.Split(array.ID(), "_")
+		ptrID := fmt.Sprintf("self_%s_ptr_%s", strElements[1], m.getNextAvail())
+		result = NewElement(dir, ptrID, array.Type(), "")
+	} else {
+		result = NewElement(dir, "ptr_"+m.getNextAvail(), array.Type(), "")
+	}
+
 	q := Quad{CALCDIR, array, index, result}
 	m.quads = append(m.quads, q)
 
@@ -224,14 +314,14 @@ func (m *Manager) AddAndUpdateGoto() {
 	m.quads = append(m.quads, q)
 
 	// Update quad
-	m.quads[pos].Result = NewElement(len(m.quads), "", constants.ADDR)
+	m.quads[pos].Result = NewElement(len(m.quads), "", constants.ADDR, "")
 }
 
 func (m *Manager) UpdateGoto() {
 	pos := m.jumpStack[len(m.jumpStack)-1]
 	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
 
-	m.quads[pos].Result = NewElement(len(m.quads), "", constants.ADDR)
+	m.quads[pos].Result = NewElement(len(m.quads), "", constants.ADDR, "")
 }
 
 func (m *Manager) SaveJumpPosition() {
@@ -245,10 +335,10 @@ func (m *Manager) AddAndUpdateWhileGotos() {
 	posR := m.jumpStack[len(m.jumpStack)-1]
 	m.jumpStack = m.jumpStack[:len(m.jumpStack)-1]
 
-	q := Quad{GOTO, nil, nil, NewElement(posR, "", constants.ADDR)}
+	q := Quad{GOTO, nil, nil, NewElement(posR, "", constants.ADDR, "")}
 	m.quads = append(m.quads, q)
 
-	m.quads[posF].Result = NewElement(len(m.quads), "", constants.ADDR)
+	m.quads[posF].Result = NewElement(len(m.quads), "", constants.ADDR, "")
 }
 
 func (m *Manager) AddSimpleGOTO() {
@@ -262,7 +352,7 @@ func (m *Manager) AddForLoopIterator(id string) {
 		log.Fatalf("Error: (AddForLoopIterator) %s\n", err)
 	}
 
-	e := NewElement(dir, id, constants.TYPEINT)
+	e := NewElement(dir, id, constants.TYPEINT, "")
 	m.operands.Push(e)
 }
 
@@ -288,31 +378,49 @@ func (m *Manager) AddEndFuncQuad() {
 	m.quads = append(m.quads, q)
 }
 
-func (m *Manager) AddReturnQuad(currentFunction string) {
-	if m.functionTable[currentFunction].TypeOf == constants.VOID {
+func (m *Manager) getCurrentFunctionTable() semantic.FunctionTable {
+	if m.scopeStack.Top() == m.globalName {
+		return m.functionTable
+	}
+	return m.classTable[m.scopeStack.Top()].Methods
+}
+
+func (m *Manager) AddReturnQuad() {
+	if m.getCurrentFunctionTable()[m.currentFunction].TypeOf == constants.VOID {
 		q := Quad{RETURN, nil, nil, nil}
 		m.quads = append(m.quads, q)
 		return
 	}
 
 	returnValue := m.operands.Pop()
-	functionType := m.functionTable[currentFunction].TypeOf
+	functionType := m.getCurrentFunctionTable()[m.currentFunction].TypeOf
 	if returnValue.Type() != functionType {
-		log.Fatalf("Error: (AddReturnQuad) %s expects to return type %s", currentFunction, functionType)
+		log.Fatalf("Error: (AddReturnQuad) %s expects to return type %s", m.currentFunction, functionType)
 	}
 
-	returnDir := m.functionTable[currentFunction].ReturnDir
-	funcReturnElement := NewElement(returnDir, "", constants.ADDR)
+	returnDir := m.getCurrentFunctionTable()[m.currentFunction].ReturnDir
+	funcReturnElement := NewElement(returnDir, "", constants.ADDR, "")
 	q := Quad{RETURN, funcReturnElement, nil, returnValue}
 	m.quads = append(m.quads, q)
 }
 
-func (m *Manager) AddEraQuad(name string) {
-	n := NewElement(0, name, constants.TYPEINT)
+func (m *Manager) AddInitReturnQuad() {
+	selfAtrr := m.getCurrentFunctionTable()[m.currentFunction].Vars["self"]
+	returnValue := NewElement(selfAtrr.Dir, selfAtrr.Name, selfAtrr.TypeOf, selfAtrr.Class)
+
+	returnDir := m.getCurrentFunctionTable()[m.currentFunction].ReturnDir
+	initReturnElement := NewElement(returnDir, "", constants.ADDR, "")
+	q := Quad{RETURN, initReturnElement, nil, returnValue}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddEraQuad(name, className string) {
+	n := NewElement(0, name, constants.ADDR, className)
 	q := Quad{ERA, n, nil, nil}
 	m.quads = append(m.quads, q)
 
 	m.currentFunctionCall = name
+	m.currentFunctionCallClass = className
 	m.paramCounter = 0
 }
 
@@ -335,12 +443,36 @@ func (m *Manager) AddParamQuad() {
 		)
 	}
 
-	argNum := NewElement(m.functionTable[m.currentFunctionCall].Params[m.paramCounter], fmt.Sprintf("%d", m.paramCounter), expectedType)
+	argNum := NewElement(m.functionTable[m.currentFunctionCall].Params[m.paramCounter], fmt.Sprintf("%d", m.paramCounter), expectedType, "")
 	q := Quad{PARAM, arg, argNum, nil}
 	m.quads = append(m.quads, q)
 }
 
-func (m *Manager) AddGoSubQuad(name string) {
+func (m *Manager) AddClassParamQuad() {
+	if m.paramCounter >= len(m.classTable[m.currentFunctionCallClass].Methods[m.currentFunctionCall].Params) {
+		log.Fatalf(
+			"Error: (AddGoSubQuad) function %s has too many arguments",
+			m.currentFunctionCall,
+		)
+	}
+
+	expectedType := memory.TypeForAddr(m.classTable[m.currentFunctionCallClass].Methods[m.currentFunctionCall].Params[m.paramCounter])
+	arg := m.operands.Pop()
+	t := semantic.Cube.ValidateBinaryOperation(expectedType, arg.Type(), int(constants.OPASSIGN))
+	if t == constants.ERR {
+		log.Fatalf(
+			"Error: (AddParamQuad) type mismatch, parameter %s must be of type %s",
+			arg,
+			expectedType,
+		)
+	}
+
+	argNum := NewElement(m.classTable[m.currentFunctionCallClass].Methods[m.currentFunctionCall].Params[m.paramCounter], fmt.Sprintf("%d", m.paramCounter), expectedType, "")
+	q := Quad{PARAM, arg, argNum, nil}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddGoSubQuad() {
 	if m.paramCounter < len(m.functionTable[m.currentFunctionCall].Params) {
 		log.Fatalf(
 			"Error: (AddGoSubQuad) function %s has too few arguments",
@@ -349,8 +481,8 @@ func (m *Manager) AddGoSubQuad(name string) {
 	}
 
 	dir := m.functionTable[m.currentFunctionCall].Dir
-	n := NewElement(0, name, constants.TYPEINT)
-	dirElement := NewElement(dir, "", constants.ADDR)
+	n := NewElement(0, m.currentFunctionCall, constants.TYPEINT, "")
+	dirElement := NewElement(dir, "", constants.ADDR, "")
 	q := Quad{GOSUB, n, nil, dirElement}
 	m.quads = append(m.quads, q)
 
@@ -367,14 +499,79 @@ func (m *Manager) AddGoSubQuad(name string) {
 		if err != nil {
 			log.Fatalf("Error: (AddGoSubQuad) %s\n", err)
 		}
-		result := NewElement(dir, m.getNextAvail(), resultType)
+		result := NewElement(dir, m.getNextAvail(), resultType, "")
 		m.operands.Push(result)
 
 		returnDir := m.functionTable[m.currentFunctionCall].ReturnDir
-		funcReturnElement := NewElement(returnDir, "", constants.ADDR)
+		funcReturnElement := NewElement(returnDir, "", constants.ADDR, "")
 		q := Quad{ASSIGN, funcReturnElement, nil, result}
 		m.quads = append(m.quads, q)
 	}
+}
+
+func (m *Manager) AddClassGoSubQuad(className, instance string) {
+	if m.paramCounter < len(m.classTable[className].Methods[m.currentFunctionCall].Params) {
+		log.Fatalf(
+			"Error: (AddClassGoSubQuad) function %s has too few arguments",
+			m.currentFunctionCall,
+		)
+	}
+
+	if m.currentFunctionCall != "init" {
+		selfDir := m.getCurrentFunctionTable()[m.currentFunction].Vars[instance].Dir
+		m.classTable[className].Methods[m.currentFunctionCall].Vars["self"].Dir = selfDir
+		instanceName := fmt.Sprintf("self_%d_%s", selfDir, instance)
+		instanceElement := NewElement(selfDir, instanceName, constants.ADDR, className)
+		q := Quad{INSTANCE, instanceElement, nil, nil}
+		m.quads = append(m.quads, q)
+	}
+
+	dir := m.classTable[className].Methods[m.currentFunctionCall].Dir
+	n := NewElement(0, m.currentFunctionCall, constants.TYPEINT, className)
+	dirElement := NewElement(dir, "", constants.ADDR, "")
+	q := Quad{GOSUB, n, nil, dirElement}
+	m.quads = append(m.quads, q)
+
+	if m.classTable[className].Methods[m.currentFunctionCall].TypeOf != constants.VOID {
+		resultType := m.classTable[className].Methods[m.currentFunctionCall].TypeOf
+		if resultType == constants.ERR {
+			log.Fatalf(
+				"Error: (AddClassGoSubQuad) error in return type %s",
+				m.classTable[className].Methods[m.currentFunctionCall].TypeOf,
+			)
+		}
+
+		dir, err := memory.Manager.GetNextAddr(resultType, memory.Temp)
+		if err != nil {
+			log.Fatalf("Error: (AddClassGoSubQuad) %s\n", err)
+		}
+
+		var resultClass string
+		if m.currentFunctionCall == "init" {
+			resultClass = className
+			m.getCurrentFunctionTable()[m.currentFunction].Objects = append(m.getCurrentFunctionTable()[m.currentFunction].Objects, className)
+		}
+		result := NewElement(dir, m.getNextAvail(), resultType, resultClass)
+		m.operands.Push(result)
+
+		returnDir := m.classTable[className].Methods[m.currentFunctionCall].ReturnDir
+		funcReturnElement := NewElement(returnDir, "", constants.ADDR, "")
+		q := Quad{ASSIGN, funcReturnElement, nil, result}
+		m.quads = append(m.quads, q)
+	}
+	m.currentFunctionCallClass = ""
+}
+
+// CheckImplicitMethodCall decides if a function call should be thought of as a method
+// this decision is made by checking if the current scope is a class and by checking if the
+// current class contains a method with the given name. If the function is indeed a method call
+// this function returns the class it belongs to.
+func (m *Manager) CheckImplicitMethodCall(name string) (bool, string) {
+	if m.scopeStack.Top() == m.globalName {
+		return false, ""
+	}
+	_, exists := m.classTable[m.scopeStack.Top()].Methods[name]
+	return exists, m.scopeStack.Top()
 }
 
 func (m *Manager) getNextAvail() string {
@@ -389,6 +586,17 @@ func arrayContainsElement(element QuadAction, array []int) bool {
 		}
 	}
 	return false
+}
+
+func (m *Manager) setObjectSize() {
+	if len(m.getCurrentFunctionTable()[m.currentFunction].Objects) == m.getCurrentFunctionTable()[m.currentFunction].ObjectCount {
+		for _, objName := range m.getCurrentFunctionTable()[m.currentFunction].Objects {
+			obj := memory.MemObjInfo{VarSize: m.classTable[objName].VarsSize, ObjSize: m.classTable[objName].ObjSize}
+			m.getCurrentFunctionTable()[m.currentFunction].ObjSize = append(m.getCurrentFunctionTable()[m.currentFunction].ObjSize, obj)
+		}
+	}
+	m.getCurrentFunctionTable()[m.currentFunction].Objects = nil
+	m.getCurrentFunctionTable()[m.currentFunction].ObjectCount = 0
 }
 
 func stringToOp(text string) (QuadAction, error) {

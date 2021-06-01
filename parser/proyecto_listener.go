@@ -20,6 +20,15 @@ type ProyectoListener interface {
 	// EnterClassBlock is called when entering the classBlock production.
 	EnterClassBlock(c *ClassBlockContext)
 
+	// EnterClassAttributes is called when entering the classAttributes production.
+	EnterClassAttributes(c *ClassAttributesContext)
+
+	// EnterClassMethod is called when entering the classMethod production.
+	EnterClassMethod(c *ClassMethodContext)
+
+	// EnterClassInit is called when entering the classInit production.
+	EnterClassInit(c *ClassInitContext)
+
 	// EnterVariableDeclaration is called when entering the variableDeclaration production.
 	EnterVariableDeclaration(c *VariableDeclarationContext)
 
@@ -31,6 +40,12 @@ type ProyectoListener interface {
 
 	// EnterVarsDecMat is called when entering the varsDecMat production.
 	EnterVarsDecMat(c *VarsDecMatContext)
+
+	// EnterAttributesDeclaration is called when entering the attributesDeclaration production.
+	EnterAttributesDeclaration(c *AttributesDeclarationContext)
+
+	// EnterAttributesDec is called when entering the attributesDec production.
+	EnterAttributesDec(c *AttributesDecContext)
 
 	// EnterVarsTypeInit is called when entering the varsTypeInit production.
 	EnterVarsTypeInit(c *VarsTypeInitContext)
@@ -65,6 +80,9 @@ type ProyectoListener interface {
 	// EnterBlock is called when entering the block production.
 	EnterBlock(c *BlockContext)
 
+	// EnterStatutesNoReturn is called when entering the statutesNoReturn production.
+	EnterStatutesNoReturn(c *StatutesNoReturnContext)
+
 	// EnterStatutes is called when entering the statutes production.
 	EnterStatutes(c *StatutesContext)
 
@@ -82,6 +100,9 @@ type ProyectoListener interface {
 
 	// EnterMethodCall is called when entering the methodCall production.
 	EnterMethodCall(c *MethodCallContext)
+
+	// EnterInitCall is called when entering the initCall production.
+	EnterInitCall(c *InitCallContext)
 
 	// EnterCall is called when entering the call production.
 	EnterCall(c *CallContext)
@@ -206,6 +227,15 @@ type ProyectoListener interface {
 	// ExitClassBlock is called when exiting the classBlock production.
 	ExitClassBlock(c *ClassBlockContext)
 
+	// ExitClassAttributes is called when exiting the classAttributes production.
+	ExitClassAttributes(c *ClassAttributesContext)
+
+	// ExitClassMethod is called when exiting the classMethod production.
+	ExitClassMethod(c *ClassMethodContext)
+
+	// ExitClassInit is called when exiting the classInit production.
+	ExitClassInit(c *ClassInitContext)
+
 	// ExitVariableDeclaration is called when exiting the variableDeclaration production.
 	ExitVariableDeclaration(c *VariableDeclarationContext)
 
@@ -217,6 +247,12 @@ type ProyectoListener interface {
 
 	// ExitVarsDecMat is called when exiting the varsDecMat production.
 	ExitVarsDecMat(c *VarsDecMatContext)
+
+	// ExitAttributesDeclaration is called when exiting the attributesDeclaration production.
+	ExitAttributesDeclaration(c *AttributesDeclarationContext)
+
+	// ExitAttributesDec is called when exiting the attributesDec production.
+	ExitAttributesDec(c *AttributesDecContext)
 
 	// ExitVarsTypeInit is called when exiting the varsTypeInit production.
 	ExitVarsTypeInit(c *VarsTypeInitContext)
@@ -251,6 +287,9 @@ type ProyectoListener interface {
 	// ExitBlock is called when exiting the block production.
 	ExitBlock(c *BlockContext)
 
+	// ExitStatutesNoReturn is called when exiting the statutesNoReturn production.
+	ExitStatutesNoReturn(c *StatutesNoReturnContext)
+
 	// ExitStatutes is called when exiting the statutes production.
 	ExitStatutes(c *StatutesContext)
 
@@ -268,6 +307,9 @@ type ProyectoListener interface {
 
 	// ExitMethodCall is called when exiting the methodCall production.
 	ExitMethodCall(c *MethodCallContext)
+
+	// ExitInitCall is called when exiting the initCall production.
+	ExitInitCall(c *InitCallContext)
 
 	// ExitCall is called when exiting the call production.
 	ExitCall(c *CallContext)

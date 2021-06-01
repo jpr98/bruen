@@ -34,6 +34,9 @@ IN: 'in';
 CLASS: 'class';
 ATTRIBUTES: 'attributes';
 METHODS: 'methods';
+INIT: 'init';
+PRIVATE: 'private';
+PUBLIC: 'public';
 // I/O
 WRITE: 'write';
 READ: 'read';
@@ -55,16 +58,22 @@ PROGRAM: 'program';
 ID: [a-zA-Z_][a-zA-Z0-9]*;
 
 // Rules
-program: PROGRAM ID SEMI classDef* variableDeclaration* program2;
-program2: functions* main EOF;
+program: PROGRAM ID SEMI variableDeclaration* program2;
+program2: classDef* functions* main EOF;
 
-classDef: CLASS ID ('<' ID '>')? classBlock SEMI;
-classBlock: '{' ATTRIBUTES variableDeclaration* METHODS functions* '}';
+classDef: CLASS ID classBlock SEMI;
+classBlock: '{' classAttributes classInit METHODS classMethod* '}';
+classAttributes: ATTRIBUTES attributesDeclaration*;
+classMethod: (PRIVATE | PUBLIC?) functions;
+classInit: INIT LPAREN RPAREN '{' variableDeclaration* statutesNoReturn* '}';
 
 variableDeclaration: varsDec | varsDecArray | varsDecMat;
 varsDec: VAR ID ':' varsTypeInit SEMI;
-varsDecArray: VAR ID ':' '['INT']'(typeRule | ID) SEMI;
-varsDecMat: VAR ID ':' '['INT']['INT']'(typeRule | ID) SEMI;
+varsDecArray: VAR ID ':' '['INT']'typeRule SEMI;
+varsDecMat: VAR ID ':' '['INT']['INT']'typeRule SEMI;
+
+attributesDeclaration: (PRIVATE | PUBLIC?) (attributesDec | varsDecArray | varsDecMat);
+attributesDec: VAR ID ':' typeRule SEMI;
 
 varsTypeInit: (typeRule | ID) varsTypeInit2?;
 varsTypeInit2: (ASSIGN exp);
@@ -81,6 +90,14 @@ returnRule: RETURN exp? SEMI;
 
 block: '{' statutes* '}';
 
+statutesNoReturn: assignation
+        | read
+        | write
+        | conditional
+        | forLoop
+        | whileLoop
+        | expression;
+
 statutes: assignation
         | read
         | write
@@ -90,7 +107,7 @@ statutes: assignation
         | expression
         | returnRule;
 
-assignation: (vars |varArray | varMat) ASSIGN exp SEMI;
+assignation: (vars | varArray | varMat) ASSIGN exp SEMI;
 
 functionCall: ID LPAREN arguments? RPAREN;
 arguments: exp arguments2;
@@ -98,7 +115,9 @@ arguments2: ',' arguments | ;
 
 methodCall: ID '.' ID LPAREN arguments? RPAREN;
 
-call: functionCall | methodCall;
+initCall: 'new' ID LPAREN RPAREN;
+
+call: functionCall | methodCall | initCall;
 
 read: READ LPAREN read2 RPAREN SEMI;
 read2: (vars | varArray | varMat) read3;

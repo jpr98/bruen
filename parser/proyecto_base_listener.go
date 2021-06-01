@@ -45,6 +45,24 @@ func (s *BaseProyectoListener) EnterClassBlock(ctx *ClassBlockContext) {}
 // ExitClassBlock is called when production classBlock is exited.
 func (s *BaseProyectoListener) ExitClassBlock(ctx *ClassBlockContext) {}
 
+// EnterClassAttributes is called when production classAttributes is entered.
+func (s *BaseProyectoListener) EnterClassAttributes(ctx *ClassAttributesContext) {}
+
+// ExitClassAttributes is called when production classAttributes is exited.
+func (s *BaseProyectoListener) ExitClassAttributes(ctx *ClassAttributesContext) {}
+
+// EnterClassMethod is called when production classMethod is entered.
+func (s *BaseProyectoListener) EnterClassMethod(ctx *ClassMethodContext) {}
+
+// ExitClassMethod is called when production classMethod is exited.
+func (s *BaseProyectoListener) ExitClassMethod(ctx *ClassMethodContext) {}
+
+// EnterClassInit is called when production classInit is entered.
+func (s *BaseProyectoListener) EnterClassInit(ctx *ClassInitContext) {}
+
+// ExitClassInit is called when production classInit is exited.
+func (s *BaseProyectoListener) ExitClassInit(ctx *ClassInitContext) {}
+
 // EnterVariableDeclaration is called when production variableDeclaration is entered.
 func (s *BaseProyectoListener) EnterVariableDeclaration(ctx *VariableDeclarationContext) {}
 
@@ -68,6 +86,18 @@ func (s *BaseProyectoListener) EnterVarsDecMat(ctx *VarsDecMatContext) {}
 
 // ExitVarsDecMat is called when production varsDecMat is exited.
 func (s *BaseProyectoListener) ExitVarsDecMat(ctx *VarsDecMatContext) {}
+
+// EnterAttributesDeclaration is called when production attributesDeclaration is entered.
+func (s *BaseProyectoListener) EnterAttributesDeclaration(ctx *AttributesDeclarationContext) {}
+
+// ExitAttributesDeclaration is called when production attributesDeclaration is exited.
+func (s *BaseProyectoListener) ExitAttributesDeclaration(ctx *AttributesDeclarationContext) {}
+
+// EnterAttributesDec is called when production attributesDec is entered.
+func (s *BaseProyectoListener) EnterAttributesDec(ctx *AttributesDecContext) {}
+
+// ExitAttributesDec is called when production attributesDec is exited.
+func (s *BaseProyectoListener) ExitAttributesDec(ctx *AttributesDecContext) {}
 
 // EnterVarsTypeInit is called when production varsTypeInit is entered.
 func (s *BaseProyectoListener) EnterVarsTypeInit(ctx *VarsTypeInitContext) {}
@@ -135,6 +165,12 @@ func (s *BaseProyectoListener) EnterBlock(ctx *BlockContext) {}
 // ExitBlock is called when production block is exited.
 func (s *BaseProyectoListener) ExitBlock(ctx *BlockContext) {}
 
+// EnterStatutesNoReturn is called when production statutesNoReturn is entered.
+func (s *BaseProyectoListener) EnterStatutesNoReturn(ctx *StatutesNoReturnContext) {}
+
+// ExitStatutesNoReturn is called when production statutesNoReturn is exited.
+func (s *BaseProyectoListener) ExitStatutesNoReturn(ctx *StatutesNoReturnContext) {}
+
 // EnterStatutes is called when production statutes is entered.
 func (s *BaseProyectoListener) EnterStatutes(ctx *StatutesContext) {}
 
@@ -170,6 +206,12 @@ func (s *BaseProyectoListener) EnterMethodCall(ctx *MethodCallContext) {}
 
 // ExitMethodCall is called when production methodCall is exited.
 func (s *BaseProyectoListener) ExitMethodCall(ctx *MethodCallContext) {}
+
+// EnterInitCall is called when production initCall is entered.
+func (s *BaseProyectoListener) EnterInitCall(ctx *InitCallContext) {}
+
+// ExitInitCall is called when production initCall is exited.
+func (s *BaseProyectoListener) ExitInitCall(ctx *InitCallContext) {}
 
 // EnterCall is called when production call is entered.
 func (s *BaseProyectoListener) EnterCall(ctx *CallContext) {}

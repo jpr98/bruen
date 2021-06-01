@@ -6,6 +6,11 @@ import (
 	"github.com/jpr98/compis/constants"
 )
 
+type MemObjInfo struct {
+	VarSize [4]int
+	ObjSize []MemObjInfo
+}
+
 const (
 	GLOBAL_INT   = 1000
 	GLOBAL_FLOAT = 2000
@@ -26,6 +31,10 @@ const (
 	CONST_FLOAT = 14000
 	CONST_CHAR  = 15000
 	CONST_BOOL  = 16000
+
+	GLOBAL_OBJ = 17000
+	LOCAL_OBJ  = 18000
+	TEMP_OBJ   = 19000
 )
 
 type Context string
@@ -49,6 +58,8 @@ func TypeForAddr(addr int) constants.Type {
 		return constants.TYPECHAR
 	case 4, 8, 12, 16:
 		return constants.TYPEBOOL
+	case 17, 18, 19:
+		return constants.TYPECLASS
 	default:
 		return constants.ERR
 	}
@@ -65,6 +76,12 @@ func ContextForAddr(addr int) Context {
 		return Temp
 	case 13, 14, 15, 16:
 		return Constant
+	case 17:
+		return Global
+	case 18:
+		return Local
+	case 19:
+		return Temp
 	default:
 		return Invalid
 	}
@@ -92,6 +109,10 @@ type manager struct {
 	cFloat int
 	cChar  int
 	cBool  int
+
+	gObj int
+	lObj int
+	tObj int
 }
 
 func newManager() *manager {
@@ -115,6 +136,10 @@ func newManager() *manager {
 		cFloat: CONST_FLOAT,
 		cChar:  CONST_CHAR,
 		cBool:  CONST_BOOL,
+
+		gObj: GLOBAL_OBJ,
+		lObj: LOCAL_OBJ,
+		tObj: TEMP_OBJ,
 	}
 }
 
@@ -164,13 +189,19 @@ func ConvertAddr(addr int) int {
 		return addr - CONST_FLOAT
 	} else if addr < CONST_BOOL {
 		return addr - CONST_CHAR
-	} else {
+	} else if addr < GLOBAL_OBJ {
 		return addr - CONST_BOOL
+	} else if addr < LOCAL_OBJ {
+		return addr - GLOBAL_OBJ
+	} else if addr < TEMP_OBJ {
+		return addr - LOCAL_OBJ
+	} else {
+		return addr - TEMP_OBJ
 	}
 }
 
 func IsTempAddr(addr int) bool {
-	return addr >= TEMP_INT && addr < CONST_INT
+	return (addr >= TEMP_INT && addr < CONST_INT) || addr >= TEMP_OBJ
 }
 
 func (m *manager) getGlobalForType(typeOf constants.Type) int {
@@ -188,6 +219,9 @@ func (m *manager) getGlobalForType(typeOf constants.Type) int {
 	case constants.TYPEBOOL:
 		result = m.gBool
 		m.gBool++
+	case constants.TYPECLASS:
+		result = m.gObj
+		m.gObj++
 	}
 	return result
 }
@@ -207,6 +241,9 @@ func (m *manager) getLocalForType(typeOf constants.Type) int {
 	case constants.TYPEBOOL:
 		result = m.lBool
 		m.lBool++
+	case constants.TYPECLASS:
+		result = m.lObj
+		m.lObj++
 	}
 	return result
 }
@@ -226,6 +263,9 @@ func (m *manager) getTempForType(typeOf constants.Type) int {
 	case constants.TYPEBOOL:
 		result = m.tBool
 		m.tBool++
+	case constants.TYPECLASS:
+		result = m.tObj
+		m.tObj++
 	}
 	return result
 }
@@ -249,24 +289,28 @@ func (m *manager) getConstForType(typeOf constants.Type) int {
 	return result
 }
 
-func (m *manager) ResetLocalCounter() [4]int {
+func (m *manager) ResetLocalCounter() ([4]int, int) {
 	size := [4]int{m.lInt - LOCAL_INT, m.lFloat - LOCAL_FLOAT, m.lChar - LOCAL_CHAR, m.lBool - LOCAL_BOOL}
+	objSize := m.lObj - LOCAL_OBJ
 	m.lInt = LOCAL_INT
 	m.lFloat = LOCAL_FLOAT
 	m.lChar = LOCAL_CHAR
 	m.lBool = LOCAL_BOOL
-	return size
+	m.lObj = LOCAL_OBJ
+	return size, objSize
 }
 
-func (m *manager) ResetTempCounter() [4]int {
+func (m *manager) ResetTempCounter() ([4]int, int) {
 	size := [4]int{m.tInt - TEMP_INT, m.tFloat - TEMP_FLOAT, m.tChar - TEMP_CHAR, m.tBool - TEMP_BOOL}
+	objSize := m.tObj - TEMP_OBJ
 	m.tInt = TEMP_INT
 	m.tFloat = TEMP_FLOAT
 	m.tChar = TEMP_CHAR
 	m.tBool = TEMP_BOOL
-	return size
+	m.tObj = TEMP_OBJ
+	return size, objSize
 }
 
-func (m *manager) GetGlobalSize() [4]int {
-	return [4]int{m.gInt - GLOBAL_INT, m.gFloat - GLOBAL_FLOAT, m.gChar - GLOBAL_CHAR, m.gBool - GLOBAL_BOOL}
+func (m *manager) GetGlobalSize() ([4]int, int) {
+	return [4]int{m.gInt - GLOBAL_INT, m.gFloat - GLOBAL_FLOAT, m.gChar - GLOBAL_CHAR, m.gBool - GLOBAL_BOOL}, m.gObj - GLOBAL_OBJ
 }

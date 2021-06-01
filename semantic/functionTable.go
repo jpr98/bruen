@@ -4,6 +4,7 @@ import (
 	"encoding/gob"
 
 	"github.com/jpr98/compis/constants"
+	"github.com/jpr98/compis/memory"
 )
 
 type FunctionTable map[string]*FunctionTableContent
@@ -15,6 +16,10 @@ type VariableAttributes struct {
 	Dir        int
 	ArrayOrMat int // 0 = nothing, 1 = array, 2 = mat
 	Dim        [2]int
+	Class      string
+	FromSelf   bool
+	SelfDir    int
+	IsPrivate  bool
 }
 
 func NewVariableAttributes(id string, typeOf constants.Type, dir int) *VariableAttributes {
@@ -24,19 +29,25 @@ func NewVariableAttributes(id string, typeOf constants.Type, dir int) *VariableA
 		Dir:        dir,
 		ArrayOrMat: 0,
 		Dim:        [2]int{},
+		Class:      "",
+		FromSelf:   false,
+		IsPrivate:  false,
 	}
 }
 
 type FunctionTableContent struct {
-	TypeOf    constants.Type
-	Dir       int
-	ReturnDir int
-	EraSize   string
-	Vars      map[string]*VariableAttributes
-	Params    []int
-	Scope     string
-	VarsSize  [4]int
-	TempSize  [4]int
+	TypeOf      constants.Type
+	Dir         int
+	ReturnDir   int
+	Vars        map[string]*VariableAttributes
+	Params      []int
+	Scope       string
+	VarsSize    [4]int
+	TempSize    [4]int
+	ObjSize     []memory.MemObjInfo
+	Objects     []string
+	ObjectCount int
+	IsPrivate   bool
 }
 
 func init() {

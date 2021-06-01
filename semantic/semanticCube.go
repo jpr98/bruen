@@ -22,10 +22,10 @@ type cube struct {
 // NewCube creates a new Cube
 func NewCube(logger *log.Logger) SCube {
 	sc := cube{logger: logger}
-	sc.cube = make([][][]constants.Type, 4)
-	for i := 0; i < 4; i++ {
-		sc.cube[i] = make([][]constants.Type, 4)
-		for j := 0; j < 4; j++ {
+	sc.cube = make([][][]constants.Type, 5)
+	for i := 0; i < 5; i++ {
+		sc.cube[i] = make([][]constants.Type, 5)
+		for j := 0; j < 5; j++ {
 			sc.cube[i][j] = make([]constants.Type, 11)
 		}
 	}
@@ -79,6 +79,18 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEINT][constants.TYPEBOOL][constants.OPOR] = constants.ERR
 	sc.cube[constants.TYPEINT][constants.TYPEBOOL][constants.OPASSIGN] = constants.ERR
 
+	sc.cube[constants.TYPEINT][constants.TYPECLASS][constants.OPPLUS] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPECLASS][constants.OPMINUS] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPECLASS][constants.OPDIV] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPECLASS][constants.OPMULT] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPECLASS][constants.OPGT] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPECLASS][constants.OPLT] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPECLASS][constants.OPEQ] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPECLASS][constants.OPNEQ] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPECLASS][constants.OPAND] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPECLASS][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEINT][constants.TYPECLASS][constants.OPASSIGN] = constants.ERR
+
 	// Float
 	sc.cube[constants.TYPEFLOAT][constants.TYPEINT][constants.OPPLUS] = constants.TYPEFLOAT
 	sc.cube[constants.TYPEFLOAT][constants.TYPEINT][constants.OPMINUS] = constants.TYPEFLOAT
@@ -127,6 +139,18 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEFLOAT][constants.TYPEBOOL][constants.OPAND] = constants.ERR
 	sc.cube[constants.TYPEFLOAT][constants.TYPEBOOL][constants.OPOR] = constants.ERR
 	sc.cube[constants.TYPEFLOAT][constants.TYPEBOOL][constants.OPASSIGN] = constants.ERR
+
+	sc.cube[constants.TYPEFLOAT][constants.TYPECLASS][constants.OPPLUS] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPECLASS][constants.OPMINUS] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPECLASS][constants.OPDIV] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPECLASS][constants.OPMULT] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPECLASS][constants.OPGT] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPECLASS][constants.OPLT] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPECLASS][constants.OPEQ] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPECLASS][constants.OPNEQ] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPECLASS][constants.OPAND] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPECLASS][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEFLOAT][constants.TYPECLASS][constants.OPASSIGN] = constants.ERR
 
 	// Char
 	sc.cube[constants.TYPECHAR][constants.TYPEINT][constants.OPPLUS] = constants.ERR
@@ -177,6 +201,18 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPECHAR][constants.TYPEBOOL][constants.OPOR] = constants.ERR
 	sc.cube[constants.TYPECHAR][constants.TYPEBOOL][constants.OPASSIGN] = constants.ERR
 
+	sc.cube[constants.TYPECHAR][constants.TYPECLASS][constants.OPPLUS] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPECLASS][constants.OPMINUS] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPECLASS][constants.OPDIV] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPECLASS][constants.OPMULT] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPECLASS][constants.OPGT] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPECLASS][constants.OPLT] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPECLASS][constants.OPEQ] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPECLASS][constants.OPNEQ] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPECLASS][constants.OPAND] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPECLASS][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPECHAR][constants.TYPECLASS][constants.OPASSIGN] = constants.ERR
+
 	// Bool
 	sc.cube[constants.TYPEBOOL][constants.TYPEINT][constants.OPPLUS] = constants.ERR
 	sc.cube[constants.TYPEBOOL][constants.TYPEINT][constants.OPMINUS] = constants.ERR
@@ -225,6 +261,79 @@ func NewCube(logger *log.Logger) SCube {
 	sc.cube[constants.TYPEBOOL][constants.TYPEBOOL][constants.OPAND] = constants.TYPEBOOL
 	sc.cube[constants.TYPEBOOL][constants.TYPEBOOL][constants.OPOR] = constants.TYPEBOOL
 	sc.cube[constants.TYPEBOOL][constants.TYPEBOOL][constants.OPASSIGN] = constants.TYPEBOOL
+
+	sc.cube[constants.TYPEBOOL][constants.TYPECLASS][constants.OPPLUS] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPECLASS][constants.OPMINUS] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPECLASS][constants.OPDIV] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPECLASS][constants.OPMULT] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPECLASS][constants.OPGT] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPECLASS][constants.OPLT] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPECLASS][constants.OPEQ] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPECLASS][constants.OPNEQ] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPECLASS][constants.OPAND] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPECLASS][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPEBOOL][constants.TYPECLASS][constants.OPASSIGN] = constants.ERR
+
+	// Class
+	sc.cube[constants.TYPECLASS][constants.TYPEINT][constants.OPPLUS] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEINT][constants.OPMINUS] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEINT][constants.OPDIV] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEINT][constants.OPMULT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEINT][constants.OPGT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEINT][constants.OPLT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEINT][constants.OPEQ] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEINT][constants.OPNEQ] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEINT][constants.OPAND] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEINT][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEINT][constants.OPASSIGN] = constants.ERR
+
+	sc.cube[constants.TYPECLASS][constants.TYPEFLOAT][constants.OPPLUS] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEFLOAT][constants.OPMINUS] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEFLOAT][constants.OPDIV] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEFLOAT][constants.OPMULT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEFLOAT][constants.OPGT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEFLOAT][constants.OPLT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEFLOAT][constants.OPEQ] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEFLOAT][constants.OPNEQ] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEFLOAT][constants.OPAND] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEFLOAT][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEFLOAT][constants.OPASSIGN] = constants.ERR
+
+	sc.cube[constants.TYPECLASS][constants.TYPECHAR][constants.OPPLUS] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECHAR][constants.OPMINUS] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECHAR][constants.OPDIV] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECHAR][constants.OPMULT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECHAR][constants.OPGT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECHAR][constants.OPLT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECHAR][constants.OPEQ] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECHAR][constants.OPNEQ] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECHAR][constants.OPAND] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECHAR][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECHAR][constants.OPASSIGN] = constants.ERR
+
+	sc.cube[constants.TYPECLASS][constants.TYPEBOOL][constants.OPPLUS] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEBOOL][constants.OPMINUS] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEBOOL][constants.OPDIV] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEBOOL][constants.OPMULT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEBOOL][constants.OPGT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEBOOL][constants.OPLT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEBOOL][constants.OPEQ] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEBOOL][constants.OPNEQ] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEBOOL][constants.OPAND] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEBOOL][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPEBOOL][constants.OPASSIGN] = constants.ERR
+
+	sc.cube[constants.TYPECLASS][constants.TYPECLASS][constants.OPPLUS] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECLASS][constants.OPMINUS] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECLASS][constants.OPDIV] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECLASS][constants.OPMULT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECLASS][constants.OPGT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECLASS][constants.OPLT] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECLASS][constants.OPEQ] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECLASS][constants.OPNEQ] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECLASS][constants.OPAND] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECLASS][constants.OPOR] = constants.ERR
+	sc.cube[constants.TYPECLASS][constants.TYPECLASS][constants.OPASSIGN] = constants.TYPECLASS
 
 	return sc
 }

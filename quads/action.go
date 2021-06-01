@@ -28,10 +28,11 @@ const (
 	PARAM
 	GOSUB
 	RETURN
+	INSTANCE
 )
 
 func (a QuadAction) String() string {
-	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||", "(", "READ", "WRITE", "WRITENEWLINE", "=", "VER", "CALCDIR", "GOTOF", "GOTO", "ENDFUNC", "ERA", "PARAM", "GOSUB", "RETURN"}[a]
+	return [...]string{"+", "-", "*", "/", ">", "<", "==", "!=", "&&", "||", "(", "READ", "WRITE", "WRITENEWLINE", "=", "VER", "CALCDIR", "GOTOF", "GOTO", "ENDFUNC", "ERA", "PARAM", "GOSUB", "RETURN", "INSTANCE"}[a]
 }
 
 type QuadActionStack struct {

@@ -1,0 +1,59 @@
+program test4;
+
+var fast: bool;
+
+class Car {
+    attributes
+    private var motorNum: int;
+    var color: float;
+    var fast: bool;
+    var tires: [4]int;
+
+    init() {
+        var x: int;
+        var fast: bool = false;
+        x = 8 * 2;
+        motorNum = 1000;
+        self.fast = true;
+        if (self.fast) {
+            color = 1.0;
+        }
+        tires[0] = 3;
+    }
+
+    methods
+    function start(a: int) void {
+        write(color);
+        stop();
+    }
+
+    private function stop() void {
+        write(getMotorNum());
+    }
+
+    function setMotorNum(motorNum: int) void {
+        self.motorNum = motorNum;
+    }
+
+    function getMotorNum() int {
+        return motorNum;
+    }
+};
+
+function getInt() int {
+    return 1;
+}
+
+main() {
+    var c: Car;
+    var car: Car;
+    var arr: [3]bool;
+    c = new Car();
+    c.start(1);
+
+    car = new Car();
+    car.setMotorNum(1819);
+    c.setMotorNum(2021);
+    write(car.getMotorNum());
+    write(c.getMotorNum());
+}

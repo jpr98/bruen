@@ -13,19 +13,16 @@ import (
 
 type QuadGenListener struct {
 	*parser.BaseProyectoListener
-	m               *Manager
-	scopeStack      utils.StringStack
-	currentFunction string
-	globalName      string
+	m *Manager
 
 	enteredVarInit  bool
 	isArgumentParam bool
 }
 
-func NewListener(functionTable semantic.FunctionTable) QuadGenListener {
-	m := NewManager(functionTable)
+func NewListener(functionTable semantic.FunctionTable, classTable semantic.ClassTable) QuadGenListener {
 	ss := utils.StringStack{}
-	return QuadGenListener{m: &m, scopeStack: ss}
+	m := NewManager(functionTable, classTable, ss)
+	return QuadGenListener{m: &m}
 }
 
 func (l QuadGenListener) GetManager() Manager {
@@ -41,7 +38,15 @@ func (l *QuadGenListener) ExitAssignation(c *parser.AssignationContext) {
 }
 
 func (l *QuadGenListener) EnterVarsDec(c *parser.VarsDecContext) {
-	l.m.PushOperand(c.ID().GetText(), l.currentFunction, l.globalName)
+	l.m.PushOperand(c.ID().GetText())
+}
+
+func (l *QuadGenListener) EnterVarsTypeInit(c *parser.VarsTypeInitContext) {
+	if c.ID() != nil {
+		if _, exists := l.m.classTable[c.ID().GetText()]; !exists {
+			log.Fatalf("Error: Undefined type %s", c.ID().GetText())
+		}
+	}
 }
 
 func (l *QuadGenListener) ExitVarsTypeInit(c *parser.VarsTypeInitContext) {
@@ -151,16 +156,30 @@ func (l *QuadGenListener) ExitFactor2(c *parser.Factor2Context) {
 }
 
 func (l *QuadGenListener) EnterVars(c *parser.VarsContext) {
-	l.m.PushOperand(c.ID(0).GetText(), l.currentFunction, l.globalName)
+	if c.ID(1) != nil {
+		l.m.PushOperand(c.GetText())
+	} else {
+		l.m.PushOperand(c.ID(0).GetText())
+	}
 }
 
 func (l *QuadGenListener) EnterVarArray(c *parser.VarArrayContext) {
-	l.m.PushOperand(c.ID(0).GetText(), l.currentFunction, l.globalName)
+	if c.ID(1) != nil {
+		operand := fmt.Sprintf("%s.%s", c.ID(0).GetText(), c.ID(1).GetText())
+		l.m.PushOperand(operand)
+	} else {
+		l.m.PushOperand(c.ID(0).GetText())
+	}
 }
 
 func (l *QuadGenListener) ExitVarArray(c *parser.VarArrayContext) {
-	l.m.AddVerifyQuad(c.ID(0).GetText(), l.currentFunction, l.globalName, true)
-	l.m.AddArrayAccessQuad(c.ID(0).GetText())
+	if c.ID(1) != nil {
+		operand := fmt.Sprintf("%s.%s", c.ID(0).GetText(), c.ID(1).GetText())
+		l.m.AddVerifyQuad(operand, true)
+	} else {
+		l.m.AddVerifyQuad(c.ID(0).GetText(), true)
+	}
+	l.m.AddArrayAccessQuad()
 }
 
 func (l *QuadGenListener) ExitConditional(c *parser.ConditionalContext) {
@@ -219,9 +238,9 @@ func (l *QuadGenListener) ExitForLoop3(c *parser.ForLoop3Context) {
 }
 
 func (l *QuadGenListener) EnterProgram(c *parser.ProgramContext) {
-	l.scopeStack.Push(c.ID().GetText())
-	l.currentFunction = l.scopeStack.Top()
-	l.globalName = l.scopeStack.Top()
+	l.m.scopeStack.Push(c.ID().GetText())
+	l.m.currentFunction = l.m.scopeStack.Top()
+	l.m.globalName = l.m.scopeStack.Top()
 }
 
 func (l *QuadGenListener) EnterProgram2(c *parser.Program2Context) {
@@ -229,19 +248,9 @@ func (l *QuadGenListener) EnterProgram2(c *parser.Program2Context) {
 	l.m.AddSimpleGOTO()
 }
 
-func (l *QuadGenListener) EnterClassDef(c *parser.ClassDefContext) {
-	l.scopeStack.Push(c.ID(0).GetText())
-	l.currentFunction = l.scopeStack.Top()
-}
-
-func (l *QuadGenListener) ExitClassDef(c *parser.ClassDefContext) {
-	l.scopeStack.Pop()
-	l.currentFunction = l.scopeStack.Top()
-}
-
 func (l *QuadGenListener) EnterFunctions(c *parser.FunctionsContext) {
-	l.currentFunction = c.ID().GetText()
-	l.m.functionTable[l.currentFunction].Dir = len(l.m.GetQuads())
+	l.m.currentFunction = c.ID().GetText()
+	l.m.getCurrentFunctionTable()[l.m.currentFunction].Dir = len(l.m.GetQuads())
 }
 
 func (l *QuadGenListener) ExitFunctions(c *parser.FunctionsContext) {
@@ -255,13 +264,14 @@ func (l *QuadGenListener) ExitFunctions(c *parser.FunctionsContext) {
 	}
 
 	l.m.AddEndFuncQuad()
-	l.m.functionTable[l.currentFunction].Vars = nil
-	l.m.functionTable[l.currentFunction].EraSize = "0i1f2c3b"
-	l.m.functionTable[l.currentFunction].TempSize = memory.Manager.ResetTempCounter()
+	tempSize, objSize := memory.Manager.ResetTempCounter()
+	l.m.getCurrentFunctionTable()[l.m.currentFunction].TempSize = tempSize
+	l.m.getCurrentFunctionTable()[l.m.currentFunction].ObjectCount += objSize
+	l.m.setObjectSize()
 }
 
 func (l *QuadGenListener) ExitReturnRule(c *parser.ReturnRuleContext) {
-	l.m.AddReturnQuad(l.currentFunction)
+	l.m.AddReturnQuad()
 }
 
 func (l *QuadGenListener) ExitRead2(c *parser.Read2Context) {
@@ -273,32 +283,56 @@ func (l *QuadGenListener) ExitWrite(c *parser.WriteContext) {
 }
 
 func (l *QuadGenListener) EnterMain(c *parser.MainContext) {
-	l.currentFunction = c.MAIN().GetText()
+	l.m.currentFunction = c.MAIN().GetText()
 	l.m.UpdateGoto()
-	l.m.AddEraQuad(c.MAIN().GetText())
+	l.m.AddEraQuad(c.MAIN().GetText(), "")
 }
 
 func (l *QuadGenListener) ExitMain(c *parser.MainContext) {
-	l.m.functionTable[l.currentFunction].TempSize = memory.Manager.ResetTempCounter()
+	tempSize, objSize := memory.Manager.ResetTempCounter()
+	l.m.functionTable[l.m.currentFunction].TempSize = tempSize
+	l.m.functionTable[l.m.currentFunction].ObjectCount += objSize
+	l.m.setObjectSize()
+	l.m.currentFunction = l.m.scopeStack.Top()
 }
 
 func (l *QuadGenListener) ExitProgram(c *parser.ProgramContext) {
-	l.scopeStack.Pop()
-	l.m.functionTable[l.globalName].VarsSize = memory.Manager.GetGlobalSize()
+	varsSize, objSize := memory.Manager.GetGlobalSize()
+	l.m.functionTable[l.m.globalName].VarsSize = varsSize
+	l.m.functionTable[l.m.globalName].ObjectCount = objSize
+	l.m.setObjectSize()
+	l.m.scopeStack.Pop()
 	fmt.Println(l.m.operands)
 }
 
 func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {
-	_, exists := l.m.functionTable[c.ID().GetText()]
+	exists := false
+	if _, ok := l.m.functionTable[c.ID().GetText()]; ok {
+		exists = true
+	} else {
+		if _, ok := l.m.classTable[c.ID().GetText()]; ok {
+			exists = true
+		}
+	}
 	if !exists {
+		if isMethodCall, className := l.m.CheckImplicitMethodCall(c.ID().GetText()); isMethodCall {
+			l.m.AddEraQuad(c.ID().GetText(), className)
+			l.isArgumentParam = true
+			return
+		}
 		log.Fatalf("Error: (EnterFunctionCall) undeclared function %s", c.ID().GetText())
 	}
-	l.m.AddEraQuad(c.ID().GetText())
+	l.m.AddEraQuad(c.ID().GetText(), "")
 	l.isArgumentParam = true
 }
 
 func (l *QuadGenListener) ExitFunctionCall(c *parser.FunctionCallContext) {
-	l.m.AddGoSubQuad(c.ID().GetText())
+	if isMethodCall, className := l.m.CheckImplicitMethodCall(c.ID().GetText()); isMethodCall {
+		l.m.AddClassGoSubQuad(className, "self")
+		l.isArgumentParam = false
+		return
+	}
+	l.m.AddGoSubQuad()
 	l.isArgumentParam = false
 }
 
@@ -307,6 +341,88 @@ func (l *QuadGenListener) EnterArguments2(c *parser.Arguments2Context) {
 		l.m.AddWriteQuad()
 		return
 	}
+	if l.m.currentFunctionCallClass != "" { // This is how we know in this point we are calling a method
+		l.m.AddClassParamQuad()
+		l.m.paramCounter++
+		return
+	}
 	l.m.AddParamQuad()
 	l.m.paramCounter++
+}
+
+// Classes
+func (l *QuadGenListener) EnterClassDef(c *parser.ClassDefContext) {
+	l.m.scopeStack.Push(c.ID().GetText())
+	l.m.currentFunction = l.m.scopeStack.Top()
+}
+
+func (l *QuadGenListener) ExitClassDef(c *parser.ClassDefContext) {
+	l.m.scopeStack.Pop()
+	l.m.currentFunction = l.m.scopeStack.Top()
+}
+
+func (l *QuadGenListener) EnterClassInit(c *parser.ClassInitContext) {
+	l.m.currentFunction = c.INIT().GetText()
+	l.m.classTable[l.m.scopeStack.Top()].Methods[c.INIT().GetText()].Dir = len(l.m.GetQuads())
+}
+
+func (l *QuadGenListener) ExitClassInit(c *parser.ClassInitContext) {
+	l.m.AddInitReturnQuad()
+	l.m.AddEndFuncQuad()
+	tempSize, objSize := memory.Manager.ResetTempCounter()
+	l.m.classTable[l.m.scopeStack.Top()].Methods[c.INIT().GetText()].TempSize = tempSize
+	l.m.classTable[l.m.scopeStack.Top()].Methods[c.INIT().GetText()].ObjectCount += objSize
+	l.m.setObjectSize()
+}
+
+func (l *QuadGenListener) EnterInitCall(c *parser.InitCallContext) {
+	l.m.AddEraQuad("init", c.ID().GetText())
+}
+
+func (l *QuadGenListener) ExitInitCall(c *parser.InitCallContext) {
+	l.m.AddClassGoSubQuad(c.ID().GetText(), "")
+}
+
+func (l *QuadGenListener) EnterMethodCall(c *parser.MethodCallContext) {
+	className := ""
+	if attr, exists := l.m.getCurrentFunctionTable()[l.m.currentFunction].Vars[c.ID(0).GetText()]; exists {
+		className = attr.Class
+	} else {
+		if attr, exists := l.m.functionTable[l.m.globalName].Vars[c.ID(0).GetText()]; exists {
+			className = attr.Class
+		}
+	}
+
+	if className == "" {
+		log.Fatalf("Error: Undeclared variable %s", c.ID(0).GetText())
+	}
+
+	methodData, exists := l.m.classTable[className].Methods[c.ID(1).GetText()]
+	if !exists {
+		log.Fatalf("Error: Class %s doesn't have a method %s", className, c.ID(1).GetText())
+	}
+	if methodData.IsPrivate && l.m.scopeStack.Top() != className {
+		log.Fatalf("Error: method %s is private", c.ID(1).GetText())
+	}
+
+	l.m.AddEraQuad(c.ID(1).GetText(), className)
+	l.isArgumentParam = true
+}
+
+func (l *QuadGenListener) ExitMethodCall(c *parser.MethodCallContext) {
+	className := ""
+	if attr, exists := l.m.getCurrentFunctionTable()[l.m.currentFunction].Vars[c.ID(0).GetText()]; exists {
+		className = attr.Class
+	} else {
+		if attr, exists := l.m.functionTable[l.m.globalName].Vars[c.ID(0).GetText()]; exists {
+			className = attr.Class
+		}
+	}
+
+	if className == "" {
+		log.Fatalf("Error: Undeclared variable %s", c.ID(0).GetText())
+	}
+
+	l.m.AddClassGoSubQuad(className, c.ID(0).GetText())
+	l.isArgumentParam = false
 }
