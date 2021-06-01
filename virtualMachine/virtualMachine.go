@@ -132,10 +132,19 @@ func (vm *VirtualMachine) Run() {
 			}
 			vm.pointer++
 
+		case quads.INSTANCE:
+			memblock := vm.getMemBlockForAddr(quad.Left.GetAddr())
+			var ok bool
+			vm.currentSelf, ok = memblock.Get(quad.Left.GetAddr()).(Memory)
+			if !ok {
+				log.Fatalf(
+					"Error: (Run) quads.INSTANCE couldn't cast %v to Memory",
+					memblock.Get(quad.Left.GetAddr()),
+				)
+			}
+			vm.pointer++
+
 		case quads.GOSUB:
-			// if quad.Left.ClassName() != "" {
-			// 	vm.currentSelf = vm.getMemBlockForAddr(quad.Left.GetAddr())
-			// }
 			vm.memBlocks.Push(fmb)
 			vm.pointerStack.Push(vm.pointer + 1)
 			if quad.Left.ClassName() != "" {
@@ -146,6 +155,7 @@ func (vm *VirtualMachine) Run() {
 
 		case quads.ENDFUNC:
 			vm.memBlocks.Pop()
+			vm.currentSelf = nil
 			vm.pointer = vm.pointerStack.Pop()
 
 		case quads.RETURN:
@@ -173,6 +183,9 @@ func (vm *VirtualMachine) getMemBlockForElement(elem quads.Element) Memory {
 		objInstanceAddr, err := strconv.Atoi(strElements[1])
 		if err != nil {
 			log.Fatalf("Error: (getMemBlockForElement) couldn't cast objInstanceAddr to int")
+		}
+		if objInstanceAddr == -1 {
+			return vm.currentSelf
 		}
 		memblock := vm.getMemBlockForAddr(objInstanceAddr)
 		objInstance, ok := memblock.Get(objInstanceAddr).(Memory)

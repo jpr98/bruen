@@ -15,20 +15,27 @@ class Car {
         x = 8 * 2;
         motorNum = 1000;
         self.fast = true;
-        if (fast) {
+        if (self.fast) {
             color = 1.0;
         }
         tires[0] = 3;
     }
 
     methods
-    function start() void {
-        write(11);
-        stop();
+    function start(a: int) void {
+        write(color);
     }
 
     private function stop() void {
         write(12);
+    }
+
+    function setMotorNum(motorNum: int) void {
+        self.motorNum = motorNum;
+    }
+
+    function getMotorNum() void {
+        write(motorNum);
     }
 };
 
@@ -38,7 +45,14 @@ function getInt() int {
 
 main() {
     var c: Car;
+    var car: Car;
     var arr: [3]bool;
     c = new Car();
-    c.start();
+    c.start(1);
+
+    car = new Car();
+    car.setMotorNum(1819);
+    c.setMotorNum(2021);
+    car.getMotorNum();
+    c.getMotorNum();
 }

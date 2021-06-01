@@ -47,9 +47,10 @@ type Manager struct {
 	globalName      string
 	currentFunction string
 
-	currentFunctionCall string
-	paramCounter        int
-	avail               int
+	currentFunctionCall      string
+	currentFunctionCallClass string
+	paramCounter             int
+	avail                    int
 }
 
 func (m Manager) GetQuads() []Quad {
@@ -419,6 +420,7 @@ func (m *Manager) AddEraQuad(name, className string) {
 	m.quads = append(m.quads, q)
 
 	m.currentFunctionCall = name
+	m.currentFunctionCallClass = className
 	m.paramCounter = 0
 }
 
@@ -442,6 +444,30 @@ func (m *Manager) AddParamQuad() {
 	}
 
 	argNum := NewElement(m.functionTable[m.currentFunctionCall].Params[m.paramCounter], fmt.Sprintf("%d", m.paramCounter), expectedType, "")
+	q := Quad{PARAM, arg, argNum, nil}
+	m.quads = append(m.quads, q)
+}
+
+func (m *Manager) AddClassParamQuad() {
+	if m.paramCounter >= len(m.classTable[m.currentFunctionCallClass].Methods[m.currentFunctionCall].Params) {
+		log.Fatalf(
+			"Error: (AddGoSubQuad) function %s has too many arguments",
+			m.currentFunctionCall,
+		)
+	}
+
+	expectedType := memory.TypeForAddr(m.classTable[m.currentFunctionCallClass].Methods[m.currentFunctionCall].Params[m.paramCounter])
+	arg := m.operands.Pop()
+	t := semantic.Cube.ValidateBinaryOperation(expectedType, arg.Type(), int(constants.OPASSIGN))
+	if t == constants.ERR {
+		log.Fatalf(
+			"Error: (AddParamQuad) type mismatch, parameter %s must be of type %s",
+			arg,
+			expectedType,
+		)
+	}
+
+	argNum := NewElement(m.classTable[m.currentFunctionCallClass].Methods[m.currentFunctionCall].Params[m.paramCounter], fmt.Sprintf("%d", m.paramCounter), expectedType, "")
 	q := Quad{PARAM, arg, argNum, nil}
 	m.quads = append(m.quads, q)
 }
@@ -483,12 +509,20 @@ func (m *Manager) AddGoSubQuad() {
 	}
 }
 
-func (m *Manager) AddClassGoSubQuad(className string) {
+func (m *Manager) AddClassGoSubQuad(className, instance string) {
 	if m.paramCounter < len(m.classTable[className].Methods[m.currentFunctionCall].Params) {
 		log.Fatalf(
 			"Error: (AddClassGoSubQuad) function %s has too few arguments",
 			m.currentFunctionCall,
 		)
+	}
+
+	if m.currentFunctionCall != "init" {
+		selfDir := m.getCurrentFunctionTable()[m.currentFunction].Vars[instance].Dir
+		m.classTable[className].Methods[m.currentFunctionCall].Vars["self"].Dir = selfDir
+		instanceElement := NewElement(selfDir, instance, constants.ADDR, className)
+		q := Quad{INSTANCE, instanceElement, nil, nil}
+		m.quads = append(m.quads, q)
 	}
 
 	dir := m.classTable[className].Methods[m.currentFunctionCall].Dir
@@ -524,6 +558,7 @@ func (m *Manager) AddClassGoSubQuad(className string) {
 		q := Quad{ASSIGN, funcReturnElement, nil, result}
 		m.quads = append(m.quads, q)
 	}
+	m.currentFunctionCallClass = ""
 }
 
 // CheckImplicitMethodCall decides if a function call should be thought of as a method

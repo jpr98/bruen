@@ -328,7 +328,7 @@ func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {
 
 func (l *QuadGenListener) ExitFunctionCall(c *parser.FunctionCallContext) {
 	if isMethodCall, className := l.m.CheckImplicitMethodCall(c.ID().GetText()); isMethodCall {
-		l.m.AddClassGoSubQuad(className)
+		l.m.AddClassGoSubQuad(className, "self")
 		l.isArgumentParam = false
 		return
 	}
@@ -339,6 +339,11 @@ func (l *QuadGenListener) ExitFunctionCall(c *parser.FunctionCallContext) {
 func (l *QuadGenListener) EnterArguments2(c *parser.Arguments2Context) {
 	if !l.isArgumentParam {
 		l.m.AddWriteQuad()
+		return
+	}
+	if l.m.currentFunctionCallClass != "" { // This is how we know in this point we are calling a method
+		l.m.AddClassParamQuad()
+		l.m.paramCounter++
 		return
 	}
 	l.m.AddParamQuad()
@@ -375,7 +380,7 @@ func (l *QuadGenListener) EnterInitCall(c *parser.InitCallContext) {
 }
 
 func (l *QuadGenListener) ExitInitCall(c *parser.InitCallContext) {
-	l.m.AddClassGoSubQuad(c.ID().GetText())
+	l.m.AddClassGoSubQuad(c.ID().GetText(), "")
 }
 
 func (l *QuadGenListener) EnterMethodCall(c *parser.MethodCallContext) {
@@ -418,6 +423,6 @@ func (l *QuadGenListener) ExitMethodCall(c *parser.MethodCallContext) {
 		log.Fatalf("Error: Undeclared variable %s", c.ID(0).GetText())
 	}
 
-	l.m.AddClassGoSubQuad(className)
+	l.m.AddClassGoSubQuad(className, c.ID(0).GetText())
 	l.isArgumentParam = false
 }
