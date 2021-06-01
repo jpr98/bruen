@@ -61,7 +61,7 @@ ID: [a-zA-Z_][a-zA-Z0-9]*;
 program: PROGRAM ID SEMI variableDeclaration* program2;
 program2: classDef* functions* main EOF;
 
-classDef: CLASS ID ('<' ID '>')? classBlock SEMI;
+classDef: CLASS ID classBlock SEMI;
 classBlock: '{' classAttributes classInit METHODS classMethod* '}';
 classAttributes: ATTRIBUTES attributesDeclaration*;
 classMethod: (PRIVATE | PUBLIC?) functions;

@@ -97,13 +97,13 @@ func (l *MyListener) EnterProgram(c *parser.ProgramContext) {
 }
 
 func (l *MyListener) EnterClassDef(c *parser.ClassDefContext) {
-	if c.ID(0).GetText() == "self" {
+	if c.ID().GetText() == "self" {
 		log.Fatalln("Error: self is a reserved keyword")
 	}
-	l.scopeStack.Push(c.ID(0).GetText())
-	l.classTable[c.ID(0).GetText()] = &ClassTableContent{}
-	l.classTable[c.ID(0).GetText()].Methods = make(FunctionTable)
-	l.classTable[c.ID(0).GetText()].Attributes = make(map[string]*VariableAttributes)
+	l.scopeStack.Push(c.ID().GetText())
+	l.classTable[c.ID().GetText()] = &ClassTableContent{}
+	l.classTable[c.ID().GetText()].Methods = make(FunctionTable)
+	l.classTable[c.ID().GetText()].Attributes = make(map[string]*VariableAttributes)
 }
 
 // After defining the classes, we need to continue addressing variables to the program function.

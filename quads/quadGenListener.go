@@ -352,7 +352,7 @@ func (l *QuadGenListener) EnterArguments2(c *parser.Arguments2Context) {
 
 // Classes
 func (l *QuadGenListener) EnterClassDef(c *parser.ClassDefContext) {
-	l.m.scopeStack.Push(c.ID(0).GetText())
+	l.m.scopeStack.Push(c.ID().GetText())
 	l.m.currentFunction = l.m.scopeStack.Top()
 }
 
