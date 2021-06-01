@@ -160,9 +160,9 @@ func (vm *VirtualMachine) Run() {
 
 		case quads.RETURN:
 			if quad.Result != nil {
-				memblock := vm.getMemBlockForAddr(quad.Result.GetAddr())
+				memblock := vm.getMemBlockForElement(quad.Result)
 				value := memblock.Get(quad.Result.GetAddr())
-				memblock = vm.getMemBlockForAddr(quad.Left.GetAddr())
+				memblock = vm.getMemBlockForElement(quad.Left)
 				memblock.Set(value, quad.Left.GetAddr())
 			}
 			vm.memBlocks.Pop()
