@@ -1,6 +1,6 @@
 program test4;
 
-var fast: bool;
+var fast: bool = false;
 
 class Car {
     attributes
@@ -46,6 +46,10 @@ class Car {
 
 function getInt() int {
     return 7;
+}
+
+function fast() bool {
+    return true;
 }
 
 function writeInt(a: int) void {

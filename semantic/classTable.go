@@ -6,15 +6,20 @@ import (
 	"github.com/jpr98/compis/memory"
 )
 
+// ClassTable is a map of class IDs to ClassTableContent. Its purpose is to serve
+// as the regisrty of all classes defined in a program. ClassTable is mainly used
+// in compilation.
 type ClassTable map[string]*ClassTableContent
 
+// ClassTableContent contains all relevant data of a class. It only exists inside
+// of a ClassTable map.
 type ClassTableContent struct {
-	Attributes  map[string]*VariableAttributes
-	Methods     FunctionTable
-	VarsSize    [4]int
-	ObjSize     []memory.MemObjInfo
-	Objects     []string
-	ObjectCount int
+	Attributes  map[string]*VariableAttributes // Attributes of a given class
+	Methods     FunctionTable                  // Methods of a given class (incl. init)
+	VarsSize    [4]int                         // Number of variable attributes per type, used to assign memory
+	ObjSize     []memory.MemObjInfo            // Number of class attributes, used to assign memory
+	Objects     []string                       // Class names of all class attributes
+	ObjectCount int                            // Expected length of Objects
 }
 
 func init() {
