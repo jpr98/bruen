@@ -119,6 +119,16 @@ func (m *Manager) getOperandData(operand string) *semantic.VariableAttributes {
 				return nil
 			}
 		}
+
+		// Validate that attribute attributes have been found
+		if data.TypeOf == constants.ERR {
+			log.Fatalf(
+				"Error: (PushOperand) undeclared attribute %s in class %s\n",
+				attribute,
+				instanceData.Class,
+			)
+			return nil
+		}
 		return data
 	}
 
