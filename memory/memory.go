@@ -6,9 +6,10 @@ import (
 	"github.com/jpr98/compis/constants"
 )
 
+// MemObjInfo represents the memory needed to instantiate a Class
 type MemObjInfo struct {
-	VarSize [4]int
-	ObjSize []MemObjInfo
+	VarSize [4]int       // VarSize is the size needed for its variables of native type
+	ObjSize []MemObjInfo //ObjSize is an array with the size of variables of user defined types
 }
 
 const (
@@ -37,16 +38,18 @@ const (
 	TEMP_OBJ   = 19000
 )
 
+// Context is a string which represents a memory context
 type Context string
 
 const (
-	Global   Context = "global"
-	Local    Context = "local"
-	Temp     Context = "temp"
-	Constant Context = "constant"
-	Invalid  Context = "invalid"
+	Global   Context = "global"   // Global memory context, used by global variables
+	Local    Context = "local"    // Local memory context, used by functions
+	Temp     Context = "temp"     // Temporary memory context, used by functions in operations
+	Constant Context = "constant" // Constant memory context, used to store hardcoded constants
+	Invalid  Context = "invalid"  // Invalid memory context, usually an error
 )
 
+// TypeForAddr returns the type for a given address
 func TypeForAddr(addr int) constants.Type {
 	n := addr / 1000
 	switch n {
@@ -65,6 +68,7 @@ func TypeForAddr(addr int) constants.Type {
 	}
 }
 
+// ContextForAddr returns the memory context of a given address
 func ContextForAddr(addr int) Context {
 	n := addr / 1000
 	switch n {
@@ -87,6 +91,7 @@ func ContextForAddr(addr int) Context {
 	}
 }
 
+// Manager is a global variable used for virtual memory address assignment
 var Manager *manager = newManager()
 
 type manager struct {
@@ -143,6 +148,7 @@ func newManager() *manager {
 	}
 }
 
+// GetNextAddr returns the next available address for a given type and memory context
 func (m *manager) GetNextAddr(typeOf constants.Type, context Context) (int, error) {
 	switch context {
 	case Global:
@@ -200,6 +206,7 @@ func ConvertAddr(addr int) int {
 	}
 }
 
+// IsTempAddr returns true if an address is temporary
 func IsTempAddr(addr int) bool {
 	return (addr >= TEMP_INT && addr < CONST_INT) || addr >= TEMP_OBJ
 }
@@ -289,6 +296,8 @@ func (m *manager) getConstForType(typeOf constants.Type) int {
 	return result
 }
 
+// ResetLocalCounter resets the counters of Local memory context and returns the size
+// of the context before it was reset
 func (m *manager) ResetLocalCounter() ([4]int, int) {
 	size := [4]int{m.lInt - LOCAL_INT, m.lFloat - LOCAL_FLOAT, m.lChar - LOCAL_CHAR, m.lBool - LOCAL_BOOL}
 	objSize := m.lObj - LOCAL_OBJ
@@ -300,6 +309,8 @@ func (m *manager) ResetLocalCounter() ([4]int, int) {
 	return size, objSize
 }
 
+// ResetTempCounter resets the counters of Temporary memory context and returns the size
+// of the context before it was reset
 func (m *manager) ResetTempCounter() ([4]int, int) {
 	size := [4]int{m.tInt - TEMP_INT, m.tFloat - TEMP_FLOAT, m.tChar - TEMP_CHAR, m.tBool - TEMP_BOOL}
 	objSize := m.tObj - TEMP_OBJ
@@ -311,6 +322,7 @@ func (m *manager) ResetTempCounter() ([4]int, int) {
 	return size, objSize
 }
 
+// GetGlobalSize returns the size of the Global memory context
 func (m *manager) GetGlobalSize() ([4]int, int) {
 	return [4]int{m.gInt - GLOBAL_INT, m.gFloat - GLOBAL_FLOAT, m.gChar - GLOBAL_CHAR, m.gBool - GLOBAL_BOOL}, m.gObj - GLOBAL_OBJ
 }
