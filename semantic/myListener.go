@@ -350,7 +350,6 @@ func (l *MyListener) EnterVarsDecArray(c *parser.VarsDecArrayContext) {
 		currVariable = NewVariableAttributes(id, t, dir)
 
 	} /*else if c.ID(1) != nil { Arreglos de objetos
-		// TODO: Asegurarnos que la clase existe
 		if _, exists := l.classTable[c.ID(1).GetText()]; !exists {
 			log.Fatalf("Error: Undefined type %s", c.ID(0).GetText())
 		}

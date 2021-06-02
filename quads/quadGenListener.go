@@ -209,7 +209,6 @@ func (l *QuadGenListener) ExitWhileLoop2(c *parser.WhileLoop2Context) {
 }
 
 func (l *QuadGenListener) ExitForLoop(c *parser.ForLoopContext) {
-	// TODO: change this string to constant(1) address
 	l.m.PushConstantOperand("1")
 	l.m.PushOp("+")
 	l.m.GenerateQuad([]int{constants.OPPLUS}, true)
@@ -304,7 +303,6 @@ func (l *QuadGenListener) ExitProgram(c *parser.ProgramContext) {
 	l.m.functionTable[l.m.globalName].ObjectCount = objSize
 	l.m.setObjectSize()
 	l.m.scopeStack.Pop()
-	fmt.Println(l.m.operands)
 }
 
 func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {
@@ -335,7 +333,6 @@ func (l *QuadGenListener) ExitFunctionCall(c *parser.FunctionCallContext) {
 }
 
 func (l *QuadGenListener) EnterArguments2(c *parser.Arguments2Context) {
-	fmt.Println(c.GetStart().GetLine())
 	if l.m.currentFunctionCallClass.Top() != "" { // This is how we know in this point we are calling a method
 		l.m.AddClassParamQuad()
 		aux := l.m.paramCounter.Pop()

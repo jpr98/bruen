@@ -59,7 +59,10 @@ function add(a: int, b: int) int {
 main() {
     var c: Car;
     var car: Car;
-    var arr: [3]bool;
+    var arr: [2]int;
+
+    arr[0] = -10;
+    arr[1] = 90;
     c = new Car();
     car = new Car();
 
@@ -74,4 +77,6 @@ main() {
 
     writeInt(car.getMotorNum() + add(getInt(),2));
     write(car.getMotorNum());
+
+    writeInt(arr[0]);
 }

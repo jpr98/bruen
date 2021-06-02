@@ -51,21 +51,23 @@ func compile() {
 	// Creates the parser
 	p := parser.NewProyectoParser(stream)
 
+	p.RemoveErrorListeners()
+	errorListener := semantic.NewErrorListener()
+	p.AddErrorListener(&errorListener)
+
 	listener := semantic.NewListener()
 	antlr.ParseTreeWalkerDefault.Walk(&listener, p.Program())
 
-	fmt.Println("\n---------")
+	if errorListener.FoundError {
+		os.Exit(1)
+	}
+
 	stream.Seek(0)
 	p = parser.NewProyectoParser(stream)
 
-	debugFT(listener.GetFunctionTable())
 	var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable(), listener.GetClassTable())
 	antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
 	quads := quadListener.GetManager().GetQuads()
-	for i, q := range quads {
-		fmt.Printf("%d. %s\n", i, q)
-	}
-	fmt.Println("\n---------")
 
 	f, err := os.Create("out.obj")
 	if err != nil {
@@ -100,11 +102,11 @@ func execute() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("\n---------")
-	for i, q := range m {
-		fmt.Printf("%d. %s\n", i, q)
-	}
-	fmt.Println("\n---------")
+	// fmt.Println("\n---------")
+	// for i, q := range m {
+	// 	fmt.Printf("%d. %s\n", i, q)
+	// }
+	// fmt.Println("\n---------")
 
 	var ft semantic.FunctionTable
 	err = dec.Decode(&ft)
