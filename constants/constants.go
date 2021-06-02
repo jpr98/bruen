@@ -1,18 +1,19 @@
 package constants
 
+// Type represents a type in the compiler
 type Type int
 
 const (
-	TYPEINT   Type = 0 // 0
-	TYPEFLOAT Type = 1 // 1
-	TYPECHAR  Type = 2 // 2
-	TYPEBOOL  Type = 3 // 3
+	TYPEINT   Type = 0 // An integer
+	TYPEFLOAT Type = 1 // A float
+	TYPECHAR  Type = 2 // A character
+	TYPEBOOL  Type = 3 // A boolean
 
-	TYPECLASS Type = 4
+	TYPECLASS Type = 4 // A class, not specific
 
-	VOID Type = 5
-	ERR  Type = 6 // 5
-	ADDR Type = 7
+	VOID Type = 5 // Void return type
+	ERR  Type = 6 // Error in a type
+	ADDR Type = 7 // An address in the compiler
 )
 
 func (t Type) String() string {
@@ -38,6 +39,7 @@ func (t Type) String() string {
 	}
 }
 
+// StringToType takes a string and tries to match it to a defined type
 func StringToType(str string) Type {
 	switch str {
 	case TYPEINT.String():
