@@ -61,13 +61,12 @@ function add(a: int, b: int) int {
 }
 
 main() {
-    var c: Car;
+    var c: Car = new Car();
     var car: Car;
     var arr: [2]int;
 
     arr[0] = -10;
     arr[1] = 90;
-    c = new Car();
     car = new Car();
 
     c.setMotorNum(2021);

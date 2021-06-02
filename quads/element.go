@@ -8,10 +8,19 @@ import (
 
 // Element represents an element in a Quadruple
 type Element interface {
+	// GetAddr returns the memory address of the element
 	GetAddr() int
+	// Type returns the type of the element
 	Type() constants.Type
+	// String is the string representation of the element
 	String() string
+	// ID returns the id of the element, we also add tags to this field
+	//
+	// Tags:
+	// 	`self_`: element belongs to an instance, the instance address is found between the 1st and 2nd `_`
+	// 	`ptr_`: element value is a pointer to an address
 	ID() string
+	// ClassName returns the class of the element, is empty string if Type() is not constants.TYPECLASS
 	ClassName() string
 }
 
