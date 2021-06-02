@@ -12,8 +12,10 @@ func (ms *MemoryStack) Push(mem Memory) {
 	ms.stack = append(ms.stack, mem)
 }
 
-func (ms *MemoryStack) Pop() {
+func (ms *MemoryStack) Pop() Memory {
+	memory := ms.Top()
 	ms.stack = ms.stack[:len(ms.stack)-1]
+	return memory
 }
 
 func (ms *MemoryStack) Empty() bool {

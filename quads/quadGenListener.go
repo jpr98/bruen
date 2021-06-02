@@ -15,8 +15,7 @@ type QuadGenListener struct {
 	*parser.BaseProyectoListener
 	m *Manager
 
-	enteredVarInit  bool
-	isArgumentParam bool
+	enteredVarInit bool
 }
 
 func NewListener(functionTable semantic.FunctionTable, classTable semantic.ClassTable) QuadGenListener {
@@ -320,37 +319,36 @@ func (l *QuadGenListener) EnterFunctionCall(c *parser.FunctionCallContext) {
 	if !exists {
 		if isMethodCall, className := l.m.CheckImplicitMethodCall(c.ID().GetText()); isMethodCall {
 			l.m.AddEraQuad(c.ID().GetText(), className)
-			l.isArgumentParam = true
 			return
 		}
 		log.Fatalf("Error: (EnterFunctionCall) undeclared function %s", c.ID().GetText())
 	}
 	l.m.AddEraQuad(c.ID().GetText(), "")
-	l.isArgumentParam = true
 }
 
 func (l *QuadGenListener) ExitFunctionCall(c *parser.FunctionCallContext) {
 	if isMethodCall, className := l.m.CheckImplicitMethodCall(c.ID().GetText()); isMethodCall {
 		l.m.AddClassGoSubQuad(className, "self")
-		l.isArgumentParam = false
 		return
 	}
 	l.m.AddGoSubQuad()
-	l.isArgumentParam = false
 }
 
 func (l *QuadGenListener) EnterArguments2(c *parser.Arguments2Context) {
-	if !l.isArgumentParam {
-		l.m.AddWriteQuad()
-		return
-	}
-	if l.m.currentFunctionCallClass != "" { // This is how we know in this point we are calling a method
+	fmt.Println(c.GetStart().GetLine())
+	if l.m.currentFunctionCallClass.Top() != "" { // This is how we know in this point we are calling a method
 		l.m.AddClassParamQuad()
-		l.m.paramCounter++
+		aux := l.m.paramCounter.Pop()
+		l.m.paramCounter.Push(aux + 1)
 		return
 	}
 	l.m.AddParamQuad()
-	l.m.paramCounter++
+	aux := l.m.paramCounter.Pop()
+	l.m.paramCounter.Push(aux + 1)
+}
+
+func (l *QuadGenListener) EnterW_arguments2(c *parser.W_arguments2Context) {
+	l.m.AddWriteQuad()
 }
 
 // Classes
@@ -409,7 +407,6 @@ func (l *QuadGenListener) EnterMethodCall(c *parser.MethodCallContext) {
 	}
 
 	l.m.AddEraQuad(c.ID(1).GetText(), className)
-	l.isArgumentParam = true
 }
 
 func (l *QuadGenListener) ExitMethodCall(c *parser.MethodCallContext) {
@@ -427,5 +424,4 @@ func (l *QuadGenListener) ExitMethodCall(c *parser.MethodCallContext) {
 	}
 
 	l.m.AddClassGoSubQuad(className, c.ID(0).GetText())
-	l.isArgumentParam = false
 }

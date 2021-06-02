@@ -123,7 +123,9 @@ read: READ LPAREN read2 RPAREN SEMI;
 read2: (vars | varArray | varMat) read3;
 read3: ',' read2 | ;
 
-write: WRITE LPAREN arguments RPAREN SEMI;
+write: WRITE LPAREN w_arguments RPAREN SEMI;
+w_arguments: exp w_arguments2;
+w_arguments2: ',' w_arguments | ;
 
 conditional: IF conditional2 conditional3 conditional4?;
 conditional2: LPAREN exp RPAREN;

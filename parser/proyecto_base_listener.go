@@ -243,6 +243,18 @@ func (s *BaseProyectoListener) EnterWrite(ctx *WriteContext) {}
 // ExitWrite is called when production write is exited.
 func (s *BaseProyectoListener) ExitWrite(ctx *WriteContext) {}
 
+// EnterW_arguments is called when production w_arguments is entered.
+func (s *BaseProyectoListener) EnterW_arguments(ctx *W_argumentsContext) {}
+
+// ExitW_arguments is called when production w_arguments is exited.
+func (s *BaseProyectoListener) ExitW_arguments(ctx *W_argumentsContext) {}
+
+// EnterW_arguments2 is called when production w_arguments2 is entered.
+func (s *BaseProyectoListener) EnterW_arguments2(ctx *W_arguments2Context) {}
+
+// ExitW_arguments2 is called when production w_arguments2 is exited.
+func (s *BaseProyectoListener) ExitW_arguments2(ctx *W_arguments2Context) {}
+
 // EnterConditional is called when production conditional is entered.
 func (s *BaseProyectoListener) EnterConditional(ctx *ConditionalContext) {}
 

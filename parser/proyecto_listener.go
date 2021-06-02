@@ -119,6 +119,12 @@ type ProyectoListener interface {
 	// EnterWrite is called when entering the write production.
 	EnterWrite(c *WriteContext)
 
+	// EnterW_arguments is called when entering the w_arguments production.
+	EnterW_arguments(c *W_argumentsContext)
+
+	// EnterW_arguments2 is called when entering the w_arguments2 production.
+	EnterW_arguments2(c *W_arguments2Context)
+
 	// EnterConditional is called when entering the conditional production.
 	EnterConditional(c *ConditionalContext)
 
@@ -325,6 +331,12 @@ type ProyectoListener interface {
 
 	// ExitWrite is called when exiting the write production.
 	ExitWrite(c *WriteContext)
+
+	// ExitW_arguments is called when exiting the w_arguments production.
+	ExitW_arguments(c *W_argumentsContext)
+
+	// ExitW_arguments2 is called when exiting the w_arguments2 production.
+	ExitW_arguments2(c *W_arguments2Context)
 
 	// ExitConditional is called when exiting the conditional production.
 	ExitConditional(c *ConditionalContext)

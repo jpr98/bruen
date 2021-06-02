@@ -44,10 +44,9 @@ func NewVM(programName string, functionTable semantic.FunctionTable, classTable 
 }
 
 func (vm *VirtualMachine) Run() {
-	var fmb Memory
+	fmb := MemoryStack{} // keeps Memory of functions not yet activated
 	for vm.pointer < len(vm.quads) {
 		quad := vm.quads[vm.pointer]
-
 		switch quad.Action {
 		case quads.ADD, quads.SUB, quads.MUL, quads.DIV:
 			vm.handleArithmeticOp(quad)
@@ -112,13 +111,13 @@ func (vm *VirtualMachine) Run() {
 		case quads.ERA:
 			if quad.Left.ClassName() == "" {
 				ftc := vm.functionTable[quad.Left.ID()]
-				fmb = NewMemory(ftc.VarsSize, ftc.TempSize, ftc.ObjSize)
+				fmb.Push(NewMemory(ftc.VarsSize, ftc.TempSize, ftc.ObjSize))
 				if quad.Left.ID() == "main" {
-					vm.memBlocks.Push(fmb)
+					vm.memBlocks.Push(fmb.Pop())
 				}
 			} else {
 				methodInfo := vm.classTable[quad.Left.ClassName()].Methods[quad.Left.ID()]
-				fmb = NewMemory(methodInfo.VarsSize, methodInfo.TempSize, methodInfo.ObjSize)
+				fmb.Push(NewMemory(methodInfo.VarsSize, methodInfo.TempSize, methodInfo.ObjSize))
 			}
 
 			vm.pointer++
@@ -127,7 +126,7 @@ func (vm *VirtualMachine) Run() {
 			memblock := vm.getMemBlockForAddr(quad.Left.GetAddr())
 			value := memblock.Get(quad.Left.GetAddr())
 
-			err := fmb.Set(value, quad.Right.GetAddr())
+			err := fmb.Top().Set(value, quad.Right.GetAddr())
 			if err != nil {
 				log.Fatalf("Error: (Run) quads.PARAM %s", err)
 			}
@@ -138,7 +137,7 @@ func (vm *VirtualMachine) Run() {
 			vm.pointer++
 
 		case quads.GOSUB:
-			vm.memBlocks.Push(fmb)
+			vm.memBlocks.Push(fmb.Pop())
 			vm.pointerStack.Push(vm.pointer + 1)
 			if quad.Left.ClassName() != "" {
 				vm.pointer = vm.classTable[quad.Left.ClassName()].Methods[quad.Left.ID()].Dir

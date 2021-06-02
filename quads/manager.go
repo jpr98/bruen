@@ -47,9 +47,9 @@ type Manager struct {
 	globalName      string
 	currentFunction string
 
-	currentFunctionCall      string
-	currentFunctionCallClass string
-	paramCounter             int
+	currentFunctionCall      utils.StringStack
+	currentFunctionCallClass utils.StringStack
+	paramCounter             utils.IntStack
 	avail                    int
 }
 
@@ -419,20 +419,21 @@ func (m *Manager) AddEraQuad(name, className string) {
 	q := Quad{ERA, n, nil, nil}
 	m.quads = append(m.quads, q)
 
-	m.currentFunctionCall = name
-	m.currentFunctionCallClass = className
-	m.paramCounter = 0
+	m.currentFunctionCall.Push(name)
+	m.currentFunctionCallClass.Push(className)
+	m.paramCounter.Push(0)
 }
 
 func (m *Manager) AddParamQuad() {
-	if m.paramCounter >= len(m.functionTable[m.currentFunctionCall].Params) {
+	if m.paramCounter.Top() >= len(m.functionTable[m.currentFunctionCall.Top()].Params) {
 		log.Fatalf(
-			"Error: (AddGoSubQuad) function %s has too many arguments",
+			"Error: (AddGoSubQuad) function %s has too many arguments %d",
 			m.currentFunctionCall,
+			m.paramCounter,
 		)
 	}
 
-	expectedType := memory.TypeForAddr(m.functionTable[m.currentFunctionCall].Params[m.paramCounter])
+	expectedType := memory.TypeForAddr(m.functionTable[m.currentFunctionCall.Top()].Params[m.paramCounter.Top()])
 	arg := m.operands.Pop()
 	t := semantic.Cube.ValidateBinaryOperation(expectedType, arg.Type(), int(constants.OPASSIGN))
 	if t == constants.ERR {
@@ -443,20 +444,20 @@ func (m *Manager) AddParamQuad() {
 		)
 	}
 
-	argNum := NewElement(m.functionTable[m.currentFunctionCall].Params[m.paramCounter], fmt.Sprintf("%d", m.paramCounter), expectedType, "")
+	argNum := NewElement(m.functionTable[m.currentFunctionCall.Top()].Params[m.paramCounter.Top()], fmt.Sprintf("%d", m.paramCounter), expectedType, "")
 	q := Quad{PARAM, arg, argNum, nil}
 	m.quads = append(m.quads, q)
 }
 
 func (m *Manager) AddClassParamQuad() {
-	if m.paramCounter >= len(m.classTable[m.currentFunctionCallClass].Methods[m.currentFunctionCall].Params) {
+	if m.paramCounter.Top() >= len(m.classTable[m.currentFunctionCallClass.Top()].Methods[m.currentFunctionCall.Top()].Params) {
 		log.Fatalf(
 			"Error: (AddGoSubQuad) function %s has too many arguments",
 			m.currentFunctionCall,
 		)
 	}
 
-	expectedType := memory.TypeForAddr(m.classTable[m.currentFunctionCallClass].Methods[m.currentFunctionCall].Params[m.paramCounter])
+	expectedType := memory.TypeForAddr(m.classTable[m.currentFunctionCallClass.Top()].Methods[m.currentFunctionCall.Top()].Params[m.paramCounter.Top()])
 	arg := m.operands.Pop()
 	t := semantic.Cube.ValidateBinaryOperation(expectedType, arg.Type(), int(constants.OPASSIGN))
 	if t == constants.ERR {
@@ -467,31 +468,31 @@ func (m *Manager) AddClassParamQuad() {
 		)
 	}
 
-	argNum := NewElement(m.classTable[m.currentFunctionCallClass].Methods[m.currentFunctionCall].Params[m.paramCounter], fmt.Sprintf("%d", m.paramCounter), expectedType, "")
+	argNum := NewElement(m.classTable[m.currentFunctionCallClass.Top()].Methods[m.currentFunctionCall.Top()].Params[m.paramCounter.Top()], fmt.Sprintf("%d", m.paramCounter), expectedType, "")
 	q := Quad{PARAM, arg, argNum, nil}
 	m.quads = append(m.quads, q)
 }
 
 func (m *Manager) AddGoSubQuad() {
-	if m.paramCounter < len(m.functionTable[m.currentFunctionCall].Params) {
+	if m.paramCounter.Top() < len(m.functionTable[m.currentFunctionCall.Top()].Params) {
 		log.Fatalf(
 			"Error: (AddGoSubQuad) function %s has too few arguments",
-			m.currentFunctionCall,
+			m.currentFunctionCall.Top(),
 		)
 	}
 
-	dir := m.functionTable[m.currentFunctionCall].Dir
-	n := NewElement(0, m.currentFunctionCall, constants.TYPEINT, "")
+	dir := m.functionTable[m.currentFunctionCall.Top()].Dir
+	n := NewElement(0, m.currentFunctionCall.Top(), constants.TYPEINT, "")
 	dirElement := NewElement(dir, "", constants.ADDR, "")
 	q := Quad{GOSUB, n, nil, dirElement}
 	m.quads = append(m.quads, q)
 
-	if m.functionTable[m.currentFunctionCall].TypeOf != constants.VOID {
-		resultType := m.functionTable[m.currentFunctionCall].TypeOf
+	if m.functionTable[m.currentFunctionCall.Top()].TypeOf != constants.VOID {
+		resultType := m.functionTable[m.currentFunctionCall.Top()].TypeOf
 		if resultType == constants.ERR {
 			log.Fatalf(
 				"Error: (AddGoSubQuad) error in return type %s",
-				m.functionTable[m.currentFunctionCall].TypeOf,
+				m.functionTable[m.currentFunctionCall.Top()].TypeOf,
 			)
 		}
 
@@ -502,42 +503,45 @@ func (m *Manager) AddGoSubQuad() {
 		result := NewElement(dir, m.getNextAvail(), resultType, "")
 		m.operands.Push(result)
 
-		returnDir := m.functionTable[m.currentFunctionCall].ReturnDir
+		returnDir := m.functionTable[m.currentFunctionCall.Top()].ReturnDir
 		funcReturnElement := NewElement(returnDir, "", constants.ADDR, "")
 		q := Quad{ASSIGN, funcReturnElement, nil, result}
 		m.quads = append(m.quads, q)
 	}
+	m.currentFunctionCall.Pop()
+	m.currentFunctionCallClass.Pop()
+	m.paramCounter.Pop()
 }
 
 func (m *Manager) AddClassGoSubQuad(className, instance string) {
-	if m.paramCounter < len(m.classTable[className].Methods[m.currentFunctionCall].Params) {
+	if m.paramCounter.Top() < len(m.classTable[className].Methods[m.currentFunctionCall.Top()].Params) {
 		log.Fatalf(
 			"Error: (AddClassGoSubQuad) function %s has too few arguments",
-			m.currentFunctionCall,
+			m.currentFunctionCall.Top(),
 		)
 	}
 
-	if m.currentFunctionCall != "init" {
+	if m.currentFunctionCall.Top() != "init" {
 		selfDir := m.getCurrentFunctionTable()[m.currentFunction].Vars[instance].Dir
-		m.classTable[className].Methods[m.currentFunctionCall].Vars["self"].Dir = selfDir
+		m.classTable[className].Methods[m.currentFunctionCall.Top()].Vars["self"].Dir = selfDir
 		instanceName := fmt.Sprintf("self_%d_%s", selfDir, instance)
 		instanceElement := NewElement(selfDir, instanceName, constants.ADDR, className)
 		q := Quad{INSTANCE, instanceElement, nil, nil}
 		m.quads = append(m.quads, q)
 	}
 
-	dir := m.classTable[className].Methods[m.currentFunctionCall].Dir
-	n := NewElement(0, m.currentFunctionCall, constants.TYPEINT, className)
+	dir := m.classTable[className].Methods[m.currentFunctionCall.Top()].Dir
+	n := NewElement(0, m.currentFunctionCall.Top(), constants.TYPEINT, className)
 	dirElement := NewElement(dir, "", constants.ADDR, "")
 	q := Quad{GOSUB, n, nil, dirElement}
 	m.quads = append(m.quads, q)
 
-	if m.classTable[className].Methods[m.currentFunctionCall].TypeOf != constants.VOID {
-		resultType := m.classTable[className].Methods[m.currentFunctionCall].TypeOf
+	if m.classTable[className].Methods[m.currentFunctionCall.Top()].TypeOf != constants.VOID {
+		resultType := m.classTable[className].Methods[m.currentFunctionCall.Top()].TypeOf
 		if resultType == constants.ERR {
 			log.Fatalf(
 				"Error: (AddClassGoSubQuad) error in return type %s",
-				m.classTable[className].Methods[m.currentFunctionCall].TypeOf,
+				m.classTable[className].Methods[m.currentFunctionCall.Top()].TypeOf,
 			)
 		}
 
@@ -547,19 +551,21 @@ func (m *Manager) AddClassGoSubQuad(className, instance string) {
 		}
 
 		var resultClass string
-		if m.currentFunctionCall == "init" {
+		if m.currentFunctionCall.Top() == "init" {
 			resultClass = className
 			m.getCurrentFunctionTable()[m.currentFunction].Objects = append(m.getCurrentFunctionTable()[m.currentFunction].Objects, className)
 		}
 		result := NewElement(dir, m.getNextAvail(), resultType, resultClass)
 		m.operands.Push(result)
 
-		returnDir := m.classTable[className].Methods[m.currentFunctionCall].ReturnDir
+		returnDir := m.classTable[className].Methods[m.currentFunctionCall.Top()].ReturnDir
 		funcReturnElement := NewElement(returnDir, "", constants.ADDR, "")
 		q := Quad{ASSIGN, funcReturnElement, nil, result}
 		m.quads = append(m.quads, q)
 	}
-	m.currentFunctionCallClass = ""
+	m.currentFunctionCall.Pop()
+	m.currentFunctionCallClass.Pop()
+	m.paramCounter.Pop()
 }
 
 // CheckImplicitMethodCall decides if a function call should be thought of as a method
