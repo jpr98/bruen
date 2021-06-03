@@ -9,23 +9,29 @@ import (
 	"github.com/jpr98/compis/semantic"
 )
 
+// Memory is the interface representing a memory block in the virtual machine
 type Memory interface {
+	// Get returns the value stored in a given address
 	Get(addr int) interface{}
+	// Set assigns a value to a given address
 	Set(value interface{}, addr int) error
 }
 
+// mem is the memory block on which the Memory interfacee makes operations
 type mem struct {
-	vars    memblock
-	temps   memblock
-	objects []Memory // Con el id de la instancia de una clase (dado por id.), buscamos si bloque de memoria y de ahi todo normal
+	vars    memblock // Local atomic variables
+	temps   memblock // Temporary atomic variables
+	objects []Memory // Memory blocks for constants.TYPECLASS variables
 }
 
+// memblock is a mapping from type to an array of stores values
 type memblock map[constants.Type][]interface{}
 
 func (m mem) String() string {
 	return fmt.Sprintf("Local: %v, Temp: %v, Objects: %v", m.vars, m.temps, m.objects)
 }
 
+// NewMemory creates a new Memory with the given sizes
 func NewMemory(varSizes, tempSizes [4]int, objInfo []memory.MemObjInfo) Memory {
 	m := mem{}
 	m.vars = make(memblock)
@@ -128,6 +134,7 @@ func (m *mem) Set(value interface{}, addr int) error {
 	}
 }
 
+// MakeConstantMemory creates the Memory for constants taken from the global variable semantic.ConstantsTable
 func MakeConstantMemory() Memory {
 	m := mem{}
 	m.vars = make(memblock)
@@ -164,45 +171,3 @@ func MakeConstantMemory() Memory {
 	}
 	return &m
 }
-
-/*
-map[int][]int
-
-x : float = 10.0
-
-func test {
-	a, b, c : int = 1, 2, 3
-	ch : char
-	a = b + x
-	test()
-}
-
-global.getFloat(1001) -> 10.0
-
-global = [TYPEINT : [],
-		TYPEFLOAT : [10.0],
-		TYPEBOOL : [],
-		TYPECHAR : []]
-
-stack [
-memtest = [TYPEINT : [ 1, 2, 3],
-		TYPEBOOL : [],
-		TYPECHAR : []]
-
-memtest2 = {var: [TYPEINT : [ 1, 2, 3],
-					TYPEBOOL : [],
-					TYPECHAR : []],
-
-			temp: [TYPEINT : [ 1, 2, 3],
-					TYPEBOOL : [],
-					TYPECHAR : []]
-			}
-
-memtest3 = [TYPEINT : [ 1, 2, 3],
-		TYPEBOOL : [],
-		TYPECHAR : []]
-]
-
-		// 1002
-
-*/

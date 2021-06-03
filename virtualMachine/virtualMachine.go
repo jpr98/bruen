@@ -15,21 +15,24 @@ import (
 	"github.com/jpr98/compis/semantic"
 )
 
+// VirtualMachine is in charge of executing a given set of instructions. It contains
+// and manages the memory needed to execute a program.
 type VirtualMachine struct {
-	globalMemBlock   Memory
-	memBlocks        MemoryStack
-	constantMemBlock Memory
-	pointer          int // the index of current Quad
-	pointerStack     PointerStack
+	globalMemBlock   Memory       // The global memory block of the program
+	memBlocks        MemoryStack  // The stack of functions memory block
+	constantMemBlock Memory       // The constants memory block
+	pointer          int          // The instruction pointer of current Quad
+	pointerStack     PointerStack // Keeps track of pending instruction pointers
 
-	currentSelf Memory
+	currentSelf Memory // The memory block for an instance, acting as self in a method
 
-	quads         []quads.Quad
-	programName   string
-	functionTable semantic.FunctionTable
-	classTable    semantic.ClassTable
+	quads         []quads.Quad           // The given program instructions
+	programName   string                 // The name of the program (also known as globalName)
+	functionTable semantic.FunctionTable // The FunctionTable of the compiled program
+	classTable    semantic.ClassTable    // The ClassTable of the compiled program
 }
 
+// NewVM creates a virtual machine for the given program, function and class tables and instruction set
 func NewVM(programName string, functionTable semantic.FunctionTable, classTable semantic.ClassTable, quads []quads.Quad) VirtualMachine {
 	gmb := NewMemory(functionTable[programName].VarsSize, functionTable[programName].TempSize, functionTable[programName].ObjSize)
 	return VirtualMachine{
@@ -43,6 +46,7 @@ func NewVM(programName string, functionTable semantic.FunctionTable, classTable 
 	}
 }
 
+// Run iterates over the program's instructions and handles each quad.Action correspondingly
 func (vm *VirtualMachine) Run() {
 	fmb := MemoryStack{} // keeps Memory of functions not yet activated
 	for vm.pointer < len(vm.quads) {
@@ -165,6 +169,9 @@ func (vm *VirtualMachine) Run() {
 	}
 }
 
+// getMemBlockForElement returns the memory block for a given element's address. If the
+// element has the `self_` tag it gets the memory block of the self instance indicated by
+// the addr in the tag. If the tag is -1 we use the currentSelf.
 func (vm *VirtualMachine) getMemBlockForElement(elem quads.Element) Memory {
 	if strings.Contains(elem.ID(), "self_") {
 		strElements := strings.Split(elem.ID(), "_")
@@ -188,6 +195,7 @@ func (vm *VirtualMachine) getMemBlockForElement(elem quads.Element) Memory {
 	return vm.getMemBlockForAddr(elem.GetAddr())
 }
 
+// getMemBlockForAddr returns the memory block for a given address
 func (vm *VirtualMachine) getMemBlockForAddr(addr int) Memory {
 	context := memory.ContextForAddr(addr)
 	var memBlock Memory
@@ -204,6 +212,8 @@ func (vm *VirtualMachine) getMemBlockForAddr(addr int) Memory {
 	return memBlock
 }
 
+// handleInstance sets the self instance for the given quad, if the self dir is -1
+// we continue using the currentSelf instance
 func (vm *VirtualMachine) handleInstance(quad quads.Quad) {
 	if strings.Contains(quad.Left.ID(), "self_") {
 		strElements := strings.Split(quad.Left.ID(), "_")
@@ -230,6 +240,9 @@ func (vm *VirtualMachine) handleInstance(quad quads.Quad) {
 	}
 }
 
+// handleArithmeticOp casts the operands to float, makes the appropiate arithemtic
+// operation and sets the result in the result memory address. If the result type
+// is constants.TYPEINT we round the result.
 func (vm *VirtualMachine) handleArithmeticOp(quad quads.Quad) {
 	left, ok := vm.getValueForElement(quad.Left).(float64)
 	if !ok {
@@ -257,7 +270,7 @@ func (vm *VirtualMachine) handleArithmeticOp(quad quads.Quad) {
 		res = left * right
 	case quads.DIV:
 		if right == 0 {
-			log.Fatalf("Error: (handleAdd) zero division")
+			log.Fatalf("Error: (handleArithmeticOp) zero division")
 		}
 		res = left / right
 	}
@@ -273,6 +286,9 @@ func (vm *VirtualMachine) handleArithmeticOp(quad quads.Quad) {
 	}
 }
 
+// handleRelOp performs a relational operation between two values, it gets the type
+// of the left operand and switches over its type to also cast the right operand to
+// the same type, then it performs the operation and sets the result value.
 func (vm *VirtualMachine) handleRelOp(quad quads.Quad) {
 	var res bool
 	lTemp := vm.getValueForElement(quad.Left)
@@ -326,6 +342,7 @@ func (vm *VirtualMachine) handleRelOp(quad quads.Quad) {
 	}
 }
 
+// handleLogicOp performs a logic operation between to boolean values
 func (vm *VirtualMachine) handleLogicOp(quad quads.Quad) {
 	left, ok := vm.getValueForElement(quad.Left).(bool)
 	if !ok {
@@ -356,6 +373,9 @@ func (vm *VirtualMachine) handleLogicOp(quad quads.Quad) {
 	}
 }
 
+// handleRead creates a stdin reader and reads until a newline is found, gets the memory
+// block needed to store the value, tries to cast the value to the expected type and saves
+// the result.
 func (vm *VirtualMachine) handleRead(quad quads.Quad) {
 	reader := bufio.NewReader(os.Stdin)
 	bytes, _ := reader.ReadBytes('\n')
@@ -394,11 +414,11 @@ func (vm *VirtualMachine) handleRead(quad quads.Quad) {
 	case constants.TYPEFLOAT:
 		floatVal, err := strconv.ParseFloat(str, 64)
 		if err != nil {
-			//TODO: handle err
+			log.Println("Warning: read to float expects float")
 		}
 		err = memblock.Set(floatVal, addr)
 		if err != nil {
-			//TODO: handle err
+			log.Fatalf("Error: (handleRead) %s", err)
 		}
 
 	case constants.TYPECHAR:
@@ -406,24 +426,25 @@ func (vm *VirtualMachine) handleRead(quad quads.Quad) {
 			runeVal := str[0]
 			err := memblock.Set(runeVal, addr)
 			if err != nil {
-				//TODO: handle err
+				log.Fatalf("Error: (handleRead) %s", err)
 			}
 		} else {
-			//TODO: handle err
+			log.Println("Warning: read to char expects a single char")
 		}
 
 	case constants.TYPEBOOL:
 		boolVal, err := strconv.ParseBool(str)
 		if err != nil {
-			fmt.Println("Warning: Input does not match to bool value, setting value to false")
+			fmt.Println("Warning: read to bool expects bool")
 		}
 		err = memblock.Set(boolVal, addr)
 		if err != nil {
-			//TODO: handle err
+			log.Fatalf("Error: (handleRead) %s", err)
 		}
 	}
 }
 
+// handleWrite prints to stdout
 func (vm *VirtualMachine) handleWrite(quad quads.Quad) {
 	value := vm.getValueForElement(quad.Result)
 	switch value.(type) {
@@ -438,6 +459,7 @@ func (vm *VirtualMachine) handleWrite(quad quads.Quad) {
 	}
 }
 
+// handleCalcDir calculates the array direction for a given index
 func (vm *VirtualMachine) handleCalcDir(quad quads.Quad) {
 	memblock := vm.getMemBlockForElement(quad.Right)
 	index, ok := memblock.Get(quad.Right.GetAddr()).(float64)
@@ -445,13 +467,15 @@ func (vm *VirtualMachine) handleCalcDir(quad quads.Quad) {
 		log.Fatalf("Error: (handleCalcDir) couldn't cast index to float64")
 	}
 	realAddr := float64(quad.Left.GetAddr()) + index
-	memblock = vm.getMemBlockForAddr(quad.Result.GetAddr()) // Aqui no usamos getMemBlockForElement porque un pointer siempre es un temporal de la función, nunca un atributo, por lo tanto no queremos buscar una instancia
+	memblock = vm.getMemBlockForAddr(quad.Result.GetAddr()) // Here we don't call getMemBlockForElement since a pointer is always a temporary value inside a function, never an attribute, thus we don't want to look for an instance
 	err := memblock.Set(realAddr, quad.Result.GetAddr())
 	if err != nil {
 		log.Fatalf("Error: (handleCalcDir) %s", err)
 	}
 }
 
+// handleAssign performs an assignation instruction, if the result is an array
+// we first get the real address to the index of the array, then we set the value.
 func (vm *VirtualMachine) handleAssign(quad quads.Quad) {
 	value := vm.getValueForElement(quad.Left)
 
@@ -479,6 +503,8 @@ func (vm *VirtualMachine) handleAssign(quad quads.Quad) {
 	}
 }
 
+// getValueForElement returns the value for a given element memory address, it takes
+// into consideration ptr_ and self_ tags.
 func (vm *VirtualMachine) getValueForElement(e quads.Element) interface{} {
 	if strings.Contains(e.ID(), "ptr_") {
 		memblock := vm.getMemBlockForAddr(e.GetAddr())

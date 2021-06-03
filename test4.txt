@@ -81,5 +81,8 @@ main() {
     writeInt(car.getMotorNum() + add(getInt(),2));
     write(car.getMotorNum());
 
+    car.tires[3] = 35;
+    write(car.tires[3]);
+    
     writeInt(arr[0]);
 }
