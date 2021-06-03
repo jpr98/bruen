@@ -3,7 +3,7 @@ package semantic
 import (
 	"log"
 
-	"github.com/jpr98/compis/constants"
+	"github.com/jpr98/bruen/constants"
 )
 
 // SCube contains the validity table for type operations

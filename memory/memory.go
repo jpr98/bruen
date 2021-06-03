@@ -3,7 +3,7 @@ package memory
 import (
 	"fmt"
 
-	"github.com/jpr98/compis/constants"
+	"github.com/jpr98/bruen/constants"
 )
 
 // MemObjInfo represents the memory needed to instantiate a Class

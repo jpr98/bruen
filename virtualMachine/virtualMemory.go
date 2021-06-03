@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/jpr98/compis/constants"
-	"github.com/jpr98/compis/memory"
-	"github.com/jpr98/compis/semantic"
+	"github.com/jpr98/bruen/constants"
+	"github.com/jpr98/bruen/memory"
+	"github.com/jpr98/bruen/semantic"
 )
 
 // Memory is the interface representing a memory block in the virtual machine

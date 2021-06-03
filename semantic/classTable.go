@@ -3,7 +3,7 @@ package semantic
 import (
 	"encoding/gob"
 
-	"github.com/jpr98/compis/memory"
+	"github.com/jpr98/bruen/memory"
 )
 
 // ClassTable is a map of class IDs to ClassTableContent. Its purpose is to serve

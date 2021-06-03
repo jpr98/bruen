@@ -9,10 +9,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/jpr98/compis/constants"
-	"github.com/jpr98/compis/memory"
-	"github.com/jpr98/compis/quads"
-	"github.com/jpr98/compis/semantic"
+	"github.com/jpr98/bruen/constants"
+	"github.com/jpr98/bruen/memory"
+	"github.com/jpr98/bruen/quads"
+	"github.com/jpr98/bruen/semantic"
 )
 
 // VirtualMachine is in charge of executing a given set of instructions. It contains

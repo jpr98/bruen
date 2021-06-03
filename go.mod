@@ -1,4 +1,4 @@
-module github.com/jpr98/compis
+module github.com/jpr98/bruen
 
 go 1.16
 

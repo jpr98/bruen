@@ -3,8 +3,8 @@ package semantic
 import (
 	"encoding/gob"
 
-	"github.com/jpr98/compis/constants"
-	"github.com/jpr98/compis/memory"
+	"github.com/jpr98/bruen/constants"
+	"github.com/jpr98/bruen/memory"
 )
 
 // FunctionTable is a map of function IDs to FunctionTableContent. Its purpose is

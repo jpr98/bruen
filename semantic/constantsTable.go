@@ -3,7 +3,7 @@ package semantic
 import (
 	"encoding/gob"
 
-	"github.com/jpr98/compis/constants"
+	"github.com/jpr98/bruen/constants"
 )
 
 type constantsTableContent struct {

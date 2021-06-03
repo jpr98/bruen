@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/jpr98/compis/constants"
-	"github.com/jpr98/compis/memory"
-	"github.com/jpr98/compis/parser"
-	"github.com/jpr98/compis/semantic"
+	"github.com/jpr98/bruen/constants"
+	"github.com/jpr98/bruen/memory"
+	"github.com/jpr98/bruen/parser"
+	"github.com/jpr98/bruen/semantic"
 )
 
 // QuadGenListener contains logic to analyze a program on a semantic level. The main

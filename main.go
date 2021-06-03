@@ -7,11 +7,11 @@ import (
 	"os"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/jpr98/compis/memory"
-	"github.com/jpr98/compis/parser"
-	"github.com/jpr98/compis/quads"
-	"github.com/jpr98/compis/semantic"
-	"github.com/jpr98/compis/virtualMachine"
+	"github.com/jpr98/bruen/memory"
+	"github.com/jpr98/bruen/parser"
+	"github.com/jpr98/bruen/quads"
+	"github.com/jpr98/bruen/semantic"
+	"github.com/jpr98/bruen/virtualMachine"
 )
 
 func main() {

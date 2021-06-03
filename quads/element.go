@@ -3,7 +3,7 @@ package quads
 import (
 	"fmt"
 
-	"github.com/jpr98/compis/constants"
+	"github.com/jpr98/bruen/constants"
 )
 
 // Element represents an element in a Quadruple
