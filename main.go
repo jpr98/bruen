@@ -69,6 +69,14 @@ func compile() {
 	antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())
 	quads := quadListener.GetManager().GetQuads()
 
+	if len(os.Args) > 3 {
+		if os.Args[3] == "-d" {
+			for i, q := range quads {
+				fmt.Printf("%d. %s\n", i, q)
+			}
+		}
+	}
+
 	f, err := os.Create("out.obj")
 	if err != nil {
 		panic(err)
