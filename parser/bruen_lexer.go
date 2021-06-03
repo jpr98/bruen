@@ -1,4 +1,4 @@
-// Code generated from Proyecto.g4 by ANTLR 4.9.1. DO NOT EDIT.
+// Code generated from Bruen.g4 by ANTLR 4.9.1. DO NOT EDIT.
 
 package parser
 
@@ -201,21 +201,21 @@ var lexerRuleNames = []string{
 	"ID",
 }
 
-type ProyectoLexer struct {
+type BruenLexer struct {
 	*antlr.BaseLexer
 	channelNames []string
 	modeNames    []string
 	// TODO: EOF string
 }
 
-// NewProyectoLexer produces a new lexer instance for the optional input antlr.CharStream.
+// NewBruenLexer produces a new lexer instance for the optional input antlr.CharStream.
 //
-// The *ProyectoLexer instance produced may be reused by calling the SetInputStream method.
+// The *BruenLexer instance produced may be reused by calling the SetInputStream method.
 // The initial lexer configuration is expensive to construct, and the object is not thread-safe;
 // however, if used within a Golang sync.Pool, the construction cost amortizes well and the
 // objects can be used in a thread-safe manner.
-func NewProyectoLexer(input antlr.CharStream) *ProyectoLexer {
-	l := new(ProyectoLexer)
+func NewBruenLexer(input antlr.CharStream) *BruenLexer {
+	l := new(BruenLexer)
 	lexerDeserializer := antlr.NewATNDeserializer(nil)
 	lexerAtn := lexerDeserializer.DeserializeFromUInt16(serializedLexerAtn)
 	lexerDecisionToDFA := make([]*antlr.DFA, len(lexerAtn.DecisionToState))
@@ -230,65 +230,65 @@ func NewProyectoLexer(input antlr.CharStream) *ProyectoLexer {
 	l.RuleNames = lexerRuleNames
 	l.LiteralNames = lexerLiteralNames
 	l.SymbolicNames = lexerSymbolicNames
-	l.GrammarFileName = "Proyecto.g4"
+	l.GrammarFileName = "Bruen.g4"
 	// TODO: l.EOF = antlr.TokenEOF
 
 	return l
 }
 
-// ProyectoLexer tokens.
+// BruenLexer tokens.
 const (
-	ProyectoLexerT__0       = 1
-	ProyectoLexerT__1       = 2
-	ProyectoLexerT__2       = 3
-	ProyectoLexerT__3       = 4
-	ProyectoLexerT__4       = 5
-	ProyectoLexerT__5       = 6
-	ProyectoLexerT__6       = 7
-	ProyectoLexerT__7       = 8
-	ProyectoLexerT__8       = 9
-	ProyectoLexerT__9       = 10
-	ProyectoLexerINT        = 11
-	ProyectoLexerFLOAT      = 12
-	ProyectoLexerCHAR       = 13
-	ProyectoLexerBOOL       = 14
-	ProyectoLexerWS         = 15
-	ProyectoLexerOR         = 16
-	ProyectoLexerAND        = 17
-	ProyectoLexerGT         = 18
-	ProyectoLexerLT         = 19
-	ProyectoLexerEQ         = 20
-	ProyectoLexerNEQ        = 21
-	ProyectoLexerMUL        = 22
-	ProyectoLexerDIV        = 23
-	ProyectoLexerADD        = 24
-	ProyectoLexerSUB        = 25
-	ProyectoLexerSEMI       = 26
-	ProyectoLexerASSIGN     = 27
-	ProyectoLexerLPAREN     = 28
-	ProyectoLexerRPAREN     = 29
-	ProyectoLexerIF         = 30
-	ProyectoLexerELSE       = 31
-	ProyectoLexerWHILE      = 32
-	ProyectoLexerFOR        = 33
-	ProyectoLexerIN         = 34
-	ProyectoLexerCLASS      = 35
-	ProyectoLexerATTRIBUTES = 36
-	ProyectoLexerMETHODS    = 37
-	ProyectoLexerINIT       = 38
-	ProyectoLexerPRIVATE    = 39
-	ProyectoLexerPUBLIC     = 40
-	ProyectoLexerWRITE      = 41
-	ProyectoLexerREAD       = 42
-	ProyectoLexerFUNCTION   = 43
-	ProyectoLexerRETURN     = 44
-	ProyectoLexerMAIN       = 45
-	ProyectoLexerVAR        = 46
-	ProyectoLexerINT_TYPE   = 47
-	ProyectoLexerFLOAT_TYPE = 48
-	ProyectoLexerCHAR_TYPE  = 49
-	ProyectoLexerBOOL_TYPE  = 50
-	ProyectoLexerVOID       = 51
-	ProyectoLexerPROGRAM    = 52
-	ProyectoLexerID         = 53
+	BruenLexerT__0       = 1
+	BruenLexerT__1       = 2
+	BruenLexerT__2       = 3
+	BruenLexerT__3       = 4
+	BruenLexerT__4       = 5
+	BruenLexerT__5       = 6
+	BruenLexerT__6       = 7
+	BruenLexerT__7       = 8
+	BruenLexerT__8       = 9
+	BruenLexerT__9       = 10
+	BruenLexerINT        = 11
+	BruenLexerFLOAT      = 12
+	BruenLexerCHAR       = 13
+	BruenLexerBOOL       = 14
+	BruenLexerWS         = 15
+	BruenLexerOR         = 16
+	BruenLexerAND        = 17
+	BruenLexerGT         = 18
+	BruenLexerLT         = 19
+	BruenLexerEQ         = 20
+	BruenLexerNEQ        = 21
+	BruenLexerMUL        = 22
+	BruenLexerDIV        = 23
+	BruenLexerADD        = 24
+	BruenLexerSUB        = 25
+	BruenLexerSEMI       = 26
+	BruenLexerASSIGN     = 27
+	BruenLexerLPAREN     = 28
+	BruenLexerRPAREN     = 29
+	BruenLexerIF         = 30
+	BruenLexerELSE       = 31
+	BruenLexerWHILE      = 32
+	BruenLexerFOR        = 33
+	BruenLexerIN         = 34
+	BruenLexerCLASS      = 35
+	BruenLexerATTRIBUTES = 36
+	BruenLexerMETHODS    = 37
+	BruenLexerINIT       = 38
+	BruenLexerPRIVATE    = 39
+	BruenLexerPUBLIC     = 40
+	BruenLexerWRITE      = 41
+	BruenLexerREAD       = 42
+	BruenLexerFUNCTION   = 43
+	BruenLexerRETURN     = 44
+	BruenLexerMAIN       = 45
+	BruenLexerVAR        = 46
+	BruenLexerINT_TYPE   = 47
+	BruenLexerFLOAT_TYPE = 48
+	BruenLexerCHAR_TYPE  = 49
+	BruenLexerBOOL_TYPE  = 50
+	BruenLexerVOID       = 51
+	BruenLexerPROGRAM    = 52
+	BruenLexerID         = 53
 )

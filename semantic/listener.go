@@ -16,7 +16,7 @@ import (
 // assignation, access modifiers, etc. Almost all methods are called when the
 // parser visits rule nodes and emits events.
 type Listener struct {
-	*parser.BaseProyectoListener
+	*parser.BaseBruenListener
 	scopeStack          utils.StringStack // Keeps track of the current scope
 	currentFunction     string
 	ProgramName         string

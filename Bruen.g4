@@ -1,5 +1,5 @@
-// Proyecto.g4
-grammar Proyecto;
+// Bruen.g4
+grammar Bruen;
 
 // Tokens
 INT: '-'? [0-9]+;

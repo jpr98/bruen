@@ -1,6 +1,6 @@
-// Code generated from Proyecto.g4 by ANTLR 4.9.1. DO NOT EDIT.
+// Code generated from Bruen.g4 by ANTLR 4.9.1. DO NOT EDIT.
 
-package parser // Proyecto
+package parser // Bruen
 
 import (
 	"fmt"
@@ -309,18 +309,18 @@ var ruleNames = []string{
 	"relop",
 }
 
-type ProyectoParser struct {
+type BruenParser struct {
 	*antlr.BaseParser
 }
 
-// NewProyectoParser produces a new parser instance for the optional input antlr.TokenStream.
+// NewBruenParser produces a new parser instance for the optional input antlr.TokenStream.
 //
-// The *ProyectoParser instance produced may be reused by calling the SetInputStream method.
+// The *BruenParser instance produced may be reused by calling the SetInputStream method.
 // The initial parser configuration is expensive to construct, and the object is not thread-safe;
 // however, if used within a Golang sync.Pool, the construction cost amortizes well and the
 // objects can be used in a thread-safe manner.
-func NewProyectoParser(input antlr.TokenStream) *ProyectoParser {
-	this := new(ProyectoParser)
+func NewBruenParser(input antlr.TokenStream) *BruenParser {
+	this := new(BruenParser)
 	deserializer := antlr.NewATNDeserializer(nil)
 	deserializedATN := deserializer.DeserializeFromUInt16(parserATN)
 	decisionToDFA := make([]*antlr.DFA, len(deserializedATN.DecisionToState))
@@ -333,142 +333,142 @@ func NewProyectoParser(input antlr.TokenStream) *ProyectoParser {
 	this.RuleNames = ruleNames
 	this.LiteralNames = literalNames
 	this.SymbolicNames = symbolicNames
-	this.GrammarFileName = "Proyecto.g4"
+	this.GrammarFileName = "Bruen.g4"
 
 	return this
 }
 
-// ProyectoParser tokens.
+// BruenParser tokens.
 const (
-	ProyectoParserEOF        = antlr.TokenEOF
-	ProyectoParserT__0       = 1
-	ProyectoParserT__1       = 2
-	ProyectoParserT__2       = 3
-	ProyectoParserT__3       = 4
-	ProyectoParserT__4       = 5
-	ProyectoParserT__5       = 6
-	ProyectoParserT__6       = 7
-	ProyectoParserT__7       = 8
-	ProyectoParserT__8       = 9
-	ProyectoParserT__9       = 10
-	ProyectoParserINT        = 11
-	ProyectoParserFLOAT      = 12
-	ProyectoParserCHAR       = 13
-	ProyectoParserBOOL       = 14
-	ProyectoParserWS         = 15
-	ProyectoParserOR         = 16
-	ProyectoParserAND        = 17
-	ProyectoParserGT         = 18
-	ProyectoParserLT         = 19
-	ProyectoParserEQ         = 20
-	ProyectoParserNEQ        = 21
-	ProyectoParserMUL        = 22
-	ProyectoParserDIV        = 23
-	ProyectoParserADD        = 24
-	ProyectoParserSUB        = 25
-	ProyectoParserSEMI       = 26
-	ProyectoParserASSIGN     = 27
-	ProyectoParserLPAREN     = 28
-	ProyectoParserRPAREN     = 29
-	ProyectoParserIF         = 30
-	ProyectoParserELSE       = 31
-	ProyectoParserWHILE      = 32
-	ProyectoParserFOR        = 33
-	ProyectoParserIN         = 34
-	ProyectoParserCLASS      = 35
-	ProyectoParserATTRIBUTES = 36
-	ProyectoParserMETHODS    = 37
-	ProyectoParserINIT       = 38
-	ProyectoParserPRIVATE    = 39
-	ProyectoParserPUBLIC     = 40
-	ProyectoParserWRITE      = 41
-	ProyectoParserREAD       = 42
-	ProyectoParserFUNCTION   = 43
-	ProyectoParserRETURN     = 44
-	ProyectoParserMAIN       = 45
-	ProyectoParserVAR        = 46
-	ProyectoParserINT_TYPE   = 47
-	ProyectoParserFLOAT_TYPE = 48
-	ProyectoParserCHAR_TYPE  = 49
-	ProyectoParserBOOL_TYPE  = 50
-	ProyectoParserVOID       = 51
-	ProyectoParserPROGRAM    = 52
-	ProyectoParserID         = 53
+	BruenParserEOF        = antlr.TokenEOF
+	BruenParserT__0       = 1
+	BruenParserT__1       = 2
+	BruenParserT__2       = 3
+	BruenParserT__3       = 4
+	BruenParserT__4       = 5
+	BruenParserT__5       = 6
+	BruenParserT__6       = 7
+	BruenParserT__7       = 8
+	BruenParserT__8       = 9
+	BruenParserT__9       = 10
+	BruenParserINT        = 11
+	BruenParserFLOAT      = 12
+	BruenParserCHAR       = 13
+	BruenParserBOOL       = 14
+	BruenParserWS         = 15
+	BruenParserOR         = 16
+	BruenParserAND        = 17
+	BruenParserGT         = 18
+	BruenParserLT         = 19
+	BruenParserEQ         = 20
+	BruenParserNEQ        = 21
+	BruenParserMUL        = 22
+	BruenParserDIV        = 23
+	BruenParserADD        = 24
+	BruenParserSUB        = 25
+	BruenParserSEMI       = 26
+	BruenParserASSIGN     = 27
+	BruenParserLPAREN     = 28
+	BruenParserRPAREN     = 29
+	BruenParserIF         = 30
+	BruenParserELSE       = 31
+	BruenParserWHILE      = 32
+	BruenParserFOR        = 33
+	BruenParserIN         = 34
+	BruenParserCLASS      = 35
+	BruenParserATTRIBUTES = 36
+	BruenParserMETHODS    = 37
+	BruenParserINIT       = 38
+	BruenParserPRIVATE    = 39
+	BruenParserPUBLIC     = 40
+	BruenParserWRITE      = 41
+	BruenParserREAD       = 42
+	BruenParserFUNCTION   = 43
+	BruenParserRETURN     = 44
+	BruenParserMAIN       = 45
+	BruenParserVAR        = 46
+	BruenParserINT_TYPE   = 47
+	BruenParserFLOAT_TYPE = 48
+	BruenParserCHAR_TYPE  = 49
+	BruenParserBOOL_TYPE  = 50
+	BruenParserVOID       = 51
+	BruenParserPROGRAM    = 52
+	BruenParserID         = 53
 )
 
-// ProyectoParser rules.
+// BruenParser rules.
 const (
-	ProyectoParserRULE_program               = 0
-	ProyectoParserRULE_program2              = 1
-	ProyectoParserRULE_classDef              = 2
-	ProyectoParserRULE_classBlock            = 3
-	ProyectoParserRULE_classAttributes       = 4
-	ProyectoParserRULE_classMethod           = 5
-	ProyectoParserRULE_classInit             = 6
-	ProyectoParserRULE_variableDeclaration   = 7
-	ProyectoParserRULE_varsDec               = 8
-	ProyectoParserRULE_varsDecArray          = 9
-	ProyectoParserRULE_varsDecMat            = 10
-	ProyectoParserRULE_attributesDeclaration = 11
-	ProyectoParserRULE_attributesDec         = 12
-	ProyectoParserRULE_varsTypeInit          = 13
-	ProyectoParserRULE_varsTypeInit2         = 14
-	ProyectoParserRULE_vars                  = 15
-	ProyectoParserRULE_varArray              = 16
-	ProyectoParserRULE_varMat                = 17
-	ProyectoParserRULE_functions             = 18
-	ProyectoParserRULE_parameters            = 19
-	ProyectoParserRULE_parameter             = 20
-	ProyectoParserRULE_functionBlock         = 21
-	ProyectoParserRULE_returnRule            = 22
-	ProyectoParserRULE_block                 = 23
-	ProyectoParserRULE_statutesNoReturn      = 24
-	ProyectoParserRULE_statutes              = 25
-	ProyectoParserRULE_assignation           = 26
-	ProyectoParserRULE_functionCall          = 27
-	ProyectoParserRULE_arguments             = 28
-	ProyectoParserRULE_arguments2            = 29
-	ProyectoParserRULE_methodCall            = 30
-	ProyectoParserRULE_initCall              = 31
-	ProyectoParserRULE_call                  = 32
-	ProyectoParserRULE_read                  = 33
-	ProyectoParserRULE_read2                 = 34
-	ProyectoParserRULE_read3                 = 35
-	ProyectoParserRULE_write                 = 36
-	ProyectoParserRULE_w_arguments           = 37
-	ProyectoParserRULE_w_arguments2          = 38
-	ProyectoParserRULE_conditional           = 39
-	ProyectoParserRULE_conditional2          = 40
-	ProyectoParserRULE_conditional3          = 41
-	ProyectoParserRULE_conditional4          = 42
-	ProyectoParserRULE_forLoop               = 43
-	ProyectoParserRULE_forLoop2              = 44
-	ProyectoParserRULE_forLoop3              = 45
-	ProyectoParserRULE_whileLoop             = 46
-	ProyectoParserRULE_whileLoop2            = 47
-	ProyectoParserRULE_expression            = 48
-	ProyectoParserRULE_exp                   = 49
-	ProyectoParserRULE_exp2                  = 50
-	ProyectoParserRULE_t_exp                 = 51
-	ProyectoParserRULE_t_exp2                = 52
-	ProyectoParserRULE_g_exp                 = 53
-	ProyectoParserRULE_g_exp2                = 54
-	ProyectoParserRULE_m_exp                 = 55
-	ProyectoParserRULE_m_exp2                = 56
-	ProyectoParserRULE_term                  = 57
-	ProyectoParserRULE_term2                 = 58
-	ProyectoParserRULE_factor                = 59
-	ProyectoParserRULE_factor2               = 60
-	ProyectoParserRULE_varCte                = 61
-	ProyectoParserRULE_cte_i                 = 62
-	ProyectoParserRULE_cte_f                 = 63
-	ProyectoParserRULE_cte_c                 = 64
-	ProyectoParserRULE_cte_b                 = 65
-	ProyectoParserRULE_cte_s                 = 66
-	ProyectoParserRULE_main                  = 67
-	ProyectoParserRULE_mainBlock             = 68
-	ProyectoParserRULE_typeRule              = 69
-	ProyectoParserRULE_relop                 = 70
+	BruenParserRULE_program               = 0
+	BruenParserRULE_program2              = 1
+	BruenParserRULE_classDef              = 2
+	BruenParserRULE_classBlock            = 3
+	BruenParserRULE_classAttributes       = 4
+	BruenParserRULE_classMethod           = 5
+	BruenParserRULE_classInit             = 6
+	BruenParserRULE_variableDeclaration   = 7
+	BruenParserRULE_varsDec               = 8
+	BruenParserRULE_varsDecArray          = 9
+	BruenParserRULE_varsDecMat            = 10
+	BruenParserRULE_attributesDeclaration = 11
+	BruenParserRULE_attributesDec         = 12
+	BruenParserRULE_varsTypeInit          = 13
+	BruenParserRULE_varsTypeInit2         = 14
+	BruenParserRULE_vars                  = 15
+	BruenParserRULE_varArray              = 16
+	BruenParserRULE_varMat                = 17
+	BruenParserRULE_functions             = 18
+	BruenParserRULE_parameters            = 19
+	BruenParserRULE_parameter             = 20
+	BruenParserRULE_functionBlock         = 21
+	BruenParserRULE_returnRule            = 22
+	BruenParserRULE_block                 = 23
+	BruenParserRULE_statutesNoReturn      = 24
+	BruenParserRULE_statutes              = 25
+	BruenParserRULE_assignation           = 26
+	BruenParserRULE_functionCall          = 27
+	BruenParserRULE_arguments             = 28
+	BruenParserRULE_arguments2            = 29
+	BruenParserRULE_methodCall            = 30
+	BruenParserRULE_initCall              = 31
+	BruenParserRULE_call                  = 32
+	BruenParserRULE_read                  = 33
+	BruenParserRULE_read2                 = 34
+	BruenParserRULE_read3                 = 35
+	BruenParserRULE_write                 = 36
+	BruenParserRULE_w_arguments           = 37
+	BruenParserRULE_w_arguments2          = 38
+	BruenParserRULE_conditional           = 39
+	BruenParserRULE_conditional2          = 40
+	BruenParserRULE_conditional3          = 41
+	BruenParserRULE_conditional4          = 42
+	BruenParserRULE_forLoop               = 43
+	BruenParserRULE_forLoop2              = 44
+	BruenParserRULE_forLoop3              = 45
+	BruenParserRULE_whileLoop             = 46
+	BruenParserRULE_whileLoop2            = 47
+	BruenParserRULE_expression            = 48
+	BruenParserRULE_exp                   = 49
+	BruenParserRULE_exp2                  = 50
+	BruenParserRULE_t_exp                 = 51
+	BruenParserRULE_t_exp2                = 52
+	BruenParserRULE_g_exp                 = 53
+	BruenParserRULE_g_exp2                = 54
+	BruenParserRULE_m_exp                 = 55
+	BruenParserRULE_m_exp2                = 56
+	BruenParserRULE_term                  = 57
+	BruenParserRULE_term2                 = 58
+	BruenParserRULE_factor                = 59
+	BruenParserRULE_factor2               = 60
+	BruenParserRULE_varCte                = 61
+	BruenParserRULE_cte_i                 = 62
+	BruenParserRULE_cte_f                 = 63
+	BruenParserRULE_cte_c                 = 64
+	BruenParserRULE_cte_b                 = 65
+	BruenParserRULE_cte_s                 = 66
+	BruenParserRULE_main                  = 67
+	BruenParserRULE_mainBlock             = 68
+	BruenParserRULE_typeRule              = 69
+	BruenParserRULE_relop                 = 70
 )
 
 // IProgramContext is an interface to support dynamic dispatch.
@@ -490,7 +490,7 @@ type ProgramContext struct {
 func NewEmptyProgramContext() *ProgramContext {
 	var p = new(ProgramContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_program
+	p.RuleIndex = BruenParserRULE_program
 	return p
 }
 
@@ -502,7 +502,7 @@ func NewProgramContext(parser antlr.Parser, parent antlr.ParserRuleContext, invo
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_program
+	p.RuleIndex = BruenParserRULE_program
 
 	return p
 }
@@ -510,15 +510,15 @@ func NewProgramContext(parser antlr.Parser, parent antlr.ParserRuleContext, invo
 func (s *ProgramContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *ProgramContext) PROGRAM() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserPROGRAM, 0)
+	return s.GetToken(BruenParserPROGRAM, 0)
 }
 
 func (s *ProgramContext) ID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, 0)
+	return s.GetToken(BruenParserID, 0)
 }
 
 func (s *ProgramContext) SEMI() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSEMI, 0)
+	return s.GetToken(BruenParserSEMI, 0)
 }
 
 func (s *ProgramContext) Program2() IProgram2Context {
@@ -563,20 +563,20 @@ func (s *ProgramContext) ToStringTree(ruleNames []string, recog antlr.Recognizer
 }
 
 func (s *ProgramContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterProgram(s)
 	}
 }
 
 func (s *ProgramContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitProgram(s)
 	}
 }
 
-func (p *ProyectoParser) Program() (localctx IProgramContext) {
+func (p *BruenParser) Program() (localctx IProgramContext) {
 	localctx = NewProgramContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 0, ProyectoParserRULE_program)
+	p.EnterRule(localctx, 0, BruenParserRULE_program)
 	var _la int
 
 	defer func() {
@@ -598,21 +598,21 @@ func (p *ProyectoParser) Program() (localctx IProgramContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(142)
-		p.Match(ProyectoParserPROGRAM)
+		p.Match(BruenParserPROGRAM)
 	}
 	{
 		p.SetState(143)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(144)
-		p.Match(ProyectoParserSEMI)
+		p.Match(BruenParserSEMI)
 	}
 	p.SetState(148)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserVAR {
+	for _la == BruenParserVAR {
 		{
 			p.SetState(145)
 			p.VariableDeclaration()
@@ -649,7 +649,7 @@ type Program2Context struct {
 func NewEmptyProgram2Context() *Program2Context {
 	var p = new(Program2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_program2
+	p.RuleIndex = BruenParserRULE_program2
 	return p
 }
 
@@ -661,7 +661,7 @@ func NewProgram2Context(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_program2
+	p.RuleIndex = BruenParserRULE_program2
 
 	return p
 }
@@ -679,7 +679,7 @@ func (s *Program2Context) Main() IMainContext {
 }
 
 func (s *Program2Context) EOF() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserEOF, 0)
+	return s.GetToken(BruenParserEOF, 0)
 }
 
 func (s *Program2Context) AllClassDef() []IClassDefContext {
@@ -737,20 +737,20 @@ func (s *Program2Context) ToStringTree(ruleNames []string, recog antlr.Recognize
 }
 
 func (s *Program2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterProgram2(s)
 	}
 }
 
 func (s *Program2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitProgram2(s)
 	}
 }
 
-func (p *ProyectoParser) Program2() (localctx IProgram2Context) {
+func (p *BruenParser) Program2() (localctx IProgram2Context) {
 	localctx = NewProgram2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 2, ProyectoParserRULE_program2)
+	p.EnterRule(localctx, 2, BruenParserRULE_program2)
 	var _la int
 
 	defer func() {
@@ -774,7 +774,7 @@ func (p *ProyectoParser) Program2() (localctx IProgram2Context) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserCLASS {
+	for _la == BruenParserCLASS {
 		{
 			p.SetState(153)
 			p.ClassDef()
@@ -788,7 +788,7 @@ func (p *ProyectoParser) Program2() (localctx IProgram2Context) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserFUNCTION {
+	for _la == BruenParserFUNCTION {
 		{
 			p.SetState(159)
 			p.Functions()
@@ -804,7 +804,7 @@ func (p *ProyectoParser) Program2() (localctx IProgram2Context) {
 	}
 	{
 		p.SetState(166)
-		p.Match(ProyectoParserEOF)
+		p.Match(BruenParserEOF)
 	}
 
 	return localctx
@@ -829,7 +829,7 @@ type ClassDefContext struct {
 func NewEmptyClassDefContext() *ClassDefContext {
 	var p = new(ClassDefContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_classDef
+	p.RuleIndex = BruenParserRULE_classDef
 	return p
 }
 
@@ -841,7 +841,7 @@ func NewClassDefContext(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_classDef
+	p.RuleIndex = BruenParserRULE_classDef
 
 	return p
 }
@@ -849,11 +849,11 @@ func NewClassDefContext(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 func (s *ClassDefContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *ClassDefContext) CLASS() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserCLASS, 0)
+	return s.GetToken(BruenParserCLASS, 0)
 }
 
 func (s *ClassDefContext) ID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, 0)
+	return s.GetToken(BruenParserID, 0)
 }
 
 func (s *ClassDefContext) ClassBlock() IClassBlockContext {
@@ -867,7 +867,7 @@ func (s *ClassDefContext) ClassBlock() IClassBlockContext {
 }
 
 func (s *ClassDefContext) SEMI() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSEMI, 0)
+	return s.GetToken(BruenParserSEMI, 0)
 }
 
 func (s *ClassDefContext) GetRuleContext() antlr.RuleContext {
@@ -879,20 +879,20 @@ func (s *ClassDefContext) ToStringTree(ruleNames []string, recog antlr.Recognize
 }
 
 func (s *ClassDefContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterClassDef(s)
 	}
 }
 
 func (s *ClassDefContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitClassDef(s)
 	}
 }
 
-func (p *ProyectoParser) ClassDef() (localctx IClassDefContext) {
+func (p *BruenParser) ClassDef() (localctx IClassDefContext) {
 	localctx = NewClassDefContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 4, ProyectoParserRULE_classDef)
+	p.EnterRule(localctx, 4, BruenParserRULE_classDef)
 
 	defer func() {
 		p.ExitRule()
@@ -913,11 +913,11 @@ func (p *ProyectoParser) ClassDef() (localctx IClassDefContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(168)
-		p.Match(ProyectoParserCLASS)
+		p.Match(BruenParserCLASS)
 	}
 	{
 		p.SetState(169)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(170)
@@ -925,7 +925,7 @@ func (p *ProyectoParser) ClassDef() (localctx IClassDefContext) {
 	}
 	{
 		p.SetState(171)
-		p.Match(ProyectoParserSEMI)
+		p.Match(BruenParserSEMI)
 	}
 
 	return localctx
@@ -950,7 +950,7 @@ type ClassBlockContext struct {
 func NewEmptyClassBlockContext() *ClassBlockContext {
 	var p = new(ClassBlockContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_classBlock
+	p.RuleIndex = BruenParserRULE_classBlock
 	return p
 }
 
@@ -962,7 +962,7 @@ func NewClassBlockContext(parser antlr.Parser, parent antlr.ParserRuleContext, i
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_classBlock
+	p.RuleIndex = BruenParserRULE_classBlock
 
 	return p
 }
@@ -990,7 +990,7 @@ func (s *ClassBlockContext) ClassInit() IClassInitContext {
 }
 
 func (s *ClassBlockContext) METHODS() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserMETHODS, 0)
+	return s.GetToken(BruenParserMETHODS, 0)
 }
 
 func (s *ClassBlockContext) AllClassMethod() []IClassMethodContext {
@@ -1025,20 +1025,20 @@ func (s *ClassBlockContext) ToStringTree(ruleNames []string, recog antlr.Recogni
 }
 
 func (s *ClassBlockContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterClassBlock(s)
 	}
 }
 
 func (s *ClassBlockContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitClassBlock(s)
 	}
 }
 
-func (p *ProyectoParser) ClassBlock() (localctx IClassBlockContext) {
+func (p *BruenParser) ClassBlock() (localctx IClassBlockContext) {
 	localctx = NewClassBlockContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 6, ProyectoParserRULE_classBlock)
+	p.EnterRule(localctx, 6, BruenParserRULE_classBlock)
 	var _la int
 
 	defer func() {
@@ -1060,7 +1060,7 @@ func (p *ProyectoParser) ClassBlock() (localctx IClassBlockContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(173)
-		p.Match(ProyectoParserT__0)
+		p.Match(BruenParserT__0)
 	}
 	{
 		p.SetState(174)
@@ -1072,13 +1072,13 @@ func (p *ProyectoParser) ClassBlock() (localctx IClassBlockContext) {
 	}
 	{
 		p.SetState(176)
-		p.Match(ProyectoParserMETHODS)
+		p.Match(BruenParserMETHODS)
 	}
 	p.SetState(180)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for ((_la-39)&-(0x1f+1)) == 0 && ((1<<uint((_la-39)))&((1<<(ProyectoParserPRIVATE-39))|(1<<(ProyectoParserPUBLIC-39))|(1<<(ProyectoParserFUNCTION-39)))) != 0 {
+	for ((_la-39)&-(0x1f+1)) == 0 && ((1<<uint((_la-39)))&((1<<(BruenParserPRIVATE-39))|(1<<(BruenParserPUBLIC-39))|(1<<(BruenParserFUNCTION-39)))) != 0 {
 		{
 			p.SetState(177)
 			p.ClassMethod()
@@ -1090,7 +1090,7 @@ func (p *ProyectoParser) ClassBlock() (localctx IClassBlockContext) {
 	}
 	{
 		p.SetState(183)
-		p.Match(ProyectoParserT__1)
+		p.Match(BruenParserT__1)
 	}
 
 	return localctx
@@ -1115,7 +1115,7 @@ type ClassAttributesContext struct {
 func NewEmptyClassAttributesContext() *ClassAttributesContext {
 	var p = new(ClassAttributesContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_classAttributes
+	p.RuleIndex = BruenParserRULE_classAttributes
 	return p
 }
 
@@ -1127,7 +1127,7 @@ func NewClassAttributesContext(parser antlr.Parser, parent antlr.ParserRuleConte
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_classAttributes
+	p.RuleIndex = BruenParserRULE_classAttributes
 
 	return p
 }
@@ -1135,7 +1135,7 @@ func NewClassAttributesContext(parser antlr.Parser, parent antlr.ParserRuleConte
 func (s *ClassAttributesContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *ClassAttributesContext) ATTRIBUTES() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserATTRIBUTES, 0)
+	return s.GetToken(BruenParserATTRIBUTES, 0)
 }
 
 func (s *ClassAttributesContext) AllAttributesDeclaration() []IAttributesDeclarationContext {
@@ -1170,20 +1170,20 @@ func (s *ClassAttributesContext) ToStringTree(ruleNames []string, recog antlr.Re
 }
 
 func (s *ClassAttributesContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterClassAttributes(s)
 	}
 }
 
 func (s *ClassAttributesContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitClassAttributes(s)
 	}
 }
 
-func (p *ProyectoParser) ClassAttributes() (localctx IClassAttributesContext) {
+func (p *BruenParser) ClassAttributes() (localctx IClassAttributesContext) {
 	localctx = NewClassAttributesContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 8, ProyectoParserRULE_classAttributes)
+	p.EnterRule(localctx, 8, BruenParserRULE_classAttributes)
 	var _la int
 
 	defer func() {
@@ -1205,13 +1205,13 @@ func (p *ProyectoParser) ClassAttributes() (localctx IClassAttributesContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(185)
-		p.Match(ProyectoParserATTRIBUTES)
+		p.Match(BruenParserATTRIBUTES)
 	}
 	p.SetState(189)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for ((_la-39)&-(0x1f+1)) == 0 && ((1<<uint((_la-39)))&((1<<(ProyectoParserPRIVATE-39))|(1<<(ProyectoParserPUBLIC-39))|(1<<(ProyectoParserVAR-39)))) != 0 {
+	for ((_la-39)&-(0x1f+1)) == 0 && ((1<<uint((_la-39)))&((1<<(BruenParserPRIVATE-39))|(1<<(BruenParserPUBLIC-39))|(1<<(BruenParserVAR-39)))) != 0 {
 		{
 			p.SetState(186)
 			p.AttributesDeclaration()
@@ -1244,7 +1244,7 @@ type ClassMethodContext struct {
 func NewEmptyClassMethodContext() *ClassMethodContext {
 	var p = new(ClassMethodContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_classMethod
+	p.RuleIndex = BruenParserRULE_classMethod
 	return p
 }
 
@@ -1256,7 +1256,7 @@ func NewClassMethodContext(parser antlr.Parser, parent antlr.ParserRuleContext, 
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_classMethod
+	p.RuleIndex = BruenParserRULE_classMethod
 
 	return p
 }
@@ -1274,11 +1274,11 @@ func (s *ClassMethodContext) Functions() IFunctionsContext {
 }
 
 func (s *ClassMethodContext) PRIVATE() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserPRIVATE, 0)
+	return s.GetToken(BruenParserPRIVATE, 0)
 }
 
 func (s *ClassMethodContext) PUBLIC() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserPUBLIC, 0)
+	return s.GetToken(BruenParserPUBLIC, 0)
 }
 
 func (s *ClassMethodContext) GetRuleContext() antlr.RuleContext {
@@ -1290,20 +1290,20 @@ func (s *ClassMethodContext) ToStringTree(ruleNames []string, recog antlr.Recogn
 }
 
 func (s *ClassMethodContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterClassMethod(s)
 	}
 }
 
 func (s *ClassMethodContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitClassMethod(s)
 	}
 }
 
-func (p *ProyectoParser) ClassMethod() (localctx IClassMethodContext) {
+func (p *BruenParser) ClassMethod() (localctx IClassMethodContext) {
 	localctx = NewClassMethodContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 10, ProyectoParserRULE_classMethod)
+	p.EnterRule(localctx, 10, BruenParserRULE_classMethod)
 	var _la int
 
 	defer func() {
@@ -1327,21 +1327,21 @@ func (p *ProyectoParser) ClassMethod() (localctx IClassMethodContext) {
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case ProyectoParserPRIVATE:
+	case BruenParserPRIVATE:
 		{
 			p.SetState(192)
-			p.Match(ProyectoParserPRIVATE)
+			p.Match(BruenParserPRIVATE)
 		}
 
-	case ProyectoParserPUBLIC, ProyectoParserFUNCTION:
+	case BruenParserPUBLIC, BruenParserFUNCTION:
 		p.SetState(194)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		if _la == ProyectoParserPUBLIC {
+		if _la == BruenParserPUBLIC {
 			{
 				p.SetState(193)
-				p.Match(ProyectoParserPUBLIC)
+				p.Match(BruenParserPUBLIC)
 			}
 
 		}
@@ -1376,7 +1376,7 @@ type ClassInitContext struct {
 func NewEmptyClassInitContext() *ClassInitContext {
 	var p = new(ClassInitContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_classInit
+	p.RuleIndex = BruenParserRULE_classInit
 	return p
 }
 
@@ -1388,7 +1388,7 @@ func NewClassInitContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_classInit
+	p.RuleIndex = BruenParserRULE_classInit
 
 	return p
 }
@@ -1396,15 +1396,15 @@ func NewClassInitContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 func (s *ClassInitContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *ClassInitContext) INIT() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserINIT, 0)
+	return s.GetToken(BruenParserINIT, 0)
 }
 
 func (s *ClassInitContext) LPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserLPAREN, 0)
+	return s.GetToken(BruenParserLPAREN, 0)
 }
 
 func (s *ClassInitContext) RPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserRPAREN, 0)
+	return s.GetToken(BruenParserRPAREN, 0)
 }
 
 func (s *ClassInitContext) AllVariableDeclaration() []IVariableDeclarationContext {
@@ -1462,20 +1462,20 @@ func (s *ClassInitContext) ToStringTree(ruleNames []string, recog antlr.Recogniz
 }
 
 func (s *ClassInitContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterClassInit(s)
 	}
 }
 
 func (s *ClassInitContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitClassInit(s)
 	}
 }
 
-func (p *ProyectoParser) ClassInit() (localctx IClassInitContext) {
+func (p *BruenParser) ClassInit() (localctx IClassInitContext) {
 	localctx = NewClassInitContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 12, ProyectoParserRULE_classInit)
+	p.EnterRule(localctx, 12, BruenParserRULE_classInit)
 	var _la int
 
 	defer func() {
@@ -1497,25 +1497,25 @@ func (p *ProyectoParser) ClassInit() (localctx IClassInitContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(200)
-		p.Match(ProyectoParserINIT)
+		p.Match(BruenParserINIT)
 	}
 	{
 		p.SetState(201)
-		p.Match(ProyectoParserLPAREN)
+		p.Match(BruenParserLPAREN)
 	}
 	{
 		p.SetState(202)
-		p.Match(ProyectoParserRPAREN)
+		p.Match(BruenParserRPAREN)
 	}
 	{
 		p.SetState(203)
-		p.Match(ProyectoParserT__0)
+		p.Match(BruenParserT__0)
 	}
 	p.SetState(207)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserVAR {
+	for _la == BruenParserVAR {
 		{
 			p.SetState(204)
 			p.VariableDeclaration()
@@ -1529,7 +1529,7 @@ func (p *ProyectoParser) ClassInit() (localctx IClassInitContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__8)|(1<<ProyectoParserT__9)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN)|(1<<ProyectoParserIF))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(ProyectoParserWHILE-32))|(1<<(ProyectoParserFOR-32))|(1<<(ProyectoParserWRITE-32))|(1<<(ProyectoParserREAD-32))|(1<<(ProyectoParserID-32)))) != 0) {
+	for (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<BruenParserT__8)|(1<<BruenParserT__9)|(1<<BruenParserINT)|(1<<BruenParserFLOAT)|(1<<BruenParserCHAR)|(1<<BruenParserBOOL)|(1<<BruenParserLPAREN)|(1<<BruenParserIF))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(BruenParserWHILE-32))|(1<<(BruenParserFOR-32))|(1<<(BruenParserWRITE-32))|(1<<(BruenParserREAD-32))|(1<<(BruenParserID-32)))) != 0) {
 		{
 			p.SetState(210)
 			p.StatutesNoReturn()
@@ -1541,7 +1541,7 @@ func (p *ProyectoParser) ClassInit() (localctx IClassInitContext) {
 	}
 	{
 		p.SetState(216)
-		p.Match(ProyectoParserT__1)
+		p.Match(BruenParserT__1)
 	}
 
 	return localctx
@@ -1566,7 +1566,7 @@ type VariableDeclarationContext struct {
 func NewEmptyVariableDeclarationContext() *VariableDeclarationContext {
 	var p = new(VariableDeclarationContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_variableDeclaration
+	p.RuleIndex = BruenParserRULE_variableDeclaration
 	return p
 }
 
@@ -1578,7 +1578,7 @@ func NewVariableDeclarationContext(parser antlr.Parser, parent antlr.ParserRuleC
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_variableDeclaration
+	p.RuleIndex = BruenParserRULE_variableDeclaration
 
 	return p
 }
@@ -1624,20 +1624,20 @@ func (s *VariableDeclarationContext) ToStringTree(ruleNames []string, recog antl
 }
 
 func (s *VariableDeclarationContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterVariableDeclaration(s)
 	}
 }
 
 func (s *VariableDeclarationContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitVariableDeclaration(s)
 	}
 }
 
-func (p *ProyectoParser) VariableDeclaration() (localctx IVariableDeclarationContext) {
+func (p *BruenParser) VariableDeclaration() (localctx IVariableDeclarationContext) {
 	localctx = NewVariableDeclarationContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 14, ProyectoParserRULE_variableDeclaration)
+	p.EnterRule(localctx, 14, BruenParserRULE_variableDeclaration)
 
 	defer func() {
 		p.ExitRule()
@@ -1703,7 +1703,7 @@ type VarsDecContext struct {
 func NewEmptyVarsDecContext() *VarsDecContext {
 	var p = new(VarsDecContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_varsDec
+	p.RuleIndex = BruenParserRULE_varsDec
 	return p
 }
 
@@ -1715,7 +1715,7 @@ func NewVarsDecContext(parser antlr.Parser, parent antlr.ParserRuleContext, invo
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_varsDec
+	p.RuleIndex = BruenParserRULE_varsDec
 
 	return p
 }
@@ -1723,11 +1723,11 @@ func NewVarsDecContext(parser antlr.Parser, parent antlr.ParserRuleContext, invo
 func (s *VarsDecContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *VarsDecContext) VAR() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserVAR, 0)
+	return s.GetToken(BruenParserVAR, 0)
 }
 
 func (s *VarsDecContext) ID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, 0)
+	return s.GetToken(BruenParserID, 0)
 }
 
 func (s *VarsDecContext) VarsTypeInit() IVarsTypeInitContext {
@@ -1741,7 +1741,7 @@ func (s *VarsDecContext) VarsTypeInit() IVarsTypeInitContext {
 }
 
 func (s *VarsDecContext) SEMI() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSEMI, 0)
+	return s.GetToken(BruenParserSEMI, 0)
 }
 
 func (s *VarsDecContext) GetRuleContext() antlr.RuleContext {
@@ -1753,20 +1753,20 @@ func (s *VarsDecContext) ToStringTree(ruleNames []string, recog antlr.Recognizer
 }
 
 func (s *VarsDecContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterVarsDec(s)
 	}
 }
 
 func (s *VarsDecContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitVarsDec(s)
 	}
 }
 
-func (p *ProyectoParser) VarsDec() (localctx IVarsDecContext) {
+func (p *BruenParser) VarsDec() (localctx IVarsDecContext) {
 	localctx = NewVarsDecContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 16, ProyectoParserRULE_varsDec)
+	p.EnterRule(localctx, 16, BruenParserRULE_varsDec)
 
 	defer func() {
 		p.ExitRule()
@@ -1787,15 +1787,15 @@ func (p *ProyectoParser) VarsDec() (localctx IVarsDecContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(223)
-		p.Match(ProyectoParserVAR)
+		p.Match(BruenParserVAR)
 	}
 	{
 		p.SetState(224)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(225)
-		p.Match(ProyectoParserT__2)
+		p.Match(BruenParserT__2)
 	}
 	{
 		p.SetState(226)
@@ -1803,7 +1803,7 @@ func (p *ProyectoParser) VarsDec() (localctx IVarsDecContext) {
 	}
 	{
 		p.SetState(227)
-		p.Match(ProyectoParserSEMI)
+		p.Match(BruenParserSEMI)
 	}
 
 	return localctx
@@ -1828,7 +1828,7 @@ type VarsDecArrayContext struct {
 func NewEmptyVarsDecArrayContext() *VarsDecArrayContext {
 	var p = new(VarsDecArrayContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_varsDecArray
+	p.RuleIndex = BruenParserRULE_varsDecArray
 	return p
 }
 
@@ -1840,7 +1840,7 @@ func NewVarsDecArrayContext(parser antlr.Parser, parent antlr.ParserRuleContext,
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_varsDecArray
+	p.RuleIndex = BruenParserRULE_varsDecArray
 
 	return p
 }
@@ -1848,15 +1848,15 @@ func NewVarsDecArrayContext(parser antlr.Parser, parent antlr.ParserRuleContext,
 func (s *VarsDecArrayContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *VarsDecArrayContext) VAR() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserVAR, 0)
+	return s.GetToken(BruenParserVAR, 0)
 }
 
 func (s *VarsDecArrayContext) ID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, 0)
+	return s.GetToken(BruenParserID, 0)
 }
 
 func (s *VarsDecArrayContext) INT() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserINT, 0)
+	return s.GetToken(BruenParserINT, 0)
 }
 
 func (s *VarsDecArrayContext) TypeRule() ITypeRuleContext {
@@ -1870,7 +1870,7 @@ func (s *VarsDecArrayContext) TypeRule() ITypeRuleContext {
 }
 
 func (s *VarsDecArrayContext) SEMI() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSEMI, 0)
+	return s.GetToken(BruenParserSEMI, 0)
 }
 
 func (s *VarsDecArrayContext) GetRuleContext() antlr.RuleContext {
@@ -1882,20 +1882,20 @@ func (s *VarsDecArrayContext) ToStringTree(ruleNames []string, recog antlr.Recog
 }
 
 func (s *VarsDecArrayContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterVarsDecArray(s)
 	}
 }
 
 func (s *VarsDecArrayContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitVarsDecArray(s)
 	}
 }
 
-func (p *ProyectoParser) VarsDecArray() (localctx IVarsDecArrayContext) {
+func (p *BruenParser) VarsDecArray() (localctx IVarsDecArrayContext) {
 	localctx = NewVarsDecArrayContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 18, ProyectoParserRULE_varsDecArray)
+	p.EnterRule(localctx, 18, BruenParserRULE_varsDecArray)
 
 	defer func() {
 		p.ExitRule()
@@ -1916,27 +1916,27 @@ func (p *ProyectoParser) VarsDecArray() (localctx IVarsDecArrayContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(229)
-		p.Match(ProyectoParserVAR)
+		p.Match(BruenParserVAR)
 	}
 	{
 		p.SetState(230)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(231)
-		p.Match(ProyectoParserT__2)
+		p.Match(BruenParserT__2)
 	}
 	{
 		p.SetState(232)
-		p.Match(ProyectoParserT__3)
+		p.Match(BruenParserT__3)
 	}
 	{
 		p.SetState(233)
-		p.Match(ProyectoParserINT)
+		p.Match(BruenParserINT)
 	}
 	{
 		p.SetState(234)
-		p.Match(ProyectoParserT__4)
+		p.Match(BruenParserT__4)
 	}
 	{
 		p.SetState(235)
@@ -1944,7 +1944,7 @@ func (p *ProyectoParser) VarsDecArray() (localctx IVarsDecArrayContext) {
 	}
 	{
 		p.SetState(236)
-		p.Match(ProyectoParserSEMI)
+		p.Match(BruenParserSEMI)
 	}
 
 	return localctx
@@ -1969,7 +1969,7 @@ type VarsDecMatContext struct {
 func NewEmptyVarsDecMatContext() *VarsDecMatContext {
 	var p = new(VarsDecMatContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_varsDecMat
+	p.RuleIndex = BruenParserRULE_varsDecMat
 	return p
 }
 
@@ -1981,7 +1981,7 @@ func NewVarsDecMatContext(parser antlr.Parser, parent antlr.ParserRuleContext, i
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_varsDecMat
+	p.RuleIndex = BruenParserRULE_varsDecMat
 
 	return p
 }
@@ -1989,19 +1989,19 @@ func NewVarsDecMatContext(parser antlr.Parser, parent antlr.ParserRuleContext, i
 func (s *VarsDecMatContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *VarsDecMatContext) VAR() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserVAR, 0)
+	return s.GetToken(BruenParserVAR, 0)
 }
 
 func (s *VarsDecMatContext) ID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, 0)
+	return s.GetToken(BruenParserID, 0)
 }
 
 func (s *VarsDecMatContext) AllINT() []antlr.TerminalNode {
-	return s.GetTokens(ProyectoParserINT)
+	return s.GetTokens(BruenParserINT)
 }
 
 func (s *VarsDecMatContext) INT(i int) antlr.TerminalNode {
-	return s.GetToken(ProyectoParserINT, i)
+	return s.GetToken(BruenParserINT, i)
 }
 
 func (s *VarsDecMatContext) TypeRule() ITypeRuleContext {
@@ -2015,7 +2015,7 @@ func (s *VarsDecMatContext) TypeRule() ITypeRuleContext {
 }
 
 func (s *VarsDecMatContext) SEMI() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSEMI, 0)
+	return s.GetToken(BruenParserSEMI, 0)
 }
 
 func (s *VarsDecMatContext) GetRuleContext() antlr.RuleContext {
@@ -2027,20 +2027,20 @@ func (s *VarsDecMatContext) ToStringTree(ruleNames []string, recog antlr.Recogni
 }
 
 func (s *VarsDecMatContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterVarsDecMat(s)
 	}
 }
 
 func (s *VarsDecMatContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitVarsDecMat(s)
 	}
 }
 
-func (p *ProyectoParser) VarsDecMat() (localctx IVarsDecMatContext) {
+func (p *BruenParser) VarsDecMat() (localctx IVarsDecMatContext) {
 	localctx = NewVarsDecMatContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 20, ProyectoParserRULE_varsDecMat)
+	p.EnterRule(localctx, 20, BruenParserRULE_varsDecMat)
 
 	defer func() {
 		p.ExitRule()
@@ -2061,35 +2061,35 @@ func (p *ProyectoParser) VarsDecMat() (localctx IVarsDecMatContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(238)
-		p.Match(ProyectoParserVAR)
+		p.Match(BruenParserVAR)
 	}
 	{
 		p.SetState(239)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(240)
-		p.Match(ProyectoParserT__2)
+		p.Match(BruenParserT__2)
 	}
 	{
 		p.SetState(241)
-		p.Match(ProyectoParserT__3)
+		p.Match(BruenParserT__3)
 	}
 	{
 		p.SetState(242)
-		p.Match(ProyectoParserINT)
+		p.Match(BruenParserINT)
 	}
 	{
 		p.SetState(243)
-		p.Match(ProyectoParserT__5)
+		p.Match(BruenParserT__5)
 	}
 	{
 		p.SetState(244)
-		p.Match(ProyectoParserINT)
+		p.Match(BruenParserINT)
 	}
 	{
 		p.SetState(245)
-		p.Match(ProyectoParserT__4)
+		p.Match(BruenParserT__4)
 	}
 	{
 		p.SetState(246)
@@ -2097,7 +2097,7 @@ func (p *ProyectoParser) VarsDecMat() (localctx IVarsDecMatContext) {
 	}
 	{
 		p.SetState(247)
-		p.Match(ProyectoParserSEMI)
+		p.Match(BruenParserSEMI)
 	}
 
 	return localctx
@@ -2122,7 +2122,7 @@ type AttributesDeclarationContext struct {
 func NewEmptyAttributesDeclarationContext() *AttributesDeclarationContext {
 	var p = new(AttributesDeclarationContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_attributesDeclaration
+	p.RuleIndex = BruenParserRULE_attributesDeclaration
 	return p
 }
 
@@ -2134,7 +2134,7 @@ func NewAttributesDeclarationContext(parser antlr.Parser, parent antlr.ParserRul
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_attributesDeclaration
+	p.RuleIndex = BruenParserRULE_attributesDeclaration
 
 	return p
 }
@@ -2142,7 +2142,7 @@ func NewAttributesDeclarationContext(parser antlr.Parser, parent antlr.ParserRul
 func (s *AttributesDeclarationContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *AttributesDeclarationContext) PRIVATE() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserPRIVATE, 0)
+	return s.GetToken(BruenParserPRIVATE, 0)
 }
 
 func (s *AttributesDeclarationContext) AttributesDec() IAttributesDecContext {
@@ -2176,7 +2176,7 @@ func (s *AttributesDeclarationContext) VarsDecMat() IVarsDecMatContext {
 }
 
 func (s *AttributesDeclarationContext) PUBLIC() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserPUBLIC, 0)
+	return s.GetToken(BruenParserPUBLIC, 0)
 }
 
 func (s *AttributesDeclarationContext) GetRuleContext() antlr.RuleContext {
@@ -2188,20 +2188,20 @@ func (s *AttributesDeclarationContext) ToStringTree(ruleNames []string, recog an
 }
 
 func (s *AttributesDeclarationContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterAttributesDeclaration(s)
 	}
 }
 
 func (s *AttributesDeclarationContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitAttributesDeclaration(s)
 	}
 }
 
-func (p *ProyectoParser) AttributesDeclaration() (localctx IAttributesDeclarationContext) {
+func (p *BruenParser) AttributesDeclaration() (localctx IAttributesDeclarationContext) {
 	localctx = NewAttributesDeclarationContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 22, ProyectoParserRULE_attributesDeclaration)
+	p.EnterRule(localctx, 22, BruenParserRULE_attributesDeclaration)
 	var _la int
 
 	defer func() {
@@ -2225,21 +2225,21 @@ func (p *ProyectoParser) AttributesDeclaration() (localctx IAttributesDeclaratio
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case ProyectoParserPRIVATE:
+	case BruenParserPRIVATE:
 		{
 			p.SetState(249)
-			p.Match(ProyectoParserPRIVATE)
+			p.Match(BruenParserPRIVATE)
 		}
 
-	case ProyectoParserPUBLIC, ProyectoParserVAR:
+	case BruenParserPUBLIC, BruenParserVAR:
 		p.SetState(251)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		if _la == ProyectoParserPUBLIC {
+		if _la == BruenParserPUBLIC {
 			{
 				p.SetState(250)
-				p.Match(ProyectoParserPUBLIC)
+				p.Match(BruenParserPUBLIC)
 			}
 
 		}
@@ -2292,7 +2292,7 @@ type AttributesDecContext struct {
 func NewEmptyAttributesDecContext() *AttributesDecContext {
 	var p = new(AttributesDecContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_attributesDec
+	p.RuleIndex = BruenParserRULE_attributesDec
 	return p
 }
 
@@ -2304,7 +2304,7 @@ func NewAttributesDecContext(parser antlr.Parser, parent antlr.ParserRuleContext
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_attributesDec
+	p.RuleIndex = BruenParserRULE_attributesDec
 
 	return p
 }
@@ -2312,11 +2312,11 @@ func NewAttributesDecContext(parser antlr.Parser, parent antlr.ParserRuleContext
 func (s *AttributesDecContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *AttributesDecContext) VAR() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserVAR, 0)
+	return s.GetToken(BruenParserVAR, 0)
 }
 
 func (s *AttributesDecContext) ID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, 0)
+	return s.GetToken(BruenParserID, 0)
 }
 
 func (s *AttributesDecContext) TypeRule() ITypeRuleContext {
@@ -2330,7 +2330,7 @@ func (s *AttributesDecContext) TypeRule() ITypeRuleContext {
 }
 
 func (s *AttributesDecContext) SEMI() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSEMI, 0)
+	return s.GetToken(BruenParserSEMI, 0)
 }
 
 func (s *AttributesDecContext) GetRuleContext() antlr.RuleContext {
@@ -2342,20 +2342,20 @@ func (s *AttributesDecContext) ToStringTree(ruleNames []string, recog antlr.Reco
 }
 
 func (s *AttributesDecContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterAttributesDec(s)
 	}
 }
 
 func (s *AttributesDecContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitAttributesDec(s)
 	}
 }
 
-func (p *ProyectoParser) AttributesDec() (localctx IAttributesDecContext) {
+func (p *BruenParser) AttributesDec() (localctx IAttributesDecContext) {
 	localctx = NewAttributesDecContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 24, ProyectoParserRULE_attributesDec)
+	p.EnterRule(localctx, 24, BruenParserRULE_attributesDec)
 
 	defer func() {
 		p.ExitRule()
@@ -2376,15 +2376,15 @@ func (p *ProyectoParser) AttributesDec() (localctx IAttributesDecContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(260)
-		p.Match(ProyectoParserVAR)
+		p.Match(BruenParserVAR)
 	}
 	{
 		p.SetState(261)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(262)
-		p.Match(ProyectoParserT__2)
+		p.Match(BruenParserT__2)
 	}
 	{
 		p.SetState(263)
@@ -2392,7 +2392,7 @@ func (p *ProyectoParser) AttributesDec() (localctx IAttributesDecContext) {
 	}
 	{
 		p.SetState(264)
-		p.Match(ProyectoParserSEMI)
+		p.Match(BruenParserSEMI)
 	}
 
 	return localctx
@@ -2417,7 +2417,7 @@ type VarsTypeInitContext struct {
 func NewEmptyVarsTypeInitContext() *VarsTypeInitContext {
 	var p = new(VarsTypeInitContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_varsTypeInit
+	p.RuleIndex = BruenParserRULE_varsTypeInit
 	return p
 }
 
@@ -2429,7 +2429,7 @@ func NewVarsTypeInitContext(parser antlr.Parser, parent antlr.ParserRuleContext,
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_varsTypeInit
+	p.RuleIndex = BruenParserRULE_varsTypeInit
 
 	return p
 }
@@ -2447,7 +2447,7 @@ func (s *VarsTypeInitContext) TypeRule() ITypeRuleContext {
 }
 
 func (s *VarsTypeInitContext) ID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, 0)
+	return s.GetToken(BruenParserID, 0)
 }
 
 func (s *VarsTypeInitContext) VarsTypeInit2() IVarsTypeInit2Context {
@@ -2469,20 +2469,20 @@ func (s *VarsTypeInitContext) ToStringTree(ruleNames []string, recog antlr.Recog
 }
 
 func (s *VarsTypeInitContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterVarsTypeInit(s)
 	}
 }
 
 func (s *VarsTypeInitContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitVarsTypeInit(s)
 	}
 }
 
-func (p *ProyectoParser) VarsTypeInit() (localctx IVarsTypeInitContext) {
+func (p *BruenParser) VarsTypeInit() (localctx IVarsTypeInitContext) {
 	localctx = NewVarsTypeInitContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 26, ProyectoParserRULE_varsTypeInit)
+	p.EnterRule(localctx, 26, BruenParserRULE_varsTypeInit)
 	var _la int
 
 	defer func() {
@@ -2506,16 +2506,16 @@ func (p *ProyectoParser) VarsTypeInit() (localctx IVarsTypeInitContext) {
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case ProyectoParserINT_TYPE, ProyectoParserFLOAT_TYPE, ProyectoParserCHAR_TYPE, ProyectoParserBOOL_TYPE:
+	case BruenParserINT_TYPE, BruenParserFLOAT_TYPE, BruenParserCHAR_TYPE, BruenParserBOOL_TYPE:
 		{
 			p.SetState(266)
 			p.TypeRule()
 		}
 
-	case ProyectoParserID:
+	case BruenParserID:
 		{
 			p.SetState(267)
-			p.Match(ProyectoParserID)
+			p.Match(BruenParserID)
 		}
 
 	default:
@@ -2525,7 +2525,7 @@ func (p *ProyectoParser) VarsTypeInit() (localctx IVarsTypeInitContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if _la == ProyectoParserASSIGN {
+	if _la == BruenParserASSIGN {
 		{
 			p.SetState(270)
 			p.VarsTypeInit2()
@@ -2555,7 +2555,7 @@ type VarsTypeInit2Context struct {
 func NewEmptyVarsTypeInit2Context() *VarsTypeInit2Context {
 	var p = new(VarsTypeInit2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_varsTypeInit2
+	p.RuleIndex = BruenParserRULE_varsTypeInit2
 	return p
 }
 
@@ -2567,7 +2567,7 @@ func NewVarsTypeInit2Context(parser antlr.Parser, parent antlr.ParserRuleContext
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_varsTypeInit2
+	p.RuleIndex = BruenParserRULE_varsTypeInit2
 
 	return p
 }
@@ -2575,7 +2575,7 @@ func NewVarsTypeInit2Context(parser antlr.Parser, parent antlr.ParserRuleContext
 func (s *VarsTypeInit2Context) GetParser() antlr.Parser { return s.parser }
 
 func (s *VarsTypeInit2Context) ASSIGN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserASSIGN, 0)
+	return s.GetToken(BruenParserASSIGN, 0)
 }
 
 func (s *VarsTypeInit2Context) Exp() IExpContext {
@@ -2597,20 +2597,20 @@ func (s *VarsTypeInit2Context) ToStringTree(ruleNames []string, recog antlr.Reco
 }
 
 func (s *VarsTypeInit2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterVarsTypeInit2(s)
 	}
 }
 
 func (s *VarsTypeInit2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitVarsTypeInit2(s)
 	}
 }
 
-func (p *ProyectoParser) VarsTypeInit2() (localctx IVarsTypeInit2Context) {
+func (p *BruenParser) VarsTypeInit2() (localctx IVarsTypeInit2Context) {
 	localctx = NewVarsTypeInit2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 28, ProyectoParserRULE_varsTypeInit2)
+	p.EnterRule(localctx, 28, BruenParserRULE_varsTypeInit2)
 
 	defer func() {
 		p.ExitRule()
@@ -2631,7 +2631,7 @@ func (p *ProyectoParser) VarsTypeInit2() (localctx IVarsTypeInit2Context) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(273)
-		p.Match(ProyectoParserASSIGN)
+		p.Match(BruenParserASSIGN)
 	}
 	{
 		p.SetState(274)
@@ -2660,7 +2660,7 @@ type VarsContext struct {
 func NewEmptyVarsContext() *VarsContext {
 	var p = new(VarsContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_vars
+	p.RuleIndex = BruenParserRULE_vars
 	return p
 }
 
@@ -2672,7 +2672,7 @@ func NewVarsContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_vars
+	p.RuleIndex = BruenParserRULE_vars
 
 	return p
 }
@@ -2680,11 +2680,11 @@ func NewVarsContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 func (s *VarsContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *VarsContext) AllID() []antlr.TerminalNode {
-	return s.GetTokens(ProyectoParserID)
+	return s.GetTokens(BruenParserID)
 }
 
 func (s *VarsContext) ID(i int) antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, i)
+	return s.GetToken(BruenParserID, i)
 }
 
 func (s *VarsContext) GetRuleContext() antlr.RuleContext {
@@ -2696,20 +2696,20 @@ func (s *VarsContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) s
 }
 
 func (s *VarsContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterVars(s)
 	}
 }
 
 func (s *VarsContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitVars(s)
 	}
 }
 
-func (p *ProyectoParser) Vars() (localctx IVarsContext) {
+func (p *BruenParser) Vars() (localctx IVarsContext) {
 	localctx = NewVarsContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 30, ProyectoParserRULE_vars)
+	p.EnterRule(localctx, 30, BruenParserRULE_vars)
 	var _la int
 
 	defer func() {
@@ -2731,20 +2731,20 @@ func (p *ProyectoParser) Vars() (localctx IVarsContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(276)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	p.SetState(279)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if _la == ProyectoParserT__6 {
+	if _la == BruenParserT__6 {
 		{
 			p.SetState(277)
-			p.Match(ProyectoParserT__6)
+			p.Match(BruenParserT__6)
 		}
 		{
 			p.SetState(278)
-			p.Match(ProyectoParserID)
+			p.Match(BruenParserID)
 		}
 
 	}
@@ -2771,7 +2771,7 @@ type VarArrayContext struct {
 func NewEmptyVarArrayContext() *VarArrayContext {
 	var p = new(VarArrayContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_varArray
+	p.RuleIndex = BruenParserRULE_varArray
 	return p
 }
 
@@ -2783,7 +2783,7 @@ func NewVarArrayContext(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_varArray
+	p.RuleIndex = BruenParserRULE_varArray
 
 	return p
 }
@@ -2791,11 +2791,11 @@ func NewVarArrayContext(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 func (s *VarArrayContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *VarArrayContext) AllID() []antlr.TerminalNode {
-	return s.GetTokens(ProyectoParserID)
+	return s.GetTokens(BruenParserID)
 }
 
 func (s *VarArrayContext) ID(i int) antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, i)
+	return s.GetToken(BruenParserID, i)
 }
 
 func (s *VarArrayContext) Exp() IExpContext {
@@ -2817,20 +2817,20 @@ func (s *VarArrayContext) ToStringTree(ruleNames []string, recog antlr.Recognize
 }
 
 func (s *VarArrayContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterVarArray(s)
 	}
 }
 
 func (s *VarArrayContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitVarArray(s)
 	}
 }
 
-func (p *ProyectoParser) VarArray() (localctx IVarArrayContext) {
+func (p *BruenParser) VarArray() (localctx IVarArrayContext) {
 	localctx = NewVarArrayContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 32, ProyectoParserRULE_varArray)
+	p.EnterRule(localctx, 32, BruenParserRULE_varArray)
 	var _la int
 
 	defer func() {
@@ -2852,26 +2852,26 @@ func (p *ProyectoParser) VarArray() (localctx IVarArrayContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(281)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	p.SetState(284)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if _la == ProyectoParserT__6 {
+	if _la == BruenParserT__6 {
 		{
 			p.SetState(282)
-			p.Match(ProyectoParserT__6)
+			p.Match(BruenParserT__6)
 		}
 		{
 			p.SetState(283)
-			p.Match(ProyectoParserID)
+			p.Match(BruenParserID)
 		}
 
 	}
 	{
 		p.SetState(286)
-		p.Match(ProyectoParserT__3)
+		p.Match(BruenParserT__3)
 	}
 	{
 		p.SetState(287)
@@ -2879,7 +2879,7 @@ func (p *ProyectoParser) VarArray() (localctx IVarArrayContext) {
 	}
 	{
 		p.SetState(288)
-		p.Match(ProyectoParserT__4)
+		p.Match(BruenParserT__4)
 	}
 
 	return localctx
@@ -2904,7 +2904,7 @@ type VarMatContext struct {
 func NewEmptyVarMatContext() *VarMatContext {
 	var p = new(VarMatContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_varMat
+	p.RuleIndex = BruenParserRULE_varMat
 	return p
 }
 
@@ -2916,7 +2916,7 @@ func NewVarMatContext(parser antlr.Parser, parent antlr.ParserRuleContext, invok
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_varMat
+	p.RuleIndex = BruenParserRULE_varMat
 
 	return p
 }
@@ -2924,11 +2924,11 @@ func NewVarMatContext(parser antlr.Parser, parent antlr.ParserRuleContext, invok
 func (s *VarMatContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *VarMatContext) AllID() []antlr.TerminalNode {
-	return s.GetTokens(ProyectoParserID)
+	return s.GetTokens(BruenParserID)
 }
 
 func (s *VarMatContext) ID(i int) antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, i)
+	return s.GetToken(BruenParserID, i)
 }
 
 func (s *VarMatContext) AllExp() []IExpContext {
@@ -2963,20 +2963,20 @@ func (s *VarMatContext) ToStringTree(ruleNames []string, recog antlr.Recognizer)
 }
 
 func (s *VarMatContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterVarMat(s)
 	}
 }
 
 func (s *VarMatContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitVarMat(s)
 	}
 }
 
-func (p *ProyectoParser) VarMat() (localctx IVarMatContext) {
+func (p *BruenParser) VarMat() (localctx IVarMatContext) {
 	localctx = NewVarMatContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 34, ProyectoParserRULE_varMat)
+	p.EnterRule(localctx, 34, BruenParserRULE_varMat)
 	var _la int
 
 	defer func() {
@@ -2998,20 +2998,20 @@ func (p *ProyectoParser) VarMat() (localctx IVarMatContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(290)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	p.SetState(293)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if _la == ProyectoParserT__6 {
+	if _la == BruenParserT__6 {
 		{
 			p.SetState(291)
-			p.Match(ProyectoParserT__6)
+			p.Match(BruenParserT__6)
 		}
 		{
 			p.SetState(292)
-			p.Match(ProyectoParserID)
+			p.Match(BruenParserID)
 		}
 
 	}
@@ -3021,7 +3021,7 @@ func (p *ProyectoParser) VarMat() (localctx IVarMatContext) {
 	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 18, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(295)
-			p.Match(ProyectoParserT__3)
+			p.Match(BruenParserT__3)
 		}
 		{
 			p.SetState(296)
@@ -3029,7 +3029,7 @@ func (p *ProyectoParser) VarMat() (localctx IVarMatContext) {
 		}
 		{
 			p.SetState(297)
-			p.Match(ProyectoParserT__4)
+			p.Match(BruenParserT__4)
 		}
 
 	}
@@ -3037,10 +3037,10 @@ func (p *ProyectoParser) VarMat() (localctx IVarMatContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if _la == ProyectoParserT__3 {
+	if _la == BruenParserT__3 {
 		{
 			p.SetState(301)
-			p.Match(ProyectoParserT__3)
+			p.Match(BruenParserT__3)
 		}
 		{
 			p.SetState(302)
@@ -3048,7 +3048,7 @@ func (p *ProyectoParser) VarMat() (localctx IVarMatContext) {
 		}
 		{
 			p.SetState(303)
-			p.Match(ProyectoParserT__4)
+			p.Match(BruenParserT__4)
 		}
 
 	}
@@ -3075,7 +3075,7 @@ type FunctionsContext struct {
 func NewEmptyFunctionsContext() *FunctionsContext {
 	var p = new(FunctionsContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_functions
+	p.RuleIndex = BruenParserRULE_functions
 	return p
 }
 
@@ -3087,7 +3087,7 @@ func NewFunctionsContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_functions
+	p.RuleIndex = BruenParserRULE_functions
 
 	return p
 }
@@ -3095,19 +3095,19 @@ func NewFunctionsContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 func (s *FunctionsContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *FunctionsContext) FUNCTION() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserFUNCTION, 0)
+	return s.GetToken(BruenParserFUNCTION, 0)
 }
 
 func (s *FunctionsContext) ID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, 0)
+	return s.GetToken(BruenParserID, 0)
 }
 
 func (s *FunctionsContext) LPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserLPAREN, 0)
+	return s.GetToken(BruenParserLPAREN, 0)
 }
 
 func (s *FunctionsContext) RPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserRPAREN, 0)
+	return s.GetToken(BruenParserRPAREN, 0)
 }
 
 func (s *FunctionsContext) FunctionBlock() IFunctionBlockContext {
@@ -3131,7 +3131,7 @@ func (s *FunctionsContext) TypeRule() ITypeRuleContext {
 }
 
 func (s *FunctionsContext) VOID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserVOID, 0)
+	return s.GetToken(BruenParserVOID, 0)
 }
 
 func (s *FunctionsContext) Parameters() IParametersContext {
@@ -3153,20 +3153,20 @@ func (s *FunctionsContext) ToStringTree(ruleNames []string, recog antlr.Recogniz
 }
 
 func (s *FunctionsContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterFunctions(s)
 	}
 }
 
 func (s *FunctionsContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitFunctions(s)
 	}
 }
 
-func (p *ProyectoParser) Functions() (localctx IFunctionsContext) {
+func (p *BruenParser) Functions() (localctx IFunctionsContext) {
 	localctx = NewFunctionsContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 36, ProyectoParserRULE_functions)
+	p.EnterRule(localctx, 36, BruenParserRULE_functions)
 	var _la int
 
 	defer func() {
@@ -3188,21 +3188,21 @@ func (p *ProyectoParser) Functions() (localctx IFunctionsContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(307)
-		p.Match(ProyectoParserFUNCTION)
+		p.Match(BruenParserFUNCTION)
 	}
 	{
 		p.SetState(308)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(309)
-		p.Match(ProyectoParserLPAREN)
+		p.Match(BruenParserLPAREN)
 	}
 	p.SetState(311)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if _la == ProyectoParserID {
+	if _la == BruenParserID {
 		{
 			p.SetState(310)
 			p.Parameters()
@@ -3211,22 +3211,22 @@ func (p *ProyectoParser) Functions() (localctx IFunctionsContext) {
 	}
 	{
 		p.SetState(313)
-		p.Match(ProyectoParserRPAREN)
+		p.Match(BruenParserRPAREN)
 	}
 	p.SetState(316)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case ProyectoParserINT_TYPE, ProyectoParserFLOAT_TYPE, ProyectoParserCHAR_TYPE, ProyectoParserBOOL_TYPE:
+	case BruenParserINT_TYPE, BruenParserFLOAT_TYPE, BruenParserCHAR_TYPE, BruenParserBOOL_TYPE:
 		{
 			p.SetState(314)
 			p.TypeRule()
 		}
 
-	case ProyectoParserVOID:
+	case BruenParserVOID:
 		{
 			p.SetState(315)
-			p.Match(ProyectoParserVOID)
+			p.Match(BruenParserVOID)
 		}
 
 	default:
@@ -3259,7 +3259,7 @@ type ParametersContext struct {
 func NewEmptyParametersContext() *ParametersContext {
 	var p = new(ParametersContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_parameters
+	p.RuleIndex = BruenParserRULE_parameters
 	return p
 }
 
@@ -3271,7 +3271,7 @@ func NewParametersContext(parser antlr.Parser, parent antlr.ParserRuleContext, i
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_parameters
+	p.RuleIndex = BruenParserRULE_parameters
 
 	return p
 }
@@ -3310,20 +3310,20 @@ func (s *ParametersContext) ToStringTree(ruleNames []string, recog antlr.Recogni
 }
 
 func (s *ParametersContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterParameters(s)
 	}
 }
 
 func (s *ParametersContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitParameters(s)
 	}
 }
 
-func (p *ProyectoParser) Parameters() (localctx IParametersContext) {
+func (p *BruenParser) Parameters() (localctx IParametersContext) {
 	localctx = NewParametersContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 38, ProyectoParserRULE_parameters)
+	p.EnterRule(localctx, 38, BruenParserRULE_parameters)
 	var _la int
 
 	defer func() {
@@ -3351,10 +3351,10 @@ func (p *ProyectoParser) Parameters() (localctx IParametersContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserT__7 {
+	for _la == BruenParserT__7 {
 		{
 			p.SetState(321)
-			p.Match(ProyectoParserT__7)
+			p.Match(BruenParserT__7)
 		}
 		{
 			p.SetState(322)
@@ -3388,7 +3388,7 @@ type ParameterContext struct {
 func NewEmptyParameterContext() *ParameterContext {
 	var p = new(ParameterContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_parameter
+	p.RuleIndex = BruenParserRULE_parameter
 	return p
 }
 
@@ -3400,7 +3400,7 @@ func NewParameterContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_parameter
+	p.RuleIndex = BruenParserRULE_parameter
 
 	return p
 }
@@ -3408,7 +3408,7 @@ func NewParameterContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 func (s *ParameterContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *ParameterContext) ID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, 0)
+	return s.GetToken(BruenParserID, 0)
 }
 
 func (s *ParameterContext) TypeRule() ITypeRuleContext {
@@ -3430,20 +3430,20 @@ func (s *ParameterContext) ToStringTree(ruleNames []string, recog antlr.Recogniz
 }
 
 func (s *ParameterContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterParameter(s)
 	}
 }
 
 func (s *ParameterContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitParameter(s)
 	}
 }
 
-func (p *ProyectoParser) Parameter() (localctx IParameterContext) {
+func (p *BruenParser) Parameter() (localctx IParameterContext) {
 	localctx = NewParameterContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 40, ProyectoParserRULE_parameter)
+	p.EnterRule(localctx, 40, BruenParserRULE_parameter)
 
 	defer func() {
 		p.ExitRule()
@@ -3464,11 +3464,11 @@ func (p *ProyectoParser) Parameter() (localctx IParameterContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(328)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(329)
-		p.Match(ProyectoParserT__2)
+		p.Match(BruenParserT__2)
 	}
 	{
 		p.SetState(330)
@@ -3497,7 +3497,7 @@ type FunctionBlockContext struct {
 func NewEmptyFunctionBlockContext() *FunctionBlockContext {
 	var p = new(FunctionBlockContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_functionBlock
+	p.RuleIndex = BruenParserRULE_functionBlock
 	return p
 }
 
@@ -3509,7 +3509,7 @@ func NewFunctionBlockContext(parser antlr.Parser, parent antlr.ParserRuleContext
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_functionBlock
+	p.RuleIndex = BruenParserRULE_functionBlock
 
 	return p
 }
@@ -3571,20 +3571,20 @@ func (s *FunctionBlockContext) ToStringTree(ruleNames []string, recog antlr.Reco
 }
 
 func (s *FunctionBlockContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterFunctionBlock(s)
 	}
 }
 
 func (s *FunctionBlockContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitFunctionBlock(s)
 	}
 }
 
-func (p *ProyectoParser) FunctionBlock() (localctx IFunctionBlockContext) {
+func (p *BruenParser) FunctionBlock() (localctx IFunctionBlockContext) {
 	localctx = NewFunctionBlockContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 42, ProyectoParserRULE_functionBlock)
+	p.EnterRule(localctx, 42, BruenParserRULE_functionBlock)
 	var _la int
 
 	defer func() {
@@ -3606,13 +3606,13 @@ func (p *ProyectoParser) FunctionBlock() (localctx IFunctionBlockContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(332)
-		p.Match(ProyectoParserT__0)
+		p.Match(BruenParserT__0)
 	}
 	p.SetState(336)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserVAR {
+	for _la == BruenParserVAR {
 		{
 			p.SetState(333)
 			p.VariableDeclaration()
@@ -3626,7 +3626,7 @@ func (p *ProyectoParser) FunctionBlock() (localctx IFunctionBlockContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__8)|(1<<ProyectoParserT__9)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN)|(1<<ProyectoParserIF))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(ProyectoParserWHILE-32))|(1<<(ProyectoParserFOR-32))|(1<<(ProyectoParserWRITE-32))|(1<<(ProyectoParserREAD-32))|(1<<(ProyectoParserRETURN-32))|(1<<(ProyectoParserID-32)))) != 0) {
+	for (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<BruenParserT__8)|(1<<BruenParserT__9)|(1<<BruenParserINT)|(1<<BruenParserFLOAT)|(1<<BruenParserCHAR)|(1<<BruenParserBOOL)|(1<<BruenParserLPAREN)|(1<<BruenParserIF))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(BruenParserWHILE-32))|(1<<(BruenParserFOR-32))|(1<<(BruenParserWRITE-32))|(1<<(BruenParserREAD-32))|(1<<(BruenParserRETURN-32))|(1<<(BruenParserID-32)))) != 0) {
 		{
 			p.SetState(339)
 			p.Statutes()
@@ -3638,7 +3638,7 @@ func (p *ProyectoParser) FunctionBlock() (localctx IFunctionBlockContext) {
 	}
 	{
 		p.SetState(345)
-		p.Match(ProyectoParserT__1)
+		p.Match(BruenParserT__1)
 	}
 
 	return localctx
@@ -3663,7 +3663,7 @@ type ReturnRuleContext struct {
 func NewEmptyReturnRuleContext() *ReturnRuleContext {
 	var p = new(ReturnRuleContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_returnRule
+	p.RuleIndex = BruenParserRULE_returnRule
 	return p
 }
 
@@ -3675,7 +3675,7 @@ func NewReturnRuleContext(parser antlr.Parser, parent antlr.ParserRuleContext, i
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_returnRule
+	p.RuleIndex = BruenParserRULE_returnRule
 
 	return p
 }
@@ -3683,11 +3683,11 @@ func NewReturnRuleContext(parser antlr.Parser, parent antlr.ParserRuleContext, i
 func (s *ReturnRuleContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *ReturnRuleContext) RETURN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserRETURN, 0)
+	return s.GetToken(BruenParserRETURN, 0)
 }
 
 func (s *ReturnRuleContext) SEMI() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSEMI, 0)
+	return s.GetToken(BruenParserSEMI, 0)
 }
 
 func (s *ReturnRuleContext) Exp() IExpContext {
@@ -3709,20 +3709,20 @@ func (s *ReturnRuleContext) ToStringTree(ruleNames []string, recog antlr.Recogni
 }
 
 func (s *ReturnRuleContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterReturnRule(s)
 	}
 }
 
 func (s *ReturnRuleContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitReturnRule(s)
 	}
 }
 
-func (p *ProyectoParser) ReturnRule() (localctx IReturnRuleContext) {
+func (p *BruenParser) ReturnRule() (localctx IReturnRuleContext) {
 	localctx = NewReturnRuleContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 44, ProyectoParserRULE_returnRule)
+	p.EnterRule(localctx, 44, BruenParserRULE_returnRule)
 	var _la int
 
 	defer func() {
@@ -3744,13 +3744,13 @@ func (p *ProyectoParser) ReturnRule() (localctx IReturnRuleContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(347)
-		p.Match(ProyectoParserRETURN)
+		p.Match(BruenParserRETURN)
 	}
 	p.SetState(349)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__8)|(1<<ProyectoParserT__9)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN))) != 0) || _la == ProyectoParserID {
+	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<BruenParserT__8)|(1<<BruenParserT__9)|(1<<BruenParserINT)|(1<<BruenParserFLOAT)|(1<<BruenParserCHAR)|(1<<BruenParserBOOL)|(1<<BruenParserLPAREN))) != 0) || _la == BruenParserID {
 		{
 			p.SetState(348)
 			p.Exp()
@@ -3759,7 +3759,7 @@ func (p *ProyectoParser) ReturnRule() (localctx IReturnRuleContext) {
 	}
 	{
 		p.SetState(351)
-		p.Match(ProyectoParserSEMI)
+		p.Match(BruenParserSEMI)
 	}
 
 	return localctx
@@ -3784,7 +3784,7 @@ type BlockContext struct {
 func NewEmptyBlockContext() *BlockContext {
 	var p = new(BlockContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_block
+	p.RuleIndex = BruenParserRULE_block
 	return p
 }
 
@@ -3796,7 +3796,7 @@ func NewBlockContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_block
+	p.RuleIndex = BruenParserRULE_block
 
 	return p
 }
@@ -3835,20 +3835,20 @@ func (s *BlockContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *BlockContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterBlock(s)
 	}
 }
 
 func (s *BlockContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitBlock(s)
 	}
 }
 
-func (p *ProyectoParser) Block() (localctx IBlockContext) {
+func (p *BruenParser) Block() (localctx IBlockContext) {
 	localctx = NewBlockContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 46, ProyectoParserRULE_block)
+	p.EnterRule(localctx, 46, BruenParserRULE_block)
 	var _la int
 
 	defer func() {
@@ -3870,13 +3870,13 @@ func (p *ProyectoParser) Block() (localctx IBlockContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(353)
-		p.Match(ProyectoParserT__0)
+		p.Match(BruenParserT__0)
 	}
 	p.SetState(357)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__8)|(1<<ProyectoParserT__9)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN)|(1<<ProyectoParserIF))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(ProyectoParserWHILE-32))|(1<<(ProyectoParserFOR-32))|(1<<(ProyectoParserWRITE-32))|(1<<(ProyectoParserREAD-32))|(1<<(ProyectoParserRETURN-32))|(1<<(ProyectoParserID-32)))) != 0) {
+	for (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<BruenParserT__8)|(1<<BruenParserT__9)|(1<<BruenParserINT)|(1<<BruenParserFLOAT)|(1<<BruenParserCHAR)|(1<<BruenParserBOOL)|(1<<BruenParserLPAREN)|(1<<BruenParserIF))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(BruenParserWHILE-32))|(1<<(BruenParserFOR-32))|(1<<(BruenParserWRITE-32))|(1<<(BruenParserREAD-32))|(1<<(BruenParserRETURN-32))|(1<<(BruenParserID-32)))) != 0) {
 		{
 			p.SetState(354)
 			p.Statutes()
@@ -3888,7 +3888,7 @@ func (p *ProyectoParser) Block() (localctx IBlockContext) {
 	}
 	{
 		p.SetState(360)
-		p.Match(ProyectoParserT__1)
+		p.Match(BruenParserT__1)
 	}
 
 	return localctx
@@ -3913,7 +3913,7 @@ type StatutesNoReturnContext struct {
 func NewEmptyStatutesNoReturnContext() *StatutesNoReturnContext {
 	var p = new(StatutesNoReturnContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_statutesNoReturn
+	p.RuleIndex = BruenParserRULE_statutesNoReturn
 	return p
 }
 
@@ -3925,7 +3925,7 @@ func NewStatutesNoReturnContext(parser antlr.Parser, parent antlr.ParserRuleCont
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_statutesNoReturn
+	p.RuleIndex = BruenParserRULE_statutesNoReturn
 
 	return p
 }
@@ -4011,20 +4011,20 @@ func (s *StatutesNoReturnContext) ToStringTree(ruleNames []string, recog antlr.R
 }
 
 func (s *StatutesNoReturnContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterStatutesNoReturn(s)
 	}
 }
 
 func (s *StatutesNoReturnContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitStatutesNoReturn(s)
 	}
 }
 
-func (p *ProyectoParser) StatutesNoReturn() (localctx IStatutesNoReturnContext) {
+func (p *BruenParser) StatutesNoReturn() (localctx IStatutesNoReturnContext) {
 	localctx = NewStatutesNoReturnContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 48, ProyectoParserRULE_statutesNoReturn)
+	p.EnterRule(localctx, 48, BruenParserRULE_statutesNoReturn)
 
 	defer func() {
 		p.ExitRule()
@@ -4118,7 +4118,7 @@ type StatutesContext struct {
 func NewEmptyStatutesContext() *StatutesContext {
 	var p = new(StatutesContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_statutes
+	p.RuleIndex = BruenParserRULE_statutes
 	return p
 }
 
@@ -4130,7 +4130,7 @@ func NewStatutesContext(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_statutes
+	p.RuleIndex = BruenParserRULE_statutes
 
 	return p
 }
@@ -4226,20 +4226,20 @@ func (s *StatutesContext) ToStringTree(ruleNames []string, recog antlr.Recognize
 }
 
 func (s *StatutesContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterStatutes(s)
 	}
 }
 
 func (s *StatutesContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitStatutes(s)
 	}
 }
 
-func (p *ProyectoParser) Statutes() (localctx IStatutesContext) {
+func (p *BruenParser) Statutes() (localctx IStatutesContext) {
 	localctx = NewStatutesContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 50, ProyectoParserRULE_statutes)
+	p.EnterRule(localctx, 50, BruenParserRULE_statutes)
 
 	defer func() {
 		p.ExitRule()
@@ -4340,7 +4340,7 @@ type AssignationContext struct {
 func NewEmptyAssignationContext() *AssignationContext {
 	var p = new(AssignationContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_assignation
+	p.RuleIndex = BruenParserRULE_assignation
 	return p
 }
 
@@ -4352,7 +4352,7 @@ func NewAssignationContext(parser antlr.Parser, parent antlr.ParserRuleContext, 
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_assignation
+	p.RuleIndex = BruenParserRULE_assignation
 
 	return p
 }
@@ -4360,7 +4360,7 @@ func NewAssignationContext(parser antlr.Parser, parent antlr.ParserRuleContext, 
 func (s *AssignationContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *AssignationContext) ASSIGN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserASSIGN, 0)
+	return s.GetToken(BruenParserASSIGN, 0)
 }
 
 func (s *AssignationContext) Exp() IExpContext {
@@ -4374,7 +4374,7 @@ func (s *AssignationContext) Exp() IExpContext {
 }
 
 func (s *AssignationContext) SEMI() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSEMI, 0)
+	return s.GetToken(BruenParserSEMI, 0)
 }
 
 func (s *AssignationContext) Vars() IVarsContext {
@@ -4416,20 +4416,20 @@ func (s *AssignationContext) ToStringTree(ruleNames []string, recog antlr.Recogn
 }
 
 func (s *AssignationContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterAssignation(s)
 	}
 }
 
 func (s *AssignationContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitAssignation(s)
 	}
 }
 
-func (p *ProyectoParser) Assignation() (localctx IAssignationContext) {
+func (p *BruenParser) Assignation() (localctx IAssignationContext) {
 	localctx = NewAssignationContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 52, ProyectoParserRULE_assignation)
+	p.EnterRule(localctx, 52, BruenParserRULE_assignation)
 
 	defer func() {
 		p.ExitRule()
@@ -4472,7 +4472,7 @@ func (p *ProyectoParser) Assignation() (localctx IAssignationContext) {
 	}
 	{
 		p.SetState(386)
-		p.Match(ProyectoParserASSIGN)
+		p.Match(BruenParserASSIGN)
 	}
 	{
 		p.SetState(387)
@@ -4480,7 +4480,7 @@ func (p *ProyectoParser) Assignation() (localctx IAssignationContext) {
 	}
 	{
 		p.SetState(388)
-		p.Match(ProyectoParserSEMI)
+		p.Match(BruenParserSEMI)
 	}
 
 	return localctx
@@ -4505,7 +4505,7 @@ type FunctionCallContext struct {
 func NewEmptyFunctionCallContext() *FunctionCallContext {
 	var p = new(FunctionCallContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_functionCall
+	p.RuleIndex = BruenParserRULE_functionCall
 	return p
 }
 
@@ -4517,7 +4517,7 @@ func NewFunctionCallContext(parser antlr.Parser, parent antlr.ParserRuleContext,
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_functionCall
+	p.RuleIndex = BruenParserRULE_functionCall
 
 	return p
 }
@@ -4525,15 +4525,15 @@ func NewFunctionCallContext(parser antlr.Parser, parent antlr.ParserRuleContext,
 func (s *FunctionCallContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *FunctionCallContext) ID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, 0)
+	return s.GetToken(BruenParserID, 0)
 }
 
 func (s *FunctionCallContext) LPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserLPAREN, 0)
+	return s.GetToken(BruenParserLPAREN, 0)
 }
 
 func (s *FunctionCallContext) RPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserRPAREN, 0)
+	return s.GetToken(BruenParserRPAREN, 0)
 }
 
 func (s *FunctionCallContext) Arguments() IArgumentsContext {
@@ -4555,20 +4555,20 @@ func (s *FunctionCallContext) ToStringTree(ruleNames []string, recog antlr.Recog
 }
 
 func (s *FunctionCallContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterFunctionCall(s)
 	}
 }
 
 func (s *FunctionCallContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitFunctionCall(s)
 	}
 }
 
-func (p *ProyectoParser) FunctionCall() (localctx IFunctionCallContext) {
+func (p *BruenParser) FunctionCall() (localctx IFunctionCallContext) {
 	localctx = NewFunctionCallContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 54, ProyectoParserRULE_functionCall)
+	p.EnterRule(localctx, 54, BruenParserRULE_functionCall)
 	var _la int
 
 	defer func() {
@@ -4590,17 +4590,17 @@ func (p *ProyectoParser) FunctionCall() (localctx IFunctionCallContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(390)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(391)
-		p.Match(ProyectoParserLPAREN)
+		p.Match(BruenParserLPAREN)
 	}
 	p.SetState(393)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__8)|(1<<ProyectoParserT__9)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN))) != 0) || _la == ProyectoParserID {
+	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<BruenParserT__8)|(1<<BruenParserT__9)|(1<<BruenParserINT)|(1<<BruenParserFLOAT)|(1<<BruenParserCHAR)|(1<<BruenParserBOOL)|(1<<BruenParserLPAREN))) != 0) || _la == BruenParserID {
 		{
 			p.SetState(392)
 			p.Arguments()
@@ -4609,7 +4609,7 @@ func (p *ProyectoParser) FunctionCall() (localctx IFunctionCallContext) {
 	}
 	{
 		p.SetState(395)
-		p.Match(ProyectoParserRPAREN)
+		p.Match(BruenParserRPAREN)
 	}
 
 	return localctx
@@ -4634,7 +4634,7 @@ type ArgumentsContext struct {
 func NewEmptyArgumentsContext() *ArgumentsContext {
 	var p = new(ArgumentsContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_arguments
+	p.RuleIndex = BruenParserRULE_arguments
 	return p
 }
 
@@ -4646,7 +4646,7 @@ func NewArgumentsContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_arguments
+	p.RuleIndex = BruenParserRULE_arguments
 
 	return p
 }
@@ -4682,20 +4682,20 @@ func (s *ArgumentsContext) ToStringTree(ruleNames []string, recog antlr.Recogniz
 }
 
 func (s *ArgumentsContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterArguments(s)
 	}
 }
 
 func (s *ArgumentsContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitArguments(s)
 	}
 }
 
-func (p *ProyectoParser) Arguments() (localctx IArgumentsContext) {
+func (p *BruenParser) Arguments() (localctx IArgumentsContext) {
 	localctx = NewArgumentsContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 56, ProyectoParserRULE_arguments)
+	p.EnterRule(localctx, 56, BruenParserRULE_arguments)
 
 	defer func() {
 		p.ExitRule()
@@ -4745,7 +4745,7 @@ type Arguments2Context struct {
 func NewEmptyArguments2Context() *Arguments2Context {
 	var p = new(Arguments2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_arguments2
+	p.RuleIndex = BruenParserRULE_arguments2
 	return p
 }
 
@@ -4757,7 +4757,7 @@ func NewArguments2Context(parser antlr.Parser, parent antlr.ParserRuleContext, i
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_arguments2
+	p.RuleIndex = BruenParserRULE_arguments2
 
 	return p
 }
@@ -4783,20 +4783,20 @@ func (s *Arguments2Context) ToStringTree(ruleNames []string, recog antlr.Recogni
 }
 
 func (s *Arguments2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterArguments2(s)
 	}
 }
 
 func (s *Arguments2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitArguments2(s)
 	}
 }
 
-func (p *ProyectoParser) Arguments2() (localctx IArguments2Context) {
+func (p *BruenParser) Arguments2() (localctx IArguments2Context) {
 	localctx = NewArguments2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 58, ProyectoParserRULE_arguments2)
+	p.EnterRule(localctx, 58, BruenParserRULE_arguments2)
 
 	defer func() {
 		p.ExitRule()
@@ -4818,18 +4818,18 @@ func (p *ProyectoParser) Arguments2() (localctx IArguments2Context) {
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case ProyectoParserT__7:
+	case BruenParserT__7:
 		p.EnterOuterAlt(localctx, 1)
 		{
 			p.SetState(400)
-			p.Match(ProyectoParserT__7)
+			p.Match(BruenParserT__7)
 		}
 		{
 			p.SetState(401)
 			p.Arguments()
 		}
 
-	case ProyectoParserRPAREN:
+	case BruenParserRPAREN:
 		p.EnterOuterAlt(localctx, 2)
 
 	default:
@@ -4858,7 +4858,7 @@ type MethodCallContext struct {
 func NewEmptyMethodCallContext() *MethodCallContext {
 	var p = new(MethodCallContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_methodCall
+	p.RuleIndex = BruenParserRULE_methodCall
 	return p
 }
 
@@ -4870,7 +4870,7 @@ func NewMethodCallContext(parser antlr.Parser, parent antlr.ParserRuleContext, i
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_methodCall
+	p.RuleIndex = BruenParserRULE_methodCall
 
 	return p
 }
@@ -4878,19 +4878,19 @@ func NewMethodCallContext(parser antlr.Parser, parent antlr.ParserRuleContext, i
 func (s *MethodCallContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *MethodCallContext) AllID() []antlr.TerminalNode {
-	return s.GetTokens(ProyectoParserID)
+	return s.GetTokens(BruenParserID)
 }
 
 func (s *MethodCallContext) ID(i int) antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, i)
+	return s.GetToken(BruenParserID, i)
 }
 
 func (s *MethodCallContext) LPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserLPAREN, 0)
+	return s.GetToken(BruenParserLPAREN, 0)
 }
 
 func (s *MethodCallContext) RPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserRPAREN, 0)
+	return s.GetToken(BruenParserRPAREN, 0)
 }
 
 func (s *MethodCallContext) Arguments() IArgumentsContext {
@@ -4912,20 +4912,20 @@ func (s *MethodCallContext) ToStringTree(ruleNames []string, recog antlr.Recogni
 }
 
 func (s *MethodCallContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterMethodCall(s)
 	}
 }
 
 func (s *MethodCallContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitMethodCall(s)
 	}
 }
 
-func (p *ProyectoParser) MethodCall() (localctx IMethodCallContext) {
+func (p *BruenParser) MethodCall() (localctx IMethodCallContext) {
 	localctx = NewMethodCallContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 60, ProyectoParserRULE_methodCall)
+	p.EnterRule(localctx, 60, BruenParserRULE_methodCall)
 	var _la int
 
 	defer func() {
@@ -4947,25 +4947,25 @@ func (p *ProyectoParser) MethodCall() (localctx IMethodCallContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(405)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(406)
-		p.Match(ProyectoParserT__6)
+		p.Match(BruenParserT__6)
 	}
 	{
 		p.SetState(407)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(408)
-		p.Match(ProyectoParserLPAREN)
+		p.Match(BruenParserLPAREN)
 	}
 	p.SetState(410)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__8)|(1<<ProyectoParserT__9)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN))) != 0) || _la == ProyectoParserID {
+	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<BruenParserT__8)|(1<<BruenParserT__9)|(1<<BruenParserINT)|(1<<BruenParserFLOAT)|(1<<BruenParserCHAR)|(1<<BruenParserBOOL)|(1<<BruenParserLPAREN))) != 0) || _la == BruenParserID {
 		{
 			p.SetState(409)
 			p.Arguments()
@@ -4974,7 +4974,7 @@ func (p *ProyectoParser) MethodCall() (localctx IMethodCallContext) {
 	}
 	{
 		p.SetState(412)
-		p.Match(ProyectoParserRPAREN)
+		p.Match(BruenParserRPAREN)
 	}
 
 	return localctx
@@ -4999,7 +4999,7 @@ type InitCallContext struct {
 func NewEmptyInitCallContext() *InitCallContext {
 	var p = new(InitCallContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_initCall
+	p.RuleIndex = BruenParserRULE_initCall
 	return p
 }
 
@@ -5011,7 +5011,7 @@ func NewInitCallContext(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_initCall
+	p.RuleIndex = BruenParserRULE_initCall
 
 	return p
 }
@@ -5019,15 +5019,15 @@ func NewInitCallContext(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 func (s *InitCallContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *InitCallContext) ID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, 0)
+	return s.GetToken(BruenParserID, 0)
 }
 
 func (s *InitCallContext) LPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserLPAREN, 0)
+	return s.GetToken(BruenParserLPAREN, 0)
 }
 
 func (s *InitCallContext) RPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserRPAREN, 0)
+	return s.GetToken(BruenParserRPAREN, 0)
 }
 
 func (s *InitCallContext) GetRuleContext() antlr.RuleContext {
@@ -5039,20 +5039,20 @@ func (s *InitCallContext) ToStringTree(ruleNames []string, recog antlr.Recognize
 }
 
 func (s *InitCallContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterInitCall(s)
 	}
 }
 
 func (s *InitCallContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitInitCall(s)
 	}
 }
 
-func (p *ProyectoParser) InitCall() (localctx IInitCallContext) {
+func (p *BruenParser) InitCall() (localctx IInitCallContext) {
 	localctx = NewInitCallContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 62, ProyectoParserRULE_initCall)
+	p.EnterRule(localctx, 62, BruenParserRULE_initCall)
 
 	defer func() {
 		p.ExitRule()
@@ -5073,19 +5073,19 @@ func (p *ProyectoParser) InitCall() (localctx IInitCallContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(414)
-		p.Match(ProyectoParserT__8)
+		p.Match(BruenParserT__8)
 	}
 	{
 		p.SetState(415)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(416)
-		p.Match(ProyectoParserLPAREN)
+		p.Match(BruenParserLPAREN)
 	}
 	{
 		p.SetState(417)
-		p.Match(ProyectoParserRPAREN)
+		p.Match(BruenParserRPAREN)
 	}
 
 	return localctx
@@ -5110,7 +5110,7 @@ type CallContext struct {
 func NewEmptyCallContext() *CallContext {
 	var p = new(CallContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_call
+	p.RuleIndex = BruenParserRULE_call
 	return p
 }
 
@@ -5122,7 +5122,7 @@ func NewCallContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_call
+	p.RuleIndex = BruenParserRULE_call
 
 	return p
 }
@@ -5168,20 +5168,20 @@ func (s *CallContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) s
 }
 
 func (s *CallContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterCall(s)
 	}
 }
 
 func (s *CallContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitCall(s)
 	}
 }
 
-func (p *ProyectoParser) Call() (localctx ICallContext) {
+func (p *BruenParser) Call() (localctx ICallContext) {
 	localctx = NewCallContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 64, ProyectoParserRULE_call)
+	p.EnterRule(localctx, 64, BruenParserRULE_call)
 
 	defer func() {
 		p.ExitRule()
@@ -5247,7 +5247,7 @@ type ReadContext struct {
 func NewEmptyReadContext() *ReadContext {
 	var p = new(ReadContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_read
+	p.RuleIndex = BruenParserRULE_read
 	return p
 }
 
@@ -5259,7 +5259,7 @@ func NewReadContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_read
+	p.RuleIndex = BruenParserRULE_read
 
 	return p
 }
@@ -5267,11 +5267,11 @@ func NewReadContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 func (s *ReadContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *ReadContext) READ() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserREAD, 0)
+	return s.GetToken(BruenParserREAD, 0)
 }
 
 func (s *ReadContext) LPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserLPAREN, 0)
+	return s.GetToken(BruenParserLPAREN, 0)
 }
 
 func (s *ReadContext) Read2() IRead2Context {
@@ -5285,11 +5285,11 @@ func (s *ReadContext) Read2() IRead2Context {
 }
 
 func (s *ReadContext) RPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserRPAREN, 0)
+	return s.GetToken(BruenParserRPAREN, 0)
 }
 
 func (s *ReadContext) SEMI() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSEMI, 0)
+	return s.GetToken(BruenParserSEMI, 0)
 }
 
 func (s *ReadContext) GetRuleContext() antlr.RuleContext {
@@ -5301,20 +5301,20 @@ func (s *ReadContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) s
 }
 
 func (s *ReadContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterRead(s)
 	}
 }
 
 func (s *ReadContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitRead(s)
 	}
 }
 
-func (p *ProyectoParser) Read() (localctx IReadContext) {
+func (p *BruenParser) Read() (localctx IReadContext) {
 	localctx = NewReadContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 66, ProyectoParserRULE_read)
+	p.EnterRule(localctx, 66, BruenParserRULE_read)
 
 	defer func() {
 		p.ExitRule()
@@ -5335,11 +5335,11 @@ func (p *ProyectoParser) Read() (localctx IReadContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(424)
-		p.Match(ProyectoParserREAD)
+		p.Match(BruenParserREAD)
 	}
 	{
 		p.SetState(425)
-		p.Match(ProyectoParserLPAREN)
+		p.Match(BruenParserLPAREN)
 	}
 	{
 		p.SetState(426)
@@ -5347,11 +5347,11 @@ func (p *ProyectoParser) Read() (localctx IReadContext) {
 	}
 	{
 		p.SetState(427)
-		p.Match(ProyectoParserRPAREN)
+		p.Match(BruenParserRPAREN)
 	}
 	{
 		p.SetState(428)
-		p.Match(ProyectoParserSEMI)
+		p.Match(BruenParserSEMI)
 	}
 
 	return localctx
@@ -5376,7 +5376,7 @@ type Read2Context struct {
 func NewEmptyRead2Context() *Read2Context {
 	var p = new(Read2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_read2
+	p.RuleIndex = BruenParserRULE_read2
 	return p
 }
 
@@ -5388,7 +5388,7 @@ func NewRead2Context(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_read2
+	p.RuleIndex = BruenParserRULE_read2
 
 	return p
 }
@@ -5444,20 +5444,20 @@ func (s *Read2Context) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *Read2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterRead2(s)
 	}
 }
 
 func (s *Read2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitRead2(s)
 	}
 }
 
-func (p *ProyectoParser) Read2() (localctx IRead2Context) {
+func (p *BruenParser) Read2() (localctx IRead2Context) {
 	localctx = NewRead2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 68, ProyectoParserRULE_read2)
+	p.EnterRule(localctx, 68, BruenParserRULE_read2)
 
 	defer func() {
 		p.ExitRule()
@@ -5525,7 +5525,7 @@ type Read3Context struct {
 func NewEmptyRead3Context() *Read3Context {
 	var p = new(Read3Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_read3
+	p.RuleIndex = BruenParserRULE_read3
 	return p
 }
 
@@ -5537,7 +5537,7 @@ func NewRead3Context(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_read3
+	p.RuleIndex = BruenParserRULE_read3
 
 	return p
 }
@@ -5563,20 +5563,20 @@ func (s *Read3Context) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *Read3Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterRead3(s)
 	}
 }
 
 func (s *Read3Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitRead3(s)
 	}
 }
 
-func (p *ProyectoParser) Read3() (localctx IRead3Context) {
+func (p *BruenParser) Read3() (localctx IRead3Context) {
 	localctx = NewRead3Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 70, ProyectoParserRULE_read3)
+	p.EnterRule(localctx, 70, BruenParserRULE_read3)
 
 	defer func() {
 		p.ExitRule()
@@ -5598,18 +5598,18 @@ func (p *ProyectoParser) Read3() (localctx IRead3Context) {
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case ProyectoParserT__7:
+	case BruenParserT__7:
 		p.EnterOuterAlt(localctx, 1)
 		{
 			p.SetState(437)
-			p.Match(ProyectoParserT__7)
+			p.Match(BruenParserT__7)
 		}
 		{
 			p.SetState(438)
 			p.Read2()
 		}
 
-	case ProyectoParserRPAREN:
+	case BruenParserRPAREN:
 		p.EnterOuterAlt(localctx, 2)
 
 	default:
@@ -5638,7 +5638,7 @@ type WriteContext struct {
 func NewEmptyWriteContext() *WriteContext {
 	var p = new(WriteContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_write
+	p.RuleIndex = BruenParserRULE_write
 	return p
 }
 
@@ -5650,7 +5650,7 @@ func NewWriteContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_write
+	p.RuleIndex = BruenParserRULE_write
 
 	return p
 }
@@ -5658,11 +5658,11 @@ func NewWriteContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 func (s *WriteContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *WriteContext) WRITE() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserWRITE, 0)
+	return s.GetToken(BruenParserWRITE, 0)
 }
 
 func (s *WriteContext) LPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserLPAREN, 0)
+	return s.GetToken(BruenParserLPAREN, 0)
 }
 
 func (s *WriteContext) W_arguments() IW_argumentsContext {
@@ -5676,11 +5676,11 @@ func (s *WriteContext) W_arguments() IW_argumentsContext {
 }
 
 func (s *WriteContext) RPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserRPAREN, 0)
+	return s.GetToken(BruenParserRPAREN, 0)
 }
 
 func (s *WriteContext) SEMI() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSEMI, 0)
+	return s.GetToken(BruenParserSEMI, 0)
 }
 
 func (s *WriteContext) GetRuleContext() antlr.RuleContext {
@@ -5692,20 +5692,20 @@ func (s *WriteContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *WriteContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterWrite(s)
 	}
 }
 
 func (s *WriteContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitWrite(s)
 	}
 }
 
-func (p *ProyectoParser) Write() (localctx IWriteContext) {
+func (p *BruenParser) Write() (localctx IWriteContext) {
 	localctx = NewWriteContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 72, ProyectoParserRULE_write)
+	p.EnterRule(localctx, 72, BruenParserRULE_write)
 
 	defer func() {
 		p.ExitRule()
@@ -5726,11 +5726,11 @@ func (p *ProyectoParser) Write() (localctx IWriteContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(442)
-		p.Match(ProyectoParserWRITE)
+		p.Match(BruenParserWRITE)
 	}
 	{
 		p.SetState(443)
-		p.Match(ProyectoParserLPAREN)
+		p.Match(BruenParserLPAREN)
 	}
 	{
 		p.SetState(444)
@@ -5738,11 +5738,11 @@ func (p *ProyectoParser) Write() (localctx IWriteContext) {
 	}
 	{
 		p.SetState(445)
-		p.Match(ProyectoParserRPAREN)
+		p.Match(BruenParserRPAREN)
 	}
 	{
 		p.SetState(446)
-		p.Match(ProyectoParserSEMI)
+		p.Match(BruenParserSEMI)
 	}
 
 	return localctx
@@ -5767,7 +5767,7 @@ type W_argumentsContext struct {
 func NewEmptyW_argumentsContext() *W_argumentsContext {
 	var p = new(W_argumentsContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_w_arguments
+	p.RuleIndex = BruenParserRULE_w_arguments
 	return p
 }
 
@@ -5779,7 +5779,7 @@ func NewW_argumentsContext(parser antlr.Parser, parent antlr.ParserRuleContext, 
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_w_arguments
+	p.RuleIndex = BruenParserRULE_w_arguments
 
 	return p
 }
@@ -5815,20 +5815,20 @@ func (s *W_argumentsContext) ToStringTree(ruleNames []string, recog antlr.Recogn
 }
 
 func (s *W_argumentsContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterW_arguments(s)
 	}
 }
 
 func (s *W_argumentsContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitW_arguments(s)
 	}
 }
 
-func (p *ProyectoParser) W_arguments() (localctx IW_argumentsContext) {
+func (p *BruenParser) W_arguments() (localctx IW_argumentsContext) {
 	localctx = NewW_argumentsContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 74, ProyectoParserRULE_w_arguments)
+	p.EnterRule(localctx, 74, BruenParserRULE_w_arguments)
 
 	defer func() {
 		p.ExitRule()
@@ -5878,7 +5878,7 @@ type W_arguments2Context struct {
 func NewEmptyW_arguments2Context() *W_arguments2Context {
 	var p = new(W_arguments2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_w_arguments2
+	p.RuleIndex = BruenParserRULE_w_arguments2
 	return p
 }
 
@@ -5890,7 +5890,7 @@ func NewW_arguments2Context(parser antlr.Parser, parent antlr.ParserRuleContext,
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_w_arguments2
+	p.RuleIndex = BruenParserRULE_w_arguments2
 
 	return p
 }
@@ -5916,20 +5916,20 @@ func (s *W_arguments2Context) ToStringTree(ruleNames []string, recog antlr.Recog
 }
 
 func (s *W_arguments2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterW_arguments2(s)
 	}
 }
 
 func (s *W_arguments2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitW_arguments2(s)
 	}
 }
 
-func (p *ProyectoParser) W_arguments2() (localctx IW_arguments2Context) {
+func (p *BruenParser) W_arguments2() (localctx IW_arguments2Context) {
 	localctx = NewW_arguments2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 76, ProyectoParserRULE_w_arguments2)
+	p.EnterRule(localctx, 76, BruenParserRULE_w_arguments2)
 
 	defer func() {
 		p.ExitRule()
@@ -5951,18 +5951,18 @@ func (p *ProyectoParser) W_arguments2() (localctx IW_arguments2Context) {
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case ProyectoParserT__7:
+	case BruenParserT__7:
 		p.EnterOuterAlt(localctx, 1)
 		{
 			p.SetState(451)
-			p.Match(ProyectoParserT__7)
+			p.Match(BruenParserT__7)
 		}
 		{
 			p.SetState(452)
 			p.W_arguments()
 		}
 
-	case ProyectoParserRPAREN:
+	case BruenParserRPAREN:
 		p.EnterOuterAlt(localctx, 2)
 
 	default:
@@ -5991,7 +5991,7 @@ type ConditionalContext struct {
 func NewEmptyConditionalContext() *ConditionalContext {
 	var p = new(ConditionalContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_conditional
+	p.RuleIndex = BruenParserRULE_conditional
 	return p
 }
 
@@ -6003,7 +6003,7 @@ func NewConditionalContext(parser antlr.Parser, parent antlr.ParserRuleContext, 
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_conditional
+	p.RuleIndex = BruenParserRULE_conditional
 
 	return p
 }
@@ -6011,7 +6011,7 @@ func NewConditionalContext(parser antlr.Parser, parent antlr.ParserRuleContext, 
 func (s *ConditionalContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *ConditionalContext) IF() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserIF, 0)
+	return s.GetToken(BruenParserIF, 0)
 }
 
 func (s *ConditionalContext) Conditional2() IConditional2Context {
@@ -6053,20 +6053,20 @@ func (s *ConditionalContext) ToStringTree(ruleNames []string, recog antlr.Recogn
 }
 
 func (s *ConditionalContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterConditional(s)
 	}
 }
 
 func (s *ConditionalContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitConditional(s)
 	}
 }
 
-func (p *ProyectoParser) Conditional() (localctx IConditionalContext) {
+func (p *BruenParser) Conditional() (localctx IConditionalContext) {
 	localctx = NewConditionalContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 78, ProyectoParserRULE_conditional)
+	p.EnterRule(localctx, 78, BruenParserRULE_conditional)
 	var _la int
 
 	defer func() {
@@ -6088,7 +6088,7 @@ func (p *ProyectoParser) Conditional() (localctx IConditionalContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(456)
-		p.Match(ProyectoParserIF)
+		p.Match(BruenParserIF)
 	}
 	{
 		p.SetState(457)
@@ -6102,7 +6102,7 @@ func (p *ProyectoParser) Conditional() (localctx IConditionalContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if _la == ProyectoParserELSE {
+	if _la == BruenParserELSE {
 		{
 			p.SetState(459)
 			p.Conditional4()
@@ -6132,7 +6132,7 @@ type Conditional2Context struct {
 func NewEmptyConditional2Context() *Conditional2Context {
 	var p = new(Conditional2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_conditional2
+	p.RuleIndex = BruenParserRULE_conditional2
 	return p
 }
 
@@ -6144,7 +6144,7 @@ func NewConditional2Context(parser antlr.Parser, parent antlr.ParserRuleContext,
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_conditional2
+	p.RuleIndex = BruenParserRULE_conditional2
 
 	return p
 }
@@ -6152,7 +6152,7 @@ func NewConditional2Context(parser antlr.Parser, parent antlr.ParserRuleContext,
 func (s *Conditional2Context) GetParser() antlr.Parser { return s.parser }
 
 func (s *Conditional2Context) LPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserLPAREN, 0)
+	return s.GetToken(BruenParserLPAREN, 0)
 }
 
 func (s *Conditional2Context) Exp() IExpContext {
@@ -6166,7 +6166,7 @@ func (s *Conditional2Context) Exp() IExpContext {
 }
 
 func (s *Conditional2Context) RPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserRPAREN, 0)
+	return s.GetToken(BruenParserRPAREN, 0)
 }
 
 func (s *Conditional2Context) GetRuleContext() antlr.RuleContext {
@@ -6178,20 +6178,20 @@ func (s *Conditional2Context) ToStringTree(ruleNames []string, recog antlr.Recog
 }
 
 func (s *Conditional2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterConditional2(s)
 	}
 }
 
 func (s *Conditional2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitConditional2(s)
 	}
 }
 
-func (p *ProyectoParser) Conditional2() (localctx IConditional2Context) {
+func (p *BruenParser) Conditional2() (localctx IConditional2Context) {
 	localctx = NewConditional2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 80, ProyectoParserRULE_conditional2)
+	p.EnterRule(localctx, 80, BruenParserRULE_conditional2)
 
 	defer func() {
 		p.ExitRule()
@@ -6212,7 +6212,7 @@ func (p *ProyectoParser) Conditional2() (localctx IConditional2Context) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(462)
-		p.Match(ProyectoParserLPAREN)
+		p.Match(BruenParserLPAREN)
 	}
 	{
 		p.SetState(463)
@@ -6220,7 +6220,7 @@ func (p *ProyectoParser) Conditional2() (localctx IConditional2Context) {
 	}
 	{
 		p.SetState(464)
-		p.Match(ProyectoParserRPAREN)
+		p.Match(BruenParserRPAREN)
 	}
 
 	return localctx
@@ -6245,7 +6245,7 @@ type Conditional3Context struct {
 func NewEmptyConditional3Context() *Conditional3Context {
 	var p = new(Conditional3Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_conditional3
+	p.RuleIndex = BruenParserRULE_conditional3
 	return p
 }
 
@@ -6257,7 +6257,7 @@ func NewConditional3Context(parser antlr.Parser, parent antlr.ParserRuleContext,
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_conditional3
+	p.RuleIndex = BruenParserRULE_conditional3
 
 	return p
 }
@@ -6283,20 +6283,20 @@ func (s *Conditional3Context) ToStringTree(ruleNames []string, recog antlr.Recog
 }
 
 func (s *Conditional3Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterConditional3(s)
 	}
 }
 
 func (s *Conditional3Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitConditional3(s)
 	}
 }
 
-func (p *ProyectoParser) Conditional3() (localctx IConditional3Context) {
+func (p *BruenParser) Conditional3() (localctx IConditional3Context) {
 	localctx = NewConditional3Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 82, ProyectoParserRULE_conditional3)
+	p.EnterRule(localctx, 82, BruenParserRULE_conditional3)
 
 	defer func() {
 		p.ExitRule()
@@ -6342,7 +6342,7 @@ type Conditional4Context struct {
 func NewEmptyConditional4Context() *Conditional4Context {
 	var p = new(Conditional4Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_conditional4
+	p.RuleIndex = BruenParserRULE_conditional4
 	return p
 }
 
@@ -6354,7 +6354,7 @@ func NewConditional4Context(parser antlr.Parser, parent antlr.ParserRuleContext,
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_conditional4
+	p.RuleIndex = BruenParserRULE_conditional4
 
 	return p
 }
@@ -6362,7 +6362,7 @@ func NewConditional4Context(parser antlr.Parser, parent antlr.ParserRuleContext,
 func (s *Conditional4Context) GetParser() antlr.Parser { return s.parser }
 
 func (s *Conditional4Context) ELSE() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserELSE, 0)
+	return s.GetToken(BruenParserELSE, 0)
 }
 
 func (s *Conditional4Context) Block() IBlockContext {
@@ -6384,20 +6384,20 @@ func (s *Conditional4Context) ToStringTree(ruleNames []string, recog antlr.Recog
 }
 
 func (s *Conditional4Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterConditional4(s)
 	}
 }
 
 func (s *Conditional4Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitConditional4(s)
 	}
 }
 
-func (p *ProyectoParser) Conditional4() (localctx IConditional4Context) {
+func (p *BruenParser) Conditional4() (localctx IConditional4Context) {
 	localctx = NewConditional4Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 84, ProyectoParserRULE_conditional4)
+	p.EnterRule(localctx, 84, BruenParserRULE_conditional4)
 
 	defer func() {
 		p.ExitRule()
@@ -6418,7 +6418,7 @@ func (p *ProyectoParser) Conditional4() (localctx IConditional4Context) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(468)
-		p.Match(ProyectoParserELSE)
+		p.Match(BruenParserELSE)
 	}
 	{
 		p.SetState(469)
@@ -6447,7 +6447,7 @@ type ForLoopContext struct {
 func NewEmptyForLoopContext() *ForLoopContext {
 	var p = new(ForLoopContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_forLoop
+	p.RuleIndex = BruenParserRULE_forLoop
 	return p
 }
 
@@ -6459,7 +6459,7 @@ func NewForLoopContext(parser antlr.Parser, parent antlr.ParserRuleContext, invo
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_forLoop
+	p.RuleIndex = BruenParserRULE_forLoop
 
 	return p
 }
@@ -6467,7 +6467,7 @@ func NewForLoopContext(parser antlr.Parser, parent antlr.ParserRuleContext, invo
 func (s *ForLoopContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *ForLoopContext) FOR() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserFOR, 0)
+	return s.GetToken(BruenParserFOR, 0)
 }
 
 func (s *ForLoopContext) ForLoop2() IForLoop2Context {
@@ -6481,7 +6481,7 @@ func (s *ForLoopContext) ForLoop2() IForLoop2Context {
 }
 
 func (s *ForLoopContext) IN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserIN, 0)
+	return s.GetToken(BruenParserIN, 0)
 }
 
 func (s *ForLoopContext) ForLoop3() IForLoop3Context {
@@ -6513,20 +6513,20 @@ func (s *ForLoopContext) ToStringTree(ruleNames []string, recog antlr.Recognizer
 }
 
 func (s *ForLoopContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterForLoop(s)
 	}
 }
 
 func (s *ForLoopContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitForLoop(s)
 	}
 }
 
-func (p *ProyectoParser) ForLoop() (localctx IForLoopContext) {
+func (p *BruenParser) ForLoop() (localctx IForLoopContext) {
 	localctx = NewForLoopContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 86, ProyectoParserRULE_forLoop)
+	p.EnterRule(localctx, 86, BruenParserRULE_forLoop)
 
 	defer func() {
 		p.ExitRule()
@@ -6547,7 +6547,7 @@ func (p *ProyectoParser) ForLoop() (localctx IForLoopContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(471)
-		p.Match(ProyectoParserFOR)
+		p.Match(BruenParserFOR)
 	}
 	{
 		p.SetState(472)
@@ -6555,7 +6555,7 @@ func (p *ProyectoParser) ForLoop() (localctx IForLoopContext) {
 	}
 	{
 		p.SetState(473)
-		p.Match(ProyectoParserIN)
+		p.Match(BruenParserIN)
 	}
 	{
 		p.SetState(474)
@@ -6588,7 +6588,7 @@ type ForLoop2Context struct {
 func NewEmptyForLoop2Context() *ForLoop2Context {
 	var p = new(ForLoop2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_forLoop2
+	p.RuleIndex = BruenParserRULE_forLoop2
 	return p
 }
 
@@ -6600,7 +6600,7 @@ func NewForLoop2Context(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_forLoop2
+	p.RuleIndex = BruenParserRULE_forLoop2
 
 	return p
 }
@@ -6608,11 +6608,11 @@ func NewForLoop2Context(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 func (s *ForLoop2Context) GetParser() antlr.Parser { return s.parser }
 
 func (s *ForLoop2Context) ID() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserID, 0)
+	return s.GetToken(BruenParserID, 0)
 }
 
 func (s *ForLoop2Context) ASSIGN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserASSIGN, 0)
+	return s.GetToken(BruenParserASSIGN, 0)
 }
 
 func (s *ForLoop2Context) Exp() IExpContext {
@@ -6634,20 +6634,20 @@ func (s *ForLoop2Context) ToStringTree(ruleNames []string, recog antlr.Recognize
 }
 
 func (s *ForLoop2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterForLoop2(s)
 	}
 }
 
 func (s *ForLoop2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitForLoop2(s)
 	}
 }
 
-func (p *ProyectoParser) ForLoop2() (localctx IForLoop2Context) {
+func (p *BruenParser) ForLoop2() (localctx IForLoop2Context) {
 	localctx = NewForLoop2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 88, ProyectoParserRULE_forLoop2)
+	p.EnterRule(localctx, 88, BruenParserRULE_forLoop2)
 
 	defer func() {
 		p.ExitRule()
@@ -6668,11 +6668,11 @@ func (p *ProyectoParser) ForLoop2() (localctx IForLoop2Context) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(477)
-		p.Match(ProyectoParserID)
+		p.Match(BruenParserID)
 	}
 	{
 		p.SetState(478)
-		p.Match(ProyectoParserASSIGN)
+		p.Match(BruenParserASSIGN)
 	}
 	{
 		p.SetState(479)
@@ -6701,7 +6701,7 @@ type ForLoop3Context struct {
 func NewEmptyForLoop3Context() *ForLoop3Context {
 	var p = new(ForLoop3Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_forLoop3
+	p.RuleIndex = BruenParserRULE_forLoop3
 	return p
 }
 
@@ -6713,7 +6713,7 @@ func NewForLoop3Context(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_forLoop3
+	p.RuleIndex = BruenParserRULE_forLoop3
 
 	return p
 }
@@ -6739,20 +6739,20 @@ func (s *ForLoop3Context) ToStringTree(ruleNames []string, recog antlr.Recognize
 }
 
 func (s *ForLoop3Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterForLoop3(s)
 	}
 }
 
 func (s *ForLoop3Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitForLoop3(s)
 	}
 }
 
-func (p *ProyectoParser) ForLoop3() (localctx IForLoop3Context) {
+func (p *BruenParser) ForLoop3() (localctx IForLoop3Context) {
 	localctx = NewForLoop3Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 90, ProyectoParserRULE_forLoop3)
+	p.EnterRule(localctx, 90, BruenParserRULE_forLoop3)
 
 	defer func() {
 		p.ExitRule()
@@ -6798,7 +6798,7 @@ type WhileLoopContext struct {
 func NewEmptyWhileLoopContext() *WhileLoopContext {
 	var p = new(WhileLoopContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_whileLoop
+	p.RuleIndex = BruenParserRULE_whileLoop
 	return p
 }
 
@@ -6810,7 +6810,7 @@ func NewWhileLoopContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_whileLoop
+	p.RuleIndex = BruenParserRULE_whileLoop
 
 	return p
 }
@@ -6818,7 +6818,7 @@ func NewWhileLoopContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 func (s *WhileLoopContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *WhileLoopContext) WHILE() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserWHILE, 0)
+	return s.GetToken(BruenParserWHILE, 0)
 }
 
 func (s *WhileLoopContext) WhileLoop2() IWhileLoop2Context {
@@ -6850,20 +6850,20 @@ func (s *WhileLoopContext) ToStringTree(ruleNames []string, recog antlr.Recogniz
 }
 
 func (s *WhileLoopContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterWhileLoop(s)
 	}
 }
 
 func (s *WhileLoopContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitWhileLoop(s)
 	}
 }
 
-func (p *ProyectoParser) WhileLoop() (localctx IWhileLoopContext) {
+func (p *BruenParser) WhileLoop() (localctx IWhileLoopContext) {
 	localctx = NewWhileLoopContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 92, ProyectoParserRULE_whileLoop)
+	p.EnterRule(localctx, 92, BruenParserRULE_whileLoop)
 
 	defer func() {
 		p.ExitRule()
@@ -6884,7 +6884,7 @@ func (p *ProyectoParser) WhileLoop() (localctx IWhileLoopContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(483)
-		p.Match(ProyectoParserWHILE)
+		p.Match(BruenParserWHILE)
 	}
 	{
 		p.SetState(484)
@@ -6917,7 +6917,7 @@ type WhileLoop2Context struct {
 func NewEmptyWhileLoop2Context() *WhileLoop2Context {
 	var p = new(WhileLoop2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_whileLoop2
+	p.RuleIndex = BruenParserRULE_whileLoop2
 	return p
 }
 
@@ -6929,7 +6929,7 @@ func NewWhileLoop2Context(parser antlr.Parser, parent antlr.ParserRuleContext, i
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_whileLoop2
+	p.RuleIndex = BruenParserRULE_whileLoop2
 
 	return p
 }
@@ -6937,7 +6937,7 @@ func NewWhileLoop2Context(parser antlr.Parser, parent antlr.ParserRuleContext, i
 func (s *WhileLoop2Context) GetParser() antlr.Parser { return s.parser }
 
 func (s *WhileLoop2Context) LPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserLPAREN, 0)
+	return s.GetToken(BruenParserLPAREN, 0)
 }
 
 func (s *WhileLoop2Context) Exp() IExpContext {
@@ -6951,7 +6951,7 @@ func (s *WhileLoop2Context) Exp() IExpContext {
 }
 
 func (s *WhileLoop2Context) RPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserRPAREN, 0)
+	return s.GetToken(BruenParserRPAREN, 0)
 }
 
 func (s *WhileLoop2Context) GetRuleContext() antlr.RuleContext {
@@ -6963,20 +6963,20 @@ func (s *WhileLoop2Context) ToStringTree(ruleNames []string, recog antlr.Recogni
 }
 
 func (s *WhileLoop2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterWhileLoop2(s)
 	}
 }
 
 func (s *WhileLoop2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitWhileLoop2(s)
 	}
 }
 
-func (p *ProyectoParser) WhileLoop2() (localctx IWhileLoop2Context) {
+func (p *BruenParser) WhileLoop2() (localctx IWhileLoop2Context) {
 	localctx = NewWhileLoop2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 94, ProyectoParserRULE_whileLoop2)
+	p.EnterRule(localctx, 94, BruenParserRULE_whileLoop2)
 
 	defer func() {
 		p.ExitRule()
@@ -6997,7 +6997,7 @@ func (p *ProyectoParser) WhileLoop2() (localctx IWhileLoop2Context) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(487)
-		p.Match(ProyectoParserLPAREN)
+		p.Match(BruenParserLPAREN)
 	}
 	{
 		p.SetState(488)
@@ -7005,7 +7005,7 @@ func (p *ProyectoParser) WhileLoop2() (localctx IWhileLoop2Context) {
 	}
 	{
 		p.SetState(489)
-		p.Match(ProyectoParserRPAREN)
+		p.Match(BruenParserRPAREN)
 	}
 
 	return localctx
@@ -7030,7 +7030,7 @@ type ExpressionContext struct {
 func NewEmptyExpressionContext() *ExpressionContext {
 	var p = new(ExpressionContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_expression
+	p.RuleIndex = BruenParserRULE_expression
 	return p
 }
 
@@ -7042,7 +7042,7 @@ func NewExpressionContext(parser antlr.Parser, parent antlr.ParserRuleContext, i
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_expression
+	p.RuleIndex = BruenParserRULE_expression
 
 	return p
 }
@@ -7060,7 +7060,7 @@ func (s *ExpressionContext) Exp() IExpContext {
 }
 
 func (s *ExpressionContext) SEMI() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSEMI, 0)
+	return s.GetToken(BruenParserSEMI, 0)
 }
 
 func (s *ExpressionContext) GetRuleContext() antlr.RuleContext {
@@ -7072,20 +7072,20 @@ func (s *ExpressionContext) ToStringTree(ruleNames []string, recog antlr.Recogni
 }
 
 func (s *ExpressionContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterExpression(s)
 	}
 }
 
 func (s *ExpressionContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitExpression(s)
 	}
 }
 
-func (p *ProyectoParser) Expression() (localctx IExpressionContext) {
+func (p *BruenParser) Expression() (localctx IExpressionContext) {
 	localctx = NewExpressionContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 96, ProyectoParserRULE_expression)
+	p.EnterRule(localctx, 96, BruenParserRULE_expression)
 
 	defer func() {
 		p.ExitRule()
@@ -7110,7 +7110,7 @@ func (p *ProyectoParser) Expression() (localctx IExpressionContext) {
 	}
 	{
 		p.SetState(492)
-		p.Match(ProyectoParserSEMI)
+		p.Match(BruenParserSEMI)
 	}
 
 	return localctx
@@ -7135,7 +7135,7 @@ type ExpContext struct {
 func NewEmptyExpContext() *ExpContext {
 	var p = new(ExpContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_exp
+	p.RuleIndex = BruenParserRULE_exp
 	return p
 }
 
@@ -7147,7 +7147,7 @@ func NewExpContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoking
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_exp
+	p.RuleIndex = BruenParserRULE_exp
 
 	return p
 }
@@ -7196,20 +7196,20 @@ func (s *ExpContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) st
 }
 
 func (s *ExpContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterExp(s)
 	}
 }
 
 func (s *ExpContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitExp(s)
 	}
 }
 
-func (p *ProyectoParser) Exp() (localctx IExpContext) {
+func (p *BruenParser) Exp() (localctx IExpContext) {
 	localctx = NewExpContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 98, ProyectoParserRULE_exp)
+	p.EnterRule(localctx, 98, BruenParserRULE_exp)
 	var _la int
 
 	defer func() {
@@ -7237,7 +7237,7 @@ func (p *ProyectoParser) Exp() (localctx IExpContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserOR {
+	for _la == BruenParserOR {
 		{
 			p.SetState(495)
 			p.Exp2()
@@ -7270,7 +7270,7 @@ type Exp2Context struct {
 func NewEmptyExp2Context() *Exp2Context {
 	var p = new(Exp2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_exp2
+	p.RuleIndex = BruenParserRULE_exp2
 	return p
 }
 
@@ -7282,7 +7282,7 @@ func NewExp2Context(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_exp2
+	p.RuleIndex = BruenParserRULE_exp2
 
 	return p
 }
@@ -7290,7 +7290,7 @@ func NewExp2Context(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 func (s *Exp2Context) GetParser() antlr.Parser { return s.parser }
 
 func (s *Exp2Context) OR() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserOR, 0)
+	return s.GetToken(BruenParserOR, 0)
 }
 
 func (s *Exp2Context) T_exp() IT_expContext {
@@ -7312,20 +7312,20 @@ func (s *Exp2Context) ToStringTree(ruleNames []string, recog antlr.Recognizer) s
 }
 
 func (s *Exp2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterExp2(s)
 	}
 }
 
 func (s *Exp2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitExp2(s)
 	}
 }
 
-func (p *ProyectoParser) Exp2() (localctx IExp2Context) {
+func (p *BruenParser) Exp2() (localctx IExp2Context) {
 	localctx = NewExp2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 100, ProyectoParserRULE_exp2)
+	p.EnterRule(localctx, 100, BruenParserRULE_exp2)
 
 	defer func() {
 		p.ExitRule()
@@ -7346,7 +7346,7 @@ func (p *ProyectoParser) Exp2() (localctx IExp2Context) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(501)
-		p.Match(ProyectoParserOR)
+		p.Match(BruenParserOR)
 	}
 	{
 		p.SetState(502)
@@ -7375,7 +7375,7 @@ type T_expContext struct {
 func NewEmptyT_expContext() *T_expContext {
 	var p = new(T_expContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_t_exp
+	p.RuleIndex = BruenParserRULE_t_exp
 	return p
 }
 
@@ -7387,7 +7387,7 @@ func NewT_expContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_t_exp
+	p.RuleIndex = BruenParserRULE_t_exp
 
 	return p
 }
@@ -7436,20 +7436,20 @@ func (s *T_expContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *T_expContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterT_exp(s)
 	}
 }
 
 func (s *T_expContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitT_exp(s)
 	}
 }
 
-func (p *ProyectoParser) T_exp() (localctx IT_expContext) {
+func (p *BruenParser) T_exp() (localctx IT_expContext) {
 	localctx = NewT_expContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 102, ProyectoParserRULE_t_exp)
+	p.EnterRule(localctx, 102, BruenParserRULE_t_exp)
 	var _la int
 
 	defer func() {
@@ -7477,7 +7477,7 @@ func (p *ProyectoParser) T_exp() (localctx IT_expContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserAND {
+	for _la == BruenParserAND {
 		{
 			p.SetState(505)
 			p.T_exp2()
@@ -7510,7 +7510,7 @@ type T_exp2Context struct {
 func NewEmptyT_exp2Context() *T_exp2Context {
 	var p = new(T_exp2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_t_exp2
+	p.RuleIndex = BruenParserRULE_t_exp2
 	return p
 }
 
@@ -7522,7 +7522,7 @@ func NewT_exp2Context(parser antlr.Parser, parent antlr.ParserRuleContext, invok
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_t_exp2
+	p.RuleIndex = BruenParserRULE_t_exp2
 
 	return p
 }
@@ -7530,7 +7530,7 @@ func NewT_exp2Context(parser antlr.Parser, parent antlr.ParserRuleContext, invok
 func (s *T_exp2Context) GetParser() antlr.Parser { return s.parser }
 
 func (s *T_exp2Context) AND() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserAND, 0)
+	return s.GetToken(BruenParserAND, 0)
 }
 
 func (s *T_exp2Context) G_exp() IG_expContext {
@@ -7552,20 +7552,20 @@ func (s *T_exp2Context) ToStringTree(ruleNames []string, recog antlr.Recognizer)
 }
 
 func (s *T_exp2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterT_exp2(s)
 	}
 }
 
 func (s *T_exp2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitT_exp2(s)
 	}
 }
 
-func (p *ProyectoParser) T_exp2() (localctx IT_exp2Context) {
+func (p *BruenParser) T_exp2() (localctx IT_exp2Context) {
 	localctx = NewT_exp2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 104, ProyectoParserRULE_t_exp2)
+	p.EnterRule(localctx, 104, BruenParserRULE_t_exp2)
 
 	defer func() {
 		p.ExitRule()
@@ -7586,7 +7586,7 @@ func (p *ProyectoParser) T_exp2() (localctx IT_exp2Context) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(511)
-		p.Match(ProyectoParserAND)
+		p.Match(BruenParserAND)
 	}
 	{
 		p.SetState(512)
@@ -7615,7 +7615,7 @@ type G_expContext struct {
 func NewEmptyG_expContext() *G_expContext {
 	var p = new(G_expContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_g_exp
+	p.RuleIndex = BruenParserRULE_g_exp
 	return p
 }
 
@@ -7627,7 +7627,7 @@ func NewG_expContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_g_exp
+	p.RuleIndex = BruenParserRULE_g_exp
 
 	return p
 }
@@ -7663,20 +7663,20 @@ func (s *G_expContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *G_expContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterG_exp(s)
 	}
 }
 
 func (s *G_expContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitG_exp(s)
 	}
 }
 
-func (p *ProyectoParser) G_exp() (localctx IG_expContext) {
+func (p *BruenParser) G_exp() (localctx IG_expContext) {
 	localctx = NewG_expContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 106, ProyectoParserRULE_g_exp)
+	p.EnterRule(localctx, 106, BruenParserRULE_g_exp)
 	var _la int
 
 	defer func() {
@@ -7704,7 +7704,7 @@ func (p *ProyectoParser) G_exp() (localctx IG_expContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserGT)|(1<<ProyectoParserLT)|(1<<ProyectoParserEQ)|(1<<ProyectoParserNEQ))) != 0 {
+	if ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<BruenParserGT)|(1<<BruenParserLT)|(1<<BruenParserEQ)|(1<<BruenParserNEQ))) != 0 {
 		{
 			p.SetState(515)
 			p.G_exp2()
@@ -7734,7 +7734,7 @@ type G_exp2Context struct {
 func NewEmptyG_exp2Context() *G_exp2Context {
 	var p = new(G_exp2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_g_exp2
+	p.RuleIndex = BruenParserRULE_g_exp2
 	return p
 }
 
@@ -7746,7 +7746,7 @@ func NewG_exp2Context(parser antlr.Parser, parent antlr.ParserRuleContext, invok
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_g_exp2
+	p.RuleIndex = BruenParserRULE_g_exp2
 
 	return p
 }
@@ -7782,20 +7782,20 @@ func (s *G_exp2Context) ToStringTree(ruleNames []string, recog antlr.Recognizer)
 }
 
 func (s *G_exp2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterG_exp2(s)
 	}
 }
 
 func (s *G_exp2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitG_exp2(s)
 	}
 }
 
-func (p *ProyectoParser) G_exp2() (localctx IG_exp2Context) {
+func (p *BruenParser) G_exp2() (localctx IG_exp2Context) {
 	localctx = NewG_exp2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 108, ProyectoParserRULE_g_exp2)
+	p.EnterRule(localctx, 108, BruenParserRULE_g_exp2)
 
 	defer func() {
 		p.ExitRule()
@@ -7845,7 +7845,7 @@ type M_expContext struct {
 func NewEmptyM_expContext() *M_expContext {
 	var p = new(M_expContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_m_exp
+	p.RuleIndex = BruenParserRULE_m_exp
 	return p
 }
 
@@ -7857,7 +7857,7 @@ func NewM_expContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_m_exp
+	p.RuleIndex = BruenParserRULE_m_exp
 
 	return p
 }
@@ -7906,20 +7906,20 @@ func (s *M_expContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *M_expContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterM_exp(s)
 	}
 }
 
 func (s *M_expContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitM_exp(s)
 	}
 }
 
-func (p *ProyectoParser) M_exp() (localctx IM_expContext) {
+func (p *BruenParser) M_exp() (localctx IM_expContext) {
 	localctx = NewM_expContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 110, ProyectoParserRULE_m_exp)
+	p.EnterRule(localctx, 110, BruenParserRULE_m_exp)
 	var _la int
 
 	defer func() {
@@ -7947,7 +7947,7 @@ func (p *ProyectoParser) M_exp() (localctx IM_expContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserADD || _la == ProyectoParserSUB {
+	for _la == BruenParserADD || _la == BruenParserSUB {
 		{
 			p.SetState(522)
 			p.M_exp2()
@@ -7980,7 +7980,7 @@ type M_exp2Context struct {
 func NewEmptyM_exp2Context() *M_exp2Context {
 	var p = new(M_exp2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_m_exp2
+	p.RuleIndex = BruenParserRULE_m_exp2
 	return p
 }
 
@@ -7992,7 +7992,7 @@ func NewM_exp2Context(parser antlr.Parser, parent antlr.ParserRuleContext, invok
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_m_exp2
+	p.RuleIndex = BruenParserRULE_m_exp2
 
 	return p
 }
@@ -8010,11 +8010,11 @@ func (s *M_exp2Context) Term() ITermContext {
 }
 
 func (s *M_exp2Context) ADD() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserADD, 0)
+	return s.GetToken(BruenParserADD, 0)
 }
 
 func (s *M_exp2Context) SUB() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserSUB, 0)
+	return s.GetToken(BruenParserSUB, 0)
 }
 
 func (s *M_exp2Context) GetRuleContext() antlr.RuleContext {
@@ -8026,20 +8026,20 @@ func (s *M_exp2Context) ToStringTree(ruleNames []string, recog antlr.Recognizer)
 }
 
 func (s *M_exp2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterM_exp2(s)
 	}
 }
 
 func (s *M_exp2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitM_exp2(s)
 	}
 }
 
-func (p *ProyectoParser) M_exp2() (localctx IM_exp2Context) {
+func (p *BruenParser) M_exp2() (localctx IM_exp2Context) {
 	localctx = NewM_exp2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 112, ProyectoParserRULE_m_exp2)
+	p.EnterRule(localctx, 112, BruenParserRULE_m_exp2)
 	var _la int
 
 	defer func() {
@@ -8063,7 +8063,7 @@ func (p *ProyectoParser) M_exp2() (localctx IM_exp2Context) {
 		p.SetState(528)
 		_la = p.GetTokenStream().LA(1)
 
-		if !(_la == ProyectoParserADD || _la == ProyectoParserSUB) {
+		if !(_la == BruenParserADD || _la == BruenParserSUB) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
@@ -8097,7 +8097,7 @@ type TermContext struct {
 func NewEmptyTermContext() *TermContext {
 	var p = new(TermContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_term
+	p.RuleIndex = BruenParserRULE_term
 	return p
 }
 
@@ -8109,7 +8109,7 @@ func NewTermContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_term
+	p.RuleIndex = BruenParserRULE_term
 
 	return p
 }
@@ -8158,20 +8158,20 @@ func (s *TermContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) s
 }
 
 func (s *TermContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterTerm(s)
 	}
 }
 
 func (s *TermContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitTerm(s)
 	}
 }
 
-func (p *ProyectoParser) Term() (localctx ITermContext) {
+func (p *BruenParser) Term() (localctx ITermContext) {
 	localctx = NewTermContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 114, ProyectoParserRULE_term)
+	p.EnterRule(localctx, 114, BruenParserRULE_term)
 	var _la int
 
 	defer func() {
@@ -8199,7 +8199,7 @@ func (p *ProyectoParser) Term() (localctx ITermContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserMUL || _la == ProyectoParserDIV {
+	for _la == BruenParserMUL || _la == BruenParserDIV {
 		{
 			p.SetState(532)
 			p.Term2()
@@ -8232,7 +8232,7 @@ type Term2Context struct {
 func NewEmptyTerm2Context() *Term2Context {
 	var p = new(Term2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_term2
+	p.RuleIndex = BruenParserRULE_term2
 	return p
 }
 
@@ -8244,7 +8244,7 @@ func NewTerm2Context(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_term2
+	p.RuleIndex = BruenParserRULE_term2
 
 	return p
 }
@@ -8262,11 +8262,11 @@ func (s *Term2Context) Factor() IFactorContext {
 }
 
 func (s *Term2Context) MUL() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserMUL, 0)
+	return s.GetToken(BruenParserMUL, 0)
 }
 
 func (s *Term2Context) DIV() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserDIV, 0)
+	return s.GetToken(BruenParserDIV, 0)
 }
 
 func (s *Term2Context) GetRuleContext() antlr.RuleContext {
@@ -8278,20 +8278,20 @@ func (s *Term2Context) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *Term2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterTerm2(s)
 	}
 }
 
 func (s *Term2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitTerm2(s)
 	}
 }
 
-func (p *ProyectoParser) Term2() (localctx ITerm2Context) {
+func (p *BruenParser) Term2() (localctx ITerm2Context) {
 	localctx = NewTerm2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 116, ProyectoParserRULE_term2)
+	p.EnterRule(localctx, 116, BruenParserRULE_term2)
 	var _la int
 
 	defer func() {
@@ -8315,7 +8315,7 @@ func (p *ProyectoParser) Term2() (localctx ITerm2Context) {
 		p.SetState(538)
 		_la = p.GetTokenStream().LA(1)
 
-		if !(_la == ProyectoParserMUL || _la == ProyectoParserDIV) {
+		if !(_la == BruenParserMUL || _la == BruenParserDIV) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
@@ -8349,7 +8349,7 @@ type FactorContext struct {
 func NewEmptyFactorContext() *FactorContext {
 	var p = new(FactorContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_factor
+	p.RuleIndex = BruenParserRULE_factor
 	return p
 }
 
@@ -8361,7 +8361,7 @@ func NewFactorContext(parser antlr.Parser, parent antlr.ParserRuleContext, invok
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_factor
+	p.RuleIndex = BruenParserRULE_factor
 
 	return p
 }
@@ -8437,20 +8437,20 @@ func (s *FactorContext) ToStringTree(ruleNames []string, recog antlr.Recognizer)
 }
 
 func (s *FactorContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterFactor(s)
 	}
 }
 
 func (s *FactorContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitFactor(s)
 	}
 }
 
-func (p *ProyectoParser) Factor() (localctx IFactorContext) {
+func (p *BruenParser) Factor() (localctx IFactorContext) {
 	localctx = NewFactorContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 118, ProyectoParserRULE_factor)
+	p.EnterRule(localctx, 118, BruenParserRULE_factor)
 
 	defer func() {
 		p.ExitRule()
@@ -8541,7 +8541,7 @@ type Factor2Context struct {
 func NewEmptyFactor2Context() *Factor2Context {
 	var p = new(Factor2Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_factor2
+	p.RuleIndex = BruenParserRULE_factor2
 	return p
 }
 
@@ -8553,7 +8553,7 @@ func NewFactor2Context(parser antlr.Parser, parent antlr.ParserRuleContext, invo
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_factor2
+	p.RuleIndex = BruenParserRULE_factor2
 
 	return p
 }
@@ -8561,7 +8561,7 @@ func NewFactor2Context(parser antlr.Parser, parent antlr.ParserRuleContext, invo
 func (s *Factor2Context) GetParser() antlr.Parser { return s.parser }
 
 func (s *Factor2Context) LPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserLPAREN, 0)
+	return s.GetToken(BruenParserLPAREN, 0)
 }
 
 func (s *Factor2Context) Exp() IExpContext {
@@ -8575,7 +8575,7 @@ func (s *Factor2Context) Exp() IExpContext {
 }
 
 func (s *Factor2Context) RPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserRPAREN, 0)
+	return s.GetToken(BruenParserRPAREN, 0)
 }
 
 func (s *Factor2Context) GetRuleContext() antlr.RuleContext {
@@ -8587,20 +8587,20 @@ func (s *Factor2Context) ToStringTree(ruleNames []string, recog antlr.Recognizer
 }
 
 func (s *Factor2Context) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterFactor2(s)
 	}
 }
 
 func (s *Factor2Context) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitFactor2(s)
 	}
 }
 
-func (p *ProyectoParser) Factor2() (localctx IFactor2Context) {
+func (p *BruenParser) Factor2() (localctx IFactor2Context) {
 	localctx = NewFactor2Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 120, ProyectoParserRULE_factor2)
+	p.EnterRule(localctx, 120, BruenParserRULE_factor2)
 
 	defer func() {
 		p.ExitRule()
@@ -8621,7 +8621,7 @@ func (p *ProyectoParser) Factor2() (localctx IFactor2Context) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(551)
-		p.Match(ProyectoParserLPAREN)
+		p.Match(BruenParserLPAREN)
 	}
 	{
 		p.SetState(552)
@@ -8629,7 +8629,7 @@ func (p *ProyectoParser) Factor2() (localctx IFactor2Context) {
 	}
 	{
 		p.SetState(553)
-		p.Match(ProyectoParserRPAREN)
+		p.Match(BruenParserRPAREN)
 	}
 
 	return localctx
@@ -8654,7 +8654,7 @@ type VarCteContext struct {
 func NewEmptyVarCteContext() *VarCteContext {
 	var p = new(VarCteContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_varCte
+	p.RuleIndex = BruenParserRULE_varCte
 	return p
 }
 
@@ -8666,7 +8666,7 @@ func NewVarCteContext(parser antlr.Parser, parent antlr.ParserRuleContext, invok
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_varCte
+	p.RuleIndex = BruenParserRULE_varCte
 
 	return p
 }
@@ -8732,20 +8732,20 @@ func (s *VarCteContext) ToStringTree(ruleNames []string, recog antlr.Recognizer)
 }
 
 func (s *VarCteContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterVarCte(s)
 	}
 }
 
 func (s *VarCteContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitVarCte(s)
 	}
 }
 
-func (p *ProyectoParser) VarCte() (localctx IVarCteContext) {
+func (p *BruenParser) VarCte() (localctx IVarCteContext) {
 	localctx = NewVarCteContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 122, ProyectoParserRULE_varCte)
+	p.EnterRule(localctx, 122, BruenParserRULE_varCte)
 
 	defer func() {
 		p.ExitRule()
@@ -8767,35 +8767,35 @@ func (p *ProyectoParser) VarCte() (localctx IVarCteContext) {
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case ProyectoParserINT:
+	case BruenParserINT:
 		p.EnterOuterAlt(localctx, 1)
 		{
 			p.SetState(555)
 			p.Cte_i()
 		}
 
-	case ProyectoParserFLOAT:
+	case BruenParserFLOAT:
 		p.EnterOuterAlt(localctx, 2)
 		{
 			p.SetState(556)
 			p.Cte_f()
 		}
 
-	case ProyectoParserCHAR:
+	case BruenParserCHAR:
 		p.EnterOuterAlt(localctx, 3)
 		{
 			p.SetState(557)
 			p.Cte_c()
 		}
 
-	case ProyectoParserT__9:
+	case BruenParserT__9:
 		p.EnterOuterAlt(localctx, 4)
 		{
 			p.SetState(558)
 			p.Cte_s()
 		}
 
-	case ProyectoParserBOOL:
+	case BruenParserBOOL:
 		p.EnterOuterAlt(localctx, 5)
 		{
 			p.SetState(559)
@@ -8828,7 +8828,7 @@ type Cte_iContext struct {
 func NewEmptyCte_iContext() *Cte_iContext {
 	var p = new(Cte_iContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_cte_i
+	p.RuleIndex = BruenParserRULE_cte_i
 	return p
 }
 
@@ -8840,7 +8840,7 @@ func NewCte_iContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_cte_i
+	p.RuleIndex = BruenParserRULE_cte_i
 
 	return p
 }
@@ -8848,7 +8848,7 @@ func NewCte_iContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 func (s *Cte_iContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *Cte_iContext) INT() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserINT, 0)
+	return s.GetToken(BruenParserINT, 0)
 }
 
 func (s *Cte_iContext) GetRuleContext() antlr.RuleContext {
@@ -8860,20 +8860,20 @@ func (s *Cte_iContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *Cte_iContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterCte_i(s)
 	}
 }
 
 func (s *Cte_iContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitCte_i(s)
 	}
 }
 
-func (p *ProyectoParser) Cte_i() (localctx ICte_iContext) {
+func (p *BruenParser) Cte_i() (localctx ICte_iContext) {
 	localctx = NewCte_iContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 124, ProyectoParserRULE_cte_i)
+	p.EnterRule(localctx, 124, BruenParserRULE_cte_i)
 
 	defer func() {
 		p.ExitRule()
@@ -8894,7 +8894,7 @@ func (p *ProyectoParser) Cte_i() (localctx ICte_iContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(562)
-		p.Match(ProyectoParserINT)
+		p.Match(BruenParserINT)
 	}
 
 	return localctx
@@ -8919,7 +8919,7 @@ type Cte_fContext struct {
 func NewEmptyCte_fContext() *Cte_fContext {
 	var p = new(Cte_fContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_cte_f
+	p.RuleIndex = BruenParserRULE_cte_f
 	return p
 }
 
@@ -8931,7 +8931,7 @@ func NewCte_fContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_cte_f
+	p.RuleIndex = BruenParserRULE_cte_f
 
 	return p
 }
@@ -8939,7 +8939,7 @@ func NewCte_fContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 func (s *Cte_fContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *Cte_fContext) FLOAT() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserFLOAT, 0)
+	return s.GetToken(BruenParserFLOAT, 0)
 }
 
 func (s *Cte_fContext) GetRuleContext() antlr.RuleContext {
@@ -8951,20 +8951,20 @@ func (s *Cte_fContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *Cte_fContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterCte_f(s)
 	}
 }
 
 func (s *Cte_fContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitCte_f(s)
 	}
 }
 
-func (p *ProyectoParser) Cte_f() (localctx ICte_fContext) {
+func (p *BruenParser) Cte_f() (localctx ICte_fContext) {
 	localctx = NewCte_fContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 126, ProyectoParserRULE_cte_f)
+	p.EnterRule(localctx, 126, BruenParserRULE_cte_f)
 
 	defer func() {
 		p.ExitRule()
@@ -8985,7 +8985,7 @@ func (p *ProyectoParser) Cte_f() (localctx ICte_fContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(564)
-		p.Match(ProyectoParserFLOAT)
+		p.Match(BruenParserFLOAT)
 	}
 
 	return localctx
@@ -9010,7 +9010,7 @@ type Cte_cContext struct {
 func NewEmptyCte_cContext() *Cte_cContext {
 	var p = new(Cte_cContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_cte_c
+	p.RuleIndex = BruenParserRULE_cte_c
 	return p
 }
 
@@ -9022,7 +9022,7 @@ func NewCte_cContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_cte_c
+	p.RuleIndex = BruenParserRULE_cte_c
 
 	return p
 }
@@ -9030,7 +9030,7 @@ func NewCte_cContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 func (s *Cte_cContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *Cte_cContext) CHAR() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserCHAR, 0)
+	return s.GetToken(BruenParserCHAR, 0)
 }
 
 func (s *Cte_cContext) GetRuleContext() antlr.RuleContext {
@@ -9042,20 +9042,20 @@ func (s *Cte_cContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *Cte_cContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterCte_c(s)
 	}
 }
 
 func (s *Cte_cContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitCte_c(s)
 	}
 }
 
-func (p *ProyectoParser) Cte_c() (localctx ICte_cContext) {
+func (p *BruenParser) Cte_c() (localctx ICte_cContext) {
 	localctx = NewCte_cContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 128, ProyectoParserRULE_cte_c)
+	p.EnterRule(localctx, 128, BruenParserRULE_cte_c)
 
 	defer func() {
 		p.ExitRule()
@@ -9076,7 +9076,7 @@ func (p *ProyectoParser) Cte_c() (localctx ICte_cContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(566)
-		p.Match(ProyectoParserCHAR)
+		p.Match(BruenParserCHAR)
 	}
 
 	return localctx
@@ -9101,7 +9101,7 @@ type Cte_bContext struct {
 func NewEmptyCte_bContext() *Cte_bContext {
 	var p = new(Cte_bContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_cte_b
+	p.RuleIndex = BruenParserRULE_cte_b
 	return p
 }
 
@@ -9113,7 +9113,7 @@ func NewCte_bContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_cte_b
+	p.RuleIndex = BruenParserRULE_cte_b
 
 	return p
 }
@@ -9121,7 +9121,7 @@ func NewCte_bContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 func (s *Cte_bContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *Cte_bContext) BOOL() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserBOOL, 0)
+	return s.GetToken(BruenParserBOOL, 0)
 }
 
 func (s *Cte_bContext) GetRuleContext() antlr.RuleContext {
@@ -9133,20 +9133,20 @@ func (s *Cte_bContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *Cte_bContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterCte_b(s)
 	}
 }
 
 func (s *Cte_bContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitCte_b(s)
 	}
 }
 
-func (p *ProyectoParser) Cte_b() (localctx ICte_bContext) {
+func (p *BruenParser) Cte_b() (localctx ICte_bContext) {
 	localctx = NewCte_bContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 130, ProyectoParserRULE_cte_b)
+	p.EnterRule(localctx, 130, BruenParserRULE_cte_b)
 
 	defer func() {
 		p.ExitRule()
@@ -9167,7 +9167,7 @@ func (p *ProyectoParser) Cte_b() (localctx ICte_bContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(568)
-		p.Match(ProyectoParserBOOL)
+		p.Match(BruenParserBOOL)
 	}
 
 	return localctx
@@ -9192,7 +9192,7 @@ type Cte_sContext struct {
 func NewEmptyCte_sContext() *Cte_sContext {
 	var p = new(Cte_sContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_cte_s
+	p.RuleIndex = BruenParserRULE_cte_s
 	return p
 }
 
@@ -9204,7 +9204,7 @@ func NewCte_sContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_cte_s
+	p.RuleIndex = BruenParserRULE_cte_s
 
 	return p
 }
@@ -9219,20 +9219,20 @@ func (s *Cte_sContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *Cte_sContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterCte_s(s)
 	}
 }
 
 func (s *Cte_sContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitCte_s(s)
 	}
 }
 
-func (p *ProyectoParser) Cte_s() (localctx ICte_sContext) {
+func (p *BruenParser) Cte_s() (localctx ICte_sContext) {
 	localctx = NewCte_sContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 132, ProyectoParserRULE_cte_s)
+	p.EnterRule(localctx, 132, BruenParserRULE_cte_s)
 
 	defer func() {
 		p.ExitRule()
@@ -9255,7 +9255,7 @@ func (p *ProyectoParser) Cte_s() (localctx ICte_sContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(570)
-		p.Match(ProyectoParserT__9)
+		p.Match(BruenParserT__9)
 	}
 	p.SetState(574)
 	p.GetErrorHandler().Sync(p)
@@ -9273,7 +9273,7 @@ func (p *ProyectoParser) Cte_s() (localctx ICte_sContext) {
 	}
 	{
 		p.SetState(577)
-		p.Match(ProyectoParserT__9)
+		p.Match(BruenParserT__9)
 	}
 
 	return localctx
@@ -9298,7 +9298,7 @@ type MainContext struct {
 func NewEmptyMainContext() *MainContext {
 	var p = new(MainContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_main
+	p.RuleIndex = BruenParserRULE_main
 	return p
 }
 
@@ -9310,7 +9310,7 @@ func NewMainContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_main
+	p.RuleIndex = BruenParserRULE_main
 
 	return p
 }
@@ -9318,15 +9318,15 @@ func NewMainContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 func (s *MainContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *MainContext) MAIN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserMAIN, 0)
+	return s.GetToken(BruenParserMAIN, 0)
 }
 
 func (s *MainContext) LPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserLPAREN, 0)
+	return s.GetToken(BruenParserLPAREN, 0)
 }
 
 func (s *MainContext) RPAREN() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserRPAREN, 0)
+	return s.GetToken(BruenParserRPAREN, 0)
 }
 
 func (s *MainContext) MainBlock() IMainBlockContext {
@@ -9348,20 +9348,20 @@ func (s *MainContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) s
 }
 
 func (s *MainContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterMain(s)
 	}
 }
 
 func (s *MainContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitMain(s)
 	}
 }
 
-func (p *ProyectoParser) Main() (localctx IMainContext) {
+func (p *BruenParser) Main() (localctx IMainContext) {
 	localctx = NewMainContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 134, ProyectoParserRULE_main)
+	p.EnterRule(localctx, 134, BruenParserRULE_main)
 
 	defer func() {
 		p.ExitRule()
@@ -9382,15 +9382,15 @@ func (p *ProyectoParser) Main() (localctx IMainContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(579)
-		p.Match(ProyectoParserMAIN)
+		p.Match(BruenParserMAIN)
 	}
 	{
 		p.SetState(580)
-		p.Match(ProyectoParserLPAREN)
+		p.Match(BruenParserLPAREN)
 	}
 	{
 		p.SetState(581)
-		p.Match(ProyectoParserRPAREN)
+		p.Match(BruenParserRPAREN)
 	}
 	{
 		p.SetState(582)
@@ -9419,7 +9419,7 @@ type MainBlockContext struct {
 func NewEmptyMainBlockContext() *MainBlockContext {
 	var p = new(MainBlockContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_mainBlock
+	p.RuleIndex = BruenParserRULE_mainBlock
 	return p
 }
 
@@ -9431,7 +9431,7 @@ func NewMainBlockContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_mainBlock
+	p.RuleIndex = BruenParserRULE_mainBlock
 
 	return p
 }
@@ -9493,20 +9493,20 @@ func (s *MainBlockContext) ToStringTree(ruleNames []string, recog antlr.Recogniz
 }
 
 func (s *MainBlockContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterMainBlock(s)
 	}
 }
 
 func (s *MainBlockContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitMainBlock(s)
 	}
 }
 
-func (p *ProyectoParser) MainBlock() (localctx IMainBlockContext) {
+func (p *BruenParser) MainBlock() (localctx IMainBlockContext) {
 	localctx = NewMainBlockContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 136, ProyectoParserRULE_mainBlock)
+	p.EnterRule(localctx, 136, BruenParserRULE_mainBlock)
 	var _la int
 
 	defer func() {
@@ -9528,13 +9528,13 @@ func (p *ProyectoParser) MainBlock() (localctx IMainBlockContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(584)
-		p.Match(ProyectoParserT__0)
+		p.Match(BruenParserT__0)
 	}
 	p.SetState(588)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == ProyectoParserVAR {
+	for _la == BruenParserVAR {
 		{
 			p.SetState(585)
 			p.VariableDeclaration()
@@ -9548,7 +9548,7 @@ func (p *ProyectoParser) MainBlock() (localctx IMainBlockContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserT__8)|(1<<ProyectoParserT__9)|(1<<ProyectoParserINT)|(1<<ProyectoParserFLOAT)|(1<<ProyectoParserCHAR)|(1<<ProyectoParserBOOL)|(1<<ProyectoParserLPAREN)|(1<<ProyectoParserIF))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(ProyectoParserWHILE-32))|(1<<(ProyectoParserFOR-32))|(1<<(ProyectoParserWRITE-32))|(1<<(ProyectoParserREAD-32))|(1<<(ProyectoParserRETURN-32))|(1<<(ProyectoParserID-32)))) != 0) {
+	for (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<BruenParserT__8)|(1<<BruenParserT__9)|(1<<BruenParserINT)|(1<<BruenParserFLOAT)|(1<<BruenParserCHAR)|(1<<BruenParserBOOL)|(1<<BruenParserLPAREN)|(1<<BruenParserIF))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(BruenParserWHILE-32))|(1<<(BruenParserFOR-32))|(1<<(BruenParserWRITE-32))|(1<<(BruenParserREAD-32))|(1<<(BruenParserRETURN-32))|(1<<(BruenParserID-32)))) != 0) {
 		{
 			p.SetState(591)
 			p.Statutes()
@@ -9560,7 +9560,7 @@ func (p *ProyectoParser) MainBlock() (localctx IMainBlockContext) {
 	}
 	{
 		p.SetState(597)
-		p.Match(ProyectoParserT__1)
+		p.Match(BruenParserT__1)
 	}
 
 	return localctx
@@ -9585,7 +9585,7 @@ type TypeRuleContext struct {
 func NewEmptyTypeRuleContext() *TypeRuleContext {
 	var p = new(TypeRuleContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_typeRule
+	p.RuleIndex = BruenParserRULE_typeRule
 	return p
 }
 
@@ -9597,7 +9597,7 @@ func NewTypeRuleContext(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_typeRule
+	p.RuleIndex = BruenParserRULE_typeRule
 
 	return p
 }
@@ -9605,19 +9605,19 @@ func NewTypeRuleContext(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 func (s *TypeRuleContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *TypeRuleContext) INT_TYPE() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserINT_TYPE, 0)
+	return s.GetToken(BruenParserINT_TYPE, 0)
 }
 
 func (s *TypeRuleContext) FLOAT_TYPE() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserFLOAT_TYPE, 0)
+	return s.GetToken(BruenParserFLOAT_TYPE, 0)
 }
 
 func (s *TypeRuleContext) CHAR_TYPE() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserCHAR_TYPE, 0)
+	return s.GetToken(BruenParserCHAR_TYPE, 0)
 }
 
 func (s *TypeRuleContext) BOOL_TYPE() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserBOOL_TYPE, 0)
+	return s.GetToken(BruenParserBOOL_TYPE, 0)
 }
 
 func (s *TypeRuleContext) GetRuleContext() antlr.RuleContext {
@@ -9629,20 +9629,20 @@ func (s *TypeRuleContext) ToStringTree(ruleNames []string, recog antlr.Recognize
 }
 
 func (s *TypeRuleContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterTypeRule(s)
 	}
 }
 
 func (s *TypeRuleContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitTypeRule(s)
 	}
 }
 
-func (p *ProyectoParser) TypeRule() (localctx ITypeRuleContext) {
+func (p *BruenParser) TypeRule() (localctx ITypeRuleContext) {
 	localctx = NewTypeRuleContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 138, ProyectoParserRULE_typeRule)
+	p.EnterRule(localctx, 138, BruenParserRULE_typeRule)
 	var _la int
 
 	defer func() {
@@ -9666,7 +9666,7 @@ func (p *ProyectoParser) TypeRule() (localctx ITypeRuleContext) {
 		p.SetState(599)
 		_la = p.GetTokenStream().LA(1)
 
-		if !(((_la-47)&-(0x1f+1)) == 0 && ((1<<uint((_la-47)))&((1<<(ProyectoParserINT_TYPE-47))|(1<<(ProyectoParserFLOAT_TYPE-47))|(1<<(ProyectoParserCHAR_TYPE-47))|(1<<(ProyectoParserBOOL_TYPE-47)))) != 0) {
+		if !(((_la-47)&-(0x1f+1)) == 0 && ((1<<uint((_la-47)))&((1<<(BruenParserINT_TYPE-47))|(1<<(BruenParserFLOAT_TYPE-47))|(1<<(BruenParserCHAR_TYPE-47))|(1<<(BruenParserBOOL_TYPE-47)))) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
@@ -9696,7 +9696,7 @@ type RelopContext struct {
 func NewEmptyRelopContext() *RelopContext {
 	var p = new(RelopContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = ProyectoParserRULE_relop
+	p.RuleIndex = BruenParserRULE_relop
 	return p
 }
 
@@ -9708,7 +9708,7 @@ func NewRelopContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = ProyectoParserRULE_relop
+	p.RuleIndex = BruenParserRULE_relop
 
 	return p
 }
@@ -9716,19 +9716,19 @@ func NewRelopContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 func (s *RelopContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *RelopContext) GT() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserGT, 0)
+	return s.GetToken(BruenParserGT, 0)
 }
 
 func (s *RelopContext) LT() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserLT, 0)
+	return s.GetToken(BruenParserLT, 0)
 }
 
 func (s *RelopContext) EQ() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserEQ, 0)
+	return s.GetToken(BruenParserEQ, 0)
 }
 
 func (s *RelopContext) NEQ() antlr.TerminalNode {
-	return s.GetToken(ProyectoParserNEQ, 0)
+	return s.GetToken(BruenParserNEQ, 0)
 }
 
 func (s *RelopContext) GetRuleContext() antlr.RuleContext {
@@ -9740,20 +9740,20 @@ func (s *RelopContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 }
 
 func (s *RelopContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.EnterRelop(s)
 	}
 }
 
 func (s *RelopContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(ProyectoListener); ok {
+	if listenerT, ok := listener.(BruenListener); ok {
 		listenerT.ExitRelop(s)
 	}
 }
 
-func (p *ProyectoParser) Relop() (localctx IRelopContext) {
+func (p *BruenParser) Relop() (localctx IRelopContext) {
 	localctx = NewRelopContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 140, ProyectoParserRULE_relop)
+	p.EnterRule(localctx, 140, BruenParserRULE_relop)
 	var _la int
 
 	defer func() {
@@ -9777,7 +9777,7 @@ func (p *ProyectoParser) Relop() (localctx IRelopContext) {
 		p.SetState(601)
 		_la = p.GetTokenStream().LA(1)
 
-		if !(((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ProyectoParserGT)|(1<<ProyectoParserLT)|(1<<ProyectoParserEQ)|(1<<ProyectoParserNEQ))) != 0) {
+		if !(((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<BruenParserGT)|(1<<BruenParserLT)|(1<<BruenParserEQ)|(1<<BruenParserNEQ))) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)

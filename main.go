@@ -45,11 +45,11 @@ func compile() {
 	}
 
 	// Creates the lexer
-	lexer := parser.NewProyectoLexer(is)
+	lexer := parser.NewBruenLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 
 	// Creates the parser
-	p := parser.NewProyectoParser(stream)
+	p := parser.NewBruenParser(stream)
 
 	p.RemoveErrorListeners()
 	errorListener := semantic.NewErrorListener()
@@ -63,7 +63,7 @@ func compile() {
 	}
 
 	stream.Seek(0)
-	p = parser.NewProyectoParser(stream)
+	p = parser.NewBruenParser(stream)
 
 	var quadListener quads.QuadGenListener = quads.NewListener(listener.GetFunctionTable(), listener.GetClassTable())
 	antlr.ParseTreeWalkerDefault.Walk(&quadListener, p.Program())

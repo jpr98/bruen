@@ -16,7 +16,7 @@ import (
 // calls, etc. Almost all methods are called when the parser visits rule nodes and
 // emits events.
 type QuadGenListener struct {
-	*parser.BaseProyectoListener
+	*parser.BaseBruenListener
 	m *Manager
 
 	enteredVarInit bool

@@ -1,11 +1,11 @@
-// Code generated from Proyecto.g4 by ANTLR 4.9.1. DO NOT EDIT.
+// Code generated from Bruen.g4 by ANTLR 4.9.1. DO NOT EDIT.
 
-package parser // Proyecto
+package parser // Bruen
 
 import "github.com/antlr/antlr4/runtime/Go/antlr"
 
-// ProyectoListener is a complete listener for a parse tree produced by ProyectoParser.
-type ProyectoListener interface {
+// BruenListener is a complete listener for a parse tree produced by BruenParser.
+type BruenListener interface {
 	antlr.ParseTreeListener
 
 	// EnterProgram is called when entering the program production.
