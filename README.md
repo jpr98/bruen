@@ -16,7 +16,9 @@ Installation
 To be able to compile and execute *.br* files you need to download the Bruen compiler and virtual machine. We created a no hassle download for the most popular operating systems.
 
 [MacOS](https://github.com/jpr98/bruen/raw/main/build/macos/bruen)
+
 [Windows 64-bit](https://github.com/jpr98/bruen/raw/main/build/windows/bruen.exe)
+
 [Linux x86-64](https://github.com/jpr98/bruen/raw/main/build/linux/bruen)
 
 If you are using a different OS you can download Go, the Bruen compiler source code ([link](https://github.com/jpr98/bruen)) and build it for your architecture.
@@ -53,7 +55,9 @@ Program structure
 All Bruen programs have a defined structure.
 
 They all begin with a `program` keyword followed by the program name.
+
 Then global variables are declared, followed by classes and then functions.
+
 Finally there's `main` the entry point into every Bruen program.
 
 ```=1
@@ -224,15 +228,19 @@ class Car {
 ```
 
 **Sections**
+
 A class has two sections, `attributes` and `methods`. You need to follow that order and write each tag before starting to code the section.
 
 **Initializer**
+
 Every class has a special function called `init`, its declaration goes after the attributes section. The initializer doesn't receive any parameters (for now... :eyes:) and doesn't need the `function` keyword. The init function always returns a new instance of the class.
 
 **Access modifiers**
+
 Everything inside a class is public by default. If you want to specify that it is public you can write `public` before the `var` or `function` keyword. If you want to make something not accessible outside the class you can add the `private`keyword.
 
 **Self**
+
 The keyword `self` is a special variable that exists inside of every class method (and init). It makes reference to the current instance of the class. So for example, if you have a parameter named the same as one of your attributes, you can use `self.attribute` to get access to your attribute. 
 
 So now you have your class defined, how do you use it? To declare an instance of your class you simply set the type of a variable to the name of your class. Once you have your variable declared you can call the initializer by using the `new` keyword. After that you can call methods on the instance.
