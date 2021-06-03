@@ -5,7 +5,18 @@ Bruen is a small object oriented programming language that takes inspiration fro
 
 ## Table of Contents
 
-[TOC]
+- [Bruen programming language](#Bruen-programming-language)
+    - [Beginners Guide](#Beginners-Guide)
+    - [Installation](#Installation)
+    - [Usage](#Usage)
+    - [Program structure](#Program-structure)
+    - [Variables](#Variables)
+    - [Functions](#Functions)
+    - [Expressions](#Expressions)
+    - [Conditional Logic](#Conditional-Logic)
+    - [Repetition](#Repetition)
+    - [Input and Output](#Input-and-Output)
+    - [Classes](#Classes)
 
 ## Beginners Guide
 
@@ -49,6 +60,7 @@ bruen file-to-path.br r
 It is probable that you will have to use your system's syntax (i.e. `./bruen`) to execute the compiler. If you don't wish to do this, you can install the compiler and be done with it.
 
 If you built the compiler from source (or have Go installed), you can use: `go install github.com/jpr98/bruen`.
+
 
 Program structure
 ---
